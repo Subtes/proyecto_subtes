@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Tablero</class>
+ <widget class="QMainWindow" name="Tablero">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Tablero</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-image: url(:/resources/BKG_tablero.png);</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="Velocimetro" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>20</y>
+      <width>260</width>
+      <height>260</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/velocimetro.png);</string>
+    </property>
+   </widget>
+   <widget class="Botonera3" name="widget_2" native="true">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>156</width>
+      <height>266</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/BKG_botonera.png);
+
+</string>
+    </property>
+   </widget>
+   <widget class="Botonera2" name="widget_3" native="true">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>430</y>
+      <width>100</width>
+      <height>150</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/BKG_botonera_HM.png);</string>
+    </property>
+   </widget>
+   <widget class="Botonera3" name="widget_4" native="true">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>20</y>
+      <width>156</width>
+      <height>266</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/BKG_botonera.png);</string>
+    </property>
+   </widget>
+   <widget class="PalancaSlider" name="widget_5" native="true">
+    <property name="geometry">
+     <rect>
+      <x>627</x>
+      <y>316</y>
+      <width>157</width>
+      <height>266</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/BKG_palanca.png);</string>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>300</y>
+      <width>260</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(85, 255, 0); 
+background-color: Black ;
+background-image: url(:/);</string>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <property name="segmentStyle">
+     <enum>QLCDNumber::Flat</enum>
+    </property>
+    <property name="value" stdset="0">
+     <double>223.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDial" name="dial">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>440</y>
+      <width>151</width>
+      <height>151</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>Velocimetro</class>
+   <extends>QWidget</extends>
+   <header>velocimetro.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Botonera3</class>
+   <extends>QWidget</extends>
+   <header>botonera3.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Botonera2</class>
+   <extends>QWidget</extends>
+   <header>botonera2.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PalancaSlider</class>
+   <extends>QWidget</extends>
+   <header>palancaslider.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
