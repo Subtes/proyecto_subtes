@@ -2,7 +2,7 @@
 #define TABLERO_H
 
 #include <QMainWindow>
-#include "botonera2.h"
+#include "Panel_Button2.h"
 
 namespace Ui {
 class Tablero;

@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>botonera2.qml</file>
-        <file>botonera3.qml</file>
-        <file>velocimetro.qml</file>
+        <file>panel_buttons3.qml</file>
+        <file>panel_buttons2.qml</file>
+        <file>speedgauge.qml</file>
     </qresource>
 </RCC>
