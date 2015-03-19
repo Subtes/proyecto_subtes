@@ -4,7 +4,7 @@ Rectangle {
     width: 100
     height: 150
 
-    id: botoneraHM
+    id: panelButtons2
 
     signal blueClicked()
     signal redClicked()
@@ -76,7 +76,7 @@ Rectangle {
                             red.state = "stateRedOff"
                         else
                             red.state = "stateRedOn"
-                        botoneraHM.blueClicked()
+                        panelButtons2.blueClicked()
                     }
                 }
             }
@@ -140,7 +140,7 @@ Rectangle {
                             blue.state = "stateBlueOff"
                         else
                             blue.state = "stateBlueOn"
-                        botoneraHM.blueClicked()
+                        panelButtons2.blueClicked()
                     }
                 }
             }

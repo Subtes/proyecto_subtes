@@ -4,20 +4,23 @@ TEMPLATE = lib
 
 CONFIG+= staticlib
 
-HEADERS += botonera2.h \
-    botonera3.h \
-    velocimetro.h \
-    palancaslider.h
+HEADERS += \
+    panel_buttons2.h \
+    panel_buttons3.h \
+    tractionlever.h \
+    speedgauge.h
 
-SOURCES += botonera2.cpp \
-    botonera3.cpp \
-    velocimetro.cpp \
-    palancaslider.cpp
+SOURCES += \
+    panel_buttons2.cpp \
+    panel_buttons3.cpp \
+    tractionlever.cpp \
+    speedgauge.cpp
 
-FORMS += botonera2.ui \
-    botonera3.ui \
-    velocimetro.ui \
-    palancaslider.ui
+FORMS += \
+    panel_buttons2.ui \
+    panel_buttons3.ui \
+    tractionlever.ui \
+    speedgauge.ui
 
 RESOURCES += widgetsrsc.qrc \
             qmlrsc.qrc

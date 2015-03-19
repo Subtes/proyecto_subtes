@@ -6,13 +6,14 @@ Rectangle {
     color: "#00000000"
     border.color: "#00000000"
 
-    id: botonera
-    signal blueClicked()
-    signal redClicked()
-    signal greenClicked()
+    id: panelButtons
+
+    signal firstClicked()
+    signal secondClicked()
+    signal thirdClicked()
 
     Image {
-        id: image1
+        id: backgroud
         anchors.fill: parent
         sourceSize.height: 280
         sourceSize.width: 150
@@ -20,7 +21,7 @@ Rectangle {
     }
 
     Column {
-        id: column1
+        id: column
         x: 0
         y: 26
         width: 150
@@ -33,12 +34,14 @@ Rectangle {
         spacing: 10
 
         Item {
-            id: blue
+            id: first
+            objectName: "first"
             width: 150
             height: 65
 
             Image {
-                id: blueOFF
+                id: firstOFF
+                objectName: "firstOFF"
                 anchors.fill: parent
                 transformOrigin: Item.Center
                 fillMode: Image.PreserveAspectFit
@@ -47,8 +50,10 @@ Rectangle {
             }
 
             Image {
-                id: blueON
+                id: firstON
+                objectName: "firstON"
                 anchors.fill: parent
+                transformOrigin: Item.Center
                 fillMode: Image.PreserveAspectFit
                 source: "resources/blueON.png"
                 opacity: 0
@@ -56,13 +61,12 @@ Rectangle {
 
             states: [
                 State {
-                    name: "stateBlueOn";
-                    PropertyChanges { target: blueON;opacity: 1}
+                    name: "stateFirstOn";
+                    PropertyChanges { target: firstON;opacity: 1}
                 },
                 State {
-                    name: "stateBlueOff";
-                    PropertyChanges { target: blueON; opacity: 0}
-
+                    name: "stateFirstOff";
+                    PropertyChanges { target: firstON; opacity: 0}
                 }
             ]
 
@@ -78,23 +82,24 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
 
-                    if (blue.state == "stateBlueOn")
-                        blue.state = "stateBlueOff"
+                    if (first.state == "stateFirstOn")
+                        first.state = "stateFirstOff"
                     else
-                        blue.state = "stateBlueOn"
-                    botonera.blueClicked()
+                        first.state = "stateFirstOn"
+                    panelButtons.firstClicked()
                 }
             }
-
         }
 
         Item {
-            id: green
+            id: second
+            objectName: "second"
             width: 150
             height: 65
 
             Image {
-                id: greenOFF
+                id: secondOFF
+                objectName: "secondOFF"
                 anchors.fill: parent
                 fillMode: Image.PreserveAspectFit
                 source: "resources/green.PNG"
@@ -102,7 +107,8 @@ Rectangle {
             }
 
             Image {
-                id: greenON
+                id: secondON
+                objectName: "secondON"
                 anchors.fill: parent
                 fillMode: Image.PreserveAspectFit
                 source: "resources/greenON.png"
@@ -111,13 +117,12 @@ Rectangle {
 
             states: [
                 State {
-                    name: "stateGreenOn";
-                    PropertyChanges { target: greenON;opacity: 1}
+                    name: "stateSecondOn";
+                    PropertyChanges { target: secondON;opacity: 1}
                 },
                 State {
-                    name: "stateGreenOff";
-                    PropertyChanges { target: greenON; opacity: 0}
-
+                    name: "stateSecondOff";
+                    PropertyChanges { target: secondON; opacity: 0}
                 }
             ]
 
@@ -133,23 +138,24 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
 
-                    if (green.state == "stateGreenOn")
-                        green.state = "stateGreenOff"
+                    if (second.state == "stateSecondOn")
+                        second.state = "stateSecondOff"
                     else
-                        green.state = "stateGreenOn"
-                    botonera.greenClicked()
+                        second.state = "stateSecondOn"
+                    panelButtons.secondClicked()
                 }
             }
-
         }
 
         Item {
-            id: red
+            id: third
+            objectName: "third"
             width: 150
             height: 65
 
             Image {
-                id: redOFF
+                id: thirdOFF
+                objectName: "thirdOFF"
                 anchors.fill: parent
                 fillMode: Image.PreserveAspectFit
                 source: "resources/red.PNG"
@@ -157,7 +163,8 @@ Rectangle {
             }
 
             Image {
-                id: redON
+                id: thirdON
+                objectName: "thirdON"
                 anchors.fill: parent
                 fillMode: Image.PreserveAspectFit
                 source: "resources/redON.png"
@@ -166,12 +173,12 @@ Rectangle {
 
             states: [
                 State {
-                    name: "stateRedOn";
-                    PropertyChanges { target: redON;opacity: 1}
+                    name: "stateThirdOn";
+                    PropertyChanges { target: thirdON;opacity: 1}
                 },
                 State {
-                    name: "stateRedOff";
-                    PropertyChanges { target: redON; opacity: 0}
+                    name: "stateThirdOff";
+                    PropertyChanges { target: thirdON; opacity: 0}
 
                 }
             ]
@@ -188,11 +195,11 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
 
-                    if (red.state == "stateRedOn")
-                        red.state = "stateRedOff"
+                    if (third.state == "stateThirdOn")
+                        third.state = "stateThirdOff"
                     else
-                        red.state = "stateRedOn"
-                    botonera.redClicked()
+                        third.state = "stateThirdOn"
+                    panelButtons.thirdClicked()
                 }
             }
         }

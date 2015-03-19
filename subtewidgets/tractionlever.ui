@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PalancaSlider</class>
- <widget class="QWidget" name="PalancaSlider">
+ <class>TractionLever</class>
+ <widget class="QWidget" name="TractionLever">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -12,9 +12,6 @@
   </property>
   <property name="windowTitle">
    <string>Form</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true"/>
   </property>
   <widget class="QSlider" name="verticalSlider">
    <property name="geometry">
@@ -27,6 +24,18 @@
    </property>
    <property name="styleSheet">
     <string notr="true">background-image: url(:/resources/BKG_palanca.png);</string>
+   </property>
+   <property name="minimum">
+    <number>-100</number>
+   </property>
+   <property name="singleStep">
+    <number>1</number>
+   </property>
+   <property name="value">
+    <number>0</number>
+   </property>
+   <property name="sliderPosition">
+    <number>0</number>
    </property>
    <property name="orientation">
     <enum>Qt::Vertical</enum>

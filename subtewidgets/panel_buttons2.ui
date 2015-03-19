@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Botonera3</class>
- <widget class="QWidget" name="Botonera3">
+ <class>Panel_Buttons2</class>
+ <widget class="QWidget" name="Panel_Buttons2">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>150</width>
-    <height>250</height>
+    <width>100</width>
+    <height>150</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>150</width>
-     <height>250</height>
+     <width>100</width>
+     <height>150</height>
     </rect>
    </property>
    <property name="resizeMode">
@@ -27,7 +27,7 @@
    </property>
    <property name="source">
     <url>
-     <string>qrc:/botonera3.qml</string>
+     <string>qrc:/panel_buttons2.qml</string>
     </url>
    </property>
   </widget>
