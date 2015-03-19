@@ -6,10 +6,24 @@
 #include <QStateMachine>
 #include <QState>
 
+/**
+ * El controlador maneja las botoneras de 3 botones (widget) para simular el comportamiento
+ * de los comandos de apertura y cerrado de puertas. Coordina ademas, segun la posicion
+ * del selector (widget dial), que botonera de puertas se activa. Mantiene el estado de las
+ * puertas (inicialmente "cerradas").
+ */
 
 class Doors_Controller : public QObject
 {
-     Q_OBJECT
+    Q_OBJECT
+
+    /**
+    * @STANDBY, @LEFT y @RIGHT:
+    *   son los valores que retorna el dial, que indicarian que sistema de puertas esta activo.
+    */
+    static const int STANDBY = 0;
+    static const int LEFT = 1;
+    static const int RIGHT = 2;
 
 public:
     Doors_Controller(Panel_Buttons3 *leftPanel=0,Panel_Buttons3 *rightPanel=0,QDial * dial=0);
@@ -27,19 +41,16 @@ private:
     bool stateRightDoors;
 
     void inicPanels(Panel_Buttons3 * leftPanel, Panel_Buttons3 * rightPanel);
-    void inicMachines();
+    void turnOnPanel(Panel_Buttons3 * panel);
+    void turnOffPanel(Panel_Buttons3 * panel);
+    void updatePanel(bool currentState,Panel_Buttons3 * panel);
 
 private slots:
-    void updatePanels(int value);
-    void disableRightPanel();
-    void disableLeftPanel();
-    void reactiveRightPanel();
-    void reactiveLeftPanel();
+    void switchPanels(int value);
     void openLeftDoors();
     void closeLeftDoors();
     void openRightDoors();
     void closeRightDoors();
-
 };
 
 #endif // DOORS_CONTROLLER_H

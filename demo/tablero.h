@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "Panel_Button2.h"
+#include "src/controllers/doors_controller.h"
 
 namespace Ui {
 class Tablero;

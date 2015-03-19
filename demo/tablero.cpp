@@ -13,6 +13,9 @@ Tablero::Tablero(QWidget *parent) :
         QSlider::groove {border: 0px solid black; border-radius: 3px; width: 100px; };\
         QDial::handle { image: url(:/resources/BKG_tablero.png); };");
 
+    Doors_Controller * doors = new Doors_Controller(ui->panel_buttons3_left,
+                                                    ui->panel_buttons3_right,
+                                                    ui->dial);
 }
 
 Tablero::~Tablero()
