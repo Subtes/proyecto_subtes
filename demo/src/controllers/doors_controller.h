@@ -47,6 +47,8 @@ private:
 
 private slots:
     void switchPanels(int value);
+
+public slots:
     void openLeftDoors();
     void closeLeftDoors();
     void openRightDoors();

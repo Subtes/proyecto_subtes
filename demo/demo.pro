@@ -8,12 +8,14 @@ SOURCES += main.cpp \
             tablero.cpp \
             src/models/mytest.cpp \
     src/controllers/hombrevivohombremuerto_controller.cpp \
-    src/controllers/doors_controller.cpp
+    src/controllers/doors_controller.cpp \
+    src/controllers/speedgauge_controller.cpp
 
 HEADERS += tablero.h \
             src/models/mytest.h \
     src/controllers/hombrevivohombremuerto_controller.h \
-    src/controllers/doors_controller.h
+    src/controllers/doors_controller.h \
+    src/controllers/speedgauge_controller.h
 
 FORMS += tablero.ui
 
