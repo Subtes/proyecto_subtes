@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "Panel_Button2.h"
 #include "src/controllers/doors_controller.h"
+#include "src/controllers/speedgauge_controller.h"
 
 namespace Ui {
 class Tablero;

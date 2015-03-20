@@ -2,6 +2,7 @@
 #define SPEEDGAUGE_H
 
 #include <QWidget>
+#include <QQuickItem>
 
 namespace Ui {
 class SpeedGauge;
@@ -17,6 +18,10 @@ public:
 
 private:
     Ui::SpeedGauge *ui;
+    QQuickItem *m_qmlView;
+
+public slots:
+    void updateNeedle(double speed);
 };
 
 #endif // SPEEDGAUGE_H

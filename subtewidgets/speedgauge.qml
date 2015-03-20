@@ -17,8 +17,8 @@ Rectangle {
     }
 
     Rectangle {
-        id: aguja
-        objectName: "aguja"
+        id: needle
+        objectName: "needle"
         x: 130
         y: 130
         width: 5
@@ -30,7 +30,7 @@ Rectangle {
         radius: 2
         border.width: 0
         smooth:true
-
+        property double speed: 0;
     }
 
     Rectangle {
@@ -44,4 +44,11 @@ Rectangle {
 
     }
 
+    PropertyAnimation {id: animateNeedle; target: needle; properties: "rotation"; to: speed; duration: 10}
+
+    function updateNeedle(speed) {
+            needle.speed = 0.36*(speed-17);
+            animateNeedle.start();
+            return "ok";
+        }
 }

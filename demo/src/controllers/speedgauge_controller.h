@@ -12,9 +12,9 @@ private:
 public:
     SpeedGauge_Controller(SpeedGauge * speedGauge);
     ~SpeedGauge_Controller();
-
+    //void updateNeedle(float speed);
 public slots:
-    void updateNeedle(float speed);
+    void updateNeedle(double speed);
 };
 
 #endif // SPEEDGAUGE_CONTROLLER_H

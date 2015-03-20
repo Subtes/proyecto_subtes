@@ -16,6 +16,10 @@ Tablero::Tablero(QWidget *parent) :
     Doors_Controller * doors = new Doors_Controller(ui->panel_buttons3_left,
                                                     ui->panel_buttons3_right,
                                                     ui->dial);
+
+    SpeedGauge_Controller * speedGauge = new SpeedGauge_Controller(ui->speedGauge);
+
+    connect(ui->doubleSpinBox,SIGNAL(valueChanged(double)),speedGauge,SLOT(updateNeedle(double)));
 }
 
 Tablero::~Tablero()

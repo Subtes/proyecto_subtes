@@ -10,6 +10,7 @@ SpeedGauge_Controller::~SpeedGauge_Controller()
 
 }
 
-void SpeedGauge_Controller::updateNeedle(float speed){
-
+void SpeedGauge_Controller::updateNeedle(double speed){
+    m_speedGauge->updateNeedle(speed);
 }
+
