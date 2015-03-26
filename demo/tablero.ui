@@ -17,7 +17,7 @@
    <string notr="true">background-image: url(:/resources/BKG_tablero.png);</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="Velocimetro" name="widget" native="true">
+   <widget class="SpeedGauge" name="speedGauge" native="true">
     <property name="geometry">
      <rect>
       <x>280</x>
@@ -30,7 +30,7 @@
      <string notr="true">background-image: url(:/resources/velocimetro.png);</string>
     </property>
    </widget>
-   <widget class="Botonera3" name="widget_2" native="true">
+   <widget class="Panel_Buttons3" name="panel_buttons3_left" native="true">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -45,7 +45,7 @@
 </string>
     </property>
    </widget>
-   <widget class="Botonera2" name="widget_3" native="true">
+   <widget class="Panel_Buttons2" name="widget_3" native="true">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -58,7 +58,7 @@
      <string notr="true">background-image: url(:/resources/BKG_botonera_HM.png);</string>
     </property>
    </widget>
-   <widget class="Botonera3" name="widget_4" native="true">
+   <widget class="Panel_Buttons3" name="panel_buttons3_right" native="true">
     <property name="geometry">
      <rect>
       <x>630</x>
@@ -71,7 +71,7 @@
      <string notr="true">background-image: url(:/resources/BKG_botonera.png);</string>
     </property>
    </widget>
-   <widget class="PalancaSlider" name="widget_5" native="true">
+   <widget class="TractionLever" name="traction" native="true">
     <property name="geometry">
      <rect>
       <x>627</x>
@@ -117,33 +117,39 @@ background-image: url(:/);</string>
       <height>151</height>
      </rect>
     </property>
+    <property name="maximum">
+     <number>2</number>
+    </property>
+    <property name="pageStep">
+     <number>1</number>
+    </property>
    </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>Velocimetro</class>
+   <class>Panel_Buttons3</class>
    <extends>QWidget</extends>
-   <header>velocimetro.h</header>
+   <header>panel_buttons3.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>Botonera3</class>
+   <class>Panel_Buttons2</class>
    <extends>QWidget</extends>
-   <header>botonera3.h</header>
+   <header>panel_buttons2.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>Botonera2</class>
+   <class>TractionLever</class>
    <extends>QWidget</extends>
-   <header>botonera2.h</header>
+   <header>tractionlever.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>PalancaSlider</class>
+   <class>SpeedGauge</class>
    <extends>QWidget</extends>
-   <header>palancaslider.h</header>
+   <header>speedgauge.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
