@@ -45,7 +45,7 @@ Rectangle {
                 anchors.fill: parent
                 transformOrigin: Item.Center
                 fillMode: Image.PreserveAspectFit
-                source: "resources/blue.PNG"
+                source: "resources/blue.png"
                 opacity: 1
             }
 
@@ -102,7 +102,7 @@ Rectangle {
                 objectName: "secondOFF"
                 anchors.fill: parent
                 fillMode: Image.PreserveAspectFit
-                source: "resources/green.PNG"
+                source: "resources/green.png"
                 opacity: 1
             }
 
@@ -158,7 +158,7 @@ Rectangle {
                 objectName: "thirdOFF"
                 anchors.fill: parent
                 fillMode: Image.PreserveAspectFit
-                source: "resources/red.PNG"
+                source: "resources/red.png"
                 opacity: 1
             }
 

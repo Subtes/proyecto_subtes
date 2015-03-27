@@ -25,6 +25,7 @@ class Doors_Controller : public QObject
     static const int LEFT = 1;
     static const int RIGHT = 2;
 
+
 public:
     Doors_Controller(Panel_Buttons3 *leftPanel=0,Panel_Buttons3 *rightPanel=0,QDial * dial=0);
     ~Doors_Controller();

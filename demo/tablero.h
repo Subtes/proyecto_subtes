@@ -5,6 +5,7 @@
 #include "Panel_Button2.h"
 #include "src/controllers/doors_controller.h"
 #include "src/controllers/speedgauge_controller.h"
+#include "src/controllers/hombrevivohombremuerto_controller.h"
 
 namespace Ui {
 class Tablero;
@@ -18,8 +19,12 @@ public:
     explicit Tablero(QWidget *parent = 0);
     ~Tablero();
 
+private slots:
+    void activateHombreVivoHombreMuerto(int pos = 0);
+
 private:
-    Ui::Tablero *ui;
+    Ui::Tablero *ui = NULL;
+    HombreVivoHombreMuerto_Controller *m_deviceHombreVivoHombreMuerto = NULL;
 };
 
 #endif // TABLERO_H

@@ -4,12 +4,12 @@
         <file>resources/BKG_botonera_HM.png</file>
         <file>resources/BKG_palanca.png</file>
         <file>resources/BKG_tablero.png</file>
-        <file>resources/blue.PNG</file>
+        <file>resources/blue.png</file>
         <file>resources/blueON.png</file>
-        <file>resources/green.PNG</file>
+        <file>resources/green.png</file>
         <file>resources/greenON.png</file>
         <file>resources/palanca.png</file>
-        <file>resources/red.PNG</file>
+        <file>resources/red.png</file>
         <file>resources/redON.png</file>
         <file>resources/velocimetro.png</file>
     </qresource>
