@@ -53,8 +53,14 @@ void HombreVivoHombreMuerto_Controller::on_HombreMuertoSystem(){
 
 void HombreVivoHombreMuerto_Controller::off_HombreMuertoSystem(){
 
-    this->m_panel_HombreVivoHombreMuerto->trigger_Alarm(false);
     this->m_machine_HombreMuerto->stop();
+    this->m_timer_died->stop();
+    this->m_timer_safe->stop();
+    this->m_panel_HombreVivoHombreMuerto->trigger_Alarm(false);
+    this->m_panel_HombreVivoHombreMuerto->enable_Button1(false);
+    this->m_panel_HombreVivoHombreMuerto->enable_Button2(false);
+    this->m_panel_HombreVivoHombreMuerto->off_Button1();
+    this->m_panel_HombreVivoHombreMuerto->off_Button2();
 }
 
 void HombreVivoHombreMuerto_Controller::on_routineSafe(){
@@ -76,7 +82,7 @@ void HombreVivoHombreMuerto_Controller::do_routineDied(){
 
     this->m_machine_HombreMuerto->stop();
     this->m_panel_HombreVivoHombreMuerto->trigger_Alarm(true);
-
+    this->m_panel_HombreVivoHombreMuerto->enable_Button1(false);
 }
 
 
