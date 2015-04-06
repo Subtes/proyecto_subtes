@@ -13,7 +13,7 @@ SimulacionSubteFisica::SimulacionSubteFisica(SubteStatus *subte)
 
     connect(m_timer, SIGNAL(timeout()), this, SLOT(updateTime()));
 
-    m_timer->start(200);
+    m_timer->start(50);
 }
 
 SimulacionSubteFisica::~SimulacionSubteFisica()
