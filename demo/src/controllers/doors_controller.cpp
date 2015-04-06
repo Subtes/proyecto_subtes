@@ -159,6 +159,7 @@ void Doors_Controller::openRightDoors(){
     updatePanel(SubteStatus::DOORS_OPENED,m_rightPanel);
 }
 
+
 /**
  * @brief Doors_Controller::closeRightDoors:
  *          SLOT: actualiza el estado de las puertas y configura la botonera en el

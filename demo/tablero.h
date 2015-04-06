@@ -6,6 +6,7 @@
 #include "src/models/subtestatus.h"
 #include "src/controllers/doors_controller.h"
 #include "src/controllers/speedgauge_controller.h"
+#include "src/controllers/hombrevivohombremuerto_controller.h"
 #include "src/controllers/tractionlever_controller.h"
 
 #include "dispatcher.h"
@@ -23,10 +24,13 @@ public:
     explicit Tablero(QWidget *parent = 0, SubteStatus *subte = 0);
     ~Tablero();
 
+private slots:
+    void activateHombreVivoHombreMuerto(int pos = 0);
+
 private:
     Ui::Tablero *ui;
     SubteStatus *m_subte;
-
+    HombreVivoHombreMuerto_Controller *m_deviceHombreVivoHombreMuerto = NULL;
 };
 
 #endif // TABLERO_H
