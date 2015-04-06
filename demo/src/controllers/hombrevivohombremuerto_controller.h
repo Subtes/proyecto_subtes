@@ -1,14 +1,6 @@
 #ifndef HOMBREVIVOHOMBREMUERTO_CONTROLLER_H
 #define HOMBREVIVOHOMBREMUERTO_CONTROLLER_H
 
-<<<<<<< HEAD
-
-class HombreVivoHombreMuerto_Controller
-{
-public:
-    HombreVivoHombreMuerto_Controller();
-    ~HombreVivoHombreMuerto_Controller();
-=======
 #include <QObject>
 #include <QTimer>
 #include <QState>
@@ -65,7 +57,6 @@ public:
         QTimer *m_timer_died = NULL;
         QTimer *m_timer_safe = NULL;
 
->>>>>>> origin/mm-hombreVivoMuerto
 };
 
 #endif // HOMBREVIVOHOMBREMUERTO_CONTROLLER_H
