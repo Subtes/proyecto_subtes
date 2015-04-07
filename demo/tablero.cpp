@@ -9,8 +9,11 @@ Tablero::Tablero(QWidget *parent, SubteStatus *subte) :
         subte = new SubteStatus(0,false,false);
     }
 
+    //SUBTE Model
     m_subte = subte;
 
+    //Configuration and
+    //Configuracion e instanciacion de los componentes en el UI
     ui->setupUi(this);
 
     setStyleSheet("\
@@ -22,12 +25,11 @@ Tablero::Tablero(QWidget *parent, SubteStatus *subte) :
     Doors_Controller * doors = new Doors_Controller(m_subte,ui->panel_buttons3_left,ui->panel_buttons3_right, ui->dial);
 
     SpeedGauge_Controller * speedGauge = new SpeedGauge_Controller(m_subte,ui->speedGauge);
-    connect(ui->doubleSpinBox,SIGNAL(valueChanged(double)),speedGauge,SLOT(updateNeedle(double)));
 
-    // Configuracion connect de Maquina de Estados Hombre Vivo Muerto
-    //HombreVivoHombreMuerto_Controller * deviceHombreVivoHombreMuerto = new HombreVivoHombreMuerto_Controller(ui->widget_3);
+    TractionLever_Controller * tractionLever = new TractionLever_Controller(m_subte,ui->traction);
+    
+    // Configuracion del connect del device Maquina de Estados Hombre Vivo Muerto al device de encendido dial_HombreVivoHombreMuerto
     connect(ui->dial_HombreVivoHombreMuerto,SIGNAL(valueChanged(int)),this,SLOT(activateHombreVivoHombreMuerto(int)));
-
 
 }
 
@@ -51,8 +53,6 @@ void Tablero::activateHombreVivoHombreMuerto(int pos){
         qDebug() << "Error: En Dial activacion sistema hombre vivo muerto esta tomando una valor no contemplado en case del mismo" << pos;
       break;
     }
-
-    TractionLever_Controller * tractionLever = new TractionLever_Controller(m_subte,ui->traction);
 }
 
 Tablero::~Tablero()

@@ -26,7 +26,10 @@
     <string notr="true">background-image: url(:/resources/BKG_palanca.png);</string>
    </property>
    <property name="minimum">
-    <number>-100</number>
+    <number>-5</number>
+   </property>
+   <property name="maximum">
+    <number>5</number>
    </property>
    <property name="singleStep">
     <number>1</number>

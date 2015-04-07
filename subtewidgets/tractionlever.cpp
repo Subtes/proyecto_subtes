@@ -10,7 +10,8 @@ TractionLever::TractionLever(QWidget *parent) :
         QSlider::handle {width: 80px; height: 80px; image: url(:/resources/palanca.png); }\
         QSlider::groove {border: 0px solid black; border-radius: 3px; width: 100px; };");
 
-        connect(ui->verticalSlider,SIGNAL(valueChanged(int)),this,SIGNAL(valueChanged(int)));
+    //    connect(ui->verticalSlider,SIGNAL(valueChanged(int)),this,SIGNAL(valueChanged(int)));
+    connect (ui->verticalSlider,SIGNAL(valueChanged(int)),this,SIGNAL(valueChanged(int)));
 }
 
 TractionLever::~TractionLever()

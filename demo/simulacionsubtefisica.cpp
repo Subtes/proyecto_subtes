@@ -31,7 +31,7 @@ void SimulacionSubteFisica::updateTraction(int traction)
 
 void SimulacionSubteFisica::updateTime()
 {
-    m_time += 0.2;
+    m_time += 0.3;
     qDebug() << "(simulacion_SubteFisica) TIME OUT";
     qDebug() << "(simulacion_SubteFisica) TIME: (current)" << m_time;
     updateStatus();
@@ -39,7 +39,11 @@ void SimulacionSubteFisica::updateTime()
 
 void SimulacionSubteFisica::updateStatus()
 {
-    m_speed = (double)m_initialSpeed + (m_currentTraction/80)*m_time;
+    if (m_initialSpeed >= 120.00){
+        m_initialSpeed = 115;
+    }
+
+    m_speed = (double)m_initialSpeed + (m_currentTraction/280)*m_time;
 
     qDebug() << "m_initialSpeed: "<< m_initialSpeed;
     qDebug() << "m_time: "<< m_time;
@@ -52,6 +56,7 @@ void SimulacionSubteFisica::updateStatus()
         m_initialSpeed = m_speed;
         qDebug() << "(simulacion_SubteFisica) EMIT SPEED: "<< m_speed;
     }
+
 
 }
 
