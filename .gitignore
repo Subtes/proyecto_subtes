@@ -1,3 +1,9 @@
+#SVN
+branches/
+tags/
+trunk/
+.svn
+
 # Archivos de QR
 build-[*]/
 [*]build-[*]
