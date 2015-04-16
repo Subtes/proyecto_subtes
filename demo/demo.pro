@@ -4,6 +4,8 @@ TEMPLATE = app
 
 TARGET = demo
 
+CONFIG     += ordered
+
 SOURCES += main.cpp \
             tablero.cpp \
             src/models/mytest.cpp \
@@ -12,8 +14,9 @@ SOURCES += main.cpp \
             src/controllers/doors_controller.cpp \
             src/controllers/speedgauge_controller.cpp \
             src/controllers/tractionlever_controller.cpp \
-    simulacionsubtefisica.cpp \
-    dispatcher.cpp
+            simulacionsubtefisica.cpp \
+            dispatcher.cpp \
+            src/controllers/seta_controller.cpp
 
 HEADERS += tablero.h \
             src/models/mytest.h \
@@ -22,8 +25,9 @@ HEADERS += tablero.h \
             src/controllers/doors_controller.h \
             src/controllers/speedgauge_controller.h \
             src/controllers/tractionlever_controller.h \
-    simulacionsubtefisica.h \
-    dispatcher.h
+            simulacionsubtefisica.h \
+            dispatcher.h \
+            src/controllers/seta_controller.h
 
 FORMS += tablero.ui
 

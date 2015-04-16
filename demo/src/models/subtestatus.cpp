@@ -30,7 +30,7 @@ bool SubteStatus::getRightDoor(){
 
 void SubteStatus::changeSpeed(double speed){
     m_speed=speed;
-    qDebug() << "(subteStatus) SLOT CHANGE SPEED: (m_speed)"<< m_speed;
+    //qDebug() << "(subteStatus) SLOT CHANGE SPEED: (m_speed)"<< m_speed;
     emit speedChanged(m_speed);
 }
 
@@ -45,5 +45,5 @@ void SubteStatus::changeRightDoor(bool status){
 void SubteStatus::updateTraction(int traction){
     m_traction = traction;
     emit tractionChanged(m_traction);
-    qDebug() << "(subteStatus) EMIT TRACTION CHANGED = " << m_traction;
+    //qDebug() << "(subteStatus) EMIT TRACTION CHANGED = " << m_traction;
 }

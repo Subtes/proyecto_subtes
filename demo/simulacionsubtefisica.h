@@ -29,7 +29,7 @@ public slots:
     void updateTime();
 
 signals:
-    speedChanged(double);
+    void speedChanged(double);
 };
 
 #endif // SIMULACIONSUBTEFISICA_H

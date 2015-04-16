@@ -24,8 +24,8 @@ public:
     void enable_Button2(QVariant e);
 
 signals:
-    on_ClickButton1();
-    on_ClickButton2();
+    void on_ClickButton1();
+    void on_ClickButton2();
 
 public slots:
     void on_Button1();

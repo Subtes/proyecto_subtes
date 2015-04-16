@@ -18,5 +18,7 @@
         <file>resources/selector_bkg.png</file>
         <file>resources/selector_handler.png</file>
         <file>resources/BKG_palanca2.png</file>
+        <file>resources/setaOn.png</file>
+        <file>resources/setaOff.png</file>
     </qresource>
 </RCC>
