@@ -16,8 +16,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>20</y>
+     <x>1180</x>
+     <y>0</y>
      <width>171</width>
      <height>91</height>
     </rect>
@@ -31,7 +31,25 @@
     <string>HARDWARE</string>
    </property>
   </widget>
+  <widget class="FootHorn" name="horn" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>393</width>
+     <height>316</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FootHorn</class>
+   <extends>QWidget</extends>
+   <header>foothorn.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

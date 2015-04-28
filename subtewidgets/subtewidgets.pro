@@ -8,19 +8,22 @@ HEADERS += \
     panel_buttons2.h \
     panel_buttons3.h \
     tractionlever.h \
-    speedgauge.h
+    speedgauge.h \
+    foothorn.h
 
 SOURCES += \
     panel_buttons2.cpp \
     panel_buttons3.cpp \
     tractionlever.cpp \
-    speedgauge.cpp
+    speedgauge.cpp \
+    foothorn.cpp
 
 FORMS += \
     panel_buttons2.ui \
     panel_buttons3.ui \
     tractionlever.ui \
-    speedgauge.ui
+    speedgauge.ui \
+    foothorn.ui
 
 RESOURCES += widgetsrsc.qrc \
             qmlrsc.qrc

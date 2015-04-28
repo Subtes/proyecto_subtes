@@ -12,5 +12,8 @@
         <file>resources/red.png</file>
         <file>resources/redON.png</file>
         <file>resources/velocimetro.png</file>
+        <file>resources/bocina_down.png</file>
+        <file>resources/bocina_up.png</file>
+        <file>resources/Train_Honk_Horn_Distance-Mike_Koenig-1905511933.wav</file>
     </qresource>
 </RCC>
