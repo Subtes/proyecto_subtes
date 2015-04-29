@@ -14,21 +14,21 @@
    <string>BoardCenter</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QDial" name="dial">
+   <widget class="SpeedGauge" name="dial">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>10</y>
-      <width>221</width>
-      <height>231</height>
+      <x>420</x>
+      <y>100</y>
+      <width>281</width>
+      <height>281</height>
      </rect>
     </property>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>30</y>
+      <x>370</x>
+      <y>10</y>
       <width>171</width>
       <height>91</height>
      </rect>
@@ -42,9 +42,32 @@
      <string>CENTRO</string>
     </property>
    </widget>
+   <widget class="Wiper" name="wiper" native="true">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>570</y>
+      <width>100</width>
+      <height>100</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>Wiper</class>
+   <extends>QWidget</extends>
+   <header location="global">wiper.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SpeedGauge</class>
+   <extends>QDial</extends>
+   <header>speedgauge.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

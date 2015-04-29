@@ -12,11 +12,11 @@ int main(int argc, char *argv[])
 
     SubteStatus * subte = new SubteStatus();
 
-    //BoardCenter * c = new BoardCenter(0,subte);;
-    //c->show();
-
     BoardHardware *h = new BoardHardware(0,subte);
     h->show();
+
+    BoardCenter * c = new BoardCenter(0,subte);;
+    c->show();
 
     //BoardLeft *l = new BoardLeft(0,subte);
     //l->show();

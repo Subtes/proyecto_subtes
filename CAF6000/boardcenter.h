@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "src/models/subtestatus.h"
+#include "src/controllers/wiper_controller.h"
 
 namespace Ui {
 class BoardCenter;

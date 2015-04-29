@@ -7,13 +7,29 @@ SubteStatus::SubteStatus()
 
 SubteStatus::~SubteStatus()
 {
-
 }
 
-void SubteStatus::hornOn(){
+void SubteStatus::wiperOn()
+{
+    qDebug() << "wiperON";
+}
+
+void SubteStatus::hornOn()
+{
     horn = true;
 }
 
-void SubteStatus::hornOff(){
+void SubteStatus::hornOff()
+{
     horn = false;
+}
+
+void SubteStatus::wiperOff()
+{
+    qDebug() << "wiperOff";
+}
+
+void SubteStatus::washer()
+{
+    qDebug() << "washer";
 }
