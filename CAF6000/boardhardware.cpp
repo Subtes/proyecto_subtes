@@ -12,6 +12,9 @@ BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte) :
     m_subte = subte;
 
     ui->setupUi(this);
+
+    Horn_Controller *horn = new Horn_Controller(subte,ui->horn);
+
 }
 
 BoardHardware::~BoardHardware()

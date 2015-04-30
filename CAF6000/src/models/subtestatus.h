@@ -10,6 +10,14 @@ class SubteStatus : public QObject
 public:
     SubteStatus();
     ~SubteStatus();
+
+private:
+    bool horn;
+
+public slots:
+    void hornOn();
+    void hornOff();
+
 };
 
 #endif // SUBTESTATUS_H

@@ -15,9 +15,5 @@ int main(int argc, char *argv[])
     Tablero *tablero= new Tablero(0,subte);
     tablero->show();
     return a.exec();
-
-//    Tablero tablero;
-//    tablero.show();
-//    return a.exec();
 }
 
