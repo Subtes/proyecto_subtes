@@ -20,5 +20,7 @@
         <file>resources/BKG_palanca2.png</file>
         <file>resources/setaOn.png</file>
         <file>resources/setaOff.png</file>
+        <file>resources/red_encl.png</file>
+        <file>resources/redON_encl.png</file>
     </qresource>
 </RCC>

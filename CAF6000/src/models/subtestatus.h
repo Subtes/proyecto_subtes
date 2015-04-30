@@ -13,6 +13,7 @@ public:
 
 private:
     bool horn;
+    bool emergencyOverride;
 
 public slots:
     void hornOn();
@@ -29,6 +30,7 @@ public slots:
     void ranaAD();
     void ranaCERO();
     void ranaAT();
+    void emergencyOverrideClicked();
 };
 
 #endif // SUBTESTATUS_H

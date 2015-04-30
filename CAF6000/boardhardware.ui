@@ -76,7 +76,6 @@
    <class>TractionLever</class>
    <extends>QWidget</extends>
    <header>tractionlever.h</header>
-   <container>1</container>
   </customwidget>
   <customwidget>
    <class>Rana</class>

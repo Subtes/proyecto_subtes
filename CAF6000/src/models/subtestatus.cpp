@@ -3,6 +3,7 @@
 SubteStatus::SubteStatus()
 {
     horn = false;
+    emergencyOverride = false;
 }
 
 SubteStatus::~SubteStatus()
@@ -16,17 +17,19 @@ void SubteStatus::wiperOn()
 
 void SubteStatus::hornOn()
 {
+    qDebug() << "horn = true";
     horn = true;
 }
 
 void SubteStatus::hornOff()
 {
+    qDebug() << "horn = false";
     horn = false;
 }
 
 void SubteStatus::wiperOff()
 {
-    qDebug() << "wiperOff";
+    qDebug() << "wiper Off";
 }
 
 void SubteStatus::washer()
@@ -67,4 +70,9 @@ void SubteStatus::hombreVivoPressed(){
 
 void SubteStatus::hombreVivoReleased(){
     qDebug() << "HV released";
+}
+
+void SubteStatus::emergencyOverrideClicked(){
+    emergencyOverride = !emergencyOverride;
+    qDebug() << "emergency Override Clicked, EmOv: " << emergencyOverride ;
 }
