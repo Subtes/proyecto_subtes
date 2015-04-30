@@ -4,5 +4,6 @@
         <file>panel_buttons2.qml</file>
         <file>speedgauge.qml</file>
         <file>foot_horn.qml</file>
+        <file>wiperSelector.qml</file>
     </qresource>
 </RCC>

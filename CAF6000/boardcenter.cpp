@@ -12,6 +12,8 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte) :
     m_subte = subte;
 
     ui->setupUi(this);
+
+    Wiper_Controller *wiper = new Wiper_Controller(m_subte,ui->wiper);
 }
 
 BoardCenter::~BoardCenter()

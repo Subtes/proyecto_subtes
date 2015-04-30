@@ -17,7 +17,9 @@ private:
 public slots:
     void hornOn();
     void hornOff();
-
+    void wiperOn();
+    void wiperOff();
+    void washer();
 };
 
 #endif // SUBTESTATUS_H
