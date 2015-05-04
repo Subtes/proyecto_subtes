@@ -14,7 +14,7 @@ BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte) :
     ui->setupUi(this);
 
     Horn_Controller *horn = new Horn_Controller(subte,ui->horn);
-
+    TractionLever_Controller *tractionLever = new TractionLever_Controller(subte,ui->traction);
 }
 
 BoardHardware::~BoardHardware()

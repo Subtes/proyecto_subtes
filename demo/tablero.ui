@@ -71,19 +71,6 @@
      <string notr="true">background-image: url(:/resources/BKG_botonera.png);</string>
     </property>
    </widget>
-   <widget class="TractionLever" name="traction" native="true">
-    <property name="geometry">
-     <rect>
-      <x>627</x>
-      <y>316</y>
-      <width>157</width>
-      <height>266</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-image: url(:/resources/BKG_palanca.png);</string>
-    </property>
-   </widget>
    <widget class="QLCDNumber" name="lcdNumber">
     <property name="geometry">
      <rect>
@@ -137,6 +124,19 @@ background-image: url(:/);</string>
      <number>1</number>
     </property>
    </widget>
+   <widget class="TractionLever" name="traction" native="true">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>270</y>
+      <width>160</width>
+      <height>330</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/BKG_palanca2.png);</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -154,15 +154,15 @@ background-image: url(:/);</string>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>TractionLever</class>
-   <extends>QWidget</extends>
-   <header>tractionlever.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>SpeedGauge</class>
    <extends>QWidget</extends>
    <header>speedgauge.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TractionLever</class>
+   <extends>QWidget</extends>
+   <header>tractionlever.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

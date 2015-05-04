@@ -33,3 +33,19 @@ void SubteStatus::washer()
 {
     qDebug() << "washer";
 }
+
+void SubteStatus::tractionLeverInZero(){
+    qDebug() << "zero :0";
+}
+
+void SubteStatus::tractionReceived(int value){
+    qDebug() << "traction: " << value;
+}
+
+void SubteStatus::brakeReceived(int value){
+    qDebug() << "brake: " << value;
+}
+
+void SubteStatus::emergencyBrakeActived(){
+    qDebug() << "emergency brake!!!!!";
+}
