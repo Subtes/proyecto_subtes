@@ -4,7 +4,7 @@ TractionLever_Controller::TractionLever_Controller(SubteStatus * subte, Traction
 {
     m_subte = subte;
     m_tractionLever = tractionLever;
-    connect(m_tractionLever,SIGNAL(valueChanged(int)),m_subte,SLOT(updateTraction(int)));
+    connect(m_tractionLever,SIGNAL(traction(int)),m_subte,SLOT(updateTraction(int)));
 }
 
 TractionLever_Controller::~TractionLever_Controller()

@@ -17,5 +17,6 @@
         <file>resources/Train_Honk_Horn_Distance-Mike_Koenig-1905511933.wav</file>
         <file>resources/selector_bkg.png</file>
         <file>resources/selector_handler.png</file>
+        <file>resources/BKG_palanca2.png</file>
     </qresource>
 </RCC>

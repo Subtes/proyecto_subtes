@@ -20,6 +20,10 @@ public slots:
     void wiperOn();
     void wiperOff();
     void washer();
+    void tractionLeverInZero();
+    void tractionReceived(int value);
+    void brakeReceived(int value);
+    void emergencyBrakeActived();
 };
 
 #endif // SUBTESTATUS_H

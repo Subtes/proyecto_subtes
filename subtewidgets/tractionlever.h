@@ -18,8 +18,15 @@ public:
 private:
     Ui::TractionLever *ui;
 
+private slots:
+    void processValueChanged(int value);
+
 signals:
-    valueChanged(int);
+    zero();
+    traction(int);
+    brake(int);
+    emergencyBrake();
+
 };
 
 #endif // TRACTIONLEVER_H

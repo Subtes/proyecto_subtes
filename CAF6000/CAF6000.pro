@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     boardhardware.cpp \
     src/models/subtestatus.cpp \
     src/controllers/horn_controller.cpp \
-    src/controllers/wiper_controller.cpp
+    src/controllers/wiper_controller.cpp \
+    src/controllers/tractionlever_controller.cpp
 
 HEADERS  += boardcenter.h \
     boardright.h \
@@ -28,7 +29,8 @@ HEADERS  += boardcenter.h \
     boardhardware.h \
     src/models/subtestatus.h \
     src/controllers/horn_controller.h \
-    src/controllers/wiper_controller.h
+    src/controllers/wiper_controller.h \
+    src/controllers/tractionlever_controller.h
 
 FORMS    += boardcenter.ui \
     boardright.ui \

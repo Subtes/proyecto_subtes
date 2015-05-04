@@ -41,12 +41,31 @@
     </rect>
    </property>
   </widget>
+  <widget class="TractionLever" name="traction" native="true">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>40</y>
+     <width>160</width>
+     <height>330</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/resources/BKG_palanca2.png);</string>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
    <class>FootHorn</class>
    <extends>QWidget</extends>
    <header>foothorn.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TractionLever</class>
+   <extends>QWidget</extends>
+   <header>tractionlever.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
