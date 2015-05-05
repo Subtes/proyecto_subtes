@@ -11,6 +11,8 @@ TractionLever::TractionLever(QWidget *parent) :
         QSlider::groove {border: 0px solid black; border-radius: 3px; width: 100px; };");
 
     connect (ui->verticalSlider,SIGNAL(valueChanged(int)),this,SLOT(processValueChanged(int)));
+    connect (ui->verticalSlider,SIGNAL(sliderPressed()),this,SIGNAL(hvPressed()));
+    connect (ui->verticalSlider,SIGNAL(sliderReleased()),this,SIGNAL(hvReleased()));
 }
 
 TractionLever::~TractionLever()
