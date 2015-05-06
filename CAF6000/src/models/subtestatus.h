@@ -26,6 +26,9 @@ public slots:
     void emergencyBrakeActived();
     void hombreVivoPressed();
     void hombreVivoReleased();
+    void ranaAD();
+    void ranaCERO();
+    void ranaAT();
 };
 
 #endif // SUBTESTATUS_H

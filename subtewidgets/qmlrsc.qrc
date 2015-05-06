@@ -5,6 +5,7 @@
         <file>speedgauge.qml</file>
         <file>foot_horn.qml</file>
         <file>wiperSelector.qml</file>
-        <file>setaButton.qml</file>
+        <file>rana.qml</file>
+	<file>setaButton.qml</file>
     </qresource>
 </RCC>

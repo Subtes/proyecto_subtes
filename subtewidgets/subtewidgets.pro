@@ -11,6 +11,7 @@ HEADERS += \
     speedgauge.h \
     foothorn.h \
     wiper.h \
+    rana.h \
     seta_button.h
 
 SOURCES += \
@@ -20,6 +21,7 @@ SOURCES += \
     speedgauge.cpp \
     foothorn.cpp \
     wiper.cpp \
+    rana.cpp \
     seta_button.cpp
 
 FORMS += \
@@ -29,6 +31,7 @@ FORMS += \
     speedgauge.ui \
     foothorn.ui \
     wiper.ui \
+    rana.ui \
     seta_button.ui
 
 RESOURCES += widgetsrsc.qrc \

@@ -21,7 +21,9 @@ SOURCES += main.cpp\
     src/controllers/horn_controller.cpp \
     src/controllers/wiper_controller.cpp \
     src/controllers/tractionlever_controller.cpp \
-    src/controllers/hombrevivo_controller.cpp
+    src/controllers/hombrevivo_controller.cpp \
+    src/controllers/rana_controller.cpp
+
 
 HEADERS  += boardcenter.h \
     boardright.h \
@@ -31,7 +33,8 @@ HEADERS  += boardcenter.h \
     src/controllers/horn_controller.h \
     src/controllers/wiper_controller.h \
     src/controllers/tractionlever_controller.h \
-    src/controllers/hombrevivo_controller.h
+    src/controllers/hombrevivo_controller.h \
+    src/controllers/rana_controller.h 
 
 FORMS    += boardcenter.ui \
     boardright.ui \

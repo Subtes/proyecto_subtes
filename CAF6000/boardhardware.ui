@@ -54,6 +54,16 @@
     <string notr="true">background-image: url(:/resources/BKG_palanca2.png);</string>
    </property>
   </widget>
+  <widget class="Rana" name="ranaDevice" native="true">
+   <property name="geometry">
+    <rect>
+     <x>800</x>
+     <y>50</y>
+     <width>160</width>
+     <height>300</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
@@ -66,6 +76,12 @@
    <class>TractionLever</class>
    <extends>QWidget</extends>
    <header>tractionlever.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Rana</class>
+   <extends>QWidget</extends>
+   <header>rana.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
