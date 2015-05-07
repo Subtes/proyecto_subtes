@@ -50,6 +50,17 @@ void SubteStatus::emergencyBrakeActived(){
     qDebug() << "emergency brake!!!!!";
 }
 
+void SubteStatus::ranaAD(){
+    qDebug() << "rana ADELANTE ---> Activated";
+}
+
+void SubteStatus::ranaCERO(){
+    qDebug() << "rana CERO ---> Activated";
+}
+
+void SubteStatus::ranaAT(){
+    qDebug() << "rana ATRAS ---> Activated";
+}
 void SubteStatus::hombreVivoPressed(){
     qDebug() << "HV";
 }

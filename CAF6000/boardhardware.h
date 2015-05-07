@@ -5,6 +5,7 @@
 #include "src/models/subtestatus.h"
 #include "src/controllers/horn_controller.h"
 #include "src/controllers/tractionlever_controller.h"
+#include "src/controllers/rana_controller.h"
 #include "src/controllers/hombrevivo_controller.h"
 
 namespace Ui {
