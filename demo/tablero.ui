@@ -40,16 +40,14 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-image: url(:/resources/BKG_botonera.png);
-
-</string>
+     <string notr="true">background-image: url(:/resources/BKG_botonera.png);</string>
     </property>
    </widget>
    <widget class="Panel_Buttons2" name="widget_3" native="true">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>430</y>
+      <x>490</x>
+      <y>410</y>
       <width>100</width>
       <height>150</height>
      </rect>
@@ -81,9 +79,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(85, 255, 0); 
-background-color: Black ;
-background-image: url(:/);</string>
+     <string notr="true">color: rgb(85, 255, 0); background-color: Black ; background-image: url(:/);</string>
     </property>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
@@ -124,11 +120,21 @@ background-image: url(:/);</string>
      <number>1</number>
     </property>
    </widget>
+   <widget class="Seta_Button" name="widget_setaButton" native="true">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>480</y>
+      <width>120</width>
+      <height>80</height>
+     </rect>
+    </property>
+   </widget>
    <widget class="TractionLever" name="traction" native="true">
     <property name="geometry">
      <rect>
       <x>630</x>
-      <y>270</y>
+      <y>260</y>
       <width>160</width>
       <height>330</height>
      </rect>
@@ -163,6 +169,12 @@ background-image: url(:/);</string>
    <class>TractionLever</class>
    <extends>QWidget</extends>
    <header>tractionlever.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Seta_Button</class>
+   <extends>QWidget</extends>
+   <header>seta_button.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

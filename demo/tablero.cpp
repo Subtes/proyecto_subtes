@@ -31,6 +31,9 @@ Tablero::Tablero(QWidget *parent, SubteStatus *subte) :
     // Configuracion del connect del device Maquina de Estados Hombre Vivo Muerto al device de encendido dial_HombreVivoHombreMuerto
     connect(ui->dial_HombreVivoHombreMuerto,SIGNAL(valueChanged(int)),this,SLOT(activateHombreVivoHombreMuerto(int)));
 
+    // Seta Controller: Configuration
+    Seta_Controller * setaButton = new Seta_Controller(m_subte, ui->widget_setaButton);
+
 }
 
 void Tablero::activateHombreVivoHombreMuerto(int pos){
@@ -59,4 +62,5 @@ Tablero::~Tablero()
 {
     delete ui;
     delete this->m_deviceHombreVivoHombreMuerto;
+    delete this->m_deviceSetaController;
 }

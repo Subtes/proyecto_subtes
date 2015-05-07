@@ -27,8 +27,8 @@ private:
     bool m_rightDoor;
 
 signals:
-    speedChanged(double speed);
-    tractionChanged(int traction);
+    void speedChanged(double speed);
+    void tractionChanged(int traction);
 
 public slots:
     void changeSpeed(double speed);

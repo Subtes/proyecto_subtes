@@ -26,7 +26,6 @@ signals:
     traction(int);
     brake(int);
     emergencyBrake();
-
 };
 
 #endif // TRACTIONLEVER_H

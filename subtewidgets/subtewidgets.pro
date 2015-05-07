@@ -2,7 +2,7 @@ QT += core gui quick quickwidgets declarative widgets
 
 TEMPLATE = lib
 
-CONFIG+= staticlib
+CONFIG += staticlib
 
 HEADERS += \
     panel_buttons2.h \
@@ -10,7 +10,8 @@ HEADERS += \
     tractionlever.h \
     speedgauge.h \
     foothorn.h \
-    wiper.h
+    wiper.h \
+    seta_button.h
 
 SOURCES += \
     panel_buttons2.cpp \
@@ -18,7 +19,8 @@ SOURCES += \
     tractionlever.cpp \
     speedgauge.cpp \
     foothorn.cpp \
-    wiper.cpp
+    wiper.cpp \
+    seta_button.cpp
 
 FORMS += \
     panel_buttons2.ui \
@@ -26,7 +28,8 @@ FORMS += \
     tractionlever.ui \
     speedgauge.ui \
     foothorn.ui \
-    wiper.ui
+    wiper.ui \
+    seta_button.ui
 
 RESOURCES += widgetsrsc.qrc \
             qmlrsc.qrc

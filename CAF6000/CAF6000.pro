@@ -1,10 +1,10 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2015-04-23T12:36:50
+# Project created by QtCreator 2015-04-16T13:18:10
 #
 #-------------------------------------------------
 
-QT       += core gui quick quickwidgets declarative widgets
+QT += core gui quick quickwidgets declarative widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,9 +12,8 @@ TARGET = CAF6000
 
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
-        boardcenter.cpp \
+    boardcenter.cpp \
     boardright.cpp \
     boardleft.cpp \
     boardhardware.cpp \

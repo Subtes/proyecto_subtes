@@ -24,7 +24,7 @@ SimulacionSubteFisica::~SimulacionSubteFisica()
 void SimulacionSubteFisica::updateTraction(int traction)
 {
     m_currentTraction = traction;
-    qDebug() << "(simulacion_SubteFisica) SLOT UPDATE TRACTION: (m_currentTraction)"<< m_currentTraction;
+    //qDebug() << "(simulacion_SubteFisica) SLOT UPDATE TRACTION: (m_currentTraction)"<< m_currentTraction;
     m_time = 0;
     updateStatus();
 }
@@ -32,8 +32,8 @@ void SimulacionSubteFisica::updateTraction(int traction)
 void SimulacionSubteFisica::updateTime()
 {
     m_time += 0.3;
-    qDebug() << "(simulacion_SubteFisica) TIME OUT";
-    qDebug() << "(simulacion_SubteFisica) TIME: (current)" << m_time;
+    //qDebug() << "(simulacion_SubteFisica) TIME OUT";
+    //qDebug() << "(simulacion_SubteFisica) TIME: (current)" << m_time;
     updateStatus();
 }
 
@@ -45,16 +45,16 @@ void SimulacionSubteFisica::updateStatus()
 
     m_speed = (double)m_initialSpeed + (m_currentTraction/280)*m_time;
 
-    qDebug() << "m_initialSpeed: "<< m_initialSpeed;
-    qDebug() << "m_time: "<< m_time;
-    qDebug() << "m_currentTraction: "<< m_currentTraction;
-    qDebug() << "m_speed: "<< m_speed;
+//    qDebug() << "m_initialSpeed: "<< m_initialSpeed;
+//    qDebug() << "m_time: "<< m_time;
+//    qDebug() << "m_currentTraction: "<< m_currentTraction;
+//    qDebug() << "m_speed: "<< m_speed;
 
     if (m_speed != m_initialSpeed)
     {
         emit speedChanged(abs(m_speed));
         m_initialSpeed = m_speed;
-        qDebug() << "(simulacion_SubteFisica) EMIT SPEED: "<< m_speed;
+        //qDebug() << "(simulacion_SubteFisica) EMIT SPEED: "<< m_speed;
     }
 
 
