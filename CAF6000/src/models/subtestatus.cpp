@@ -49,3 +49,11 @@ void SubteStatus::brakeReceived(int value){
 void SubteStatus::emergencyBrakeActived(){
     qDebug() << "emergency brake!!!!!";
 }
+
+void SubteStatus::hombreVivoPressed(){
+    qDebug() << "HV";
+}
+
+void SubteStatus::hombreVivoReleased(){
+    qDebug() << "HV released";
+}

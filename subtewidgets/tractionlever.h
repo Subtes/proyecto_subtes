@@ -26,6 +26,10 @@ signals:
     traction(int);
     brake(int);
     emergencyBrake();
+
+    hvPressed();
+    hvReleased();
+
 };
 
 #endif // TRACTIONLEVER_H

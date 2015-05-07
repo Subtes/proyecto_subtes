@@ -24,6 +24,8 @@ public slots:
     void tractionReceived(int value);
     void brakeReceived(int value);
     void emergencyBrakeActived();
+    void hombreVivoPressed();
+    void hombreVivoReleased();
 };
 
 #endif // SUBTESTATUS_H
