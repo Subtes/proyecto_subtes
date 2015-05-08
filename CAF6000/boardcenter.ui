@@ -52,10 +52,26 @@
      </rect>
     </property>
    </widget>
+   <widget class="SingleButton" name="emerencyOverride" native="true">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>600</y>
+      <width>65</width>
+      <height>65</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
+  <customwidget>
+   <class>SingleButton</class>
+   <extends>QWidget</extends>
+   <header>singlebutton.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>Wiper</class>
    <extends>QWidget</extends>

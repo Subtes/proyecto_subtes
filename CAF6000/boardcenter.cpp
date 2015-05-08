@@ -14,6 +14,7 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte) :
     ui->setupUi(this);
 
     Wiper_Controller *wiper = new Wiper_Controller(m_subte,ui->wiper);
+    EmergencyOverride_Controller *emergencyOverride = new EmergencyOverride_Controller(m_subte,ui->emerencyOverride);
 }
 
 BoardCenter::~BoardCenter()

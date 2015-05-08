@@ -12,7 +12,8 @@ HEADERS += \
     foothorn.h \
     wiper.h \
     rana.h \
-    seta_button.h
+    seta_button.h \
+    singlebutton.h
 
 SOURCES += \
     panel_buttons2.cpp \
@@ -22,7 +23,8 @@ SOURCES += \
     foothorn.cpp \
     wiper.cpp \
     rana.cpp \
-    seta_button.cpp
+    seta_button.cpp \
+    singlebutton.cpp
 
 FORMS += \
     panel_buttons2.ui \
@@ -32,7 +34,8 @@ FORMS += \
     foothorn.ui \
     wiper.ui \
     rana.ui \
-    seta_button.ui
+    seta_button.ui \
+    singlebutton.ui
 
 RESOURCES += widgetsrsc.qrc \
             qmlrsc.qrc
