@@ -7,9 +7,12 @@ Rectangle {
     color: "#00000000"
 
     signal buttonClicked()
+    signal buttonPressed()
+    signal buttonReleased()
 
     property bool nestled: false
     property bool lighted: true    
+    property bool onPressDriver: false
 
     Image {
         id: offImage
@@ -126,23 +129,44 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
+
+        onPressed: {
+            button.buttonPressed()
+            if(button.onPressDriver){
+                processClick()
+            }
+        }
+
+        onReleased: {
+            button.buttonReleased()
+            if(button.onPressDriver){
+                processClick()
+            }
+        }
+
         onClicked: {
             button.buttonClicked()
-            if (button.state == "buttonOffState"){
-                if (button.nestled){
-                    if (button.lighted){
-                        button.state = "buttonOnStateNestled"
-                    }else{
-                        button.state = "buttonOffStateNestled"
-                    }
+            if(!button.onPressDriver){
+                processClick()
+            }
+        }
+    }
+
+    function processClick(){
+        if (button.state == "buttonOffState"){
+            if (button.nestled){
+                if (button.lighted){
+                    button.state = "buttonOnStateNestled"
                 }else{
-                    if (button.lighted){
-                        button.state = "buttonOnState"
-                    }
+                    button.state = "buttonOffStateNestled"
                 }
             }else{
-                button.state = "buttonOffState"
+                if (button.lighted){
+                    button.state = "buttonOnState"
+                }
             }
+        }else{
+            button.state = "buttonOffState"
         }
     }
 
