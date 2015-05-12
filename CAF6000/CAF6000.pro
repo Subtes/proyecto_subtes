@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     src/controllers/hombrevivo_controller.cpp \
     src/controllers/rana_controller.cpp \
     src/controllers/emergencyoverride_controller.cpp \
-    src/controllers/tractionbypass_controller.cpp
+    src/controllers/tractionbypass_controller.cpp \
+    src/controllers/seta_controller.cpp
 
 HEADERS  += boardcenter.h \
     boardright.h \
@@ -37,7 +38,8 @@ HEADERS  += boardcenter.h \
     src/controllers/hombrevivo_controller.h \
     src/controllers/rana_controller.h \
     src/controllers/emergencyoverride_controller.h \
-    src/controllers/tractionbypass_controller.h
+    src/controllers/tractionbypass_controller.h \
+    src/controllers/seta_controller.h
 
 FORMS    += boardcenter.ui \
     boardright.ui \

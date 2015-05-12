@@ -64,6 +64,16 @@
     </rect>
    </property>
   </widget>
+  <widget class="Seta_Button" name="setaButton" native="true">
+   <property name="geometry">
+    <rect>
+     <x>890</x>
+     <y>510</y>
+     <width>120</width>
+     <height>80</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
@@ -76,11 +86,18 @@
    <class>TractionLever</class>
    <extends>QWidget</extends>
    <header>tractionlever.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>Rana</class>
    <extends>QWidget</extends>
    <header>rana.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Seta_Button</class>
+   <extends>QWidget</extends>
+   <header>seta_button.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

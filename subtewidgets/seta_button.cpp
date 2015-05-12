@@ -20,7 +20,7 @@ Seta_Button::Seta_Button(QWidget *parent) :
 QVariant Seta_Button::isPressed(){
     QVariant returnedValue(false);
     QMetaObject::invokeMethod(this->qml, "isPressed", Q_RETURN_ARG(QVariant, returnedValue));
-    qDebug() << "Valor retornado Seta Activado: " << returnedValue;
+    //qDebug() << "Valor retornado Seta Activado: " << returnedValue;
     return returnedValue.toBool();
 }
 

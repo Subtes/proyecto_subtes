@@ -22,7 +22,8 @@ private:
     bool leftDoors;
     bool rightDoors;
     bool CSCP;
-
+    bool m_seta;  
+    
     bool tractionable();
 
 signals:
@@ -50,6 +51,9 @@ public slots:
     void openLeftDoors();
     void closeLeftDoors();
     void closeRightDoors();
+    void setaActivated();
+    void setaDeactivated();
+    bool isSetaActivated();
 };
 
 #endif // SUBTESTATUS_H

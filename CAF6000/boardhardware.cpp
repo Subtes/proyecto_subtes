@@ -17,6 +17,7 @@ BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte) :
     TractionLever_Controller *tractionLever = new TractionLever_Controller(subte,ui->traction);
     Rana_Controller *rana = new Rana_Controller(subte,ui->ranaDevice);
     HombreVivo_Controller *hombreVivo = new HombreVivo_Controller(subte,ui->traction);
+    Seta_Controller * setaButton = new Seta_Controller(m_subte, ui->setaButton);
 }
 
 BoardHardware::~BoardHardware()

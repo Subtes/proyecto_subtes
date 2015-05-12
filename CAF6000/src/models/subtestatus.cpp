@@ -128,4 +128,19 @@ bool SubteStatus::CSCPStatus()
     return CSCP;
 }
 
+void SubteStatus::setaActivated(){
+    qDebug() << "---> Model Seta Activated ";
+    this->m_seta = true;
+}
+
+void SubteStatus::setaDeactivated(){
+    qDebug() << "---> Model Seta Deactivated ";
+    this->m_seta = false;
+    
+}
+
+bool SubteStatus::isSetaActivated(){
+    qDebug() << "---> Model, Seta value: " << this->m_seta;
+    return this->m_seta;
+}
 
