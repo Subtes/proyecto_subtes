@@ -13,7 +13,8 @@ HEADERS += \
     wiper.h \
     rana.h \
     seta_button.h \
-    singlebutton.h
+    singlebutton.h \
+    speedgaugeleds.h
 
 SOURCES += \
     panel_buttons2.cpp \
@@ -24,7 +25,8 @@ SOURCES += \
     wiper.cpp \
     rana.cpp \
     seta_button.cpp \
-    singlebutton.cpp
+    singlebutton.cpp \
+    speedgaugeleds.cpp
 
 FORMS += \
     panel_buttons2.ui \
@@ -35,7 +37,8 @@ FORMS += \
     wiper.ui \
     rana.ui \
     seta_button.ui \
-    singlebutton.ui
+    singlebutton.ui \
+    speedgaugeleds.ui
 
 RESOURCES += widgetsrsc.qrc \
             qmlrsc.qrc
