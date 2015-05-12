@@ -37,12 +37,12 @@ Rectangle {
                 if ( setaButton.state == "State1_SetaON"){
                     setaButton.state = "State1_SetaOFF";
                     releasedButton();
-                    console.log("Entro en Onclick Seta Button");
+                    //console.log("Entro en Onclick Seta Button");
                 }
                 else{
                     setaButton.state = "State1_SetaON";
                     pressedButton();
-                    console.log("Entro en Onclick Else Seta Button");
+                    //console.log("Entro en Onclick Else Seta Button");
                 }
             }
         }
