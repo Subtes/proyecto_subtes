@@ -12,6 +12,8 @@ SingleButton::SingleButton(QWidget *parent) :
 
     m_qmlView = ui->button->rootObject();
     connect(m_qmlView,SIGNAL(buttonClicked()),this,SIGNAL(buttonClicked()));
+    connect(m_qmlView,SIGNAL(buttonReleased()),this,SIGNAL(buttonReleased()));
+    connect(m_qmlView,SIGNAL(buttonPressed()),this,SIGNAL(buttonPressed()));
 
 }
 
@@ -71,6 +73,14 @@ void SingleButton::setNestled(bool nestled)
 void SingleButton::setLighted(bool lighted)
 {
     m_qmlView->setProperty("lighted", lighted );
+}
+
+void SingleButton::setOnPressAsDriver(){
+     m_qmlView->setProperty("onPressDriver", true );
+}
+
+void SingleButton::setOnClickAsDriver(){
+     m_qmlView->setProperty("onPressDriver", false );
 }
 
 void SingleButton::startBlink()

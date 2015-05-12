@@ -4,6 +4,9 @@ SubteStatus::SubteStatus()
 {
     horn = false;
     emergencyOverride = false;
+    leftDoors = CLOSE;
+    rightDoors = CLOSE;
+    CSCP = false;
 }
 
 SubteStatus::~SubteStatus()
@@ -76,3 +79,53 @@ void SubteStatus::emergencyOverrideClicked(){
     emergencyOverride = !emergencyOverride;
     qDebug() << "emergency Override Clicked, EmOv: " << emergencyOverride ;
 }
+
+void SubteStatus::CSCPBypassed()
+{
+    CSCP=true;
+    qDebug() << "CSCP bypassed";
+}
+
+void SubteStatus::CSCPActivated()
+{
+    CSCP = !leftDoors && !rightDoors;
+    qDebug() << "CSCP actived";
+}
+
+void SubteStatus::openLeftDoors()
+{
+    leftDoors = OPEN;
+    CSCP= false;
+    emit CSCPChanged(CSCP);
+}
+
+void SubteStatus::openRightDoors()
+{
+    rightDoors = OPEN;
+    CSCP= false;
+    emit CSCPChanged(CSCP);
+
+}
+
+void SubteStatus::closeLeftDoors()
+{
+    leftDoors = CLOSE;
+    CSCP= !rightDoors;
+    emit CSCPChanged(CSCP);
+
+}
+
+void SubteStatus::closeRightDoors()
+{
+    rightDoors = CLOSE;
+    CSCP= !leftDoors;
+    emit CSCPChanged(CSCP);
+
+}
+
+bool SubteStatus::CSCPStatus()
+{
+    return CSCP;
+}
+
+

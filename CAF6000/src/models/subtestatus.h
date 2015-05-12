@@ -11,9 +11,22 @@ public:
     SubteStatus();
     ~SubteStatus();
 
+    bool CSCPStatus();
+
 private:
+    static const bool OPEN = true;
+    static const bool CLOSE = false;
+
     bool horn;
     bool emergencyOverride;
+    bool leftDoors;
+    bool rightDoors;
+    bool CSCP;
+
+    bool tractionable();
+
+signals:
+    CSCPChanged(bool cscp);
 
 public slots:
     void hornOn();
@@ -31,6 +44,12 @@ public slots:
     void ranaCERO();
     void ranaAT();
     void emergencyOverrideClicked();
+    void CSCPBypassed();
+    void CSCPActivated();
+    void openRightDoors();
+    void openLeftDoors();
+    void closeLeftDoors();
+    void closeRightDoors();
 };
 
 #endif // SUBTESTATUS_H

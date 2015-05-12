@@ -62,6 +62,16 @@
      </rect>
     </property>
    </widget>
+   <widget class="SingleButton" name="tractionBypass" native="true">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>600</y>
+      <width>65</width>
+      <height>65</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

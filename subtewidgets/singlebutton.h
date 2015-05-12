@@ -25,6 +25,8 @@ public:
     void setClickeable(bool clickeable);
     void setNestled(bool nestled);
     void setLighted(bool lighted);
+    void setOnPressAsDriver();
+    void setOnClickAsDriver();
 
 private:
     Ui::SingleButton *ui;
@@ -40,6 +42,9 @@ public slots:
 
 signals:
     void buttonClicked();
+    void buttonPressed();
+    void buttonReleased();
+
 };
 
 #endif // SINGLEBUTTON_H
