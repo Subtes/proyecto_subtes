@@ -21,8 +21,8 @@ int main(int argc, char *argv[])
     //BoardLeft *l = new BoardLeft(0,subte);
     //l->show();
 
-    //BoardRight *r = new BoardRight(0,subte);
-    //r->show();
+    BoardRight *r = new BoardRight(0,subte);
+    r->show();
 
     return a.exec();
 }

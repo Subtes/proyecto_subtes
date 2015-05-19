@@ -144,3 +144,19 @@ bool SubteStatus::isSetaActivated(){
     return this->m_seta;
 }
 
+void SubteStatus::pressedCON(){
+    qDebug() << "---> Pressed, CON Disyuntor";
+    /*
+    Para poder conectar los disyuntores, es necesario:
+    Tensión normal de Batería
+    Tensión suficiente en el Hilo de Trabajo
+    Rana en AD o AT, con mando en su cabina
+    Regulador de Mando en posición “0”
+    Pulsar “CON”
+    */
+}
+
+void SubteStatus::pressedDES(){
+    qDebug() << "---> Pressed, DES Disyuntor";
+    /* Para desconectar los disyuntores, solo se pulsa “DES”, en cualquiera de las cabinas de conducción. */
+}

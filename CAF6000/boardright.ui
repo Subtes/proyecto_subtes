@@ -17,10 +17,10 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>30</y>
-      <width>171</width>
-      <height>91</height>
+      <x>10</x>
+      <y>0</y>
+      <width>81</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -30,6 +30,26 @@
     </property>
     <property name="text">
      <string>RIGHT</string>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="CONDisy_widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>30</y>
+      <width>120</width>
+      <height>80</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="DESDisy_widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>30</y>
+      <width>120</width>
+      <height>80</height>
+     </rect>
     </property>
    </widget>
   </widget>
@@ -45,6 +65,14 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SingleButton</class>
+   <extends>QWidget</extends>
+   <header>singlebutton.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

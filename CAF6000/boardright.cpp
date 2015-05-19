@@ -12,6 +12,9 @@ BoardRight::BoardRight(QWidget *parent, SubteStatus * subte) :
     m_subte = subte;
 
     ui->setupUi(this);
+
+    CircuitBreakerCON_Controller * CON_Disyuntor = new CircuitBreakerCON_Controller(subte,ui->CONDisy_widget );
+    CircuitBreakerDES_Controller * DES_Disyuntor = new CircuitBreakerDES_Controller(subte,ui->DESDisy_widget );
 }
 
 BoardRight::~BoardRight()

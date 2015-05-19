@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "src/models/subtestatus.h"
+#include "src/controllers/circuitbreakercon_controller.h"
+#include "src/controllers/circuitbreakerdes_controller.h"
 
 namespace Ui {
 class BoardRight;

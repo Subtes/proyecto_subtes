@@ -54,6 +54,8 @@ public slots:
     void setaActivated();
     void setaDeactivated();
     bool isSetaActivated();
+    void pressedCON();
+    void pressedDES();
 };
 
 #endif // SUBTESTATUS_H
