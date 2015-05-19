@@ -61,7 +61,6 @@ Rectangle {
 
         onPositionChanged: {
             newRot = -180 * Math.atan2(mouse.x - 50,mouse.y - 50) / Math.PI;
-            console.log("+=" + newRot);
             if(newRot < -45){
                 newRot = -45;
             }else if(newRot > 45){

@@ -22,5 +22,18 @@
         <file>resources/setaOff.png</file>
         <file>resources/red_encl.png</file>
         <file>resources/redON_encl.png</file>
+        <file>resources/velocimetroLed_Bkg.PNG</file>
+        <file>resources/velocimetroLedAM_OFF.PNG</file>
+        <file>resources/velocimetroLedAM_ON.PNG</file>
+        <file>resources/velocimetroLedcodigosOFF.PNG</file>
+        <file>resources/velocimetroLedcodigosON.PNG</file>
+        <file>resources/velocimetroLedFM_OFF.PNG</file>
+        <file>resources/velocimetroLedFM_ON.PNG</file>
+        <file>resources/velocimetroLedMODO.PNG</file>
+        <file>resources/velocimetroLedON_AMARILLO.PNG</file>
+        <file>resources/velocimetroLedON_ROJO.PNG</file>
+        <file>resources/velocimetroLedON_VERDE.PNG</file>
+        <file>resources/velocimetroLedAroBlanco.PNG</file>
+        <file>resources/velocimetroLedGlass.png</file>
     </qresource>
 </RCC>

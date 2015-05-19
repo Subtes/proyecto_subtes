@@ -6,6 +6,7 @@
 class SpeedGauge_Controller : public QObject
 {
     Q_OBJECT
+
 private:
     SubteStatus *m_subte;
     SpeedGauge * m_speedGauge;
@@ -14,7 +15,6 @@ private:
 public:
     SpeedGauge_Controller(SubteStatus *subte, SpeedGauge * speedGauge);
     ~SpeedGauge_Controller();
-    //void updateNeedle(float speed);
 
 public slots:
     void updateNeedle(double speed);

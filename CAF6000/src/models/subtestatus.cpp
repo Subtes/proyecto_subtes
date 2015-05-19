@@ -7,6 +7,7 @@ SubteStatus::SubteStatus()
     leftDoors = CLOSE;
     rightDoors = CLOSE;
     CSCP = false;
+    speed = 0;
 }
 
 SubteStatus::~SubteStatus()
@@ -16,6 +17,8 @@ SubteStatus::~SubteStatus()
 void SubteStatus::wiperOn()
 {
     qDebug() << "wiperON";
+    speed++;
+    emit speedChanged(speed);
 }
 
 void SubteStatus::hornOn()

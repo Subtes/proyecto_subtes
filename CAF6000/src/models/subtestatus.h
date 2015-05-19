@@ -23,11 +23,13 @@ private:
     bool rightDoors;
     bool CSCP;
     bool m_seta;  
-    
+    double speed;
+
     bool tractionable();
 
 signals:
     CSCPChanged(bool cscp);
+    speedChanged(double speed);
 
 public slots:
     void hornOn();

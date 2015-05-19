@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     src/controllers/tractionbypass_controller.cpp \
     src/controllers/seta_controller.cpp \
     src/controllers/circuitbreakerdes_controller.cpp \
-    src/controllers/circuitbreakercon_controller.cpp
+    src/controllers/circuitbreakercon_controller.cpp \
+    src/controllers/speedgaugeleds_controller.cpp
 
 HEADERS  += boardcenter.h \
     boardright.h \
@@ -43,7 +44,8 @@ HEADERS  += boardcenter.h \
     src/controllers/tractionbypass_controller.h \
     src/controllers/seta_controller.h \
     src/controllers/circuitbreakerdes_controller.h \
-    src/controllers/circuitbreakercon_controller.h
+    src/controllers/circuitbreakercon_controller.h \
+    src/controllers/speedgaugeleds_controller.h
 
 FORMS    += boardcenter.ui \
     boardright.ui \

@@ -1,0 +1,23 @@
+#ifndef SPEEDGAUGELEDS_CONTROLLER_H
+#define SPEEDGAUGELEDS_CONTROLLER_H
+#include "speedgaugeleds.h"
+#include "src/models/subtestatus.h"
+
+class SpeedGaugeLeds_Controller : public QObject
+{
+    Q_OBJECT
+
+private:
+    SpeedGaugeLeds * m_gauge;
+    SubteStatus * m_subte;
+
+public:
+    SpeedGaugeLeds_Controller(SubteStatus * subte, SpeedGaugeLeds * gauge);
+    ~SpeedGaugeLeds_Controller();
+
+public slots:
+    void updateSpeed(double speed);
+    void updateMaxSpeed(double speed);
+};
+
+#endif // SPEEDGAUGELEDS_CONTROLLER_H
