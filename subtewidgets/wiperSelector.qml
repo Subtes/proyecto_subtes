@@ -15,22 +15,26 @@ Rectangle {
     property int newRot: 0;
     property int nextRot: 0;
 
+    property int rotLimitDown: -90;
+    property int rotLimitDownBounce: -60;
+    property int rotOn: -45;
+    property int rotLimitUp: 0;
+
     Image {
         id: bkg
-        width: 100
-        height: 100
         anchors.fill: parent
         source: "resources/selector_bkg.png"
+        antialiasing: true
+        smooth: true
     }
 
     Image {
         id: sel
-        width: 45
-        height: 79
-        rotation: -45
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.fill: parent
+        rotation: -90
         source: "resources/selector_handler.png"
+        antialiasing: true
+        smooth: true
     }
 
     PropertyAnimation {
@@ -48,23 +52,26 @@ Rectangle {
         anchors.fill: parent
 
         onReleased: {
-            if(sel.rotation <= -15){
+            if(sel.rotation <= rotLimitDownBounce){
                 selector.off();
-                selector.nextRot = -45;
+                selector.nextRot = rotLimitDown;
             }else{
                 selector.wiper();
-                selector.nextRot = 0;
+                selector.nextRot = rotOn;
             }
             selectorBack.start();
 
         }
 
         onPositionChanged: {
-            newRot = -180 * Math.atan2(mouse.x - 50,mouse.y - 50) / Math.PI;
-            if(newRot < -45){
-                newRot = -45;
-            }else if(newRot > 45){
-                newRot = 45;
+            newRot = -Math.atan2(mouse.x - selector.width/2 , mouse.y - selector.height/2) * 180/Math.PI;
+            console.log("X: " + mouse.x)
+            console.log("X': " + parseInt(mouse.x - selector.width/2))
+
+            if(newRot < rotLimitDown){
+                newRot = rotLimitDown;
+            }else if(newRot > rotLimitUp){
+                newRot = rotLimitUp;
                 selector.washer();
             }else{
                 sel.rotation = newRot;

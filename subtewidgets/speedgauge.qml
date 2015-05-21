@@ -13,7 +13,7 @@ Rectangle {
         y: 0
         width: 260
         height: 260
-        source: "resources/velocimetro.png"
+        source: "resources/velocimetroLed_Bkg.PNG"
     }
 
     Rectangle {

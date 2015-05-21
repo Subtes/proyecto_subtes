@@ -6,6 +6,7 @@
 #include "src/controllers/wiper_controller.h"
 #include "src/controllers/emergencyoverride_controller.h"
 #include "src/controllers/tractionbypass_controller.h"
+#include "src/controllers/speedgaugeleds_controller.h"
 
 namespace Ui {
 class BoardCenter;

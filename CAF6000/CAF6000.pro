@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     src/controllers/seta_controller.cpp \
     src/controllers/circuitbreakerdes_controller.cpp \
     src/controllers/circuitbreakercon_controller.cpp \
-    src/controllers/speedgaugeleds_controller.cpp
+    src/controllers/speedgaugeleds_controller.cpp \
+    boardtop.cpp
 
 HEADERS  += boardcenter.h \
     boardright.h \
@@ -45,12 +46,14 @@ HEADERS  += boardcenter.h \
     src/controllers/seta_controller.h \
     src/controllers/circuitbreakerdes_controller.h \
     src/controllers/circuitbreakercon_controller.h \
-    src/controllers/speedgaugeleds_controller.h
+    src/controllers/speedgaugeleds_controller.h \
+    boardtop.h
 
 FORMS    += boardcenter.ui \
     boardright.ui \
     boardleft.ui \
-    boardhardware.ui
+    boardhardware.ui \
+    boardtop.ui
 
 INCLUDEPATH +=  ../subtewidgets
 
@@ -58,4 +61,5 @@ LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L../subtewidgets/release -lsubtewidgets \
 
 RESOURCES += ../subtewidgets/widgetsrsc.qrc \
-            ../subtewidgets/qmlrsc.qrc
+            ../subtewidgets/qmlrsc.qrc \
+    boardrsc.qrc
