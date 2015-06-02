@@ -6,69 +6,231 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1351</width>
-    <height>689</height>
+    <width>1024</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>BoardCenter</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="SpeedGauge" name="dial">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>100</y>
-      <width>281</width>
-      <height>281</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>10</y>
-      <width>171</width>
-      <height>91</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>19</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>CENTRO</string>
-    </property>
-   </widget>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/resources/board_center_BKG.jpg);</string>
+   </property>
    <widget class="Wiper" name="wiper" native="true">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>570</y>
-      <width>100</width>
-      <height>100</height>
+      <x>113</x>
+      <y>484</y>
+      <width>78</width>
+      <height>78</height>
      </rect>
     </property>
    </widget>
-   <widget class="SingleButton" name="emerencyOverride" native="true">
+   <widget class="SingleButton" name="anulacionEmergencia" native="true">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>600</y>
-      <width>65</width>
-      <height>65</height>
+      <x>817</x>
+      <y>484</y>
+      <width>78</width>
+      <height>78</height>
      </rect>
     </property>
    </widget>
-   <widget class="SingleButton" name="tractionBypass" native="true">
+   <widget class="SingleButton" name="bypassTraccion" native="true">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>600</y>
-      <width>65</width>
-      <height>65</height>
+      <x>424</x>
+      <y>208</y>
+      <width>78</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="abrirIzquierda" native="true">
+    <property name="geometry">
+     <rect>
+      <x>275</x>
+      <y>357</y>
+      <width>78</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="cerrarIzquierda" native="true">
+    <property name="geometry">
+     <rect>
+      <x>194</x>
+      <y>357</y>
+      <width>78</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="selectorIzquierda" native="true">
+    <property name="geometry">
+     <rect>
+      <x>112</x>
+      <y>357</y>
+      <width>78</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="selectorDerecha" native="true">
+    <property name="geometry">
+     <rect>
+      <x>656</x>
+      <y>357</y>
+      <width>78</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="cerrarDerecha" native="true">
+    <property name="geometry">
+     <rect>
+      <x>736</x>
+      <y>357</y>
+      <width>78</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="abrirDerecha" native="true">
+    <property name="geometry">
+     <rect>
+      <x>817</x>
+      <y>357</y>
+      <width>78</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="silbato" native="true">
+    <property name="geometry">
+     <rect>
+      <x>465</x>
+      <y>358</y>
+      <width>78</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SpeedGaugeLeds" name="velocimetro" native="true">
+    <property name="geometry">
+     <rect>
+      <x>584</x>
+      <y>16</y>
+      <width>320</width>
+      <height>320</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="bypassFreno" native="true">
+    <property name="geometry">
+     <rect>
+      <x>342</x>
+      <y>208</y>
+      <width>78</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="megafonia" native="true">
+    <property name="geometry">
+     <rect>
+      <x>737</x>
+      <y>485</y>
+      <width>78</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="iluminacionReducPulsad" native="true">
+    <property name="geometry">
+     <rect>
+      <x>157</x>
+      <y>632</y>
+      <width>78</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="antivaho" native="true">
+    <property name="geometry">
+     <rect>
+      <x>194</x>
+      <y>482</y>
+      <width>78</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="faros" native="true">
+    <property name="geometry">
+     <rect>
+      <x>275</x>
+      <y>483</y>
+      <width>78</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="iluminacionPulsadores" native="true">
+    <property name="geometry">
+     <rect>
+      <x>357</x>
+      <y>483</y>
+      <width>78</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QQuickWidget" name="modoConduccion">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>20</y>
+      <width>411</width>
+      <height>211</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="resizeMode">
+     <enum>QQuickWidget::SizeRootObjectToView</enum>
+    </property>
+    <property name="source">
+     <url>
+      <string>qrc:/mode_selector.qml</string>
+     </url>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="luzCabina" native="true">
+    <property name="geometry">
+     <rect>
+      <x>785</x>
+      <y>631</y>
+      <width>78</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="publicoCabina" native="true">
+    <property name="geometry">
+     <rect>
+      <x>656</x>
+      <y>483</y>
+      <width>78</width>
+      <height>78</height>
      </rect>
     </property>
    </widget>
@@ -76,6 +238,11 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
+  <customwidget>
+   <class>QQuickWidget</class>
+   <extends>QWidget</extends>
+   <header>QQuickWidget</header>
+  </customwidget>
   <customwidget>
    <class>SingleButton</class>
    <extends>QWidget</extends>
@@ -89,9 +256,10 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>SpeedGauge</class>
-   <extends>QDial</extends>
-   <header>speedgauge.h</header>
+   <class>SpeedGaugeLeds</class>
+   <extends>QWidget</extends>
+   <header>speedgaugeleds.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

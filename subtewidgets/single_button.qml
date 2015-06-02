@@ -2,8 +2,8 @@ import QtQuick 2.0
 
 Rectangle {
     id: button
-    width: 65
-    height: 65
+    width: 100
+    height: 100
     color: "#00000000"
 
     signal buttonClicked()

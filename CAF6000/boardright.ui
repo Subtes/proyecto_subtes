@@ -6,70 +6,113 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1351</width>
-    <height>689</height>
+    <width>1024</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>81</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>19</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>RIGHT</string>
-    </property>
-   </widget>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/resources/board_right_BKG.jpg);</string>
+   </property>
    <widget class="SingleButton" name="CONDisy_widget" native="true">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>30</y>
-      <width>120</width>
-      <height>80</height>
+      <x>803</x>
+      <y>29</y>
+      <width>72</width>
+      <height>72</height>
      </rect>
     </property>
    </widget>
    <widget class="SingleButton" name="DESDisy_widget" native="true">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>30</y>
-      <width>120</width>
-      <height>80</height>
+      <x>916</x>
+      <y>29</y>
+      <width>72</width>
+      <height>72</height>
      </rect>
     </property>
    </widget>
+   <widget class="SingleButton" name="calientapies" native="true">
+    <property name="geometry">
+     <rect>
+      <x>803</x>
+      <y>152</y>
+      <width>72</width>
+      <height>72</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="frenoRetencion" native="true">
+    <property name="geometry">
+     <rect>
+      <x>916</x>
+      <y>152</y>
+      <width>72</width>
+      <height>72</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="desacople" native="true">
+    <property name="geometry">
+     <rect>
+      <x>916</x>
+      <y>498</y>
+      <width>72</width>
+      <height>72</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Wiper" name="wiper" native="true">
+    <property name="geometry">
+     <rect>
+      <x>803</x>
+      <y>500</y>
+      <width>78</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QQuickWidget" name="quickWidget">
+    <property name="geometry">
+     <rect>
+      <x>811</x>
+      <y>273</y>
+      <width>180</width>
+      <height>180</height>
+     </rect>
+    </property>
+    <property name="resizeMode">
+     <enum>QQuickWidget::SizeRootObjectToView</enum>
+    </property>
+    <property name="source">
+     <url>
+      <string>qrc:/manometer.qml</string>
+     </url>
+    </property>
+   </widget>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1351</width>
-     <height>21</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>QQuickWidget</class>
+   <extends>QWidget</extends>
+   <header>QQuickWidget</header>
+  </customwidget>
   <customwidget>
    <class>SingleButton</class>
    <extends>QWidget</extends>
    <header>singlebutton.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Wiper</class>
+   <extends>QWidget</extends>
+   <header location="global">wiper.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

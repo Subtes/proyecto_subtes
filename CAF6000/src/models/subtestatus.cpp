@@ -16,9 +16,7 @@ SubteStatus::~SubteStatus()
 
 void SubteStatus::wiperOn()
 {
-    qDebug() << "wiperON";
-    speed++;
-    emit speedChanged(speed);
+    //qDebug() << "wiperON";
 }
 
 void SubteStatus::hornOn()
@@ -35,12 +33,16 @@ void SubteStatus::hornOff()
 
 void SubteStatus::wiperOff()
 {
-    qDebug() << "wiper Off";
+    //qDebug() << "wiper Off";
+    speed -= 10;
+    emit speedChanged(speed);
 }
 
 void SubteStatus::washer()
 {
-    qDebug() << "washer";
+    //qDebug() << "washer";
+    speed++;
+    emit speedChanged(speed);
 }
 
 void SubteStatus::tractionLeverInZero(){

@@ -20,7 +20,9 @@ Rectangle {
         anchors.leftMargin: 0
         anchors.topMargin: 0
         anchors.fill: parent
-        source: "resources/velocimetroLed_Bkg.PNG"
+        source: "resources/velocimetroLed_Bkg.png"
+        antialiasing: true
+        smooth: true
     }
 
     Image {
@@ -29,7 +31,9 @@ Rectangle {
         y: speedGauge.width * 0.9038
         width: speedGauge.width * 0.0788
         height: speedGauge.width * 0.0423
-        source: "resources/velocimetroLedAM_OFF.PNG"
+        source: "resources/velocimetroLedAM_OFF.png"
+        antialiasing: true
+        smooth: true
     }
 
     Image {
@@ -38,7 +42,9 @@ Rectangle {
         y: speedGauge.width * 0.9038
         width: speedGauge.width * 0.0788
         height: speedGauge.width * 0.0423
-        source: "resources/velocimetroLedFM_OFF.PNG"
+        source: "resources/velocimetroLedFM_OFF.png"
+        antialiasing: true
+        smooth: true
     }
 
     Image {
@@ -47,7 +53,9 @@ Rectangle {
         y: speedGauge.width * 0.9038
         width: speedGauge.width * 0.1730
         height: speedGauge.width * 0.0423
-        source: "resources/velocimetroLedcodigosOFF.PNG"
+        source: "resources/velocimetroLedcodigosOFF.png"
+        antialiasing: true
+        smooth: true
     }
 
     /*** LEDS SET ***/
@@ -61,12 +69,12 @@ Rectangle {
             width: speedGauge.width * 0.0268
             height: speedGauge.width * 0.0652
             opacity: 0
-            smooth: true
-            antialiasing: true
             rotation: getRotation(index,197,360/103)
             x: getX((yellow.rotation-90)*Math.PI/180,speedGauge.width * 0.3634,speedGauge.width * 0.4884)
             y: getY((yellow.rotation-90)*Math.PI/180,speedGauge.width * 0.3615,speedGauge.width * 0.4748)
-            source: "resources/velocimetroLedON_AMARILLO.PNG"
+            source: "resources/velocimetroLedON_AMARILLO.png"
+            antialiasing: true
+            smooth: true
             states: [
                 State {
                     name: "on"
@@ -92,11 +100,12 @@ Rectangle {
             width: speedGauge.width * 0.0230
             height: speedGauge.width * 0.0518
             opacity: 0
-            smooth: true
             rotation: getRotation(index,194,360/103)
             x: getX((green.rotation-90)*Math.PI/180,speedGauge.width * 0.3095,speedGauge.width * 0.4903)
             y: getY((green.rotation-90)*Math.PI/180,speedGauge.width * 0.3115,speedGauge.width * 0.4788)
-            source: "resources/velocimetroLedON_VERDE.PNG"
+            source: "resources/velocimetroLedON_VERDE.png"
+            antialiasing: true
+            smooth: true
             states: [
                 State {
                     name: "on"
@@ -124,16 +133,33 @@ Rectangle {
         height: speedGauge.width * 0.0653
         rotation: 13
         opacity: 0
-        source: "resources/velocimetroLedON_ROJO.PNG"
+        source: "resources/velocimetroLedON_ROJO.png"
+        antialiasing: true
+        smooth: true
     }
 
     Image {
         id: aroBlanco
-        x: 0
-        y: 0
-        width: 520
-        height: 520
-        source: "resources/velocimetroLedAroBlanco.PNG"
+        anchors.rightMargin: 0
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
+        anchors.fill: parent
+        source: "resources/velocimetroLedAroBlanco.png"
+        antialiasing: true
+        smooth: true
+    }
+
+    Image {
+        id: glass
+        anchors.rightMargin: 0
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
+        anchors.fill: parent
+        source: "resources/velocimetroLedGlass.png"
+        antialiasing: true
+        smooth: true
     }
 
     function getX(rot,r,offset){
@@ -192,14 +218,5 @@ Rectangle {
             }
             yellowIndex--
         }
-    }
-    Image {
-        id: glass
-        x: 0
-        y: 13
-        width: 526
-        height: 522
-        transformOrigin: Item.Center
-        source: "resources/velocimetroLedGlass.png"
     }
 }

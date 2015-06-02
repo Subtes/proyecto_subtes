@@ -11,7 +11,6 @@
         <file>resources/palanca.png</file>
         <file>resources/red.png</file>
         <file>resources/redON.png</file>
-        <file>resources/velocimetro.png</file>
         <file>resources/bocina_down.png</file>
         <file>resources/bocina_up.png</file>
         <file>resources/Train_Honk_Horn_Distance-Mike_Koenig-1905511933.wav</file>
@@ -22,18 +21,66 @@
         <file>resources/setaOff.png</file>
         <file>resources/red_encl.png</file>
         <file>resources/redON_encl.png</file>
-        <file>resources/velocimetroLed_Bkg.PNG</file>
-        <file>resources/velocimetroLedAM_OFF.PNG</file>
-        <file>resources/velocimetroLedAM_ON.PNG</file>
-        <file>resources/velocimetroLedcodigosOFF.PNG</file>
-        <file>resources/velocimetroLedcodigosON.PNG</file>
-        <file>resources/velocimetroLedFM_OFF.PNG</file>
-        <file>resources/velocimetroLedFM_ON.PNG</file>
-        <file>resources/velocimetroLedMODO.PNG</file>
-        <file>resources/velocimetroLedON_AMARILLO.PNG</file>
-        <file>resources/velocimetroLedON_ROJO.PNG</file>
-        <file>resources/velocimetroLedON_VERDE.PNG</file>
-        <file>resources/velocimetroLedAroBlanco.PNG</file>
+        <file>resources/velocimetroLed_Bkg.png</file>
+        <file>resources/velocimetroLedAM_OFF.png</file>
+        <file>resources/velocimetroLedAM_ON.png</file>
+        <file>resources/velocimetroLedcodigosOFF.png</file>
+        <file>resources/velocimetroLedcodigosON.png</file>
+        <file>resources/velocimetroLedFM_OFF.png</file>
+        <file>resources/velocimetroLedFM_ON.png</file>
+        <file>resources/velocimetroLedON_AMARILLO.png</file>
+        <file>resources/velocimetroLedON_ROJO.png</file>
+        <file>resources/velocimetroLedON_VERDE.png</file>
+        <file>resources/velocimetroLedAroBlanco.png</file>
         <file>resources/velocimetroLedGlass.png</file>
+        <file>resources/blueplane.png</file>
+        <file>resources/luzcabina.png</file>
+        <file>resources/MODO_BASE.png</file>
+        <file>resources/MODO_CL.png</file>
+        <file>resources/MODO_cmc.png</file>
+        <file>resources/perilla.png</file>
+        <file>resources/publico-cabinaL.png</file>
+        <file>resources/publico-cabinaR.png</file>
+        <file>resources/selectordepuertas.png</file>
+        <file>resources/luzcabinaON.png</file>
+        <file>resources/green_DES_techo.png</file>
+        <file>resources/greenON_DES_techo.png</file>
+        <file>resources/manometro_aguja_blanca.png</file>
+        <file>resources/manometro_aguja_roja.png</file>
+        <file>resources/manometro_bkg.png</file>
+        <file>resources/manometro_glass.png</file>
+        <file>resources/puertas_blackoff.png</file>
+        <file>resources/puertas_blackON.png</file>
+        <file>resources/puertas_greenON.png</file>
+        <file>resources/puertas_greenoOFF.png</file>
+        <file>resources/puertas_key1.png</file>
+        <file>resources/puertas_key2.png</file>
+        <file>resources/puertas_redOFF.png</file>
+        <file>resources/puertas_redON.png</file>
+        <file>resources/red_CON_techo.png</file>
+        <file>resources/redON_CON_techo.png</file>
+        <file>resources/rana.png</file>
+        <file>resources/reguladorP.png</file>
+        <file>resources/techo_llave0.png</file>
+        <file>resources/techo_llave45.png</file>
+        <file>resources/techo_llave45B.png</file>
+        <file>resources/techo_llave90.png</file>
+        <file>resources/techo_manual_down.png</file>
+        <file>resources/techo_manual_up.png</file>
+        <file>resources/techo_setaOFF.png</file>
+        <file>resources/techo_setaON.png</file>
+        <file>resources/velocimetroMODO.png</file>
+        <file>resources/velocimetroMODO---.png</file>
+        <file>resources/velocimetroMODO20.png</file>
+        <file>resources/velocimetroMODOAs.png</file>
+        <file>resources/velocimetroMODOAto.png</file>
+        <file>resources/velocimetroMODOAtP.png</file>
+        <file>resources/velocimetroMODOEEE.png</file>
+        <file>resources/Relojtecho01.png</file>
+        <file>resources/Relojtecho02.png</file>
+        <file>resources/Relojtecho03.png</file>
+        <file>resources/RelojtechoAGUJA01.png</file>
+        <file>resources/RelojtechoAGUJA02.png</file>
+        <file>resources/RelojtechoAGUJA03.png</file>
     </qresource>
 </RCC>
