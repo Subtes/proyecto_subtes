@@ -26,6 +26,7 @@ class Seta_Button : public QWidget
 public:
     explicit Seta_Button(QWidget *parent = 0);
     ~Seta_Button();
+    void setOff();
 
 signals:
     void m_pressed();

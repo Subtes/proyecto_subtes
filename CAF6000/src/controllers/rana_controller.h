@@ -12,6 +12,7 @@ class Rana_Controller : public QObject
 public:
     Rana_Controller(SubteStatus *modelo, Rana *vista);
     ~Rana_Controller();
+    void setValue(int v);
 
 private:
     Rana *m_ranaTraction;

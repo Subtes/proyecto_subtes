@@ -36,3 +36,8 @@ Seta_Controller::~Seta_Controller()
     delete this->m_setaButton;
 }
 
+void Seta_Controller::resetToOff()
+{
+    m_setaButton->setOff();
+}
+

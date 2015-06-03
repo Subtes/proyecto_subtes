@@ -7,10 +7,6 @@ Rana::Rana(QWidget *parent) :
     ui(new Ui::Rana)
 {
     ui->setupUi(this);
-    setStyleSheet("\
-        QSlider::handle {width: 80px; height: 80px; image: url(:/resources/palanca.png); }\
-        QSlider::groove {border: 0px solid black; border-radius: 3px; width: 100px; };");
-
     connect (ui->rana_slider,SIGNAL(valueChanged(int)),this,SLOT(processValueChanged(int)));
 }
 
@@ -18,20 +14,17 @@ void Rana::processValueChanged(int pos){
 
     switch ( pos ) {
     case 1:
-            emit ranaCERO();
-            qDebug() << "emitiendo rana UNO";
-      break;
-    case 0:
             emit ranaAD();
-            qDebug() << "emitiendo rana CERO";
-      break;
+            break;
+    case 0:
+            emit ranaCERO();
+            break;
     case -1:
             emit ranaAT();
-            qDebug() << "emitiendo rana MENOS UNO";
-      break;
+            break;
     default:
         qDebug() << "Error: Rana value DEVICE" << pos;
-      break;
+        break;
     }
 
 }
@@ -39,4 +32,9 @@ void Rana::processValueChanged(int pos){
 Rana::~Rana()
 {
     delete ui;
+}
+
+void Rana::setValue(int v)
+{
+    ui->rana_slider->setValue(v);
 }

@@ -21,6 +21,12 @@ public:
 private:
     Ui::BoardRight *ui;
     SubteStatus *m_subte;
+
+public slots:
+    void startBoard();
+    void enableScreen();
+    void disableScreen();
+    void resetControls();
 };
 
 #endif // BOARDRIGHT_H

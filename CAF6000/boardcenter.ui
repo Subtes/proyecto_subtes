@@ -234,6 +234,63 @@
      </rect>
     </property>
    </widget>
+   <widget class="QLabel" name="selectorPuertas">
+    <property name="geometry">
+     <rect>
+      <x>438</x>
+      <y>629</y>
+      <width>121</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/transparent);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::PlainText</enum>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../subtewidgets/widgetsrsc.qrc">:/resources/selectordepuertas.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="Splash" name="splash" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>0</width>
+      <height>0</height>
+     </rect>
+    </property>
+   </widget>
+   <zorder>velocimetro</zorder>
+   <zorder>wiper</zorder>
+   <zorder>anulacionEmergencia</zorder>
+   <zorder>bypassTraccion</zorder>
+   <zorder>abrirIzquierda</zorder>
+   <zorder>cerrarIzquierda</zorder>
+   <zorder>selectorIzquierda</zorder>
+   <zorder>selectorDerecha</zorder>
+   <zorder>cerrarDerecha</zorder>
+   <zorder>abrirDerecha</zorder>
+   <zorder>silbato</zorder>
+   <zorder>bypassFreno</zorder>
+   <zorder>megafonia</zorder>
+   <zorder>iluminacionReducPulsad</zorder>
+   <zorder>antivaho</zorder>
+   <zorder>faros</zorder>
+   <zorder>iluminacionPulsadores</zorder>
+   <zorder>modoConduccion</zorder>
+   <zorder>luzCabina</zorder>
+   <zorder>publicoCabina</zorder>
+   <zorder>selectorPuertas</zorder>
+   <zorder>splash</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -261,7 +318,17 @@
    <header>speedgaugeleds.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>Splash</class>
+   <extends>QWidget</extends>
+   <header>splash.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../subtewidgets/widgetsrsc.qrc"/>
+  <include location="../subtewidgets/widgetsrsc.qrc"/>
+  <include location="../subtewidgets/widgetsrsc.qrc"/>
+ </resources>
  <connections/>
 </ui>

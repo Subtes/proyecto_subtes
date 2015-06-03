@@ -14,3 +14,8 @@ Rana_Controller::Rana_Controller(SubteStatus *modelo, Rana *vista){
 Rana_Controller::~Rana_Controller(){
 
 }
+
+void Rana_Controller::setValue(int v)
+{
+    m_ranaTraction->setValue(v);
+}

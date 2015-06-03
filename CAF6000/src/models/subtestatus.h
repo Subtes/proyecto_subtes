@@ -2,6 +2,7 @@
 #define SUBTESTATUS_H
 #include <QObject>
 #include <QDebug>
+#include <ENetClient.h>
 
 class SubteStatus : public QObject
 {
@@ -10,26 +11,45 @@ class SubteStatus : public QObject
 public:
     SubteStatus();
     ~SubteStatus();
-
+    void initENet();
     bool CSCPStatus();
 
 private:
     static const bool OPEN = true;
     static const bool CLOSE = false;
 
-    bool horn;
-    bool emergencyOverride;
-    bool leftDoors;
-    bool rightDoors;
-    bool CSCP;
-    bool m_seta;  
-    double speed;
+    bool splashPassed;
 
-    bool tractionable();
+    bool m_horn;
+    bool m_emergencyOverride;
+    bool m_leftDoors;
+    bool m_rightDoors;
+    bool m_CSCP;
+    bool m_seta;  
+    double m_speed;
+    std::string m_rana;
+    int m_traction;
+    int m_tractionLeverPosition;
+
+    //=== eNet setup ===
+    ENetClient *m_eNetClient;
+    std::string m_serverIp;
+    int m_serverPort;
+    std::string m_controlsHostName;
+    std::string m_visualHostName;
+    std::string m_instructionsHostName;
+
+    void processValueChanged(std::string host, std::string key, std::string value);
+    void updateSpeed(double value);
 
 signals:
     CSCPChanged(bool cscp);
     speedChanged(double speed);
+
+    controlReady();
+    controlEnable();
+    controlDisable();
+    controlReset();
 
 public slots:
     void hornOn();
@@ -43,6 +63,7 @@ public slots:
     void emergencyBrakeActived();
     void hombreVivoPressed();
     void hombreVivoReleased();
+    void tractionLeverChanged(int value);
     void ranaAD();
     void ranaCERO();
     void ranaAT();

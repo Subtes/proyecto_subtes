@@ -210,7 +210,6 @@
       <height>78</height>
      </rect>
     </property>
-    <zorder>llave</zorder>
    </widget>
    <widget class="SingleButton" name="aireDES" native="true">
     <property name="geometry">
@@ -348,6 +347,16 @@
      </url>
     </property>
    </widget>
+   <widget class="Splash" name="splash" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>0</width>
+      <height>0</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
  <customwidgets>
@@ -360,6 +369,12 @@
    <class>SingleButton</class>
    <extends>QWidget</extends>
    <header>singlebutton.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Splash</class>
+   <extends>QWidget</extends>
+   <header>splash.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

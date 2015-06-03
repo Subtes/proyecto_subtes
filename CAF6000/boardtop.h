@@ -20,6 +20,12 @@ public:
 private:
     Ui::BoardTop *ui;
     SubteStatus *m_subte;
+
+public slots:
+    void startBoard();
+    void enableScreen();
+    void disableScreen();
+    void resetControls();
 };
 
 #endif // BOARDTOP_H

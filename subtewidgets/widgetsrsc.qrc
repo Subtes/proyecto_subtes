@@ -60,7 +60,6 @@
         <file>resources/red_CON_techo.png</file>
         <file>resources/redON_CON_techo.png</file>
         <file>resources/rana.png</file>
-        <file>resources/reguladorP.png</file>
         <file>resources/techo_llave0.png</file>
         <file>resources/techo_llave45.png</file>
         <file>resources/techo_llave45B.png</file>
@@ -82,5 +81,6 @@
         <file>resources/RelojtechoAGUJA01.png</file>
         <file>resources/RelojtechoAGUJA02.png</file>
         <file>resources/RelojtechoAGUJA03.png</file>
+        <file>resources/splash.jpg</file>
     </qresource>
 </RCC>

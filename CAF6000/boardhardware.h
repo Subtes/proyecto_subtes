@@ -22,9 +22,23 @@ public:
     explicit BoardHardware(QWidget *parent = 0, SubteStatus *subte = 0);
     ~BoardHardware();
 
+public slots:
+    void startBoard();
+    void enableScreen();
+    void disableScreen();
+    void resetControls();
+
 private:
     Ui::BoardHardware *ui;
     SubteStatus *m_subte;
+
+    Horn_Controller *m_horn;
+    TractionLever_Controller *m_tractionLever;
+    Rana_Controller *m_rana;
+    HombreVivo_Controller *m_hombreVivo;
+    Seta_Controller *m_setaButton;
+    SpeedGaugeLeds_Controller *m_speedGauge;
+
 };
 
 #endif // BOARDHARDWARE_H

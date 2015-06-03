@@ -11,6 +11,7 @@ SpeedGauge::SpeedGauge(QWidget *parent) :
     ui->quickWidget->setAttribute(Qt::WA_AlwaysStackOnTop);
 
     m_qmlView = ui->quickWidget->rootObject();
+
 }
 
 SpeedGauge::~SpeedGauge()

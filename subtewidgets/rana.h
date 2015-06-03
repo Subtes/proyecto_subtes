@@ -14,6 +14,7 @@ class Rana : public QWidget
 public:
     explicit Rana(QWidget *parent = 0);
     ~Rana();
+    void setValue(int v);
 
 signals:
     void ranaAD();

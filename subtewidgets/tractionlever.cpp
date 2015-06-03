@@ -1,18 +1,22 @@
 #include "tractionlever.h"
 #include "ui_tractionlever.h"
+#include <QDebug>
 
 TractionLever::TractionLever(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TractionLever)
 {
     ui->setupUi(this);
-    setStyleSheet("\
-        QSlider::handle {width: 80px; height: 80px; image: url(:/resources/palanca.png); }\
-        QSlider::groove {border: 0px solid black; border-radius: 3px; width: 100px; };");
 
     connect (ui->verticalSlider,SIGNAL(valueChanged(int)),this,SLOT(processValueChanged(int)));
+    connect (ui->verticalSlider,SIGNAL(valueChanged(int)),this,SIGNAL(positionChanged(int)));
     connect (ui->verticalSlider,SIGNAL(sliderPressed()),this,SIGNAL(hvPressed()));
     connect (ui->verticalSlider,SIGNAL(sliderReleased()),this,SIGNAL(hvReleased()));
+}
+
+void TractionLever::setValue(int v)
+{
+    ui->verticalSlider->setValue(v);
 }
 
 TractionLever::~TractionLever()
@@ -21,13 +25,22 @@ TractionLever::~TractionLever()
 }
 
 void TractionLever::processValueChanged(int value){
-    if(value > 4){
-        emit traction(value -4);
-    }else if((value <= 4)&&(value >= -4)){
+    //TODO: REVISAR POR QUE FALLA ?????
+    //qDebug() << "VALUE " << value;
+    //double proportional = 0;
+    if(value > 15){
+        //proportional = (value-15)/85;
+        //qDebug() << "PROPORTIONAL " << proportional;
+        //emit traction((int)(proportional*100));
+        emit traction(value);
+    }else if((value <= 15)&&(value >= -15)){
         emit zero();
-    } else if ((value < -4) && (value >= -8)){
-        emit brake(value*(-1)-4);
-    } else if (value < -8){
+    }else if ((value < -15) && (value >= -90)){
+        //proportional = (value-15)/85;
+        //qDebug() << "PROPORTIONAL " << proportional;
+        //emit traction((int)(proportional*100));
+        emit traction(value);
+    }else if (value < -95){
         emit emergencyBrake();
     }
 }
