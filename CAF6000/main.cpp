@@ -7,7 +7,8 @@
 #include "src/models/subtestatus.h"
 
 #include <QApplication>
-
+#include <ENetClient.h>
+#include <string>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -29,5 +30,15 @@ int main(int argc, char *argv[])
     BoardTop *t = new BoardTop(0,subte);
     t->showFullScreen();
 
+    ENetClient *ElCliente = new ENetClient();
+    ElCliente->Conectar("127.0.0.1", 5000, "ClienteCPP");
+    ElCliente->ColocarMiNombre("ClienteCPP");
+    ElCliente->CambiarValorClave("clave", "valor");
+    ElCliente->Suscribirse("ClienteCPP","clave");
     return a.exec();
 }
+
+//void ClientCambioValClave(std::string unHost, std::string unaClave, std::string unValor)
+//{
+//  qDebug() << "\nNuevo Valor desde el Host: " << String(unHost) << " de la Clave " << String(unaClave) << " y el Valor es: " << String(unValor);
+//}
