@@ -8,7 +8,13 @@
 
 #include <QApplication>
 #include <ENetClient.h>
-#include <string>
+#include <QDebug>
+
+void ClientCambioValClave(std::string unHost, std::string unaClave, std::string unValor)
+{
+    qDebug() << "hola!!!!!!" ;
+}
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -31,14 +37,12 @@ int main(int argc, char *argv[])
     t->showFullScreen();
 
     ENetClient *ElCliente = new ENetClient();
+
+    ElCliente->OnCambioValClave = &ClientCambioValClave;
+
     ElCliente->Conectar("127.0.0.1", 5000, "ClienteCPP");
     ElCliente->ColocarMiNombre("ClienteCPP");
     ElCliente->CambiarValorClave("clave", "valor");
-    ElCliente->Suscribirse("ClienteCPP","clave");
+    ElCliente->Suscribirse("ClienteCPP","clavetest");
     return a.exec();
 }
-
-//void ClientCambioValClave(std::string unHost, std::string unaClave, std::string unValor)
-//{
-//  qDebug() << "\nNuevo Valor desde el Host: " << String(unHost) << " de la Clave " << String(unaClave) << " y el Valor es: " << String(unValor);
-//}
