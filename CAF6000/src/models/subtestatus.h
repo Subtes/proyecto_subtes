@@ -11,8 +11,14 @@ class SubteStatus : public QObject
 public:
     SubteStatus();
     ~SubteStatus();
-
+    void initENet();
     bool CSCPStatus();
+
+    enum keySet {
+        v_velocidad,
+        c_movimiento,
+        c_regulador_de_mando
+    };
 
 private:
     static const bool OPEN = true;
@@ -28,14 +34,16 @@ private:
 
     //=== eNet setup ===
     ENetClient *eNetClient;
-    string serverIp;
+    std::string serverIp;
     int serverPort;
-    string controlsHostName;
-    string visualHostName;
-    string instructionsHostName;
-    void processValueChanged(std::string unHost, std::string unaClave, std::string unValor);
+    std::string controlsHostName;
+    std::string visualHostName;
+    std::string instructionsHostName;
 
+    static keySet hashKey(std::string inString);
+    void processValueChanged(std::string host, std::string key, std::string value);
     void updateSpeed(double value);
+
 
 signals:
     CSCPChanged(bool cscp);

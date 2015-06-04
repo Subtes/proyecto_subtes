@@ -8,17 +8,18 @@ SubteStatus::SubteStatus()
     rightDoors = CLOSE;
     CSCP = false;
     speed = 0;
+}
 
+void SubteStatus::initENet(){
     //=== eNet setup ===
-    string serverIp = "127.0.0.1";
-    int serverPort = 5000;
-
-    string controlsHostName = "P1_control";
-    string visualHostName = "P1_visualizador";
-    string instructionsHostName = "P1_instruccion";
-
+    serverIp = "127.0.0.1";
+    serverPort = 5000;
+    controlsHostName = "P1_control";
+    visualHostName = "P1_visualizador";
+    instructionsHostName = "P1_instruccion";
     eNetClient = new ENetClient();
-    eNetClient->OnCambioValClave = &processValueChanged;
+    std::function<void(std::string,std::string,std::string)> receiverFunction = &processValueChanged;
+    eNetClient->OnCambioValClave = receiverFunction;
     eNetClient->Suscribirse(visualHostName,"v_velocidad");
 }
 
@@ -110,7 +111,14 @@ void SubteStatus::hombreVivoReleased(){
 
 void SubteStatus::emergencyOverrideClicked(){
     emergencyOverride = !emergencyOverride;
-    qDebug() << "emergency Override Clicked, EmOv: " << emergencyOverride ;
+    if(emergencyOverride){
+        qDebug() << "c_emergencyOverride: con";
+        eNetClient->CambiarValorClave("c_emergencyOverride","con");
+
+    }else{
+        qDebug() << "c_emergencyOverride: des";
+        eNetClient->CambiarValorClave("c_emergencyOverride","des");
+    }
 }
 
 void SubteStatus::CSCPBypassed()
@@ -215,13 +223,20 @@ void SubteStatus::updateSpeed(double value){
     emit speedChanged(speed);
 }
 
+SubteStatus::keySet hashKey(std::string inString) {
+   if (inString == "v_velocidad") return SubteStatus::v_velocidad;
+   if (inString == "c_movimiento") return SubteStatus::c_movimiento;
+   if (inString == "c_regulador_de_mando") return SubteStatus::c_regulador_de_mando;
+}
+
 void SubteStatus::processValueChanged(std::string host, std::string key, std::string value){
-    switch (key) {
-    case "v_velocidad":
-        updateSpeed(std::stod(value));
-        break;
-    default:
-        qDebug() << "La clave: \""<< key <<"\" no es reconocida.";
-        break;
-    }
+    switch (hashKey(key)) {
+        case v_velocidad:
+            qDebug() << "cambio de velocidad recibido." ;
+            updateSpeed(std::stod(value));
+            break;
+        default:
+            qDebug() << "La clave: \""<< key.c_str() <<"\" no es reconocida.";
+            break;
+        }
 }
