@@ -8,6 +8,19 @@ SubteStatus::SubteStatus()
     rightDoors = CLOSE;
     CSCP = false;
     speed = 0;
+
+
+    //=== eNet setup ===
+
+    ENetClient *eNetClient = new ENetClient();
+
+    ElCliente->OnCambioValClave = &ClientCambioValClave;
+
+    ElCliente->Conectar("127.0.0.1", 5000, "ClienteCPP");
+    ElCliente->CambiarValorClave("clave", "valor");
+    ElCliente->Suscribirse("Cliente_65","faba");
+
+
 }
 
 SubteStatus::~SubteStatus()
@@ -164,4 +177,8 @@ void SubteStatus::pressedCON(){
 void SubteStatus::pressedDES(){
     qDebug() << "---> Pressed, DES Disyuntor";
     /* Para desconectar los disyuntores, solo se pulsa “DES”, en cualquiera de las cabinas de conducción. */
+}
+
+void SubteStatus::processValueChanged(std::string unHost, std::string unaClave, std::string unValor){
+
 }

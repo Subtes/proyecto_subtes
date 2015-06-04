@@ -10,11 +10,6 @@
 #include <ENetClient.h>
 #include <QDebug>
 
-void ClientCambioValClave(std::string unHost, std::string unaClave, std::string unValor)
-{
-    qDebug() << "hola!!!!!!" ;
-}
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -22,27 +17,24 @@ int main(int argc, char *argv[])
     SubteStatus * subte = new SubteStatus();
 
     BoardHardware *h = new BoardHardware(0,subte);
-    h->showFullScreen();
+    //h->showFullScreen();
+    //h->show();
 
     BoardCenter * c = new BoardCenter(0,subte);;
-    c->showFullScreen();
+    //c->showFullScreen();
+    c->show();
 
     BoardLeft *l = new BoardLeft(0,subte);
-    l->showFullScreen();
+    //l->showFullScreen();
+    //l->show();
 
     BoardRight *r = new BoardRight(0,subte);
-    r->showFullScreen();
+    //r->showFullScreen();
+    //r->show();
 
     BoardTop *t = new BoardTop(0,subte);
-    t->showFullScreen();
+    //t->showFullScreen();
+    t->show();
 
-    ENetClient *ElCliente = new ENetClient();
-
-    ElCliente->OnCambioValClave = &ClientCambioValClave;
-
-    ElCliente->Conectar("127.0.0.1", 5000, "ClienteCPP");
-    ElCliente->ColocarMiNombre("ClienteCPP");
-    ElCliente->CambiarValorClave("clave", "valor");
-    ElCliente->Suscribirse("ClienteCPP","clavetest");
     return a.exec();
 }
