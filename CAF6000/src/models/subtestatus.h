@@ -8,13 +8,6 @@ class SubteStatus : public QObject
 {
     Q_OBJECT
 
-    static const string serverIp = "127.0.0.1";
-    static const int serverPort = 5000;
-
-    static const string controlsHostName = "P1_control";
-    static const string visualHostName = "P1_visualizador";
-    static const string instructionsHostName = "P1_instruccion";
-
 public:
     SubteStatus();
     ~SubteStatus();
@@ -33,7 +26,16 @@ private:
     bool m_seta;  
     double speed;
 
+    //=== eNet setup ===
+    ENetClient *eNetClient;
+    string serverIp;
+    int serverPort;
+    string controlsHostName;
+    string visualHostName;
+    string instructionsHostName;
     void processValueChanged(std::string unHost, std::string unaClave, std::string unValor);
+
+    void updateSpeed(double value);
 
 signals:
     CSCPChanged(bool cscp);

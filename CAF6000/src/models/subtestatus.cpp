@@ -9,88 +9,103 @@ SubteStatus::SubteStatus()
     CSCP = false;
     speed = 0;
 
-
     //=== eNet setup ===
+    string serverIp = "127.0.0.1";
+    int serverPort = 5000;
 
-    ENetClient *eNetClient = new ENetClient();
+    string controlsHostName = "P1_control";
+    string visualHostName = "P1_visualizador";
+    string instructionsHostName = "P1_instruccion";
 
-    ElCliente->OnCambioValClave = &ClientCambioValClave;
-
-    ElCliente->Conectar("127.0.0.1", 5000, "ClienteCPP");
-    ElCliente->CambiarValorClave("clave", "valor");
-    ElCliente->Suscribirse("Cliente_65","faba");
-
-
+    eNetClient = new ENetClient();
+    eNetClient->OnCambioValClave = &processValueChanged;
+    eNetClient->Suscribirse(visualHostName,"v_velocidad");
 }
 
 SubteStatus::~SubteStatus()
 {
 }
 
-void SubteStatus::wiperOn()
-{
-    //qDebug() << "wiperON";
-}
-
 void SubteStatus::hornOn()
 {
-    qDebug() << "horn = true";
+    qDebug() << "c_bocina: on";
+    eNetClient->CambiarValorClave("c_bocina","on");
     horn = true;
 }
 
 void SubteStatus::hornOff()
 {
-    qDebug() << "horn = false";
+    qDebug() << "c_bocina: off";
+    eNetClient->CambiarValorClave("c_bocina","Off");
     horn = false;
+}
+
+void SubteStatus::wiperOn()
+{
+    qDebug() << "c_limpiaParabrisas: on";
+    eNetClient->CambiarValorClave("c_limpiaParabrisas","on");
 }
 
 void SubteStatus::wiperOff()
 {
-    //qDebug() << "wiper Off";
-    speed -= 10;
-    emit speedChanged(speed);
+    qDebug() << "c_limpiaParabrisas: off";
+    eNetClient->CambiarValorClave("c_limpiaParabrisas","off");
 }
 
 void SubteStatus::washer()
 {
-    //qDebug() << "washer";
-    speed++;
-    emit speedChanged(speed);
+    qDebug() << "c_lavaParabrisas: on";
+    eNetClient->CambiarValorClave("c_lavaParabrisas","on");
 }
 
 void SubteStatus::tractionLeverInZero(){
-    qDebug() << "zero :0";
+    qDebug() << "c_movimiento y c_regulador_de_mando: 0";
+    eNetClient->CambiarValorClave("c_regulador_de_mando","0");
+    eNetClient->CambiarValorClave("c_movimiento","0");
 }
 
 void SubteStatus::tractionReceived(int value){
-    qDebug() << "traction: " << value;
+    qDebug() << "c_movimiento y c_regulador_de_mando: "<< value;
+    eNetClient->CambiarValorClave("c_regulador_de_mando",std::to_string(value));
+    eNetClient->CambiarValorClave("c_movimiento",std::to_string(value));
 }
 
 void SubteStatus::brakeReceived(int value){
-    qDebug() << "brake: " << value;
+    qDebug() << "c_movimiento y c_regulador_de_mando: "<< -value;
+    eNetClient->CambiarValorClave("c_regulador_de_mando",std::to_string(-value));
+    eNetClient->CambiarValorClave("c_movimiento",std::to_string(-value));
 }
 
 void SubteStatus::emergencyBrakeActived(){
-    qDebug() << "emergency brake!!!!!";
+    qDebug() << "c_movimiento y c_regulador_de_mando: "<< -100;
+    eNetClient->CambiarValorClave("c_regulador_de_mando",std::to_string(-100));
+    eNetClient->CambiarValorClave("c_movimiento",std::to_string(-100));
+    eNetClient->CambiarValorClave("c_freno_emergencia","con");
 }
 
 void SubteStatus::ranaAD(){
-    qDebug() << "rana ADELANTE ---> Activated";
+    qDebug() << "c_rana: AD";
+    eNetClient->CambiarValorClave("c_rana","ad");
 }
 
 void SubteStatus::ranaCERO(){
-    qDebug() << "rana CERO ---> Activated";
+    qDebug() << "c_rana: 0";
+    eNetClient->CambiarValorClave("c_rana","0");
 }
 
 void SubteStatus::ranaAT(){
-    qDebug() << "rana ATRAS ---> Activated";
+    qDebug() << "c_rana: AT";
+    eNetClient->CambiarValorClave("c_rana","at");
 }
+
 void SubteStatus::hombreVivoPressed(){
-    qDebug() << "HV";
+    qDebug() << "c_hombreVivo: pressed";
+    eNetClient->CambiarValorClave("c_hombreVivo","pressed");
 }
 
 void SubteStatus::hombreVivoReleased(){
-    qDebug() << "HV released";
+    qDebug() << "c_hombreVivo: released";
+    eNetClient->CambiarValorClave("c_hombreVivo","released");
 }
 
 void SubteStatus::emergencyOverrideClicked(){
@@ -102,12 +117,16 @@ void SubteStatus::CSCPBypassed()
 {
     CSCP=true;
     qDebug() << "CSCP bypassed";
+    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
+
 }
 
 void SubteStatus::CSCPActivated()
 {
     CSCP = !leftDoors && !rightDoors;
     qDebug() << "CSCP actived";
+    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
+
 }
 
 void SubteStatus::openLeftDoors()
@@ -115,6 +134,8 @@ void SubteStatus::openLeftDoors()
     leftDoors = OPEN;
     CSCP= false;
     emit CSCPChanged(CSCP);
+    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
+
 }
 
 void SubteStatus::openRightDoors()
@@ -122,6 +143,8 @@ void SubteStatus::openRightDoors()
     rightDoors = OPEN;
     CSCP= false;
     emit CSCPChanged(CSCP);
+    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
+
 
 }
 
@@ -130,6 +153,8 @@ void SubteStatus::closeLeftDoors()
     leftDoors = CLOSE;
     CSCP= !rightDoors;
     emit CSCPChanged(CSCP);
+    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
+
 
 }
 
@@ -138,6 +163,8 @@ void SubteStatus::closeRightDoors()
     rightDoors = CLOSE;
     CSCP= !leftDoors;
     emit CSCPChanged(CSCP);
+    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
+
 
 }
 
@@ -148,11 +175,15 @@ bool SubteStatus::CSCPStatus()
 
 void SubteStatus::setaActivated(){
     qDebug() << "---> Model Seta Activated ";
+    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
+
     this->m_seta = true;
 }
 
 void SubteStatus::setaDeactivated(){
     qDebug() << "---> Model Seta Deactivated ";
+    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
+
     this->m_seta = false;
     
 }
@@ -179,6 +210,18 @@ void SubteStatus::pressedDES(){
     /* Para desconectar los disyuntores, solo se pulsa “DES”, en cualquiera de las cabinas de conducción. */
 }
 
-void SubteStatus::processValueChanged(std::string unHost, std::string unaClave, std::string unValor){
+void SubteStatus::updateSpeed(double value){
+    speed = value;
+    emit speedChanged(speed);
+}
 
+void SubteStatus::processValueChanged(std::string host, std::string key, std::string value){
+    switch (key) {
+    case "v_velocidad":
+        updateSpeed(std::stod(value));
+        break;
+    default:
+        qDebug() << "La clave: \""<< key <<"\" no es reconocida.";
+        break;
+    }
 }
