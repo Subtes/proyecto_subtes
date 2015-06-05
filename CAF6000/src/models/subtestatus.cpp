@@ -18,8 +18,7 @@ void SubteStatus::initENet(){
     visualHostName = "P1_visualizador";
     instructionsHostName = "P1_instruccion";
     eNetClient = new ENetClient();
-    std::function<void(std::string,std::string,std::string)> receiverFunction = &processValueChanged;
-    eNetClient->OnCambioValClave = receiverFunction;
+    eNetClient->OnCambioValClave = &SubteStatus::processValueChanged;
     eNetClient->Suscribirse(visualHostName,"v_velocidad");
 }
 
@@ -125,16 +124,12 @@ void SubteStatus::CSCPBypassed()
 {
     CSCP=true;
     qDebug() << "CSCP bypassed";
-    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
-
 }
 
 void SubteStatus::CSCPActivated()
 {
     CSCP = !leftDoors && !rightDoors;
     qDebug() << "CSCP actived";
-    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
-
 }
 
 void SubteStatus::openLeftDoors()
@@ -142,8 +137,6 @@ void SubteStatus::openLeftDoors()
     leftDoors = OPEN;
     CSCP= false;
     emit CSCPChanged(CSCP);
-    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
-
 }
 
 void SubteStatus::openRightDoors()
@@ -151,9 +144,6 @@ void SubteStatus::openRightDoors()
     rightDoors = OPEN;
     CSCP= false;
     emit CSCPChanged(CSCP);
-    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
-
-
 }
 
 void SubteStatus::closeLeftDoors()
@@ -161,9 +151,6 @@ void SubteStatus::closeLeftDoors()
     leftDoors = CLOSE;
     CSCP= !rightDoors;
     emit CSCPChanged(CSCP);
-    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
-
-
 }
 
 void SubteStatus::closeRightDoors()
@@ -171,9 +158,6 @@ void SubteStatus::closeRightDoors()
     rightDoors = CLOSE;
     CSCP= !leftDoors;
     emit CSCPChanged(CSCP);
-    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
-
-
 }
 
 bool SubteStatus::CSCPStatus()
@@ -183,15 +167,11 @@ bool SubteStatus::CSCPStatus()
 
 void SubteStatus::setaActivated(){
     qDebug() << "---> Model Seta Activated ";
-    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
-
     this->m_seta = true;
 }
 
 void SubteStatus::setaDeactivated(){
     qDebug() << "---> Model Seta Deactivated ";
-    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
-
     this->m_seta = false;
     
 }
@@ -220,7 +200,7 @@ void SubteStatus::pressedDES(){
 
 void SubteStatus::updateSpeed(double value){
     speed = value;
-    emit speedChanged(speed);
+    //emit speedChanged(speed);
 }
 
 SubteStatus::keySet hashKey(std::string inString) {

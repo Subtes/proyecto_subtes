@@ -32,8 +32,7 @@ SOURCES += main.cpp\
     src/controllers/circuitbreakerdes_controller.cpp \
     src/controllers/circuitbreakercon_controller.cpp \
     src/controllers/speedgaugeleds_controller.cpp \
-    ../ENet/ENetClient.cpp \
-    src/models/enetconnector.cpp
+    ../ENet/ENetClient.cpp
 
 HEADERS  += boardcenter.h \
     boardright.h \
@@ -52,8 +51,7 @@ HEADERS  += boardcenter.h \
     src/controllers/circuitbreakerdes_controller.h \
     src/controllers/circuitbreakercon_controller.h \
     src/controllers/speedgaugeleds_controller.h \
-    ../ENet/ENetClient.h \
-    src/models/enetconnector.h
+    ../ENet/ENetClient.h
 
 
 FORMS    += boardcenter.ui \

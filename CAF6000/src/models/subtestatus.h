@@ -40,10 +40,9 @@ private:
     std::string visualHostName;
     std::string instructionsHostName;
 
-    static keySet hashKey(std::string inString);
+    keySet hashKey(std::string inString);
     void processValueChanged(std::string host, std::string key, std::string value);
     void updateSpeed(double value);
-
 
 signals:
     CSCPChanged(bool cscp);
