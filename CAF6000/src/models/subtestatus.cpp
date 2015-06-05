@@ -8,6 +8,8 @@ SubteStatus::SubteStatus()
     rightDoors = CLOSE;
     CSCP = false;
     speed = 0;
+
+    initENet();
 }
 
 void SubteStatus::initENet(){
@@ -17,8 +19,10 @@ void SubteStatus::initENet(){
     controlsHostName = "P1_control";
     visualHostName = "P1_visualizador";
     instructionsHostName = "P1_instruccion";
+
     eNetClient = new ENetClient();
-    eNetClient->OnCambioValClave = &SubteStatus::processValueChanged;
+    eNetClient->OnCambioValClave = std::bind(&SubteStatus::processValueChanged,this);
+    eNetClient->Conectar(serverIp, serverPort, controlsHostName);
     eNetClient->Suscribirse(visualHostName,"v_velocidad");
 }
 
@@ -203,20 +207,9 @@ void SubteStatus::updateSpeed(double value){
     //emit speedChanged(speed);
 }
 
-SubteStatus::keySet hashKey(std::string inString) {
-   if (inString == "v_velocidad") return SubteStatus::v_velocidad;
-   if (inString == "c_movimiento") return SubteStatus::c_movimiento;
-   if (inString == "c_regulador_de_mando") return SubteStatus::c_regulador_de_mando;
-}
-
 void SubteStatus::processValueChanged(std::string host, std::string key, std::string value){
-    switch (hashKey(key)) {
-        case v_velocidad:
-            qDebug() << "cambio de velocidad recibido." ;
-            updateSpeed(std::stod(value));
-            break;
-        default:
-            qDebug() << "La clave: \""<< key.c_str() <<"\" no es reconocida.";
-            break;
-        }
+    if(key.compare("v_velocidad") == 0){
+        qDebug() << "cambio de velocidad recibido." ;
+        updateSpeed(std::stod(value));
+    }
 }

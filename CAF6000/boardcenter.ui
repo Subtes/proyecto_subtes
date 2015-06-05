@@ -234,6 +234,31 @@
      </rect>
     </property>
    </widget>
+   <widget class="QLabel" name="selectorPuertas">
+    <property name="geometry">
+     <rect>
+      <x>438</x>
+      <y>629</y>
+      <width>121</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/transparent);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::PlainText</enum>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../subtewidgets/widgetsrsc.qrc">:/resources/selectordepuertas.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -262,6 +287,10 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../subtewidgets/widgetsrsc.qrc"/>
+  <include location="../subtewidgets/widgetsrsc.qrc"/>
+  <include location="../subtewidgets/widgetsrsc.qrc"/>
+ </resources>
  <connections/>
 </ui>

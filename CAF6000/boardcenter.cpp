@@ -35,6 +35,8 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte) :
 
     ui->modoConduccion->setClearColor(Qt::transparent);
     ui->modoConduccion->setAttribute(Qt::WA_AlwaysStackOnTop);
+
+    this->setEnabled(false);
 }
 
 BoardCenter::~BoardCenter()

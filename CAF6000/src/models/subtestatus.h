@@ -14,12 +14,6 @@ public:
     void initENet();
     bool CSCPStatus();
 
-    enum keySet {
-        v_velocidad,
-        c_movimiento,
-        c_regulador_de_mando
-    };
-
 private:
     static const bool OPEN = true;
     static const bool CLOSE = false;
@@ -40,7 +34,6 @@ private:
     std::string visualHostName;
     std::string instructionsHostName;
 
-    keySet hashKey(std::string inString);
     void processValueChanged(std::string host, std::string key, std::string value);
     void updateSpeed(double value);
 
