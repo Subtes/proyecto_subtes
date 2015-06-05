@@ -21,7 +21,11 @@ void SubteStatus::initENet(){
     instructionsHostName = "P1_instruccion";
 
     eNetClient = new ENetClient();
-    eNetClient->OnCambioValClave = std::bind(&SubteStatus::processValueChanged,this);
+    //eNetClient->OnCambioValClave = std::bind(&SubteStatus::processValueChanged,this);
+
+    using namespace std::placeholders;
+    eNetClient->OnCambioValClave = std::bind(&SubteStatus::processValueChanged, this, _1, _2, _3);
+
     eNetClient->Conectar(serverIp, serverPort, controlsHostName);
     eNetClient->Suscribirse(visualHostName,"v_velocidad");
 }
@@ -204,7 +208,7 @@ void SubteStatus::pressedDES(){
 
 void SubteStatus::updateSpeed(double value){
     speed = value;
-    //emit speedChanged(speed);
+    emit speedChanged(speed);
 }
 
 void SubteStatus::processValueChanged(std::string host, std::string key, std::string value){
@@ -212,4 +216,6 @@ void SubteStatus::processValueChanged(std::string host, std::string key, std::st
         qDebug() << "cambio de velocidad recibido." ;
         updateSpeed(std::stod(value));
     }
+    qDebug() << "cambio de velocidad recibido." ;
+
 }
