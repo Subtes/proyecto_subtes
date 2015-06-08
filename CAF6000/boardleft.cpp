@@ -12,6 +12,9 @@ BoardLeft::BoardLeft(QWidget *parent, SubteStatus * subte) :
     m_subte = subte;
 
     ui->setupUi(this);
+
+    this->setEnabled(false);
+
 }
 
 BoardLeft::~BoardLeft()

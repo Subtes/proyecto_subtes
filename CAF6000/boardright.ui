@@ -67,7 +67,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="Wiper" name="wiper" native="true">
+   <widget class="Wiper" name="maniobra" native="true">
     <property name="geometry">
      <rect>
       <x>803</x>
@@ -77,7 +77,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QQuickWidget" name="quickWidget">
+   <widget class="QQuickWidget" name="manometro">
     <property name="geometry">
      <rect>
       <x>811</x>
@@ -93,6 +93,16 @@
      <url>
       <string>qrc:/manometer.qml</string>
      </url>
+    </property>
+   </widget>
+   <widget class="Splash" name="splash" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>0</width>
+      <height>0</height>
+     </rect>
     </property>
    </widget>
   </widget>
@@ -113,6 +123,12 @@
    <class>Wiper</class>
    <extends>QWidget</extends>
    <header location="global">wiper.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Splash</class>
+   <extends>QWidget</extends>
+   <header>splash.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

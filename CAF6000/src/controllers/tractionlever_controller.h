@@ -9,6 +9,7 @@ class TractionLever_Controller : public QObject
 public:
     TractionLever_Controller(SubteStatus * subte, TractionLever * slider);
     ~TractionLever_Controller();
+    void setValue(int v);
 
 private:
     TractionLever * m_tractionLever;

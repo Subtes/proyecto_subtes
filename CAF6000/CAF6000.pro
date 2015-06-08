@@ -12,10 +12,13 @@ TARGET = CAF6000
 
 TEMPLATE = app
 
+CONFIG     += c++11
+
 SOURCES += main.cpp\
     boardcenter.cpp \
     boardright.cpp \
     boardleft.cpp \
+    boardtop.cpp \
     boardhardware.cpp \
     src/models/subtestatus.cpp \
     src/controllers/horn_controller.cpp \
@@ -29,12 +32,13 @@ SOURCES += main.cpp\
     src/controllers/circuitbreakerdes_controller.cpp \
     src/controllers/circuitbreakercon_controller.cpp \
     src/controllers/speedgaugeleds_controller.cpp \
-    boardtop.cpp
+    ../ENet/ENetClient.cpp
 
 HEADERS  += boardcenter.h \
     boardright.h \
     boardleft.h \
     boardhardware.h \
+    boardtop.h \
     src/models/subtestatus.h \
     src/controllers/horn_controller.h \
     src/controllers/wiper_controller.h \
@@ -47,7 +51,8 @@ HEADERS  += boardcenter.h \
     src/controllers/circuitbreakerdes_controller.h \
     src/controllers/circuitbreakercon_controller.h \
     src/controllers/speedgaugeleds_controller.h \
-    boardtop.h
+    ../ENet/ENetClient.h
+
 
 FORMS    += boardcenter.ui \
     boardright.ui \
@@ -55,11 +60,18 @@ FORMS    += boardcenter.ui \
     boardhardware.ui \
     boardtop.ui
 
-INCLUDEPATH +=  ../subtewidgets
+INCLUDEPATH +=  ../subtewidgets \
+                $$PWD/../ENet
+
+DEPENDPATH += $$PWD/../ENet
 
 LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L../subtewidgets/release -lsubtewidgets \
+        -L$$PWD/../ENet -lenet \
+        -L$$PWD/../ENet/ -lWS2_32 \
+        -L$$PWD/../ENet/ -lBufferOverflowU \
+        -L$$PWD/../ENet/ -lWinMM
 
 RESOURCES += ../subtewidgets/widgetsrsc.qrc \
             ../subtewidgets/qmlrsc.qrc \
-    boardrsc.qrc
+            boardrsc.qrc

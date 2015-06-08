@@ -20,7 +20,7 @@ class Seta_Controller : public QObject
 public:
     Seta_Controller(SubteStatus *modelo, Seta_Button *view);
     ~Seta_Controller();
-
+    void resetToOff();
     QVariant isPressed();
 
 signals:

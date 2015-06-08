@@ -3,8 +3,8 @@ import QtMultimedia 5.0
 
 Rectangle {
     id: pedal
-    width: 393
-    height: 316
+    width: 150
+    height: 214
     color: "#00000000"
     border.color: "#00000000"
     focus: true
@@ -33,16 +33,17 @@ Rectangle {
 
     Image {
         id: up
-        width: 393
-        height: 316
+        anchors.fill: parent
+        fillMode: Image.PreserveAspectFit
         source: "resources/bocina_up.png"
         opacity: 1
     }
 
     Image {
         id: down
-        width: 393
-        height: 316
+        height: 205
+        anchors.fill: parent
+        fillMode: Image.PreserveAspectFit
         source: "resources/bocina_down.png"
         opacity: 0
     }

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>160</width>
-    <height>330</height>
+    <width>210</width>
+    <height>580</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,22 +17,33 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
-     <width>160</width>
-     <height>330</height>
+     <y>-27</y>
+     <width>210</width>
+     <height>622</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-image: url(:/resources/BKG_palanca2.png);</string>
+    <string notr="true">QSlider::handle {
+	width: 230px;
+	height: 230px; 
+	image: url(:/resources/palanca.png); 
+}
+                  
+QSlider::groove {
+	border: 0px solid black;
+	border-radius: 3px; 
+	width: 190px; 
+}
+</string>
    </property>
    <property name="minimum">
-    <number>-12</number>
+    <number>-100</number>
    </property>
    <property name="maximum">
-    <number>13</number>
+    <number>100</number>
    </property>
    <property name="singleStep">
-    <number>1</number>
+    <number>5</number>
    </property>
    <property name="pageStep">
     <number>1</number>

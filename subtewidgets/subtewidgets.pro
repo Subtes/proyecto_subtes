@@ -14,7 +14,8 @@ HEADERS += \
     rana.h \
     seta_button.h \
     singlebutton.h \
-    speedgaugeleds.h
+    speedgaugeleds.h \
+    splash.h
 
 SOURCES += \
     panel_buttons2.cpp \
@@ -26,7 +27,8 @@ SOURCES += \
     rana.cpp \
     seta_button.cpp \
     singlebutton.cpp \
-    speedgaugeleds.cpp
+    speedgaugeleds.cpp \
+    splash.cpp
 
 FORMS += \
     panel_buttons2.ui \
@@ -38,7 +40,8 @@ FORMS += \
     rana.ui \
     seta_button.ui \
     singlebutton.ui \
-    speedgaugeleds.ui
+    speedgaugeleds.ui \
+    splash.ui
 
 RESOURCES += widgetsrsc.qrc \
             qmlrsc.qrc

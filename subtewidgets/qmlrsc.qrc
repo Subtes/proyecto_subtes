@@ -16,5 +16,6 @@
         <file>effortmeter.qml</file>
         <file>setaTecho.qml</file>
         <file>llaveTecho.qml</file>
+        <file>SplashScreen.qml</file>
     </qresource>
 </RCC>

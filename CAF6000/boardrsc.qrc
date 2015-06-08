@@ -4,5 +4,6 @@
         <file>resources/board_center_BKG.jpg</file>
         <file>resources/board_right_BKG.jpg</file>
         <file>resources/board_top_BKG.jpg</file>
+        <file>resources/board_hardware_BKG.jpg</file>
     </qresource>
 </RCC>

@@ -13,6 +13,7 @@ class TractionLever : public QWidget
 
 public:
     explicit TractionLever(QWidget *parent = 0);
+    void setValue(int v);
     ~TractionLever();
 
 private:
@@ -24,7 +25,8 @@ private slots:
 signals:
     zero();
     traction(int);
-    brake(int);
+    positionChanged(int);
+    //brake(int);
     emergencyBrake();
 
     hvPressed();

@@ -28,3 +28,8 @@ Seta_Button::~Seta_Button()
 {
     delete ui;
 }
+
+void Seta_Button::setOff()
+{
+    this->qml->setState("State2_SetaOFF");
+}

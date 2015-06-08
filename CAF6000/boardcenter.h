@@ -20,9 +20,15 @@ public:
     explicit BoardCenter(QWidget *parent = 0, SubteStatus *subte = 0);
     ~BoardCenter();
 
+public slots:
+    void startBoard();
+    void enableScreen();
+    void disableScreen();
+    void resetControls();
+
 private:
     Ui::BoardCenter *ui;
-    SubteStatus *m_subte;
+    SubteStatus *m_subte;    
 };
 
 #endif // BOARDCENTER_H

@@ -12,10 +12,16 @@ Rectangle {
 
     Image {
         id: image2
+        anchors.rightMargin: -71
+        anchors.bottomMargin: 13
+        anchors.leftMargin: 71
+        anchors.topMargin: -13
         transformOrigin: Item.Center
         z: 1
-        rotation: 0
+        rotation: 58
         anchors.fill: parent
+        antialiasing: true
+        smooth: true
         source: "resources/RelojtechoAGUJA01.png"
     }
 }
