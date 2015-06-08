@@ -1,7 +1,6 @@
 #-------------------------------------------------
 #
 # Project created by QtCreator 2015-04-16T13:18:10
-#
 #-------------------------------------------------
 
 QT += core gui quick quickwidgets declarative widgets
@@ -71,6 +70,8 @@ LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L$$PWD/../ENet/ -lWS2_32 \
         -L$$PWD/../ENet/ -lBufferOverflowU \
         -L$$PWD/../ENet/ -lWinMM
+
+#wince50standard-x86-msvc2005: LIBS += libcmt.lib corelibc.lib ole32.lib oleaut32.lib uuid.lib commctrl.lib coredll.lib winsock.lib ws2.lib
 
 RESOURCES += ../subtewidgets/widgetsrsc.qrc \
             ../subtewidgets/qmlrsc.qrc \

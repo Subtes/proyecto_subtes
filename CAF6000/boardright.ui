@@ -9,14 +9,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
-    <height>768</height>
+    <width>1010</width>
+    <height>750</height>
    </rect>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1024</width>
-    <height>768</height>
+    <width>1010</width>
+    <height>750</height>
    </size>
   </property>
   <property name="focusPolicy">
@@ -101,11 +101,17 @@
    <widget class="QQuickWidget" name="quickWidget">
     <property name="geometry">
      <rect>
-      <x>811</x>
-      <y>273</y>
-      <width>180</width>
-      <height>180</height>
+      <x>802</x>
+      <y>272</y>
+      <width>201</width>
+      <height>183</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>201</width>
+      <height>183</height>
+     </size>
     </property>
     <property name="resizeMode">
      <enum>QQuickWidget::SizeRootObjectToView</enum>

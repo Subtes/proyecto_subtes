@@ -14,37 +14,33 @@
 #include <QWidget>
 #include <QDebug>
 #include <QTimer>
-
-
+#include <QTabWidget>
+#include <QSplashScreen>
 
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    QPixmap pixmap(":/Splash1024x768.jpeg");
+    QSplashScreen splash(pixmap);
+    splash.show();
+    //cargar algo...
+    //splash.finish(QWidget*);
+
     SubteStatus * subte = new SubteStatus();
 
     QTimer *load = new QTimer(0);
-    load->setInterval(1500);
+    load->setInterval(3500);
+    load->start();
 
     BoardHardware *h = new BoardHardware(0,subte);
     BoardCenter *c = new BoardCenter(0,subte);
     BoardLeft *l = new BoardLeft(0,subte);
     BoardRight *r = new BoardRight(0,subte);
-
-    load->start();
+    //BoardTop *t = new BoardTop(0,subte);
 
     QDesktopWidget *desktop = a.desktop();
-
-//    QPixmap pixmap(":/splash.png");
-//    QSplashScreen splash(pixmap);
-//    splash.show();
-//    app.processEvents();
-//    ...
-//    QMainWindow window;
-//    window.show();
-//    splash.finish(&window);
-
 
     if (desktop->screenCount() == 3){
         //s1 = desktop->createWindowContainer(h,0,Qt::Window);
@@ -62,32 +58,38 @@ int main(int argc, char *argv[])
         qDebug() << "Pantalla a mostrar" << s1.width() << "Alto: " << s1.height();
 
         //h->move(s1.height(),s1.width());
-        //l->move(-1024,0);
+        l->move(-1025,-1);
         qDebug() << "Pantalla a mostrar Izquierda: " << s1.width() << "Alto: " << s1.height();
-        //l->showFullScreen();
+        l->show();
         //load->start();
 
         //QWidget ScreenCentral = desktop->createWindowContainer(h,0,Qt::Window);
         //ScreenCentral.setWindowFlags();
 
-        c->move(0,0);
-        c->showFullScreen();
+        c->move(-6,-5);
+        c->show();
         //load->start();
 
-        h->move(-1024,0);
+        //h->move(1055,6);
         //h->setWindowFlags(Qt::FramelessWindowHint);
-        h->showFullScreen();
+        //h->show();
         //load->start();
 
-        r->move(1024,0);
-        r->showFullScreen();
+        //r->move(1024,0);
+        //r->show();
         //load->start();
+
+        QTabWidget *tabRight = new QTabWidget(0);
+        tabRight->addTab(h,QObject::tr("Hardware"));
+        tabRight->addTab(r,QObject::tr("RightPanel"));
+
+        tabRight->move(1050,5);
+        tabRight->showFullScreen();
+
+        //t->move(0,0);
+        //t->show();
 
     }
-
-    //BoardTop *t = new BoardTop(0,subte);
-    //t->showFullScreen();
-    //t->show();
 
     return a.exec();
 }
