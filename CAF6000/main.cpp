@@ -22,9 +22,9 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QPixmap pixmap(":/Splash1024x768.jpeg");
-    QSplashScreen splash(pixmap);
-    splash.show();
+    //QPixmap pixmap(":/Splash1024x768.jpeg");
+    //QSplashScreen splash(pixmap);
+    //splash.show();
     //cargar algo...
     //splash.finish(QWidget*);
 
