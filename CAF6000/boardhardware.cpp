@@ -2,7 +2,7 @@
 #include "ui_boardhardware.h"
 
 BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte) :
-    QMainWindow(parent),
+    QWidget(parent),
     ui(new Ui::BoardHardware)
 {
     if (subte==NULL){
@@ -19,6 +19,7 @@ BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte) :
     HombreVivo_Controller *hombreVivo = new HombreVivo_Controller(subte,ui->traction);
     Seta_Controller * setaButton = new Seta_Controller(m_subte, ui->setaButton);
     SpeedGaugeLeds_Controller *speedGauge = new SpeedGaugeLeds_Controller(subte,ui->speedGauge);
+
 }
 
 BoardHardware::~BoardHardware()

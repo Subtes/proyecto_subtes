@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>BoardRight</class>
  <widget class="QMainWindow" name="BoardRight">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -10,8 +13,26 @@
     <height>768</height>
    </rect>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>1024</width>
+    <height>768</height>
+   </size>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::NoFocus</enum>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>RightPanel</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-image: url(:/resources/board_right_BKG.jpg);</string>
+  </property>
+  <property name="animated">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
