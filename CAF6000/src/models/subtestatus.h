@@ -4,6 +4,9 @@
 #include <QDebug>
 #include <ENetClient.h>
 
+#include <QtXml>
+#include <QFile>
+
 class SubteStatus : public QObject
 {
     Q_OBJECT
@@ -29,7 +32,9 @@ private:
     double m_speed;
     std::string m_rana;
     int m_traction;
+    int m_lastTraction;
     int m_tractionLeverPosition;
+    int m_lastPosition;
 
     //=== eNet setup ===
     ENetClient *m_eNetClient;
@@ -41,6 +46,9 @@ private:
 
     void processValueChanged(std::string host, std::string key, std::string value);
     void updateSpeed(double value);
+    void recalcularTraccion();
+    void readIni();
+    void conectarCliente(std::string ip, int puerto, std::string host);
 
 signals:
     CSCPChanged(bool cscp);

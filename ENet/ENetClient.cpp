@@ -5,15 +5,19 @@
 #include <sstream>
 #include <iostream>
 
-ENetClient::ENetClient()
+//#include <future>
+
+ENetClient::ENetClient(void)
 {
   Conectado = false;
   Terminar = true;
   _fCliente = nullptr;
   _fServidor = nullptr;
+  Inicializado = false;
+  FMilisegundosEspera = 75;
 }
 
-ENetClient::~ENetClient()
+ENetClient::~ENetClient(void)
 {
   this-> Desconectar();
 
@@ -32,27 +36,60 @@ ENetClient::~ENetClient()
   enet_deinitialize();
 }
 
+bool ENetClient::EstaConectado()
+{
+  return _fServidor != nullptr && _fServidor->connectID >0;
+}
+
 bool ENetClient::Conectar(std::string unaIP, int unPuerto, std::string unNombre)
 {
-  bool result = false;
+  auto result = false;
+
   if (_fCliente == nullptr)
   {
-    if (enet_initialize() != 0)
-      return result;
-    _fCliente = enet_host_create(nullptr, 1, 5, 0, 0);
+    try
+    {
+      if (!Inicializado)
+        Inicializado = enet_initialize() == 0;
+    }
+    catch (std::exception& e)
+    {
+      std::cout<<e.what();
+      Inicializado = false;
+    }
+
+    if (!Inicializado) return false;
+
+    try
+    {
+      _fCliente = enet_host_create(nullptr, 1, 5, 0, 0);
+    }
+    catch (std::exception& e1)
+    {
+      std::cout<<e1.what();
+    }
 
     if (_fCliente == nullptr)
       return result;
 
     ENetAddress direccionServidor;
-    
+
     enet_address_set_host (&direccionServidor, unaIP.c_str());
     direccionServidor.port = unPuerto;
 
-		_fServidor = enet_host_connect(_fCliente, &direccionServidor, 5, 0);    
-    ProcesarBuffers(false);
 
-    if (_fServidor != nullptr)
+    try
+    {
+      _fServidor = enet_host_connect(_fCliente, &direccionServidor, 5, 0);
+      ProcesarBuffers(false);
+    }
+    catch (std::exception& e3)
+    {
+      std::cout<<e3.what();
+      _fServidor = nullptr;
+    }
+
+    if (_fServidor->state == ENET_PEER_STATE_CONNECTED)
     {
       //Conectado = true;
       //_LosOtros[0] = std::async (&ENetClient::ProcesarBuffers,this);
@@ -62,7 +99,7 @@ bool ENetClient::Conectar(std::string unaIP, int unPuerto, std::string unNombre)
       ColocarMiNombre(unNombre);
     }
   }
-		
+
   return result;
 }
 
@@ -87,7 +124,7 @@ void ENetClient::ProcesarBuffers(bool continuo)
   {
     try
     {
-      while (enet_host_service (_fCliente, &_fEvento, 75) > 0)
+      while (enet_host_service (_fCliente, &_fEvento, FMilisegundosEspera) > 0)
       {
         ProcesarEvento();
       }
@@ -98,11 +135,19 @@ void ENetClient::ProcesarBuffers(bool continuo)
     }
   }
   if (!continuo)
-    while (enet_host_service (_fCliente, &_fEvento, 75) > 0)
+  {
+    try
     {
-      ProcesarEvento();
+      while (enet_host_service (_fCliente, &_fEvento, FMilisegundosEspera) > 0)
+      {
+        ProcesarEvento();
+      }
     }
-
+    catch (std::exception& e)
+    {
+      std::cout<<"Hubo un error"<<e.what();
+    }
+  }
 }
 
 void ENetClient::ProcesarEvento()
@@ -111,40 +156,75 @@ void ENetClient::ProcesarEvento()
   std::vector<std::string> partes;
   std::vector<char> myString;
   switch (_fEvento.type)
+  {
+  case ENET_EVENT_TYPE_RECEIVE:
+#pragma region Recepcion
+    myString = std::vector<char>(_fEvento.packet->dataLength + 1);
+    myString[_fEvento.packet->dataLength] = '\0';
+    memcpy(&myString[0], _fEvento.packet->data, _fEvento.packet->dataLength);
+    mensaje = std::string(&myString[0]);
+
+    partes = StringSplit2(mensaje, "||");
+
+    if (partes.size() <= 1 && OnErrorRecibir != nullptr)
     {
-      case ENET_EVENT_TYPE_CONNECT:
-        if(OnConnect != nullptr) OnConnect();
-        Conectado = true;
-        break;
-
-      case ENET_EVENT_TYPE_RECEIVE:
-        myString = std::vector<char>(_fEvento.packet->dataLength + 1);
-        myString[_fEvento.packet->dataLength] = '\0';
-        memcpy(&myString[0], _fEvento.packet->data, _fEvento.packet->dataLength);
-        mensaje = std::string(&myString[0]);
-
-        //mensaje = std::string(reinterpret_cast<const char*>(_fEvento.packet->data));
-        partes = StringSplit2(mensaje, "||");
-
-        if (partes.size() <= 1 && OnErrorRecibir != nullptr)
-          OnErrorRecibir("Mensaje Erroneo Recibido", mensaje);
-
-        if (partes[0] == "valClave" && OnCambioValClave != nullptr)
-            OnCambioValClave(partes[1], partes[2], partes[3]);
-
-        enet_packet_destroy (_fEvento.packet);
-        break;
-       
-      case ENET_EVENT_TYPE_DISCONNECT:
-          if (OnDisconnect != nullptr) OnDisconnect();
-          Conectado = false;
-          _fEvento.peer -> data = nullptr;
-        break;
-
-      case ENET_EVENT_TYPE_NONE: 
-        break;
-      default: break;
+      OnErrorRecibir("Mensaje Erroneo Recibido", mensaje);
+      return;
     }
+
+    if (partes[0] == "valClave" && OnCambioValClave != nullptr)
+    {
+      if (partes.size() == 3) partes.push_back("");
+      if (partes.size()!=4)
+      {
+        if (OnErrorRecibir != nullptr)
+          OnErrorRecibir("Se recibió mal el valor de una clave desde el servidor",mensaje);
+      }
+      else
+      {
+        OnCambioValClave(partes[1], partes[2], partes[3]);
+      }
+    }
+    if (partes[0] == "seConectoCliente" && OnConnectHost != nullptr)
+    {
+      if (partes.size() != 2)
+        if (OnErrorRecibir != nullptr)
+          OnErrorRecibir("Se recibió mal el valor de conexión de un Host",mensaje);
+        else
+          OnConnectHost(partes[1]);
+    }
+    if (partes[0] == "seDesConectoCliente" && OnDisconnectHost != nullptr)
+    {
+      if (partes.size() != 2)
+        if (OnErrorRecibir != nullptr)
+          OnErrorRecibir("Se recibió mal el valor de desconexión de un Host",mensaje);
+        else
+          OnDisconnectHost(partes[1]);
+    }
+
+    enet_packet_destroy (_fEvento.packet);
+#pragma endregion
+    break;
+
+  case ENET_EVENT_TYPE_CONNECT:
+#pragma region Conexión
+    if(OnConnect != nullptr) OnConnect();
+    Conectado = true;
+#pragma endregion
+    break;
+
+  case ENET_EVENT_TYPE_DISCONNECT:
+#pragma region DesConexión
+    if (OnDisconnect != nullptr) OnDisconnect();
+    Conectado = false;
+    _fEvento.peer -> data = nullptr;
+#pragma endregion
+    break;
+
+  case ENET_EVENT_TYPE_NONE: 
+    break;
+  default: break;
+  }
 }
 
 bool ENetClient::Suscribirse(std::string unCliente, std::string unaClave)
@@ -179,27 +259,27 @@ bool ENetClient::EnviarMensaje(short idCanal, std::string unTexto)
 
   const char* mensaje = unTexto.c_str();
   size_t longitud = strlen(mensaje) + 1;
-  
   ENetPacket* packet = enet_packet_create (mensaje, longitud, ENET_PACKET_FLAG_RELIABLE);
 
   try
   {
     enet_peer_send (_fServidor, idCanal, packet);  
-    //enet_host_flush (_fCliente);
+    //enet_host_flush(_fCliente);
     result = true;
   }
-  catch (std::exception& )
+  catch (std::exception& e)
   {
+    std::cout<<e.what();
     result = false;
   }
-  
+
   return result;
 }
 
 std::vector<std::string> ENetClient::StringSplit2(std::string str, std::string delimiter) 
 {
   std::vector<std::string> internal;
-     
+
   size_t pos = 0;
   std::string token;
   while ((pos = str.find(delimiter)) != std::string::npos) 
@@ -219,10 +299,10 @@ std::vector<std::string> ENetClient::StringSplit(std::string str, char delimiter
   std::vector<std::string> internal;
   std::stringstream ss(str); // Turn the string into a stream.
   std::string tok;
-  
+
   while(std::getline(ss, tok, delimiter)) {
     internal.push_back(tok);
   }
-  
+
   return internal;
 }

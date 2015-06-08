@@ -26,5 +26,7 @@ int main(int argc, char *argv[])
     BoardTop *m_t = new BoardTop(0,m_subte);
     m_t->show();
 
+    m_subte->initENet();
+
     return a.exec();
 }
