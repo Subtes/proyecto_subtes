@@ -25,20 +25,13 @@ TractionLever::~TractionLever()
 }
 
 void TractionLever::processValueChanged(int value){
-    //TODO: REVISAR POR QUE FALLA ?????
-    //qDebug() << "VALUE " << value;
-    //double proportional = 0;
     if(value > 15){
-        //proportional = (value-15)/85;
-        //qDebug() << "PROPORTIONAL " << proportional;
-        //emit traction((int)(proportional*100));
-        emit traction(value);
+        double a = static_cast<int>((((double)value-15.0)/85.0)*100.0);
+        emit traction(a);
     }else if((value <= 15)&&(value >= -15)){
         emit zero();
-    }else if ((value < -15) && (value >= -90)){
-        //proportional = (value-15)/85;
-        //qDebug() << "PROPORTIONAL " << proportional;
-        //emit traction((int)(proportional*100));
+    }else if ((value < -15) && (value >= -95)){
+        traction(static_cast<int>((((double)value+15.0)/80.0)*100.0));
         emit traction(value);
     }else if (value < -95){
         emit emergencyBrake();

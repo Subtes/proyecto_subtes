@@ -1,4 +1,5 @@
 #include "subtestatus.h"
+#include <QThread>
 
 SubteStatus::SubteStatus()
 {
@@ -12,27 +13,66 @@ SubteStatus::SubteStatus()
     m_speed = 0;
     m_rana = "0";
     m_traction = 0;
+    m_lastTraction = 0;
     m_tractionLeverPosition = 0;
+    m_lastPosition = 0;
+
     m_seta = false;
 
-    initENet();
+    //initENet();
 }
 
 void SubteStatus::initENet(){
     //=== eNet setup ===
-    m_serverIp = "127.0.0.1";
-    m_serverPort = 5000;
-    m_controlsHostName = "P1_control";
-    m_visualHostName = "P1_visualizador";
-    m_instructionsHostName = "P1_instruccion";
+    readIni();
 
     m_eNetClient = new ENetClient();
 
     using namespace std::placeholders;
     m_eNetClient->OnCambioValClave = std::bind(&SubteStatus::processValueChanged, this, _1, _2, _3);
 
-    m_eNetClient->Conectar(m_serverIp, m_serverPort, m_controlsHostName);
+    if (!m_eNetClient->Conectar(m_serverIp, m_serverPort, m_controlsHostName)){
+        qDebug() << "ERROR AL CONECTAR CON EL SERVIDOR";
+        qDebug() << "Intento conectar con:: servidor " << m_serverIp.c_str() << " , puerto "<< m_serverPort << " , host "<< m_controlsHostName.c_str();
+    }
     m_eNetClient->Suscribirse(m_instructionsHostName,"i_estado_simulador");
+}
+
+void SubteStatus::readIni()
+{
+    QDomDocument xml;
+
+    QString fileName = QDir(qApp->applicationDirPath())
+            .absoluteFilePath("etc/control.ini");
+
+    qDebug() << "LECTURA DEL ARCHIVO DE CONFIGURACION .INI: " ;
+    qDebug() << "Ubicacion del archivo: " << fileName;
+
+    QFile f(fileName);
+    if (!f.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "Error en la carga del archivo de configuracion control.ini";
+        return;
+    }
+
+    xml.setContent(&f);
+    f.close();
+
+    QDomElement root=xml.documentElement();
+
+    qDebug() << "XML: root object" << root.nodeName();
+
+    m_serverIp = root.namedItem("serverIp").toElement().text().toStdString();
+    m_serverPort = root.namedItem("serverPort").toElement().text().toInt();
+    m_controlsHostName = root.namedItem("m_controlsHostName").toElement().text().toStdString();
+    m_visualHostName = root.namedItem("m_visualHostName").toElement().text().toStdString();
+    m_instructionsHostName = root.namedItem("m_instructionsHostName").toElement().text().toStdString();
+
+    qDebug() << "XML: server Ip: " << m_serverIp.c_str();
+    qDebug() << "XML: server Port: " << m_serverPort;
+    qDebug() << "XML: controls Host Name: " << m_controlsHostName.c_str();
+    qDebug() << "XML: visual Host Name: " << m_visualHostName.c_str();
+    qDebug() << "XML: instructions Host Name: " << m_instructionsHostName.c_str();
 }
 
 SubteStatus::~SubteStatus()
@@ -73,16 +113,20 @@ void SubteStatus::washer()
 
 void SubteStatus::tractionLeverInZero(){
     m_traction = 0;
-    qDebug() << "c_movimiento: 0";
-    m_eNetClient->CambiarValorClave("c_movimiento",std::to_string(m_traction));
+    if(((m_rana.compare("ad")==0)||(m_rana.compare("at")==0))&&(!m_seta)){
+        qDebug() << "c_movimiento: 0";
+        m_eNetClient->CambiarValorClave("c_movimiento",std::to_string(m_traction));
+    }
 }
 
 void SubteStatus::tractionReceived(int value){
     if(((m_rana.compare("ad")==0)||(m_rana.compare("at")==0))&&(!m_seta)){
         m_traction = value;
-        qDebug() << "RANA ACTIVA! c_movimiento: "<< m_traction;
-        qDebug() << "RANA ACTIVA! value: "<< value;
-        m_eNetClient->CambiarValorClave("c_movimiento",std::to_string(m_traction));
+        qDebug() << "c_movimiento: "<< m_traction;
+        if(abs(m_traction-m_lastTraction)>=5){
+            m_eNetClient->CambiarValorClave("c_movimiento",std::to_string(m_traction));
+            m_lastTraction = m_traction;
+        }
     }
 }
 
@@ -100,13 +144,7 @@ void SubteStatus::ranaAD(){
     m_rana = "ad";
     qDebug() << "c_rana: AD";
     m_eNetClient->CambiarValorClave("c_rana","ad");
-
-    //TODO: refactor this hardcoded!!!
-    qDebug() << "m_tractionLeverPosition: " << m_tractionLeverPosition;
-    m_traction = static_cast<int>(((m_tractionLeverPosition-15)/85)*100);
-
-    qDebug() << "c_movimiento: " << m_traction;
-    m_eNetClient->CambiarValorClave("c_movimiento",std::to_string(m_traction));
+    recalcularTraccion();
 }
 
 void SubteStatus::ranaCERO(){
@@ -123,11 +161,7 @@ void SubteStatus::ranaAT(){
     m_rana = "at";
     qDebug() << "c_rana: AT";
     m_eNetClient->CambiarValorClave("c_rana","at");
-
-    //TODO: refactor this hardcoded!!!
-    m_traction = static_cast<int>(((m_tractionLeverPosition-15)/85)*100);
-    qDebug() << "c_movimiento: " << m_traction;
-    m_eNetClient->CambiarValorClave("c_movimiento",std::to_string((int)m_traction));
+    recalcularTraccion();
 }
 
 void SubteStatus::hombreVivoPressed(){
@@ -142,8 +176,10 @@ void SubteStatus::hombreVivoReleased(){
 
 void SubteStatus::tractionLeverChanged(int value){
     m_tractionLeverPosition = value;
-    qDebug() << "c_regulador_de_mando: "<< value;
-    m_eNetClient->CambiarValorClave("c_regulador_de_mando",std::to_string(value));
+    if(abs(m_tractionLeverPosition-m_lastPosition)>=5){
+        m_eNetClient->CambiarValorClave("c_regulador_de_mando",std::to_string(value));
+        m_lastPosition = m_tractionLeverPosition;
+    }
 }
 
 void SubteStatus::emergencyOverrideClicked(){
@@ -207,6 +243,7 @@ void SubteStatus::setaActivated(){
     this->m_seta = true;
     qDebug() << "c_freno_emergencia: con";
     m_eNetClient->CambiarValorClave("c_freno_emergencia","con");
+    m_eNetClient->CambiarValorClave("c_seta_emergencia","con");
 
     m_traction = 0;
     qDebug() << "c_movimiento: " << m_traction;
@@ -217,11 +254,8 @@ void SubteStatus::setaDeactivated(){
     this->m_seta = false;
     qDebug() << "c_freno_emergencia: des";
     m_eNetClient->CambiarValorClave("c_freno_emergencia","des");
-
-    //TODO: refactor this hardcoded!!!
-    m_traction = static_cast<int>(((m_tractionLeverPosition-15)/85)*100);
-    qDebug() << "c_movimiento: " << m_traction;
-    m_eNetClient->CambiarValorClave("c_movimiento",std::to_string(m_traction));
+    m_eNetClient->CambiarValorClave("c_seta_emergencia","des");
+    recalcularTraccion();
 }
 
 bool SubteStatus::isSetaActivated(){
@@ -252,17 +286,22 @@ void SubteStatus::updateSpeed(double value){
 }
 
 void SubteStatus::processValueChanged(std::string host, std::string key, std::string value){
+    qDebug() << "processValueChanged:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() ;
+
     if(key.compare("v_velocidad") == 0){
         qDebug() << "cambio de velocidad recibido." ;
         updateSpeed(std::stod(value));
     }
 
-    if(key.compare("i_estado_simulador") == 0){
+
+    else if(key.compare("i_estado_simulador") == 0){
         if (value.compare("0") == 0){
 
             qDebug() << "i_estado_simulador 0 recibido" ;
+            m_eNetClient->CambiarValorClave("c_listo","0");
 
             if(!splashPassed){
+                qDebug() << "!splashPassed" ;
                 splashPassed = true;
 
                 m_eNetClient->Suscribirse(m_instructionsHostName,"i_iniciar_simulador");
@@ -300,4 +339,60 @@ void SubteStatus::processValueChanged(std::string host, std::string key, std::st
         }
 
     }
+
+    else if(key.compare("v_llego_senial") == 0){
+        std::string state = "";
+        // find the last occurrence of ';'
+        size_t pos = value.find_last_of(";");
+        // make sure the poisition is valid
+        if (pos != std::string::npos)
+            state = value.substr(pos+1);
+        else
+            qDebug() << "No se pudo encontrar 'separador ;' en el codigo de via recibido";
+
+        if (state.compare("0")==0){
+            m_seta = true;
+            qDebug() << "c_freno_emergencia: con";
+            m_eNetClient->CambiarValorClave("c_freno_emergencia","con");
+            m_traction = 0;
+            qDebug() << "c_movimiento: " << m_traction;
+            m_eNetClient->CambiarValorClave("c_movimiento",std::to_string(m_traction));
+        }
+    }
+}
+
+void SubteStatus::recalcularTraccion(){
+    if(((m_rana.compare("ad")==0)||(m_rana.compare("at")==0))&&(!m_seta)){
+        if(m_tractionLeverPosition > 15){
+            m_traction = static_cast<int>((((double)m_tractionLeverPosition-15.0)/85.0)*100.0);
+        }else if((m_tractionLeverPosition <= 15)&&(m_tractionLeverPosition >= -15)){
+            m_traction = 0;
+        }else if ((m_tractionLeverPosition < -15) && (m_tractionLeverPosition >= -95)){
+            m_traction = static_cast<int>((((double)m_tractionLeverPosition+15.0)/80.0)*100.0);
+        }else if (m_tractionLeverPosition < -95){
+            m_traction = 0;
+        }
+    }else{
+        m_traction = 0;
+    }
+    m_eNetClient->CambiarValorClave("c_movimiento",std::to_string(m_traction));
+    qDebug() << "c_movimiento: " << m_traction;
+}
+
+void SubteStatus::recalcularTraccion(){
+    if(((m_rana.compare("ad")==0)||(m_rana.compare("at")==0))&&(!m_seta)){
+        if(m_tractionLeverPosition > 15){
+            m_traction = static_cast<int>((((double)m_tractionLeverPosition-15.0)/85.0)*100.0);
+        }else if((m_tractionLeverPosition <= 15)&&(m_tractionLeverPosition >= -15)){
+            m_traction = 0;
+        }else if ((m_tractionLeverPosition < -15) && (m_tractionLeverPosition >= -95)){
+            m_traction = static_cast<int>((((double)m_tractionLeverPosition+15.0)/80.0)*100.0);
+        }else if (m_tractionLeverPosition < -95){
+            m_traction = 0;
+        }
+    }else{
+        m_traction = 0;
+    }
+    m_eNetClient->CambiarValorClave("c_movimiento",std::to_string(m_traction));
+    qDebug() << "c_movimiento: " << m_traction;
 }
