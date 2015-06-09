@@ -6,6 +6,8 @@
 
 #include <QtXml>
 #include <QFile>
+#include <QSplashScreen>
+#include <QPixmap>
 
 class SubteStatus : public QObject
 {
@@ -22,6 +24,8 @@ private:
     static const bool CLOSE = false;
 
     bool splashPassed;
+    QSplashScreen *m_splash = NULL;
+    QPixmap m_pixMapSplash;
 
     bool m_horn;
     bool m_emergencyOverride;
@@ -94,6 +98,7 @@ public slots:
     bool isSetaActivated();
     void pressedCON();
     void pressedDES();
+    void loadFinish();
 };
 
 #endif // SUBTESTATUS_H
