@@ -1,6 +1,5 @@
 #include "boardleft.h"
 #include "ui_boardleft.h"
-#include "src/controllers/atp_controller.h"
 
 BoardLeft::BoardLeft(QWidget *parent, SubteStatus * subte) :
     QMainWindow(parent),
@@ -14,7 +13,8 @@ BoardLeft::BoardLeft(QWidget *parent, SubteStatus * subte) :
 
     ui->setupUi(this);
 
-    Atp_Controller *atp = new Atp_Controller(subte,ui->widget_atp);
+    this->setEnabled(false);
+
 }
 
 BoardLeft::~BoardLeft()

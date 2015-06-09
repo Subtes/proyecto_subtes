@@ -82,5 +82,36 @@
         <file>resources/RelojtechoAGUJA02.png</file>
         <file>resources/RelojtechoAGUJA03.png</file>
         <file>resources/splash.jpg</file>
+        <file>resources/ATP_0L.png</file>
+        <file>resources/ATP_0S.png</file>
+        <file>resources/ATP_1L.png</file>
+        <file>resources/ATP_1S.png</file>
+        <file>resources/ATP_2L.png</file>
+        <file>resources/ATP_2S.png</file>
+        <file>resources/ATP_3L.png</file>
+        <file>resources/ATP_3S.png</file>
+        <file>resources/ATP_4L.png</file>
+        <file>resources/ATP_4S.png</file>
+        <file>resources/ATP_5L.png</file>
+        <file>resources/ATP_5S.png</file>
+        <file>resources/ATP_6L.png</file>
+        <file>resources/ATP_6S.png</file>
+        <file>resources/ATP_7L.png</file>
+        <file>resources/ATP_7S.png</file>
+        <file>resources/ATP_8L.png</file>
+        <file>resources/ATP_8S.png</file>
+        <file>resources/ATP_9L.png</file>
+        <file>resources/ATP_9S.png</file>
+        <file>resources/ATP_PuntoL.png</file>
+        <file>resources/ATP_PuntoS.png</file>
+        <file>resources/ATP_FONDO1024_Resize.PNG</file>
+        <file>resources/ATPoCL.PNG</file>
+        <file>resources/ATPoCMC.PNG</file>
+        <file>resources/ATOoCORTE.PNG</file>
+        <file>resources/ATPoCorL.PNG</file>
+        <file>resources/ATPofalla.PNG</file>
+        <file>resources/ATPoFoSERV.PNG</file>
+        <file>resources/ATPoFreEmrg.PNG</file>
+        <file>resources/ATPoLed2.png</file>
     </qresource>
 </RCC>

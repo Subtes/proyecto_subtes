@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include "src/models/subtestatus.h"
-#include "src/controllers/atp_controller.h"
 
 namespace Ui {
 class BoardLeft;
