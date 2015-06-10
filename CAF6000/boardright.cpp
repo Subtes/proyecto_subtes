@@ -23,8 +23,8 @@ BoardRight::BoardRight(QWidget *parent, SubteStatus * subte) :
     ui->frenoRetencion->setVisible(false);
     ui->desacople->setVisible(false);
 
-    ui->splash->setVisible(true);
-    ui->splash->resize(this->width(),this->height());
+    //ui->splash->setVisible(true);
+    //ui->splash->resize(this->width(),this->height());
 
     connect(m_subte,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(m_subte,SIGNAL(controlDisable()),this,SLOT(disableScreen()));

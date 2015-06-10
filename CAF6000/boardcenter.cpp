@@ -35,8 +35,8 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte) :
     ui->publicoCabina->setVisible(false);
     ui->anulacionEmergencia->setVisible(false);
 
-    ui->splash->setVisible(true);
-    ui->splash->resize(this->width(),this->height());
+    //ui->splash->setVisible(true);
+    //ui->splash->resize(this->width(),this->height());
 
     connect(m_subte,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(m_subte,SIGNAL(controlDisable()),this,SLOT(disableScreen()));

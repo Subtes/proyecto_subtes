@@ -18,6 +18,12 @@ public:
     ~BoardLeft();
     void probarATP(double speed);
 
+public slots:
+    void startBoard();
+    void enableScreen();
+    void disableScreen();
+    void resetControls();
+
 private:
     Ui::BoardLeft *ui;
     SubteStatus *m_subte;
