@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui quick quickwidgets declarative widgets
+QT += core gui quick quickwidgets declarative widgets xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -55,7 +55,6 @@ HEADERS  += boardcenter.h \
     ../ENet/ENetClient.h \
     src/controllers/atp_controller.h
 
-
 FORMS    += boardcenter.ui \
     boardright.ui \
     boardleft.ui \
@@ -72,8 +71,14 @@ LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L$$PWD/../ENet -lenet \
         -L$$PWD/../ENet/ -lWS2_32 \
         -L$$PWD/../ENet/ -lBufferOverflowU \
-        -L$$PWD/../ENet/ -lWinMM
+        -L$$PWD/../ENet/ -lWinMM \
+        -L$$PWD/../ENet/ -lENetClient-Cpp
 
 RESOURCES += ../subtewidgets/widgetsrsc.qrc \
             ../subtewidgets/qmlrsc.qrc \
             boardrsc.qrc
+
+DESTDIR = $$PWD
+
+OTHER_FILES += \
+    control.ini.xml

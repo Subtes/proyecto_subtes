@@ -32,5 +32,7 @@ int main(int argc, char *argv[])
     m_l->show();
     qDebug() << "Velocidad main: " << v;
 
+    m_subte->initENet();
+
     return a.exec();
 }
