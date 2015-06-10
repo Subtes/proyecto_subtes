@@ -16,10 +16,13 @@ class BoardLeft : public QMainWindow
 public:
     explicit BoardLeft(QWidget *parent = 0, SubteStatus *subte = 0);
     ~BoardLeft();
+    void probarATP(double speed);
 
 private:
     Ui::BoardLeft *ui;
     SubteStatus *m_subte;
+    //Es para probarlo Quitar!
+    Atp_Controller *m_atp;
 };
 
 #endif // BOARDLEFT_H

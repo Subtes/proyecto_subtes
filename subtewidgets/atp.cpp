@@ -13,6 +13,36 @@ Atp::Atp(QWidget *parent) :
     this->m_qmlView = ui->atp_quickWidget->rootObject();
 }
 
+void Atp::updateSpeed(double speed){
+
+    QVariant returnedValue;
+    int v = ((int)speed/2);
+    QMetaObject::invokeMethod(m_qmlView, "posLed",
+                              Q_RETURN_ARG(QVariant,returnedValue),
+                              Q_ARG(QVariant, v));
+    qDebug() << "¡¡¡Atp::updateSpeed: posLed" << v;
+}
+
+void Atp::updateTargetSpeed(double speed){
+
+    QVariant returnedValue;
+    int v = (int)speed;
+    QMetaObject::invokeMethod(m_qmlView, "targetSpeed",
+                              Q_RETURN_ARG(QVariant,returnedValue),
+                              Q_ARG(QVariant, v));
+    qDebug() << "Atp::updateTargetSpeed: " << v;
+}
+
+void Atp::updateAllowedSpeed(double speed){
+
+    QVariant returnedValue;
+    int v = (int)speed/2;
+    QMetaObject::invokeMethod(m_qmlView, "allowedSpeed",
+                              Q_RETURN_ARG(QVariant,returnedValue),
+                              Q_ARG(QVariant, v));
+    qDebug() << "Atp::updateAllowedSpeed: " << v;
+}
+
 Atp::~Atp()
 {
     delete ui;

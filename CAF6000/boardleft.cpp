@@ -14,7 +14,15 @@ BoardLeft::BoardLeft(QWidget *parent, SubteStatus * subte) :
 
     ui->setupUi(this);
 
-    Atp_Controller *atp = new Atp_Controller(subte,ui->widget_atp);
+    //Atp_Controller *atp = new Atp_Controller(subte,ui->widget_atp);
+    this->m_atp = new Atp_Controller(subte,ui->widget_atp);
+}
+
+void BoardLeft::probarATP(double s){
+    m_atp->updateSpeed(s);
+    m_atp->updateTargetSpeed(50.0);
+    qDebug() << "Velocidad boardLeft: " << s;
+
 }
 
 BoardLeft::~BoardLeft()

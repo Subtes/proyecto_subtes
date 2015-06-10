@@ -20,11 +20,17 @@ int main(int argc, char *argv[])
     BoardCenter * m_c = new BoardCenter(0,m_subte);
     m_c->show();
     BoardLeft *m_l = new BoardLeft(0,m_subte);
+    //m_l->show();
+    //BoardRight *m_r = new BoardRight(0,m_subte);
+    //m_r->show();
+    //BoardTop *m_t = new BoardTop(0,m_subte);
+    //m_t->show();
+
+    //Pruebo ATP:
+    double v=60.0;
+    m_l->probarATP(40.0);
     m_l->show();
-    BoardRight *m_r = new BoardRight(0,m_subte);
-    m_r->show();
-    BoardTop *m_t = new BoardTop(0,m_subte);
-    m_t->show();
+    qDebug() << "Velocidad main: " << v;
 
     return a.exec();
 }
