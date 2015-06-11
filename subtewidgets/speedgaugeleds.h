@@ -21,7 +21,7 @@ private:
     QQuickItem *m_qmlView;
 
 public slots:
-    void updateMaxSpeed(double speed);
+    void updateTargetSpeed(double speed);
     void updateSpeed(double speed);
 };
 

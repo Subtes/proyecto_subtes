@@ -130,6 +130,6 @@ void BoardCenter::resetControls(){
     ui->bypassFreno->turnOff();
     ui->bypassTraccion->turnOff();
     ui->anulacionEmergencia->turnOff();
-    ui->velocimetro->updateSpeed(0);
-    ui->velocimetro->updateMaxSpeed(60);
+    ui->velocimetro->updateSpeed(0.0);
+    ui->velocimetro->updateTargetSpeed(0.0);
 }

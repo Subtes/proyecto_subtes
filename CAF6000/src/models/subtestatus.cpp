@@ -11,6 +11,8 @@ SubteStatus::SubteStatus()
     m_rightDoors = CLOSE;
     m_CSCP = false;
     m_speed = 0;
+    m_targetSpeed = 0;
+    m_allowedSpeed = 0;
     m_rana = "0";
     m_traction = 0;
     m_lastTraction = 0;
@@ -36,6 +38,8 @@ void SubteStatus::initENet(){
         qDebug() << "Intento conectar con:: servidor " << m_serverIp.c_str() << " , puerto "<< m_serverPort << " , host "<< m_controlsHostName.c_str();
     }
     m_eNetClient->Suscribirse(m_instructionsHostName,"i_estado_simulador");
+    m_eNetClient->CambiarValorClave("c_listo","0");
+
 }
 
 void SubteStatus::readIni()
@@ -285,16 +289,21 @@ void SubteStatus::updateSpeed(double value){
     emit speedChanged(m_speed);
 }
 
+
+void SubteStatus::updateTargetSpeed(double value){
+    m_targetSpeed = value;
+    emit targetSpeedChanged(m_targetSpeed);
+}
+
+void SubteStatus::updateAllowedSpeed(double value){
+    m_allowedSpeed = value;
+    emit allowedSpeedChanged(m_allowedSpeed);
+}
+
 void SubteStatus::processValueChanged(std::string host, std::string key, std::string value){
     qDebug() << "processValueChanged:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() ;
 
-    if(key.compare("v_velocidad") == 0){
-        qDebug() << "cambio de velocidad recibido." ;
-        updateSpeed(std::stod(value));
-    }
-
-
-    else if(key.compare("i_estado_simulador") == 0){
+    if(key.compare("i_estado_simulador") == 0){
         if (value.compare("0") == 0){
 
             qDebug() << "i_estado_simulador 0 recibido" ;
@@ -306,6 +315,7 @@ void SubteStatus::processValueChanged(std::string host, std::string key, std::st
 
                 m_eNetClient->Suscribirse(m_instructionsHostName,"i_iniciar_simulador");
                 m_eNetClient->Suscribirse(m_visualHostName,"v_velocidad");
+                m_eNetClient->Suscribirse(m_visualHostName,"v_tramo_vel");
                 m_eNetClient->Suscribirse(m_visualHostName,"v_esfuerzo");
                 m_eNetClient->Suscribirse(m_visualHostName,"v_intensidad");
                 m_eNetClient->Suscribirse(m_visualHostName,"v_voltaje");
@@ -359,24 +369,17 @@ void SubteStatus::processValueChanged(std::string host, std::string key, std::st
             m_eNetClient->CambiarValorClave("c_movimiento",std::to_string(m_traction));
         }
     }
-}
 
-void SubteStatus::recalcularTraccion(){
-    if(((m_rana.compare("ad")==0)||(m_rana.compare("at")==0))&&(!m_seta)){
-        if(m_tractionLeverPosition > 15){
-            m_traction = static_cast<int>((((double)m_tractionLeverPosition-15.0)/85.0)*100.0);
-        }else if((m_tractionLeverPosition <= 15)&&(m_tractionLeverPosition >= -15)){
-            m_traction = 0;
-        }else if ((m_tractionLeverPosition < -15) && (m_tractionLeverPosition >= -95)){
-            m_traction = static_cast<int>((((double)m_tractionLeverPosition+15.0)/80.0)*100.0);
-        }else if (m_tractionLeverPosition < -95){
-            m_traction = 0;
-        }
-    }else{
-        m_traction = 0;
+    else if(key.compare("v_velocidad") == 0){
+        qDebug() << "cambio de velocidad recibido." ;
+        updateSpeed(std::stod(value));
     }
-    m_eNetClient->CambiarValorClave("c_movimiento",std::to_string(m_traction));
-    qDebug() << "c_movimiento: " << m_traction;
+
+    else if(key.compare("v_tramo_vel") == 0){
+        qDebug() << "cambio de velocidad objetivo recibido." ;
+        updateTargetSpeed(std::stod(value));
+    }
+
 }
 
 void SubteStatus::recalcularTraccion(){
