@@ -16,8 +16,6 @@ public:
   ENetClient(void);
   ~ENetClient(void);
 
-  bool Conectado;
-
   Connect OnConnect;
   DisConnect OnDisconnect;
   ConnectHost OnConnectHost;
@@ -28,6 +26,7 @@ public:
   bool EstaConectado();
   bool Conectar(std::string unaIP, int unPuerto, std::string unNombre);
   bool Desconectar(void);
+  void do_work();
   bool Suscribirse(std::string unCliente, std::string unaClave);
   bool DeSuscribirse(std::string unCliente, std::string unaClave);
   bool CambiarValorClave(std::string unaClave, std::string unNuevoValor);
@@ -51,6 +50,7 @@ protected:
 
   void ProcesarBuffers(bool continuo);
   void ProcesarEvento();
+  //void do_work(enet_uint32 miliseg);
 
   std::vector<std::string> StringSplit(std::string str, char delimiter);
   std::vector<std::string> StringSplit2(std::string str, std::string delimiter);

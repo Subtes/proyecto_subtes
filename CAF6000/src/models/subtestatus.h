@@ -30,6 +30,8 @@ private:
     bool m_CSCP;
     bool m_seta;  
     double m_speed;
+    double m_targetSpeed;
+    double m_allowedSpeed;
     std::string m_rana;
     int m_traction;
     int m_lastTraction;
@@ -46,6 +48,8 @@ private:
 
     void processValueChanged(std::string host, std::string key, std::string value);
     void updateSpeed(double value);
+    void updateTargetSpeed(double value);
+    void updateAllowedSpeed(double value);
     void recalcularTraccion();
     void readIni();
     void conectarCliente(std::string ip, int puerto, std::string host);
@@ -53,6 +57,9 @@ private:
 signals:
     CSCPChanged(bool cscp);
     speedChanged(double speed);
+    allowedSpeedChanged(double speed);
+    targetSpeedChanged(double speed);
+
 
     controlReady();
     controlEnable();
