@@ -26,8 +26,7 @@ void Seta_Controller::pullSeta(){
 
 QVariant Seta_Controller::isPressed(){
     // return seta's state from the model
-    return(this->m_modelo->isSetaActivated());
-
+    return(this->m_modelo->seta());
 }
 
 Seta_Controller::~Seta_Controller()

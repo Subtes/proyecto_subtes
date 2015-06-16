@@ -1,3 +1,6 @@
+#ifndef ENETCLIENT_H
+#define ENETCLIENT_H
+
 #include "enet/enet.h"
 #include <string>
 #include <thread>
@@ -66,3 +69,5 @@ protected:
   std::vector<std::string> StringSplit2(std::string str, std::string delimiter);
 
 };
+
+#endif // ENETCLIENT_H

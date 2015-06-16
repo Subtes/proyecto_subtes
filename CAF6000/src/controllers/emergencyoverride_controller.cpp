@@ -24,5 +24,5 @@ void EmergencyOverride_Controller::emergencyOverrideClicked()
     }else{
         m_button->startBlink();
     }
-    m_subte->emergencyOverrideClicked();
+    m_subte->emergencyOverridePressed();
 }

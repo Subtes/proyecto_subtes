@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>BoardCenter</string>
+   <string>BOARD CENTER</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -301,6 +301,12 @@
    <header>QQuickWidget</header>
   </customwidget>
   <customwidget>
+   <class>Splash</class>
+   <extends>QWidget</extends>
+   <header>splash.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>SingleButton</class>
    <extends>QWidget</extends>
    <header>singlebutton.h</header>
@@ -318,15 +324,8 @@
    <header>speedgaugeleds.h</header>
    <container>1</container>
   </customwidget>
-  <customwidget>
-   <class>Splash</class>
-   <extends>QWidget</extends>
-   <header>splash.h</header>
-   <container>1</container>
-  </customwidget>
  </customwidgets>
  <resources>
-  <include location="../subtewidgets/widgetsrsc.qrc"/>
   <include location="../subtewidgets/widgetsrsc.qrc"/>
   <include location="../subtewidgets/widgetsrsc.qrc"/>
  </resources>

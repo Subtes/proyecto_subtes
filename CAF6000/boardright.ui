@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>BOARD RIGHT</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
@@ -114,6 +114,12 @@
    <header>QQuickWidget</header>
   </customwidget>
   <customwidget>
+   <class>Splash</class>
+   <extends>QWidget</extends>
+   <header>splash.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>SingleButton</class>
    <extends>QWidget</extends>
    <header>singlebutton.h</header>
@@ -123,12 +129,6 @@
    <class>Wiper</class>
    <extends>QWidget</extends>
    <header location="global">wiper.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Splash</class>
-   <extends>QWidget</extends>
-   <header>splash.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
