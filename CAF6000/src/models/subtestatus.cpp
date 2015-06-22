@@ -395,23 +395,23 @@ void SubteStatus::processValueChanged(std::string host, std::string key, std::st
 
 }
 
-//void SubteStatus::recalcularTraccion(){
-//    if(((m_rana.compare("ad")==0)||(m_rana.compare("at")==0))&&(!m_seta)){
-//        if(m_tractionLeverPosition > 15){
-//            m_traction = static_cast<int>((((double)m_tractionLeverPosition-15.0)/85.0)*100.0);
-//        }else if((m_tractionLeverPosition <= 15)&&(m_tractionLeverPosition >= -15)){
-//            m_traction = 0;
-//        }else if ((m_tractionLeverPosition < -15) && (m_tractionLeverPosition >= -95)){
-//            m_traction = static_cast<int>((((double)m_tractionLeverPosition+15.0)/80.0)*100.0);
-//        }else if (m_tractionLeverPosition < -95){
-//            m_traction = 0;
-//        }
-//    }else{
-//        m_traction = 0;
-//    }
-//    m_eNetClient->CambiarValorClave("c_movimiento",std::to_string(m_traction));
-//    qDebug() << "c_movimiento: " << m_traction;
-//}
+void SubteStatus::recalcularTraccion(){
+    if(((m_rana.compare("ad")==0)||(m_rana.compare("at")==0))&&(!m_seta)){
+        if(m_tractionLeverPosition > 15){
+            m_traction = static_cast<int>((((double)m_tractionLeverPosition-15.0)/85.0)*100.0);
+        }else if((m_tractionLeverPosition <= 15)&&(m_tractionLeverPosition >= -15)){
+            m_traction = 0;
+        }else if ((m_tractionLeverPosition < -15) && (m_tractionLeverPosition >= -95)){
+            m_traction = static_cast<int>((((double)m_tractionLeverPosition+15.0)/80.0)*100.0);
+        }else if (m_tractionLeverPosition < -95){
+            m_traction = 0;
+        }
+    }else{
+        m_traction = 0;
+    }
+    m_eNetClient->CambiarValorClave("c_movimiento",std::to_string(m_traction));
+    qDebug() << "c_movimiento: " << m_traction;
+}
 
 void SubteStatus::loadFinish(){
     this->m_splash->setHidden(true);
