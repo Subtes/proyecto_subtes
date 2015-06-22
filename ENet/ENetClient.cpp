@@ -99,7 +99,8 @@ bool ENetClient::Conectar(std::string unaIP, int unPuerto, std::string unNombre)
       result = true;
       Terminar = false;
       FMilisegundosEspera = 25;
-      _LosThreads[0] = std::thread(&ENetClient::ProcesarBuffers, this, true);
+      _threads.push_back(std::thread(&ENetClient::ProcesarBuffersENet, this, true)); // Pos 0, thread que encola los mensajes
+      _threads.push_back(std::thread(&ENetClient::ProcesarColaMensajes, this)); // Pos 1, thread que saca los mensajes
       ColocarMiNombre(unNombre);
     }
   }
@@ -114,8 +115,9 @@ bool ENetClient::Desconectar()
   {
     Terminar = true;
     enet_peer_disconnect_now(_fServidor, 0);
-    ProcesarBuffers(false);
-    _LosThreads[0].join();
+
+    _threads[0].join();
+    _threads[1].join();
     result = true;
     _fServidor = nullptr;
     _fCliente = nullptr;
@@ -139,7 +141,7 @@ void ENetClient::do_work()
   }
 }
 
-void ENetClient::ProcesarBuffers(bool continuo)
+void ENetClient::ProcesarBuffersENet(bool continuo)
 {
   if (continuo) Terminar = false;
   while (!Terminar)
@@ -150,6 +152,62 @@ void ENetClient::ProcesarBuffers(bool continuo)
   {
     do_work();
   }
+}
+
+void ENetClient::ProcesarColaMensajes()
+{
+  while (!Terminar)
+  {
+    while (!_fColaMsj.empty())
+    {
+      std::string mensaje;
+      s_mutex.lock();
+
+      mensaje = _fColaMsj.front();
+      _fColaMsj.pop();
+
+      s_mutex.unlock();
+
+      std::vector<std::string> partes = StringSplit2(mensaje, "||");
+
+      if (partes.size() <= 1 && OnErrorRecibir != nullptr)
+      {
+        OnErrorRecibir("Mensaje Erroneo Recibido", mensaje);
+        return;
+      }
+
+      if (partes[0] == "valClave" && OnCambioValClave != nullptr)
+      {
+        if (partes.size() == 3) partes.push_back("");
+        if (partes.size()!=4)
+        {
+          if (OnErrorRecibir != nullptr)
+            OnErrorRecibir("Se recibió mal el valor de una clave desde el servidor",mensaje);
+        }
+        else
+        {
+          OnCambioValClave(partes[1], partes[2], partes[3]);
+        }
+      }
+      if (partes[0] == "seConectoCliente" && OnConnectHost != nullptr)
+      {
+        if (partes.size() != 2)
+          if (OnErrorRecibir != nullptr)
+            OnErrorRecibir("Se recibió mal el valor de conexión de un Host",mensaje);
+          else
+            OnConnectHost(partes[1]);
+      }
+      if (partes[0] == "seDesConectoCliente" && OnDisconnectHost != nullptr)
+      {
+        if (partes.size() != 2)
+          if (OnErrorRecibir != nullptr)
+            OnErrorRecibir("Se recibió mal el valor de desconexión de un Host",mensaje);
+          else
+            OnDisconnectHost(partes[1]);
+      }
+    }
+  }
+
 }
 
 void ENetClient::ProcesarEvento()
@@ -164,46 +222,11 @@ void ENetClient::ProcesarEvento()
     myString = std::vector<char>(_fEvento.packet->dataLength + 1);
     myString[_fEvento.packet->dataLength] = '\0';
     memcpy(&myString[0], _fEvento.packet->data, _fEvento.packet->dataLength);
-    mensaje = std::string(&myString[0]);
-
-    partes = StringSplit2(mensaje, "||");
-
-    if (partes.size() <= 1 && OnErrorRecibir != nullptr)
-    {
-      OnErrorRecibir("Mensaje Erroneo Recibido", mensaje);
-      return;
-    }
-
-    if (partes[0] == "valClave" && OnCambioValClave != nullptr)
-    {
-      if (partes.size() == 3) partes.push_back("");
-      if (partes.size()!=4)
-      {
-        if (OnErrorRecibir != nullptr)
-          OnErrorRecibir("Se recibió mal el valor de una clave desde el servidor",mensaje);
-      }
-      else
-      {
-        OnCambioValClave(partes[1], partes[2], partes[3]);
-      }
-    }
-    if (partes[0] == "seConectoCliente" && OnConnectHost != nullptr)
-    {
-      if (partes.size() != 2)
-        if (OnErrorRecibir != nullptr)
-          OnErrorRecibir("Se recibió mal el valor de conexión de un Host",mensaje);
-        else
-          OnConnectHost(partes[1]);
-    }
-    if (partes[0] == "seDesConectoCliente" && OnDisconnectHost != nullptr)
-    {
-      if (partes.size() != 2)
-        if (OnErrorRecibir != nullptr)
-          OnErrorRecibir("Se recibió mal el valor de desconexión de un Host",mensaje);
-        else
-          OnDisconnectHost(partes[1]);
-    }
-
+    
+    s_mutex.lock();
+    _fColaMsj.push(std::string(&myString[0]));
+    s_mutex.unlock();
+    
     enet_packet_destroy (_fEvento.packet);
 #pragma endregion
     break;
@@ -217,7 +240,8 @@ void ENetClient::ProcesarEvento()
   case ENET_EVENT_TYPE_DISCONNECT:
 #pragma region DesConexión
     Terminar = true;
-    _LosThreads[0].join();
+    _threads[0].join();
+    _threads[1].join();
     _fServidor = nullptr;
     _fCliente = nullptr;
     _fEvento.peer -> data = nullptr;
@@ -259,7 +283,7 @@ bool ENetClient::ColocarMiNombre(std::string unNombre)
 bool ENetClient::EnviarMensaje(short idCanal, std::string unTexto)
 {
   if (!EstaConectado()) return false;
-  auto result = false;
+  bool result;
 
   const char* mensaje = unTexto.c_str();
   size_t longitud = strlen(mensaje) + 1;
