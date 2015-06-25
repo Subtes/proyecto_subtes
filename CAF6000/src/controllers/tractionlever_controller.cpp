@@ -6,9 +6,7 @@ TractionLever_Controller::TractionLever_Controller(SubteStatus * subte, Traction
     m_tractionLever = tractionLever;
 
     connect(m_tractionLever,SIGNAL(traction(int)),m_subte,SLOT(tractionReceived(int)));
-    connect(m_tractionLever,SIGNAL(zero()),m_subte,SLOT(tractionLeverInZero()));
-    //TODO: separate traction and brake in two variables.
-    //connect(m_tractionLever,SIGNAL(brake(int)),m_subte,SLOT(brakeReceived(int)));
+    connect(m_tractionLever,SIGNAL(brake(int)),m_subte,SLOT(brakeReceived(int)));
     connect(m_tractionLever,SIGNAL(emergencyBrake()),m_subte,SLOT(emergencyBrakeActived()));
     connect(m_tractionLever,SIGNAL(positionChanged(int)),m_subte,SLOT(tractionLeverChanged(int)));
 }

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>BOARD LEFT</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-image: url(:/resources/board_left_BKG.PNG);</string>
