@@ -8,6 +8,8 @@
 #include <QFile>
 #include <QSplashScreen>
 #include <QPixmap>
+#include <QTimer>
+#include <QSignalMapper>
 
 class SubteStatus : public QObject
 {
@@ -18,6 +20,8 @@ public:
     ~SubteStatus();
     void initENet();
     bool CSCPStatus();
+    double getSpeed();
+    double getAllowSpeed();
 
 private:
     static const bool OPEN = true;
@@ -57,6 +61,21 @@ private:
     void recalcularTraccion();
     void readIni();
     void conectarCliente(std::string ip, int puerto, std::string host);
+
+    //Timer ATP
+    QTimer *m_timer_ATP_Allowed;
+
+    //Timer Debugeo
+    QTimer *m_timer_ies0;
+    QTimer *m_timer_ies1;
+    QTimer *m_timer_ies2;
+    QTimer *m_timer_vls0;
+    QTimer *m_timer_vls1;
+    QTimer *m_timer_vvX1;
+    QTimer *m_timer_vvX2;
+    QTimer *m_timer_vtvT;
+
+    QSignalMapper *signalMapper;
 
 signals:
     CSCPChanged(bool cscp);
@@ -98,7 +117,18 @@ public slots:
     bool isSetaActivated();
     void pressedCON();
     void pressedDES();
+
+    //Splash
     void loadFinish();
+    void loadStart();
+
+    //ATP
+    void enableTraction();
+    void disableTraction();
+
+    //SLOTs Debug
+    void debugSignal(QString);
+
 };
 
 #endif // SUBTESTATUS_H

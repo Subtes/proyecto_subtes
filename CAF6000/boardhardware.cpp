@@ -20,8 +20,8 @@ BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte) :
     ui->setaButton->setVisible(false);
     ui->traction->setVisible(false);
 
-    ui->splash->setVisible(true);
-    ui->splash->resize(this->width(),this->height());
+    //ui->splash->setVisible(true);
+    //ui->splash->resize(this->width(),this->height());
 
     connect(m_subte,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(m_subte,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
@@ -48,8 +48,8 @@ void BoardHardware::startBoard(){
     ui->setaButton->setVisible(true);
     ui->traction->setVisible(true);
 
-    ui->splash->setVisible(false);
-    ui->splash->resize(0,0);
+    //ui->splash->setVisible(false);
+    //ui->splash->resize(0,0);
     this->raise();
 
     this->setEnabled(false);

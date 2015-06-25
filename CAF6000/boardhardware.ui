@@ -62,16 +62,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="Splash" name="splash" native="true">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>0</width>
-     <height>0</height>
-    </rect>
-   </property>
-  </widget>
  </widget>
  <customwidgets>
   <customwidget>
@@ -96,12 +86,6 @@
    <class>Seta_Button</class>
    <extends>QWidget</extends>
    <header>seta_button.h</header>
-  </customwidget>
-  <customwidget>
-   <class>Splash</class>
-   <extends>QWidget</extends>
-   <header>splash.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

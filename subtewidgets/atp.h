@@ -20,6 +20,12 @@ public slots:
     void updateTargetSpeed(double speed);
     void updateAllowedSpeed(double speed);
     void updateSpeed(double speed);
+    void setCMC(bool);
+    void setCL(bool);
+    void setFserv(bool);
+    void setFrenoUrg(bool);
+    void setCorte(bool);
+    void setFalla(bool);
 
 private:
     Ui::Atp *ui;

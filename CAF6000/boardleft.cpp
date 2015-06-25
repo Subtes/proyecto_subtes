@@ -38,12 +38,12 @@ void BoardLeft::resetControls(){
     m_atp->updateTargetSpeed(0.0);
 }
 
-void BoardLeft::probarATP(double s){
-    m_atp->updateSpeed(s);
-    m_atp->updateTargetSpeed(60.0);
-    qDebug() << "Velocidad boardLeft: " << s;
+//void BoardLeft::probarATP(double s){
+//    m_atp->updateSpeed(s);
+//    m_atp->updateTargetSpeed(60.0);
+//    qDebug() << "Velocidad boardLeft: " << s;
 
-}
+//}
 
 BoardLeft::~BoardLeft()
 {
