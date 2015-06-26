@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>BOARD TOP</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-image: url(:/resources/board_top_BKG.jpg);</string>
@@ -366,15 +366,15 @@
    <header>QQuickWidget</header>
   </customwidget>
   <customwidget>
-   <class>SingleButton</class>
-   <extends>QWidget</extends>
-   <header>singlebutton.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>Splash</class>
    <extends>QWidget</extends>
    <header>splash.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SingleButton</class>
+   <extends>QWidget</extends>
+   <header>singlebutton.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

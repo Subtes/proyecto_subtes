@@ -1,17 +1,13 @@
 #include "boardtop.h"
 #include "ui_boardtop.h"
 
-BoardTop::BoardTop(QWidget *parent, SubteStatus * subte) :
+BoardTop::BoardTop(QWidget *parent, SubteStatus * subte, EventHandler *eventHandler) :
     QMainWindow(parent),
     ui(new Ui::BoardTop)
 {
-    //SUBTE Model TODO: make it singleton
-    if (subte==NULL){
-        subte = new SubteStatus();
-    }
-
     //SUBTE Model
     m_subte = subte;
+    m_eventHandler = eventHandler;
 
     ui->setupUi(this);
 
@@ -48,10 +44,10 @@ BoardTop::BoardTop(QWidget *parent, SubteStatus * subte) :
     ui->splash->setVisible(true);
     ui->splash->resize(this->width(),this->height());
 
-    connect(m_subte,SIGNAL(controlReady()),this,SLOT(startBoard()));
-    connect(m_subte,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
-    connect(m_subte,SIGNAL(controlEnable()),this,SLOT(enableScreen()));
-    connect(m_subte,SIGNAL(controlReset()),this,SLOT(resetControls()));
+    connect(m_eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
+    connect(m_eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
+    connect(m_eventHandler,SIGNAL(controlEnable()),this,SLOT(enableScreen()));
+    connect(m_eventHandler,SIGNAL(controlReset()),this,SLOT(resetControls()));
 
 }
 

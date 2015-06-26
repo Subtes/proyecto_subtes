@@ -20,7 +20,7 @@
    <string>ATP</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">background-image: url(:/resources/board_left_BKG.PNG);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="Atp" name="widget_atp" native="true">

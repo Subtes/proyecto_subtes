@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "src/models/subtestatus.h"
+#include "src/controllers/eventhandler.h"
 #include "src/controllers/horn_controller.h"
 #include "src/controllers/tractionlever_controller.h"
 #include "src/controllers/rana_controller.h"
@@ -19,7 +20,7 @@ class BoardHardware : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit BoardHardware(QWidget *parent = 0, SubteStatus *subte = 0);
+    explicit BoardHardware(QWidget *parent = 0, SubteStatus *subte = 0, EventHandler *eventHandler = 0);
     ~BoardHardware();
 
 public slots:
@@ -31,6 +32,7 @@ public slots:
 private:
     Ui::BoardHardware *ui;
     SubteStatus *m_subte;
+    EventHandler *m_eventHandler;
 
     Horn_Controller *m_horn;
     TractionLever_Controller *m_tractionLever;
@@ -38,7 +40,6 @@ private:
     HombreVivo_Controller *m_hombreVivo;
     Seta_Controller *m_setaButton;
     SpeedGaugeLeds_Controller *m_speedGauge;
-
 };
 
 #endif // BOARDHARDWARE_H

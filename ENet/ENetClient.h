@@ -1,7 +1,12 @@
+#ifndef ENETCLIENT_H
+#define ENETCLIENT_H
+
 #include "enet/enet.h"
 #include <string>
 #include <thread>
 #include <vector>
+#include <queue>
+#include <mutex>
 
 typedef std::function<void()> Connect;
 typedef std::function<void()> DisConnect;
@@ -39,16 +44,24 @@ protected:
     
   bool Terminar;
   bool Inicializado;  
-  std::thread _LosThreads[2];
-  //std::future<void> _LosOtros[2];
   enet_uint32 FMilisegundosEspera;
+
+  // Es la cola de los mensajes, thread y el semáforo;
+  std::vector<std::thread> _threads;
+  std::queue<std::string> _fColaMsj; 
+  std::mutex s_mutex;
 
   bool EnviarMensaje(short idCanal, std::string unTexto);
 
   // Cosas todavía no probadas
   bool CambiarValorClave(std::string unCliente, std::string unaClave, std::string unNuevoValor);
 
-  void ProcesarBuffers(bool continuo);
+  // Revisa los buffers de la ENet
+  void ProcesarBuffersENet(bool continuo);
+
+  // Procesa la cola de Mensajes
+  void ProcesarColaMensajes();
+
   void ProcesarEvento();
   //void do_work(enet_uint32 miliseg);
 
@@ -56,3 +69,5 @@ protected:
   std::vector<std::string> StringSplit2(std::string str, std::string delimiter);
 
 };
+
+#endif // ENETCLIENT_H

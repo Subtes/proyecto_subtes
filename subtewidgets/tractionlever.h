@@ -23,15 +23,14 @@ private slots:
     void processValueChanged(int value);
 
 signals:
-    zero();
     traction(int);
-    positionChanged(int);
-    //brake(int);
+    brake(int);
     emergencyBrake();
+
+    positionChanged(int);
 
     hvPressed();
     hvReleased();
-
 };
 
 #endif // TRACTIONLEVER_H

@@ -26,13 +26,14 @@ TractionLever::~TractionLever()
 
 void TractionLever::processValueChanged(int value){
     if(value > 15){
-        double a = static_cast<int>((((double)value-15.0)/85.0)*100.0);
-        emit traction(a);
+        int tr = static_cast<int>((((double)value-15.0)/85.0)*100.0);
+        emit traction(tr);
     }else if((value <= 15)&&(value >= -15)){
-        emit zero();
+        emit traction(0);
+        emit brake(0);
     }else if ((value < -15) && (value >= -95)){
-        traction(static_cast<int>((((double)value+15.0)/80.0)*100.0));
-        emit traction(value);
+        int br = static_cast<int>((((double)((-1)*value)-15.0)/80.0)*100.0);
+        emit brake(br);
     }else if (value < -95){
         emit emergencyBrake();
     }

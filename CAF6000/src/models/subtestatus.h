@@ -1,104 +1,104 @@
 #ifndef SUBTESTATUS_H
 #define SUBTESTATUS_H
+
 #include <QObject>
 #include <QDebug>
-#include <ENetClient.h>
-
+#include "src/controllers/eventhandler.h"
+#include "src/models/cscp.h"
+#include "src/models/brake.h"
+#include "src/models/traction.h"
 #include <QtXml>
 #include <QFile>
 #include <QSplashScreen>
 #include <QPixmap>
 
+class EventHandler;
+
 class SubteStatus : public QObject
 {
     Q_OBJECT
 
-public:
-    SubteStatus();
-    ~SubteStatus();
-    void initENet();
-    bool CSCPStatus();
-
 private:
-    static const bool OPEN = true;
-    static const bool CLOSE = false;
-
     bool splashPassed;
     QSplashScreen *m_splash = NULL;
     QPixmap m_pixMapSplash;
 
+    EventHandler *m_eventHandler;
+
+    // SUBTE STATUS
+    CSCP *m_cscp;
+    Brake *m_brake;
+    ATP *m_atp;
+    Traction *m_traction;
+    double m_speed;
+
+    // CONTROL STATUS
     bool m_horn;
     bool m_emergencyOverride;
-    bool m_leftDoors;
-    bool m_rightDoors;
-    bool m_CSCP;
-    bool m_seta;  
-    double m_speed;
-    double m_targetSpeed;
-    double m_allowedSpeed;
+    bool m_seta;
     std::string m_rana;
-    int m_traction;
-    int m_lastTraction;
-    int m_tractionLeverPosition;
-    int m_lastPosition;
 
-    //=== eNet setup ===
-    ENetClient *m_eNetClient;
-    std::string m_serverIp;
-    int m_serverPort;
-    std::string m_controlsHostName;
-    std::string m_visualHostName;
-    std::string m_instructionsHostName;
+signals:
+    // STATE CHANGE NOTIFICATION
+    speedChanged(double s_speed);
+    allowedSpeedChanged(double s_speed);
+    targetSpeedChanged(double s_speed);
 
-    void processValueChanged(std::string host, std::string key, std::string value);
+public:
+    SubteStatus();
+    ~SubteStatus();
+
+    void setHandler(EventHandler *eventHandler);
+    void reset();
+
+    // STATUS GETTERS
+    bool cscp() const;
+    double speed() const;
+    double targetSpeed() const;
+    double allowedSpeed() const;
+    int traction() const;
+    int brake() const;
+    bool emergencyBrake() const;
+
+    // CONTROL GETTERS
+    bool horn() const;
+    bool emergencyOverride() const;
+    bool seta() const;
+    std::string rana() const;
+    int tractionLeverPosition() const;
+
+public slots:
+    // STATE CHANGE INVOCATIONS - SETTERS
     void updateSpeed(double value);
     void updateTargetSpeed(double value);
     void updateAllowedSpeed(double value);
-    void recalcularTraccion();
-    void readIni();
-    void conectarCliente(std::string ip, int puerto, std::string host);
-
-signals:
-    CSCPChanged(bool cscp);
-    speedChanged(double speed);
-    allowedSpeedChanged(double speed);
-    targetSpeedChanged(double speed);
-
-
-    controlReady();
-    controlEnable();
-    controlDisable();
-    controlReset();
-
-public slots:
-    void hornOn();
-    void hornOff();
     void wiperOn();
     void wiperOff();
     void washer();
-    void tractionLeverInZero();
     void tractionReceived(int value);
     void brakeReceived(int value);
     void emergencyBrakeActived();
+    void emergencyBrakeReleased();
     void hombreVivoPressed();
     void hombreVivoReleased();
-    void tractionLeverChanged(int value);
-    void ranaAD();
-    void ranaCERO();
-    void ranaAT();
-    void emergencyOverrideClicked();
     void CSCPBypassed();
     void CSCPActivated();
     void openRightDoors();
     void openLeftDoors();
     void closeLeftDoors();
     void closeRightDoors();
-    void setaActivated();
-    void setaDeactivated();
-    bool isSetaActivated();
     void pressedCON();
     void pressedDES();
     void loadFinish();
+    void hornOn();
+    void hornOff();
+    void emergencyOverridePressed();
+    void setaActivated();
+    void setaDeactivated();
+    void ranaAD();
+    void ranaCERO();
+    void ranaAT();
+    void tractionLeverChanged(int value);
 };
 
 #endif // SUBTESTATUS_H
