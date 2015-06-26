@@ -23,6 +23,9 @@ public:
     void resetToOff();
     QVariant isPressed();
 
+    void setaPressed();
+    void setaReleased();
+
 signals:
     void setaActivate();
     void setaDeactivated();

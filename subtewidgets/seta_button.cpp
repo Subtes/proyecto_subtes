@@ -32,4 +32,11 @@ Seta_Button::~Seta_Button()
 void Seta_Button::setOff()
 {
     this->qml->setState("State2_SetaOFF");
+    emit m_released();
+}
+
+void Seta_Button::setOn()
+{
+    this->qml->setState("State1_SetaON");
+    emit m_pressed();
 }

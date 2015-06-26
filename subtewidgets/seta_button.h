@@ -27,6 +27,7 @@ public:
     explicit Seta_Button(QWidget *parent = 0);
     ~Seta_Button();
     void setOff();
+    void setOn();
 
 signals:
     void m_pressed();

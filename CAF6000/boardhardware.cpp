@@ -23,6 +23,13 @@ BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte, EventHandler 
     connect(eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
     connect(eventHandler,SIGNAL(controlEnable()),this,SLOT(enableScreen()));
     connect(eventHandler,SIGNAL(controlReset()),this,SLOT(resetControls()));
+    connect(eventHandler,SIGNAL(bPressed()),this,SLOT(bocinaON()));
+    connect(eventHandler,SIGNAL(bReleased()),this,SLOT(bocinaOFF()));
+    connect(eventHandler,SIGNAL(aPressed()),this,SLOT(ranaAD()));
+    connect(eventHandler,SIGNAL(ceroPressed()),this,SLOT(ranaCERO()));
+    connect(eventHandler,SIGNAL(rPressed()),this,SLOT(ranaAT()));
+    connect(eventHandler,SIGNAL(fPressed()),this,SLOT(setaON()));
+    connect(eventHandler,SIGNAL(tPressed()),this,SLOT(setaOFF()));
 }
 
 BoardHardware::~BoardHardware()
@@ -68,3 +75,30 @@ void BoardHardware::resetControls()
     m_setaButton->resetToOff();
 }
 
+void BoardHardware::bocinaON(){
+    m_horn->setBocina(true);
+}
+
+void BoardHardware::bocinaOFF(){
+    m_horn->setBocina(false);
+}
+
+void BoardHardware::ranaAD(){
+    m_rana->setValue(1);
+}
+
+void BoardHardware::ranaCERO(){
+    m_rana->setValue(0);
+}
+
+void BoardHardware::ranaAT(){
+    m_rana->setValue(-1);
+}
+
+void BoardHardware::setaON(){
+    m_setaButton->setaPressed();
+}
+
+void BoardHardware::setaOFF(){
+    m_setaButton->setaReleased();
+}
