@@ -8,31 +8,41 @@
 #include "boardright.h"
 #include "boardtop.h"
 
+#include "src/controllers/eventhandler.h"
+#include "src/controllers/keypresseater.h"
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    //MODEL
+    // CONTROLLER DISPATCHER
+    EventHandler *m_eventHandler = new EventHandler();
+
+    // MODEL
     SubteStatus * m_subte = new SubteStatus();
 
-    //VIEWS
-    BoardHardware *m_h = new BoardHardware(0,m_subte);
-    BoardCenter * m_c = new BoardCenter(0,m_subte);
-    BoardLeft *m_l = new BoardLeft(0,m_subte);
+    // VIEWS
+    BoardHardware *m_h = new BoardHardware(0,m_subte,m_eventHandler);
     m_h->show();
+    BoardCenter * m_c = new BoardCenter(0,m_subte,m_eventHandler);
     m_c->show();
+    BoardLeft *m_l = new BoardLeft(0,m_subte,m_eventHandler);
+    //m_l->show();
+//    BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
+//    m_r->show();
+//    BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
+//    m_t->show();
+
+    //m_subte->initENet();
     //Pruebo ATP:
     //double v=60.0;
     //m_l->probarATP(47.0);
     m_l->show();
 
-    //BoardRight *m_r = new BoardRight(0,m_subte);
-    //m_r->show();
-    //BoardTop *m_t = new BoardTop(0,m_subte);
-    //m_t->show();
-    m_subte->initENet();
+    // DEPENDENCY INJECTION
+    m_eventHandler->setModel(m_subte);
+    m_subte->setHandler(m_eventHandler);
+    m_eventHandler->initConnection();
 
-
-    //splash.finish(QWidget*);
     return a.exec();
 }

@@ -2,17 +2,18 @@
 #define ATP_CONTROLLER_H
 
 #include <QObject>
-#include <QTimer>
 
-#include "atp.h"
+#include <atp.h>
 #include "src/models/subtestatus.h"
+
+
 
 class Atp_Controller : public QObject
 {
     Q_OBJECT
 
 public:
-    Atp_Controller(SubteStatus *subte, Atp * view);
+    Atp_Controller(SubteStatus *subte, Atp *view);
     ~Atp_Controller();
 
 public slots:

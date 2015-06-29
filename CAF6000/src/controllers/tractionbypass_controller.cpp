@@ -11,7 +11,7 @@ TractionBypass_Controller::TractionBypass_Controller(SubteStatus *subte, SingleB
 
     m_button->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
 
-    if(m_subte->CSCPStatus())
+    if(m_subte->cscp())
         m_button->turnOn();
 
     connect(m_button,SIGNAL(buttonPressed()),m_subte,SLOT(CSCPBypassed()));

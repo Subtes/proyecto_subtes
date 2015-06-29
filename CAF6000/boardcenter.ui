@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>BoardCenter</string>
+   <string>BOARD CENTER</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -288,6 +288,12 @@
    <class>QQuickWidget</class>
    <extends>QWidget</extends>
    <header>QQuickWidget</header>
+  </customwidget>
+  <customwidget>
+   <class>Splash</class>
+   <extends>QWidget</extends>
+   <header>splash.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>SingleButton</class>

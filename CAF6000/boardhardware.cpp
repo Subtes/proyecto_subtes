@@ -1,17 +1,13 @@
 #include "boardhardware.h"
 #include "ui_boardhardware.h"
 
-BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte) :
+BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte, EventHandler *eventHandler) :
     QMainWindow(parent),
     ui(new Ui::BoardHardware)
 {
-    //SUBTE Model TODO: make it singleton
-    if (subte==NULL){
-        subte = new SubteStatus();
-    }
-
     //SUBTE Model
     m_subte = subte;
+    m_eventHandler = eventHandler;
 
     ui->setupUi(this);
 
@@ -23,10 +19,10 @@ BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte) :
     //ui->splash->setVisible(true);
     //ui->splash->resize(this->width(),this->height());
 
-    connect(m_subte,SIGNAL(controlReady()),this,SLOT(startBoard()));
-    connect(m_subte,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
-    connect(m_subte,SIGNAL(controlEnable()),this,SLOT(enableScreen()));
-    connect(m_subte,SIGNAL(controlReset()),this,SLOT(resetControls()));
+    connect(eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
+    connect(eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
+    connect(eventHandler,SIGNAL(controlEnable()),this,SLOT(enableScreen()));
+    connect(eventHandler,SIGNAL(controlReset()),this,SLOT(resetControls()));
 }
 
 BoardHardware::~BoardHardware()
@@ -71,6 +67,4 @@ void BoardHardware::resetControls()
     m_rana->setValue(0);
     m_setaButton->resetToOff();
 }
-
-
 

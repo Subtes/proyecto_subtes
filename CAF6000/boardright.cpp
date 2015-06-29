@@ -1,17 +1,13 @@
 #include "boardright.h"
 #include "ui_boardright.h"
 
-BoardRight::BoardRight(QWidget *parent, SubteStatus * subte) :
+BoardRight::BoardRight(QWidget *parent, SubteStatus * subte, EventHandler *eventHandler) :
     QMainWindow(parent),
     ui(new Ui::BoardRight)
 {
-    //SUBTE Model TODO: make it singleton
-    if (subte==NULL){
-        subte = new SubteStatus();
-    }
-
     //SUBTE Model
     m_subte = subte;
+    m_eventHandler = eventHandler;
 
     ui->setupUi(this);
 
@@ -26,10 +22,10 @@ BoardRight::BoardRight(QWidget *parent, SubteStatus * subte) :
     ui->splash->setVisible(true);
     ui->splash->resize(this->width(),this->height());
 
-    connect(m_subte,SIGNAL(controlReady()),this,SLOT(startBoard()));
-    connect(m_subte,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
-    connect(m_subte,SIGNAL(controlEnable()),this,SLOT(enableScreen()));
-    connect(m_subte,SIGNAL(controlReset()),this,SLOT(resetControls()));
+    connect(m_eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
+    connect(m_eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
+    connect(m_eventHandler,SIGNAL(controlEnable()),this,SLOT(enableScreen()));
+    connect(m_eventHandler,SIGNAL(controlReset()),this,SLOT(resetControls()));
 }
 
 BoardRight::~BoardRight()
