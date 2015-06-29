@@ -1,9 +1,15 @@
 #include "eventhandler.h"
+#include <QSplashScreen>
+#include <QPixmap>
+#include <Qt>
 
-EventHandler::EventHandler()
+EventHandler::EventHandler(QDesktopWidget *desktop)
 {
     F1_down = false;
     F2_down = false;
+    F3_down = false;
+    F4_down = false;
+    F5_down = false;
     K_down = false;
     L_down = false;
     A_down = false;
@@ -33,10 +39,31 @@ EventHandler::EventHandler()
     connect(kel,SIGNAL(keyPressed(DWORD)),this,SLOT(processKeyPressed(DWORD)));
     connect(kel,SIGNAL(keyReleased(DWORD)),this,SLOT(processKeyReleased(DWORD)));
 
+    m_imageSplash = QPixmap(":/resources/splash.jpg");
+
+    m_splash1 = new QSplashScreen(m_imageSplash);
+    m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
+    m_splash2 = new QSplashScreen(m_imageSplash);
+    m_splash2->setWindowFlags(Qt::WindowStaysOnTopHint);
+    m_splash3 = new QSplashScreen(m_imageSplash);
+    m_splash3->setWindowFlags(Qt::WindowStaysOnTopHint);
+//    m_splash->showMaximized();
+
+    QRect s0 = desktop->screenGeometry(0);
+    QRect s1 = desktop->screenGeometry(1);
+    QRect s2 = desktop->screenGeometry(2);
+
+    m_splash1->move(s0.topLeft());
+    m_splash2->move(s1.topLeft());
+    m_splash3->move(s2.topLeft());
+
+    m_splash1->showMaximized();
+    m_splash2->showMaximized();
+    m_splash3->showMaximized();
+
 }
 
-EventHandler::~EventHandler()
-{
+EventHandler::~EventHandler(){
 }
 
 void EventHandler::initConnection()
@@ -57,19 +84,26 @@ void EventHandler::notifyValueChanged(std::string key, std::string value)
 void EventHandler::processValueChanged(std::string host, std::string key, std::string value){
     qDebug() << "processValueChanged:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() ;
 
-    if(key.compare("i_estado_simulador") == 0){
-        if (value.compare("0") == 0){
+    if(key.compare("i_iniciar_simulador") == 0){
+        //Cargar Splash
+        if (value.compare("con") == 0){
+            qDebug() << "i_iniciar_simulador con recibido" ;
 
-            qDebug() << "i_estado_simulador 0 recibido" ;
             m_eNetClient->CambiarValorClave("c_listo","0");
 
             if(!splashPassed){
                 qDebug() << "!splashPassed" ;
                 splashPassed = true;
                 emit controlReady();
+                //Bajar splash
+                m_splash1->hide();
+                m_splash2->hide();
+                m_splash3->hide();
+                qDebug() << "Bajando Splashhh";
             }
 
-            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_iniciar_simulador");
+            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estado_simulador");
+            m_eNetClient->Suscribirse(m_eNetHelper->controlsHostName,"c_freno_estacionamiento");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_velocidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_tramo_vel");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
@@ -81,7 +115,37 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             emit controlReset();
 
             m_eNetClient->CambiarValorClave("c_rana",m_subte->rana());
-            m_eNetClient->CambiarValorClave("c_regulador_mando",std::to_string((int)m_subte->tractionLeverPosition()));
+            m_eNetClient->CambiarValorClave("c_regulador_de_mando",std::to_string((int)m_subte->tractionLeverPosition()));
+            m_eNetClient->CambiarValorClave("c_traccion",std::to_string((int)m_subte->traction()));
+            m_eNetClient->CambiarValorClave("c_freno_emergencia","des");
+
+            emit controlDisable();
+            m_eNetClient->CambiarValorClave("c_listo","1");
+
+        } else if (value.compare("des") == 0){
+            qDebug() << "CHAU CHAU CHAUUUUU";
+            m_eNetClient->CambiarValorClave("c_listo","0");
+            m_eNetClient->CambiarValorClave("c_regulador_mando","");
+            m_eNetClient->CambiarValorClave("c_llave_atp","");
+            m_eNetClient->CambiarValorClave("c_modo_conduccion","");
+
+            Sleep(1000);
+            emit closeApp();
+        }
+    }
+
+    if(key.compare("i_estado_simulador") == 0){
+        if (value.compare("0") == 0){
+
+            qDebug() << "i_estado_simulador 0 recibido" ;
+
+            m_eNetClient->CambiarValorClave("c_listo","0");
+
+            m_subte->reset();
+            emit controlReset();
+
+            m_eNetClient->CambiarValorClave("c_rana",m_subte->rana());
+            m_eNetClient->CambiarValorClave("c_regulador_de_mando",std::to_string((int)m_subte->tractionLeverPosition()));
             m_eNetClient->CambiarValorClave("c_traccion",std::to_string((int)m_subte->traction()));
             m_eNetClient->CambiarValorClave("c_freno_emergencia","des");
 
@@ -97,26 +161,39 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         else if(value.compare("2") == 0){
             emit controlDisable();
         }
-
     }
 
     else if(key.compare("v_llego_senial") == 0){
-        std::string state = "";
+        qDebug() << "VVVV" << value.c_str();
+        std::string direction = "";
         // find the last occurrence of ';'
         size_t pos = value.find_last_of(";");
         // make sure the poisition is valid
         if (pos != std::string::npos)
-            state = value.substr(pos+1);
+            direction = value.substr(pos+1);
         else
             qDebug() << "No se pudo encontrar 'separador ;' en el codigo de via recibido";
 
-        if (state.compare("0")==0){
-            m_subte->setaActivated();
-            qDebug() << "c_freno_emergencia: con";
-            m_eNetClient->CambiarValorClave("c_freno_emergencia","con");
-            m_subte->tractionReceived(0);
-            qDebug() << "c_traccion: " << m_subte->traction();
-            m_eNetClient->CambiarValorClave("c_traccion",std::to_string(m_subte->traction()));
+        if(direction.compare("0")==0){
+            qDebug() << "entro por sentido" <<direction.c_str();
+            std::string state = "";
+            // find the first occurrence of ';'
+            pos = value.find_first_of(";");
+
+            // make sure the poisition is valid
+            if (pos != std::string::npos)
+                state = value.substr(pos+1,1);
+            else
+                qDebug() << "No se pudo encontrar 'separador ;' en el codigo de via recibido";
+
+            if (state.compare("0")==0){
+                m_subte->setaActivated();
+                qDebug() << "c_freno_emergencia: con";
+                m_eNetClient->CambiarValorClave("c_freno_emergencia","con");
+                m_subte->tractionReceived(0);
+                qDebug() << "c_traccion: " << m_subte->traction();
+                m_eNetClient->CambiarValorClave("c_traccion",std::to_string(m_subte->traction()));
+            }
         }
     }
 
@@ -130,6 +207,18 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         m_subte->updateTargetSpeed(std::stod(value));
     }
 
+    else if(key.compare("i_cambio_senial") == 0){
+        if (value.compare("1") == 0){
+            emit iCambioSenial1();
+            qDebug() << "senial salida anden recibida, 1";
+        }
+    }
+
+    else if(key.compare("c_freno_estacionamiento") == 0){
+        if (value.compare("con") == 0){
+        }
+    }
+
 }
 
 void EventHandler::processKeyPressed(DWORD k)
@@ -137,19 +226,33 @@ void EventHandler::processKeyPressed(DWORD k)
     if ( k == _F1 && !F1_down) {
         F1_down = true;
         qDebug() << "F1 key pressed";
-        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_estado_simulador", "0");
-    }else if ( k == _F2 && !F2_down) {
+        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_iniciar_simulador", "con");
+    } else if ( k == _F2 && !F2_down) {
         F2_down = true;
         qDebug() << "F2 key pressed";
+        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_iniciar_simulador", "des");
+    } else if ( k == _F3 && !F3_down) {
+        F3_down = true;
+        qDebug() << "F3 key pressed";
+        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_estado_simulador", "0");
+    } else if ( k == _F4 && !F4_down) {
+        F4_down = true;
+        qDebug() << "F4 key pressed";
         this->processValueChanged(m_eNetHelper->instructionsHostName, "i_estado_simulador", "1");
-    } else if ( k == _K && !K_down ){
+    } else if ( k == _F5 && !F5_down  ){
+        F5_down = true;
+        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_cambio_senial", "1");
+        qDebug() << "F5 key pressed";
+    }  else if ( k == _K && !K_down ){
         this->notifyValueChanged("c_llave_atp","con");
         K_down = true;
         qDebug() << "K key pressed";
+        emit kPressed();
     } else if ( k == _L && !L_down ){
         this->notifyValueChanged("c_llave_atp","des");
         L_down = true;
         qDebug() << "L key pressed";
+        emit lPressed();
     } else if ( k == _A && !A_down ){
         A_down = true;
         emit aPressed();
@@ -158,7 +261,7 @@ void EventHandler::processKeyPressed(DWORD k)
         R_down = true;
         emit rPressed();
         qDebug() << "R key pressed";
-    } else if ( k == _F && !F_down ){
+    } else if ( k == _tF && !F_down ){
         F_down = true;
         qDebug() << "F key pressed";
         emit fPressed();
@@ -174,6 +277,7 @@ void EventHandler::processKeyPressed(DWORD k)
         C_down = true;
         qDebug() << "C key pressed";
         this->notifyValueChanged("c_freno_estacionamiento","con");
+        emit cPressed();
     } else if ( k == _CERO && !CERO_down  ){
         CERO_down = true;
         emit ceroPressed();
@@ -201,6 +305,7 @@ void EventHandler::processKeyPressed(DWORD k)
     } else if ( k == _SEIS && !SEIS_down  ){
         SEIS_down = true;
         this->notifyValueChanged("c_freno_estacionamiento","des");
+        emit frenoEstDes();
         qDebug() << "6 key pressed";
     } else if ( k == _SIETE && !SIETE_down  ){
         SIETE_down = true;
@@ -224,6 +329,15 @@ void EventHandler::processKeyReleased(DWORD k){
     } else if ( k == _F2 ) {
         qDebug() << "F2 key released";
         F2_down = false;
+    } else if ( k == _F3 ) {
+        qDebug() << "F3 key released";
+        F3_down = false;
+    } else if ( k == _F4 ) {
+        qDebug() << "F4 key released";
+        F4_down = false;
+    } else if ( k == _F5 ) {
+        qDebug() << "F5 key released";
+        F5_down = false;
     } else if ( k == _K ){
         qDebug() << "K key released";
         K_down = false;
@@ -236,7 +350,7 @@ void EventHandler::processKeyReleased(DWORD k){
     } else if ( k == _R ){
         qDebug() << "R key released";
         R_down = false;
-    } else if ( k == _F ){
+    } else if ( k == _tF ){
         qDebug() << "F key released";
         F_down = false;
     } else if ( k == _T ){

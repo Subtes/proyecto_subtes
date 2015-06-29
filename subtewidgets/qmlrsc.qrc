@@ -17,5 +17,7 @@
         <file>setaTecho.qml</file>
         <file>llaveTecho.qml</file>
         <file>SplashScreen.qml</file>
+        <file>atp.qml</file>
+        <file>resources/ATPoCorR.PNG</file>
     </qresource>
 </RCC>

@@ -1,18 +1,18 @@
 #-------------------------------------------------
-#
+# Hola Soy local
 # Project created by QtCreator 2015-04-16T13:18:10
 #
 #-------------------------------------------------
-
-QT += core gui quick quickwidgets declarative widgets xml
-
+#declarative
+QT += core gui quick quickwidgets widgets xml
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = CAF6000
 
 TEMPLATE = app
 
-CONFIG     += c++11
+#release
+CONFIG +=  c++11
 
 SOURCES += main.cpp\
     boardcenter.cpp \
@@ -32,15 +32,15 @@ SOURCES += main.cpp\
     src/controllers/circuitbreakerdes_controller.cpp \
     src/controllers/circuitbreakercon_controller.cpp \
     src/controllers/speedgaugeleds_controller.cpp \
+    src/controllers/atp_controller.cpp \
     src/controllers/enethelper.cpp \
     src/controllers/eventhandler.cpp \
     ../ENet/ENetClient.cpp \
     src/models/traction.cpp \
     src/models/brake.cpp \
     src/models/cscp.cpp \
-    src/models/atp.cpp \
-    src/controllers/keypresseater.cpp
-
+    src/controllers/keypresseater.cpp \
+    src/models/atp_model.cpp
 
 HEADERS  += boardcenter.h \
     boardright.h \
@@ -59,14 +59,15 @@ HEADERS  += boardcenter.h \
     src/controllers/circuitbreakerdes_controller.h \
     src/controllers/circuitbreakercon_controller.h \
     src/controllers/speedgaugeleds_controller.h \
+    src/controllers/atp_controller.h \
     src/controllers/enethelper.h \
     src/controllers/eventhandler.h \
     ../ENet/ENetClient.h \
     src/models/traction.h \
     src/models/brake.h \
     src/models/cscp.h \
-    src/models/atp.h \
-    src/controllers/keypresseater.h
+    src/controllers/keypresseater.h \
+    src/models/atp_model.h
 
 
 FORMS    += boardcenter.ui \

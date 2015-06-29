@@ -1,8 +1,10 @@
-QT += core gui quick quickwidgets declarative widgets
+QT += core gui quick quickwidgets widgets
+#declarative
 
 TEMPLATE = lib
 
-CONFIG += staticlib
+#order
+CONFIG +=  staticlib
 
 HEADERS += \
     panel_buttons2.h \
@@ -15,7 +17,8 @@ HEADERS += \
     seta_button.h \
     singlebutton.h \
     speedgaugeleds.h \
-    splash.h
+    splash.h \
+    atp.h
 
 SOURCES += \
     panel_buttons2.cpp \
@@ -28,7 +31,8 @@ SOURCES += \
     seta_button.cpp \
     singlebutton.cpp \
     speedgaugeleds.cpp \
-    splash.cpp
+    splash.cpp \
+    atp.cpp
 
 FORMS += \
     panel_buttons2.ui \
@@ -41,9 +45,12 @@ FORMS += \
     seta_button.ui \
     singlebutton.ui \
     speedgaugeleds.ui \
-    splash.ui
+    splash.ui \
+    atp.ui
 
-RESOURCES += widgetsrsc.qrc \
-            qmlrsc.qrc
+RESOURCES += \
+            qmlrsc.qrc \
+            widgetsrsc.qrc
+
 
 DISTFILES +=

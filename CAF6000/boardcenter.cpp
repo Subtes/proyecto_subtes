@@ -11,28 +11,28 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eve
 
     ui->setupUi(this);
 
-    ui->velocimetro->setVisible(false);
-    ui->bypassFreno->setVisible(false);
-    ui->bypassTraccion->setVisible(false);
-    ui->abrirDerecha->setVisible(false);
-    ui->abrirIzquierda->setVisible(false);
-    ui->cerrarIzquierda->setVisible(false);
-    ui->cerrarDerecha->setVisible(false);
-    ui->selectorIzquierda->setVisible(false);
-    ui->selectorDerecha->setVisible(false);
-    ui->wiper->setVisible(false);
-    ui->luzCabina->setVisible(false);
-    ui->iluminacionPulsadores->setVisible(false);
-    ui->silbato->setVisible(false);
-    ui->faros->setVisible(false);
-    ui->antivaho->setVisible(false);
-    ui->iluminacionReducPulsad->setVisible(false);
-    ui->megafonia->setVisible(false);
-    ui->publicoCabina->setVisible(false);
-    ui->anulacionEmergencia->setVisible(false);
+//    ui->velocimetro->setVisible(false);
+//    ui->bypassFreno->setVisible(false);
+//    ui->bypassTraccion->setVisible(false);
+//    ui->abrirDerecha->setVisible(false);
+//    ui->abrirIzquierda->setVisible(false);
+//    ui->cerrarIzquierda->setVisible(false);
+//    ui->cerrarDerecha->setVisible(false);
+//    ui->selectorIzquierda->setVisible(false);
+//    ui->selectorDerecha->setVisible(false);
+//    ui->wiper->setVisible(false);
+//    ui->luzCabina->setVisible(false);
+//    ui->iluminacionPulsadores->setVisible(false);
+//    ui->silbato->setVisible(false);
+//    ui->faros->setVisible(false);
+//    ui->antivaho->setVisible(false);
+//    ui->iluminacionReducPulsad->setVisible(false);
+//    ui->megafonia->setVisible(false);
+//    ui->publicoCabina->setVisible(false);
+//    ui->anulacionEmergencia->setVisible(false);
 
-    ui->splash->setVisible(true);
-    ui->splash->resize(this->width(),this->height());
+    //ui->splash->setVisible(true);
+    //ui->splash->resize(this->width(),this->height());
 
     connect(m_eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(m_eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
@@ -54,26 +54,26 @@ void BoardCenter::startBoard()
     TractionBypass_Controller *tractionBypass = new TractionBypass_Controller(m_subte,ui->bypassTraccion);
     SpeedGaugeLeds_Controller *speedGauge = new SpeedGaugeLeds_Controller(m_subte,ui->velocimetro);
 
-    ui->velocimetro->setVisible(true);
-    ui->velocimetro->setVisible(true);
-    ui->bypassFreno->setVisible(true);
-    ui->bypassTraccion->setVisible(true);
-    ui->abrirDerecha->setVisible(true);
-    ui->abrirIzquierda->setVisible(true);
-    ui->cerrarIzquierda->setVisible(true);
-    ui->cerrarDerecha->setVisible(true);
-    ui->selectorIzquierda->setVisible(true);
-    ui->selectorDerecha->setVisible(true);
-    ui->wiper->setVisible(true);
-    ui->luzCabina->setVisible(true);
-    ui->iluminacionPulsadores->setVisible(true);
-    ui->silbato->setVisible(true);
-    ui->faros->setVisible(true);
-    ui->antivaho->setVisible(true);
-    ui->iluminacionReducPulsad->setVisible(true);
-    ui->megafonia->setVisible(true);
-    ui->publicoCabina->setVisible(true);
-    ui->anulacionEmergencia->setVisible(true);
+//    ui->velocimetro->setVisible(true);
+//    ui->velocimetro->setVisible(true);
+//    ui->bypassFreno->setVisible(true);
+//    ui->bypassTraccion->setVisible(true);
+//    ui->abrirDerecha->setVisible(true);
+//    ui->abrirIzquierda->setVisible(true);
+//    ui->cerrarIzquierda->setVisible(true);
+//    ui->cerrarDerecha->setVisible(true);
+//    ui->selectorIzquierda->setVisible(true);
+//    ui->selectorDerecha->setVisible(true);
+//    ui->wiper->setVisible(true);
+//    ui->luzCabina->setVisible(true);
+//    ui->iluminacionPulsadores->setVisible(true);
+//    ui->silbato->setVisible(true);
+//    ui->faros->setVisible(true);
+//    ui->antivaho->setVisible(true);
+//    ui->iluminacionReducPulsad->setVisible(true);
+//    ui->megafonia->setVisible(true);
+//    ui->publicoCabina->setVisible(true);
+//    ui->anulacionEmergencia->setVisible(true);
 
     ui->cerrarDerecha->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
     ui->cerrarIzquierda->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
@@ -90,9 +90,9 @@ void BoardCenter::startBoard()
     ui->modoConduccion->setClearColor(Qt::transparent);
     ui->modoConduccion->setAttribute(Qt::WA_AlwaysStackOnTop);
 
-    ui->splash->setVisible(false);
-    ui->splash->resize(0,0);
-    this->raise();
+    //ui->splash->setVisible(false);
+    //ui->splash->resize(0,0);
+    //this->raise();
 
     this->setEnabled(false);
 }
