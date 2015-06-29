@@ -1,7 +1,7 @@
 #include "traction.h"
 #include <QDebug>
 
-Traction::Traction(Brake *b, CSCP* c, ATP *a)
+Traction::Traction(Brake *b, CSCP* c, ATP_model *a)
 {
     m_brake = b;
     m_cscp = c;

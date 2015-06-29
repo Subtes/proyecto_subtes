@@ -10,8 +10,8 @@ SubteStatus::SubteStatus()
 {
     m_cscp = new CSCP();
     m_brake = new Brake();
-    m_atp = new ATP();
-    m_traction = new Traction(m_brake,m_cscp,m_atp);
+    m_ATP_model = new ATP_model();
+    m_traction = new Traction(m_brake,m_cscp, m_ATP_model);
 
     m_speed = 0;
 
@@ -44,7 +44,7 @@ void SubteStatus::reset()
     //STATUS
     m_cscp->reset();
     m_brake->reset();
-    m_atp->reset();
+    m_ATP_model->reset();
     m_traction->reset();
     m_speed = 0;
 
@@ -65,12 +65,12 @@ double SubteStatus::speed() const
 
 double SubteStatus::targetSpeed() const
 {
-    return m_atp->targetSpeed();
+    return m_ATP_model->targetSpeed();
 }
 
 double SubteStatus::allowedSpeed() const
 {
-    return m_atp->allowedSpeed();
+    return m_ATP_model->allowedSpeed();
 }
 
 int SubteStatus::traction() const
@@ -120,12 +120,12 @@ void SubteStatus::updateSpeed(double value){
 }
 
 void SubteStatus::updateTargetSpeed(double value){
-    m_atp->setTargetSpeed(value);
+    //m_atp->setTargetSpeed(value);
     emit targetSpeedChanged(value);
 }
 
 void SubteStatus::updateAllowedSpeed(double value){
-    m_atp->setAllowedSpeed(value);
+    //m_atp->setAllowedSpeed(value);
     emit allowedSpeedChanged(value);
 }
 

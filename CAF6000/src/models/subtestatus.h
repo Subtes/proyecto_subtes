@@ -3,14 +3,17 @@
 
 #include <QObject>
 #include <QDebug>
-#include "src/controllers/eventhandler.h"
-#include "src/models/cscp.h"
-#include "src/models/brake.h"
-#include "src/models/traction.h"
 #include <QtXml>
 #include <QFile>
 #include <QSplashScreen>
 #include <QPixmap>
+
+#include "src/controllers/eventhandler.h"
+#include "src/models/cscp.h"
+#include "src/models/brake.h"
+#include "src/models/traction.h"
+#include "src/models/atp_model.h"
+
 
 class EventHandler;
 
@@ -28,7 +31,7 @@ private:
     // SUBTE STATUS
     CSCP *m_cscp;
     Brake *m_brake;
-    ATP *m_atp;
+    ATP_model *m_ATP_model;
     Traction *m_traction;
     double m_speed;
 

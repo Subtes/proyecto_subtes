@@ -2,7 +2,7 @@ QT += core gui quick quickwidgets declarative widgets
 
 TEMPLATE = lib
 
-#CONFIG += staticlib
+CONFIG += order staticlib
 
 HEADERS += \
     panel_buttons2.h \
@@ -46,7 +46,9 @@ FORMS += \
     splash.ui \
     atp.ui
 
-RESOURCES += widgetsrsc.qrc \
-            qmlrsc.qrc
+RESOURCES += \
+            qmlrsc.qrc \
+            widgetsrsc.qrc
+
 
 DISTFILES +=

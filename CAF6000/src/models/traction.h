@@ -3,7 +3,7 @@
 
 #include "src/models/brake.h"
 #include "src/models/cscp.h"
-#include "src/models/atp.h"
+#include "src/models/atp_model.h"
 
 class Traction
 {
@@ -15,7 +15,7 @@ private:
     RANA m_rana;
     Brake *m_brake;
     CSCP *m_cscp;
-    ATP *m_atp;
+    ATP_model *m_atp;
     bool m_hombreVivo;
 
     int m_traction;
@@ -26,7 +26,7 @@ private:
 
 
 public:
-    Traction(Brake *b, CSCP *c, ATP *a);
+    Traction(Brake *b, CSCP *c, ATP_model *a);
     ~Traction();
 
     void reset();

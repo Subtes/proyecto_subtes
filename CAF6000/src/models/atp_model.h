@@ -1,9 +1,9 @@
-#ifndef ATP_H
-#define ATP_H
+#ifndef ATP_MODEL_H
+#define ATP_MODEL_H
 
 #include <string>
 
-class ATP
+class ATP_model
 {
 
 private:
@@ -12,8 +12,8 @@ private:
     std::string m_code;
 
 public:
-    ATP();
-    ~ATP();
+    ATP_model();
+    ~ATP_model();
     bool tractionReady();
     void reset();
 
@@ -25,4 +25,4 @@ public:
     void setCode(const std::string &code);
 };
 
-#endif // ATP_H
+#endif // ATP_MODEL_H
