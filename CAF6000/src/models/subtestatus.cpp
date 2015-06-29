@@ -340,3 +340,7 @@ void SubteStatus::tractionLeverChanged(int value){
 void SubteStatus::loadFinish(){
     this->m_splash->setHidden(true);
 }
+
+void SubteStatus::loadStart(){
+    this->m_splash->showNormal();
+}

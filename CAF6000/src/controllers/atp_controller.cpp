@@ -49,31 +49,31 @@ void Atp_Controller::resetIndicator(){
 void Atp_Controller::checkSpeedWayAllowed(double speed){
     //Falta ver el arranque en cuanto a velocidad inicial 0 y permitida
     //tambien 0?? Y la conduccion sea CMC u otra.
-    if (speed > this->m_subte->getAllowSpeed() && !(this->m_timer_ATP_Allowed->isActive())){
-        this->m_timer_ATP_Allowed->start();
-        emit disableTraction();
-        qDebug() << "Atp_Controller::--> emit disable Traction";
-    }else if ((this->m_timer_ATP_Allowed->isActive()) && (speed <= this->m_subte->getAllowSpeed())){
-        this->m_timer_ATP_Allowed->stop();
-        emit enableTraction();
-        qDebug() << "Atp_Controller::--> emit enable Traction";
+//    if (speed > this->m_subte->getAllowSpeed() && !(this->m_timer_ATP_Allowed->isActive())){
+//        this->m_timer_ATP_Allowed->start();
+//        emit disableTraction();
+//        qDebug() << "Atp_Controller::--> emit disable Traction";
+//    }else if ((this->m_timer_ATP_Allowed->isActive()) && (speed <= this->m_subte->getAllowSpeed())){
+//        this->m_timer_ATP_Allowed->stop();
+//        emit enableTraction();
+//        qDebug() << "Atp_Controller::--> emit enable Traction";
 
-    }
+//    }
 }
 
 void Atp_Controller::checkSpeedWayTarget(double speedTarget){
     //Seria una caso en el cual vengo al palo y me encuentro con un codigo de via menor,
     //o sea proximidades a fin de recorrido, no se si se puede dar consultar!
-    if (speedTarget < this->m_subte->getSpeed() && !(this->m_timer_ATP_Allowed->isActive())){
-        this->m_timer_ATP_Allowed->start();
-        emit disableTraction();
-        qDebug() << "Atp_Controller::--> emit disable Traction, porque flag de via (target speed) supero velocidad traida";
-    }else if ((this->m_timer_ATP_Allowed->isActive()) && ((speedTarget*0.9) >= (this->m_subte->getSpeed()))){
-        this->m_timer_ATP_Allowed->stop();
-        emit enableTraction();
-        qDebug() << "Atp_Controller::--> emit enable Traction";
+//    if (speedTarget < this->m_subte->getSpeed() && !(this->m_timer_ATP_Allowed->isActive())){
+//        this->m_timer_ATP_Allowed->start();
+//        emit disableTraction();
+//        qDebug() << "Atp_Controller::--> emit disable Traction, porque flag de via (target speed) supero velocidad traida";
+//    }else if ((this->m_timer_ATP_Allowed->isActive()) && ((speedTarget*0.9) >= (this->m_subte->getSpeed()))){
+//        this->m_timer_ATP_Allowed->stop();
+//        emit enableTraction();
+//        qDebug() << "Atp_Controller::--> emit enable Traction";
 
-    }
+//    }
 }
 
 Atp_Controller::~Atp_Controller(){
