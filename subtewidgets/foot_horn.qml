@@ -55,13 +55,13 @@ Rectangle {
     }
 
 
-    Keys.onPressed: {
-        if (event.key == Qt.Key_B)
-            press()        
-    }
+    //Keys.onPressed: {
+    //    if (event.key == Qt.Key_B)
+    //        press()
+    //}
 
-    Keys.onReleased: {
-        if (event.key == Qt.Key_B)
-            release()
-    }
+    //Keys.onReleased: {
+    //    if (event.key == Qt.Key_B)
+    //        release()
+    //}
 }

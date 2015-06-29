@@ -29,8 +29,8 @@ int main(int argc, char *argv[])
     //m_l->show();
     //BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
     //m_r->show();
-    BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
-    m_t->show();
+    //BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
+    //m_t->show();
 
     // DEPENDENCY INJECTION
     m_eventHandler->setModel(m_subte);

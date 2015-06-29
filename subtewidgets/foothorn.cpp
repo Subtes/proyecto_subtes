@@ -19,3 +19,19 @@ FootHorn::~FootHorn()
 {
     delete ui;
 }
+
+void FootHorn::setBocina(bool v)
+{
+    QVariant returnedValue;
+
+    if(v){
+    QMetaObject::invokeMethod(m_qmlView, "press",
+        Q_RETURN_ARG(QVariant, returnedValue)
+        );
+    }else{
+        QMetaObject::invokeMethod(m_qmlView, "release",
+        Q_RETURN_ARG(QVariant, returnedValue)
+        );
+    }
+
+}

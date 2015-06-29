@@ -16,6 +16,8 @@ public:
     explicit FootHorn(QWidget *parent = 0);
     ~FootHorn();
 
+    void setBocina(bool v);
+
 private:
     Ui::FootHorn *ui;
     QQuickItem *m_qmlView;

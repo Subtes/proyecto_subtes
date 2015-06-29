@@ -13,6 +13,8 @@ public:
     Horn_Controller(SubteStatus *subte,FootHorn *pedal=0);
     ~Horn_Controller();
 
+    void setBocina(bool);
+
 private:
     SubteStatus *m_subte;
     FootHorn *m_pedal;

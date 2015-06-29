@@ -10,6 +10,12 @@
     <height>768</height>
    </rect>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>1024</width>
+    <height>768</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>BOARD HARDWARE</string>
   </property>
@@ -75,6 +81,12 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>Splash</class>
+   <extends>QWidget</extends>
+   <header>splash.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>FootHorn</class>
    <extends>QWidget</extends>
    <header>foothorn.h</header>
@@ -96,12 +108,6 @@
    <class>Seta_Button</class>
    <extends>QWidget</extends>
    <header>seta_button.h</header>
-  </customwidget>
-  <customwidget>
-   <class>Splash</class>
-   <extends>QWidget</extends>
-   <header>splash.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
