@@ -341,6 +341,10 @@ void SubteStatus::loadFinish(){
     this->m_splash->setHidden(true);
 }
 
+void SubteStatus::loadStart(){
+    this->m_splash->showMaximized();
+}
+
 void SubteStatus::cutTraction(){
     qDebug() << "SubteStatus::cutTraction()";
     m_ATP_model->cutTraction();
