@@ -259,16 +259,6 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="Splash" name="splash" native="true">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>0</width>
-      <height>0</height>
-     </rect>
-    </property>
-   </widget>
    <zorder>velocimetro</zorder>
    <zorder>wiper</zorder>
    <zorder>anulacionEmergencia</zorder>
@@ -290,7 +280,6 @@
    <zorder>luzCabina</zorder>
    <zorder>publicoCabina</zorder>
    <zorder>selectorPuertas</zorder>
-   <zorder>splash</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

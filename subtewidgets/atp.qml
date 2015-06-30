@@ -20,8 +20,14 @@ Rectangle {
     property  int  indexLed: 0
     property variant ledsSpeed: []
 
+    property int indexLedAllow: 0
+    property variant ledsSpeedAllowed: []
+
     property variant digitsL1: []
     property variant digitsL2: []
+
+    property int dL1old: 0
+    property int dL2old: 0
 
     function reset(){
 
@@ -33,6 +39,7 @@ Rectangle {
         y: 0
         width: 1024
         height: 768
+        visible: true
         fillMode: Image.PreserveAspectFit
         sourceSize.height: 480
         sourceSize.width: 640
@@ -52,7 +59,7 @@ Rectangle {
                 width: 95
                 height: 46
                 fillMode: Image.Stretch
-                opacity: 1
+                opacity: 0
                 source: "resources/ATPoCMC.PNG"
             }
         }
@@ -289,6 +296,39 @@ Rectangle {
 
   }
 
+  Row {
+      id: velocidadAllowed
+      x: 373
+      y: 273
+      width: 516
+      height: 24
+      Repeater{
+          //49
+          id: repeaterLedAllowed
+          model:49
+          Image {
+              id: ledVelocidadAllowed
+              x: 0
+              y: 0
+              width: 10
+              height: 23
+              source: "resources/ATPoLed2.png"
+              opacity: 0
+          }
+          onItemAdded: ledsSpeedAllowed[index] = item
+        }//Repeater
+  }//Row LED
+
+  function allowedSpeed(x){
+
+      for (indexLedAllow=0; indexLedAllow<=(x-1); indexLedAllow++){
+          ledsSpeedAllowed[indexLedAllow].opacity=1;
+      };
+      for (indexLedAllow=x; indexLedAllow < ledsSpeedAllowed.length; indexLedAllow++){
+          ledsSpeedAllowed[indexLedAllow].opacity=0;
+      };
+  }
+
   function targetSpeed(v){
 
       v = parseInt(v);
@@ -343,20 +383,16 @@ Rectangle {
       };
   }
 
-  function allowedSpeed(v){
+  function speedLCD(v){
+      //console.log("Velocidad LCD D1---> ",getD1(v));
+      //console.log("Velocidad LCD D2---> ",getD2(v));
+      //v = parseInt(v);
 
-  }
-
-  function targetSpeedLCD(v){
-      console.log("Velocidad LCD D1---> ",getD1(v));
-      console.log("Velocidad LCD D2---> ",getD2(v));
-      v = parseInt(v);
-      //digitsL1[getD1(v)].opacity = 1;
+      digitsL1[dL1old].opacity = 0;
+      digitsL2[dL2old].opacity = 0;
       digitsL1[getD1(v)].opacity = 1;
       digitsL2[getD2(v)].opacity = 1;
 
-      //digitsL1[4].opacity = 1;
-      //digitsL2[3].opacity = 1;
   }
 
   //Creater digits
@@ -398,7 +434,7 @@ Rectangle {
 
   function getD2(v){
       v = parseInt(v);
-      console.log("SEGUNDO Digito LDC: ------>",v - ((parseInt(v/10)*10)));
+      //console.log("SEGUNDO Digito LDC: ------>",v - ((parseInt(v/10)*10)));
       return (v - ((parseInt(v/10)*10)));
   }
 
@@ -502,6 +538,55 @@ Rectangle {
             height: 70
             opacity: 0
             source: "resources/ATP_6S.png"
+        }
+    }
+
+    function setCMC(value){
+        if (value === true){
+            imCMC.opacity=1
+        }else{
+            imCMC.opacity = 0
+        }
+    }
+
+    function setCL(value){
+        if (value === true){
+            imCL.opacity = 1
+        }else{
+            imCL.opacity = 0
+        }
+
+    }
+
+    function setFserv(value){
+        if (value === true){
+            imFServ.opacity = 1
+        }else{
+            imFServ.opacity = 0
+        }
+    }
+
+    function setFrenoUrg(value){
+        if (value === true){
+            imFurg.opacity = 1
+        }else{
+            imFurg.opacity = 0
+        }
+    }
+
+    function setCorte(value){
+        if (value === true){
+            imCorte.opacity = 1
+        }else{
+            imCorte.opacity = 0
+        }
+    }
+
+    function setFalla(value){
+        if (value === true){
+            imFalla.opacity = 1
+        }else{
+            imFalla.opacity = 0
         }
     }
 

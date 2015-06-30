@@ -31,8 +31,8 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eve
     ui->publicoCabina->setVisible(false);
     ui->anulacionEmergencia->setVisible(false);
 
-    ui->splash->setVisible(true);
-    ui->splash->resize(this->width(),this->height());
+    //ui->splash->setVisible(true);
+    //ui->splash->resize(this->width(),this->height());
 
     connect(m_eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(m_eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
@@ -90,8 +90,8 @@ void BoardCenter::startBoard()
     ui->modoConduccion->setClearColor(Qt::transparent);
     ui->modoConduccion->setAttribute(Qt::WA_AlwaysStackOnTop);
 
-    ui->splash->setVisible(false);
-    ui->splash->resize(0,0);
+    //ui->splash->setVisible(false);
+    //ui->splash->resize(0,0);
     this->raise();
 
     this->setEnabled(false);

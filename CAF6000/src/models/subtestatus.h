@@ -92,7 +92,10 @@ public slots:
     void closeRightDoors();
     void pressedCON();
     void pressedDES();
+
+    //Splash
     void loadFinish();
+    void loadStart();
     void hornOn();
     void hornOff();
     void emergencyOverridePressed();
