@@ -29,6 +29,16 @@ QVariant Seta_Controller::isPressed(){
     return(this->m_modelo->seta());
 }
 
+void Seta_Controller::setaPressed()
+{
+    m_setaButton->setOn();
+}
+
+void Seta_Controller::setaReleased()
+{
+    m_setaButton->setOff();
+}
+
 Seta_Controller::~Seta_Controller()
 {
     delete m_modelo;

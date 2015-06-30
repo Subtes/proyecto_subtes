@@ -28,6 +28,13 @@ public slots:
     void enableScreen();
     void disableScreen();
     void resetControls();
+    void bocinaON();
+    void bocinaOFF();
+    void ranaAD();
+    void ranaCERO();
+    void ranaAT();
+    void setaON();
+    void setaOFF();
 
 private:
     Ui::BoardHardware *ui;

@@ -186,15 +186,15 @@ void SubteStatus::emergencyBrakeReleased(){
 void SubteStatus::hombreVivoPressed(){
     if(m_speed == 0){
         m_traction->setHombreVivo(true);
-        m_eventHandler->notifyValueChanged("c_hombreVivo","con");
-        qDebug() << "c_hombreVivo: pressed";
+        m_eventHandler->notifyValueChanged("c_dispositivo_hombre_muerto","con");
+        qDebug() << "c_dispositivo_hombre_muerto: pressed";
     }
 }
 
 void SubteStatus::hombreVivoReleased(){
     m_traction->setHombreVivo(false);
-    m_eventHandler->notifyValueChanged("c_hombreVivo","des");
-    qDebug() << "c_hombreVivo: released";
+    m_eventHandler->notifyValueChanged("c_dispositivo_hombre_muerto","des");
+    qDebug() << "c_dispositivo_hombre_muerto: released";
 
     m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
     qDebug() << "c_traccion: "<< m_traction->getTraction();

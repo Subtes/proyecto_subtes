@@ -13,3 +13,8 @@ Horn_Controller::~Horn_Controller()
 {
 
 }
+
+void Horn_Controller::setBocina(bool v)
+{
+    m_pedal->setBocina(v);
+}
