@@ -106,6 +106,17 @@ public slots:
     void tractionLeverChanged(int value);
     void cutTraction();
     void enableTraction();
+    void setBatteryConnector(bool status);
+    void setConmutadorPuestaServicio(bool status);
+    void setConmutadorPuestaServicioAutomatica(bool status);
+    void setPantographConnector(bool status);
+    void setCompressorAuxConnector(bool status);
+    void setConverterConnector(bool status);
+    void setMainCompressorConnector(bool status);
+    void setLightingConnector(bool status);
+    void setAirConnector(bool status);
+    void setMegaphoneConnector(bool status);
+    void setRetentionBrakeConnector(bool status);
 };
 
 #endif // SUBTESTATUS_H

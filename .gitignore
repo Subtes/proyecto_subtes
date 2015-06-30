@@ -1,10 +1,12 @@
+*.exe
+
 #SVN
 branches/
 tags/
 trunk/
 .svn
 
-# Archivos de QR
+# Archivos de QT
 build-[*]/
 [*]build-[*]
 

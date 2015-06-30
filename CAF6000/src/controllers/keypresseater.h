@@ -14,7 +14,7 @@ public:
     static KeyPressEater * instance();
 
 //    // Class destructor
-//    ~KeyPressEater();
+    //~KeyPressEater();
 
     // Returns whether the keyboard hook is connected
     bool connected();

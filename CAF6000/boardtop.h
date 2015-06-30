@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "src/models/subtestatus.h"
 #include "src/controllers/eventhandler.h"
+#include "src/controllers/topboardconnectors_controller.h"
 
 namespace Ui {
 class BoardTop;
@@ -22,11 +23,14 @@ private:
     SubteStatus *m_subte;
     EventHandler *m_eventHandler;
 
+    TopBoardConnectors_Controller *m_connectors;
+
 public slots:
     void startBoard();
     void enableScreen();
     void disableScreen();
     void resetControls();
+    void cargarEstado(int);
 };
 
 #endif // BOARDTOP_H
