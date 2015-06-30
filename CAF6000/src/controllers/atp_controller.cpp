@@ -57,9 +57,9 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     //1.0 --> 1.1
     e_turnOn0->addTransition(t_timerToTurnOn,SIGNAL(timeout()),e_turnOn1);
     //1.1 --> 1.2
-    e_turnOn1->addTransition(this,SIGNAL(signalAnden(int)),e_turnOn2);
+    e_turnOn1->addTransition(this,SIGNAL(signalAnden()),e_turnOn2);
     //1.2 --> r1.0
-    e_turnOn2->addTransition(e_rolling); //Seria incondicional, ver.
+    e_turnOn2->addTransition(this,SIGNAL(enableTraction()),e_rolling);
     //r1.0 --> r1.1
     e_rolling->addTransition(this, SIGNAL(exceededSpeed()),e_controlLess2);
     //r1.1 --> r1.2
@@ -95,11 +95,16 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
 
         //Conexiones del ATP al resto del mundo.
         //Conecciones externas:
-    //connect(alguien,SIGNAL(senal salida paltaforma), this, SLOT(initATP()));
     connect(subte,SIGNAL(speedChanged(double)),this,SLOT(updateSpeed(double)));
     connect(subte,SIGNAL(targetSpeedChanged(double)),this,SLOT(updateTargetSpeed(double)));
     connect(this, SIGNAL(cutTraction()),subte,SLOT(cutTraction()));
     connect(this, SIGNAL(enableTraction()),subte,SLOT(enableTraction()));
+    connect(this, SIGNAL(enableBreakEmergency()),subte,SLOT(emergencyBrakeActived()));
+    connect(this, SIGNAL(desableBreakEmergency()),subte,SLOT(emergencyBrakeReleased()));
+    connect(eventHandler,SIGNAL(kPressed()),this,SLOT(initATP()));
+    connect(eventHandler,SIGNAL(lPressed()),this,SLOT(reset()));
+    connect(eventHandler,SIGNAL(iCambioSenial1()),SIGNAL(signalAnden()));
+    connect(eventHandler,SIGNAL(cPressed()),SIGNAL(enableTraction()));
 
 
 }

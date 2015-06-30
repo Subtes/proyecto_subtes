@@ -33,7 +33,7 @@ signals:
     void exceededSpeed();
     void speedRecovered();
     void subteStoped();
-    void signalAnden(int);
+    void signalAnden();
 
 public slots:
     void updateTargetSpeed(double speed);

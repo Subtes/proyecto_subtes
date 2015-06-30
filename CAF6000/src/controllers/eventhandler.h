@@ -1,10 +1,12 @@
 #define _F1 0x70
 #define _F2 0x71
+#define _F3 0x72
+#define _F4 0x73
 #define _K 0x4B
 #define _L 0x4C
 #define _A 0x41
 #define _R 0x52
-#define _F 0x46
+//#define _F 0x46
 #define _T 0x54
 #define _B 0x42
 
@@ -53,6 +55,8 @@ private:
 
     bool F1_down;
     bool F2_down;
+    bool F3_down;
+    bool F4_down;
     bool K_down;
     bool L_down;
     bool A_down;
@@ -80,6 +84,7 @@ signals:
     controlDisable();
     controlEnable();
     controlReset();
+    iCambioSenial1();
 
     bPressed();
     bReleased();
@@ -90,6 +95,14 @@ signals:
 
     fPressed();
     tPressed();
+
+    kPressed();
+    lPressed();
+
+    f3Pressed();
+    f4Pressed();
+
+    cPressed();
 
 public slots:
     void processKeyPressed(DWORD k);

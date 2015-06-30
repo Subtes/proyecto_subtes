@@ -4,6 +4,8 @@ EventHandler::EventHandler()
 {
     F1_down = false;
     F2_down = false;
+    F3_down = false;
+    F4_down = false;
     K_down = false;
     L_down = false;
     A_down = false;
@@ -130,6 +132,13 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         m_subte->updateTargetSpeed(std::stod(value));
     }
 
+    else if(key.compare("i_cambio_senial") == 0){
+            if (value.compare("1") == 0){
+                emit iCambioSenial1();
+                qDebug() << "senial salida anden recibida, 1";
+            }
+    }
+
 }
 
 void EventHandler::processKeyPressed(DWORD k)
@@ -138,18 +147,27 @@ void EventHandler::processKeyPressed(DWORD k)
         F1_down = true;
         qDebug() << "F1 key pressed";
         this->processValueChanged(m_eNetHelper->instructionsHostName, "i_estado_simulador", "0");
-    }else if ( k == _F2 && !F2_down) {
+    } else if ( k == _F2 && !F2_down) {
         F2_down = true;
         qDebug() << "F2 key pressed";
         this->processValueChanged(m_eNetHelper->instructionsHostName, "i_estado_simulador", "1");
-    } else if ( k == _K && !K_down ){
+    } else if ( k == _F3 && !F3_down  ){
+        F3_down = true;
+        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_cambio_senial", "1");
+        qDebug() << "F3 key pressed";
+    }  else if ( k == _F4 && !F4_down  ){
+        F4_down = true;
+        qDebug() << "F3 key pressed";
+    }  else if ( k == _K && !K_down ){
         this->notifyValueChanged("c_llave_atp","con");
         K_down = true;
         qDebug() << "K key pressed";
+        emit kPressed();
     } else if ( k == _L && !L_down ){
         this->notifyValueChanged("c_llave_atp","des");
         L_down = true;
         qDebug() << "L key pressed";
+        emit lPressed();
     } else if ( k == _A && !A_down ){
         A_down = true;
         emit aPressed();
@@ -158,11 +176,11 @@ void EventHandler::processKeyPressed(DWORD k)
         R_down = true;
         emit rPressed();
         qDebug() << "R key pressed";
-    } else if ( k == _F && !F_down ){
+    } /*else if ( k == _F && !F_down ){
         F_down = true;
         qDebug() << "F key pressed";
         emit fPressed();
-    } else if ( k == _T && !T_down ){
+    }*/ else if ( k == _T && !T_down ){
         T_down = true;
         qDebug() << "T key pressed";
         emit tPressed();
@@ -174,6 +192,7 @@ void EventHandler::processKeyPressed(DWORD k)
         C_down = true;
         qDebug() << "C key pressed";
         this->notifyValueChanged("c_freno_estacionamiento","con");
+        emit cPressed();
     } else if ( k == _CERO && !CERO_down  ){
         CERO_down = true;
         emit ceroPressed();
@@ -236,10 +255,10 @@ void EventHandler::processKeyReleased(DWORD k){
     } else if ( k == _R ){
         qDebug() << "R key released";
         R_down = false;
-    } else if ( k == _F ){
+    } /*else if ( k == _F ){
         qDebug() << "F key released";
         F_down = false;
-    } else if ( k == _T ){
+    }*/ else if ( k == _T ){
         qDebug() << "T key released";
         T_down = false;
     } else if ( k == _B ){
