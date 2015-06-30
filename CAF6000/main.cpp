@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     BoardHardware *m_h = new BoardHardware(0,m_subte,m_eventHandler);
     BoardCenter * m_c = new BoardCenter(0,m_subte,m_eventHandler);
     BoardLeft *m_l = new BoardLeft(0,m_subte,m_eventHandler);
+    //m_l->probarATP(54.8);
     BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
     //BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
 

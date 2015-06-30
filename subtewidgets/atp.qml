@@ -23,11 +23,14 @@ Rectangle {
     property int indexLedAllow: 0
     property variant ledsSpeedAllowed: []
 
+    property variant digitsL0: []
     property variant digitsL1: []
     property variant digitsL2: []
 
+    property int dL0old: 0
     property int dL1old: 0
     property int dL2old: 0
+    property int auxD3: 0
 
     function reset(){
 
@@ -213,7 +216,7 @@ Rectangle {
         Item {
             id: s0
             x: 739
-            y: 196
+            y: 197
             width: 60
             height: 70
             Image {
@@ -260,6 +263,40 @@ Rectangle {
                 source: "resources/ATP_0S.png"
             }
         }
+
+        Item {
+            id: item1
+            x: 173
+            y: 269
+            width: 104
+            height: 104
+
+            Image {
+                id: image1
+                x: 0
+                y: 0
+                width: 104
+                height: 104
+                source: "resources/ATP_PuntoL.png"
+            }
+        }
+
+        Item {
+            id: item2
+            x: 779
+            y: 196
+            width: 70
+            height: 70
+
+            Image {
+                id: image2
+                x: 0
+                y: 0
+                width: 70
+                height: 70
+                source: "resources/ATP_PuntoS.png"
+            }
+        }
     }
 
     Row {
@@ -282,166 +319,200 @@ Rectangle {
                 opacity: 0
             }
             onItemAdded: ledsSpeed[index] = item
-          }//Repeater
+        }//Repeater
     }//Row LED
 
-  function posLed(x){
+    function posLed(x){
 
-      for (indexLed=0; indexLed<=(x-1); indexLed++){
-          ledsSpeed[indexLed].opacity=1;
-      };
-      for (indexLed=x; indexLed < ledsSpeed.length; indexLed++){
-          ledsSpeed[indexLed].opacity=0;
-      };
+        for (indexLed=0; indexLed<=(x-1); indexLed++){
+            ledsSpeed[indexLed].opacity=1;
+        };
+        for (indexLed=x; indexLed < ledsSpeed.length; indexLed++){
+            ledsSpeed[indexLed].opacity=0;
+        };
 
-  }
+    }
 
-  Row {
-      id: velocidadAllowed
-      x: 373
-      y: 273
-      width: 516
-      height: 24
-      Repeater{
-          //49
-          id: repeaterLedAllowed
-          model:49
-          Image {
-              id: ledVelocidadAllowed
-              x: 0
-              y: 0
-              width: 10
-              height: 23
-              source: "resources/ATPoLed2.png"
-              opacity: 0
-          }
-          onItemAdded: ledsSpeedAllowed[index] = item
+    Row {
+        id: velocidadAllowed
+        x: 373
+        y: 273
+        width: 516
+        height: 24
+        Repeater{
+            //49
+            id: repeaterLedAllowed
+            model:49
+            Image {
+                id: ledVelocidadAllowed
+                x: 0
+                y: 0
+                width: 10
+                height: 23
+                source: "resources/ATPoLed2.png"
+                opacity: 0
+            }
+            onItemAdded: ledsSpeedAllowed[index] = item
         }//Repeater
-  }//Row LED
+    }//Row LED
 
-  function allowedSpeed(x){
+    function allowedSpeed(x){
 
-      for (indexLedAllow=0; indexLedAllow<=(x-1); indexLedAllow++){
-          ledsSpeedAllowed[indexLedAllow].opacity=1;
-      };
-      for (indexLedAllow=x; indexLedAllow < ledsSpeedAllowed.length; indexLedAllow++){
-          ledsSpeedAllowed[indexLedAllow].opacity=0;
-      };
-  }
+        for (indexLedAllow=0; indexLedAllow<=(x-1); indexLedAllow++){
+            ledsSpeedAllowed[indexLedAllow].opacity=1;
+        };
+        for (indexLedAllow=x; indexLedAllow < ledsSpeedAllowed.length; indexLedAllow++){
+            ledsSpeedAllowed[indexLedAllow].opacity=0;
+        };
+    }
 
-  function targetSpeed(v){
+    function targetSpeed(v){
 
-      v = parseInt(v);
+        v = parseInt(v);
 
-      if (v === velTramo0){
-          //0
-          ims1.opacity=1;
-      }else{
-          ims1.opacity=0;
-      };
+        if (v === velTramo0){
+            //0
+            ims0.opacity=1;
+        }else{
+            ims0.opacity=0;
+        };
 
-      if (v === velTramo1){
-          //10
-          image10.opacity=1;
-      } else{
-          image10.opacity=0;
-      };
+        if (v === velTramo1){
+            //10
+            image10.opacity=1;
+        } else{
+            image10.opacity=0;
+        };
 
-      if (v === velTramo2){
-          //20
-          image20.opacity=1;
-      }else{
-          image20.opacity=0;
-      };
+        if (v === velTramo2){
+            //20
+            image20.opacity=1;
+        }else{
+            image20.opacity=0;
+        };
 
-      if (v === velTramo3){
-          //30
-          image30.opacity=1;
-      }else{
-          image30.opacity=0;
-      };
+        if (v === velTramo3){
+            //30
+            image30.opacity=1;
+        }else{
+            image30.opacity=0;
+        };
 
-      if (v === velTramo4){
-          //40
-          image40.opacity=1;
-      }else{
-          image40.opacity=0;
-      };
+        if (v === velTramo4){
+            //40
+            image40.opacity=1;
+        }else{
+            image40.opacity=0;
+        };
 
-      if (v === velTramo5){
-          //50
-          image50.opacity=1;
-      }else{
-          image50.opacity=0;
-      };
+        if (v === velTramo5){
+            //50
+            image50.opacity=1;
+        }else{
+            image50.opacity=0;
+        };
 
-      if (v === velTramo6){
-          //60
-          image60.opacity=1;
-      }else{
-          image60.opacity=0;
-      };
-  }
+        if (v === velTramo6){
+            //60
+            image60.opacity=1;
+        }else{
+            image60.opacity=0;
+        };
+    }
 
-  function speedLCD(v){
-      //console.log("Velocidad LCD D1---> ",getD1(v));
-      //console.log("Velocidad LCD D2---> ",getD2(v));
-      //v = parseInt(v);
+    function speedLCD(v,d){
 
-      digitsL1[dL1old].opacity = 0;
-      digitsL2[dL2old].opacity = 0;
-      digitsL1[getD1(v)].opacity = 1;
-      digitsL2[getD2(v)].opacity = 1;
+//        console.log("velocidad v ---->", v);
+//        console.log("velocidad d ---->", d*10);
+//        console.log("Indiceee ---> ",dL0old);
+        if ((0<d)&&(d<1)){
+            auxD3=parseInt(d*10)
+        }else if ((1<=d)&&(d<=9)){
+            auxD3=d
+        }else{
+            auxD3=0;
+            console.log("QML atp: decimal velocidad 0 --",d);
+        }
 
-  }
+        digitsL0[dL0old].opacity = 0;
+        digitsL1[dL1old].opacity = 0;
+        digitsL2[dL2old].opacity = 0;
+        dL0old = getD1(v);
+        //console.log("D1...........",dL0old);
+        dL1old = getD2(v);
+        //console.log("D2...........",dL1old);
+        dL2old = auxD3;
+        //console.log("D3...........",dL2old);
+        digitsL0[dL0old].opacity = 1;
+        digitsL1[dL1old].opacity = 1;
+        digitsL2[dL2old].opacity = 1;
 
-  //Creater digits
-  Repeater{
-      id: digitsL1
-      model: 10
-      Image {
-          id: dl
-          x: 170
-          y: 273
-          width: 100
-          height: 100
-          source: "resources/ATP_"+index+"L.png"
-          opacity: 0
-      }
-      onItemAdded: digitsL1[index] = item
-  }
+    }
 
-  Repeater{
-      id: digitsL2
-      model: 10
-      Image {
-          id: d2
-          x: 240
-          y: 273
-          width: 100
-          height: 100
-          source: "resources/ATP_"+index+"L.png"
-          opacity: 0
-      }
-      onItemAdded: digitsL2[index] = item
-  }
+    //Creater digits
+    Repeater{
+        id: digitsL0
+        model: 10
+        Image {
+            id: d0
+            x: 102
+            y: 273
+            width: 100
+            height: 100
+            source: "resources/ATP_"+index+"L.png"
+            opacity: 0
+        }
+        onItemAdded: digitsL0[index] = item
+    }
 
-  //calculate digits
-  function getD1(v){
-      v = parseInt(v);
-      return (parseInt(v/10));
-  }
+    Repeater{
+        id: digitsL1
+        model: 10
+        Image {
+            id: dl
+            x: 170
+            y: 273
+            width: 100
+            height: 100
+            source: "resources/ATP_"+index+"L.png"
+            opacity: 0
+        }
+        onItemAdded: digitsL1[index] = item
+    }
 
-  function getD2(v){
-      v = parseInt(v);
-      //console.log("SEGUNDO Digito LDC: ------>",v - ((parseInt(v/10)*10)));
-      return (v - ((parseInt(v/10)*10)));
-  }
+    Repeater{
+        id: digitsL2
+        model: 10
+        Image {
+            id: d2
+            x: 240
+            y: 273
+            width: 100
+            height: 100
+            source: "resources/ATP_"+index+"L.png"
+            opacity: 0
+        }
+        onItemAdded: digitsL2[index] = item
+    }
 
-  //10
+    //calculate digits
+    function getD1(v){
+        v = parseInt(v);
+        console.log("getD1 -------> ",v);
+        return (parseInt(v/10));
+    }
+
+    function getD2(v){
+        v = parseInt(v);
+        console.log("SEGUNDO Digito LDC: ------>",v - ((parseInt(v/10)*10)));
+        return (v - ((parseInt(v/10)*10)));
+    }
+
+
+    //10
     Item {
         id: s10
-        x: 784
+        x: 739
         y: 197
         width: 60
         height: 70
@@ -455,10 +526,10 @@ Rectangle {
             source: "resources/ATP_1S.png"
         }
     }
-  //20
+    //20
     Item {
         id: s20
-        x: 784
+        x: 739
         y: 197
         width: 60
         height: 70
@@ -472,10 +543,10 @@ Rectangle {
             source: "resources/ATP_2S.png"
         }
     }
-  //30
+    //30
     Item {
         id: s30
-        x: 784
+        x: 739
         y: 197
         width: 60
         height: 70
@@ -489,10 +560,10 @@ Rectangle {
             source: "resources/ATP_3S.png"
         }
     }
-  //40
+    //40
     Item {
         id: s40
-        x: 784
+        x: 739
         y: 197
         width: 60
         height: 70
@@ -506,10 +577,10 @@ Rectangle {
             source: "resources/ATP_4S.png"
         }
     }
-  //50
+    //50
     Item {
         id: s50
-        x: 784
+        x: 739
         y: 197
         width: 60
         height: 70
@@ -523,10 +594,10 @@ Rectangle {
             source: "resources/ATP_5S.png"
         }
     }
-  //60
+    //60
     Item {
         id: s60
-        x: 784
+        x: 739
         y: 197
         width: 60
         height: 70
@@ -566,11 +637,27 @@ Rectangle {
         }
     }
 
+    function setFServBlink(value){
+        if (value === true){
+            blinkFServ.start()
+        }else{
+            blinkFServ.stop()
+        }
+    }
+
     function setFrenoUrg(value){
         if (value === true){
             imFurg.opacity = 1
         }else{
             imFurg.opacity = 0
+        }
+    }
+
+    function setFrenoUrgBlink(value){
+        if(value === true){
+            blinkFrenoUrg.start()
+        }else{
+            blinkFrenoUrg.stop()
         }
     }
 
@@ -582,12 +669,81 @@ Rectangle {
         }
     }
 
+    function setCorteBlink(value){
+        if(value === true){
+            blinkCorte.start()
+        }else{
+            blinkCorte.stop()
+        }
+    }
+
     function setFalla(value){
         if (value === true){
             imFalla.opacity = 1
         }else{
             imFalla.opacity = 0
         }
+    }
+
+    SequentialAnimation{
+        id: blinkFServ
+        loops: Animation.Infinite
+        PropertyAnimation{
+            properties: "opacity"
+            to: 0
+            from: 1
+            duration: 1000
+            target: imFServ
+        }
+    }
+
+    SequentialAnimation{
+        id: blinkCorte
+        loops: Animation.Infinite
+        PropertyAnimation{
+            properties: "opacity"
+            to: 0
+            from: 1
+            duration: 1000
+            target: imCorte
+        }
+    }
+
+    SequentialAnimation{
+        id: blinkFrenoUrg
+        loops: Animation.Infinite
+        PropertyAnimation{
+            properties: "opacity"
+            to: 0
+            from: 1
+            duration: 1000
+            target: imFurg
+        }
+    }
+
+    SequentialAnimation{
+        id: blinkSpeedTarget
+        loops: Animation.Infinite
+        PropertyAnimation{
+            properties: "opacity"
+            to: 0
+            from: 1
+            duration: 1100
+            targets: [ims0, ims1, ims2]
+        }
+    }
+
+    function setBlinkSpeedTarget(value){
+        targetSpeed(0);
+        if(value === true){
+            blinkSpeedTarget.start()
+        }else{
+            blinkSpeedTarget.stop()
+        }
+    }
+
+    function setReset(value){
+
     }
 
 }

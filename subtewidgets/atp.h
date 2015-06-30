@@ -23,9 +23,15 @@ public slots:
     void setCMC(bool);
     void setCL(bool);
     void setFserv(bool);
+    void setFservBlink(bool);
     void setFrenoUrg(bool);
+    void setFrenoUrgBlink(bool);
     void setCorte(bool);
+    void setCorteBlink(bool);
     void setFalla(bool);
+
+    void setBlinkSpeedTarget(bool);
+    void setReset(bool);
 
 private:
     Ui::Atp *ui;

@@ -1,3 +1,5 @@
+#include <math.h>
+
 #include "atp.h"
 #include "ui_atp.h"
 
@@ -19,14 +21,22 @@ void Atp::updateSpeed(double speed){
 
     QVariant returnedValue1;
     QVariant returnedValue2;
-    int v = (int)speed;
+    double frac,entera;
+    int digitoFraccion,v;
+
+    frac = modf(speed,&entera);
+    qDebug() << frac;
+    digitoFraccion = (int)(frac*10);
+    v = (int)entera;
+
     QMetaObject::invokeMethod(m_qmlView, "posLed",
                               Q_RETURN_ARG(QVariant,returnedValue1),
                               Q_ARG(QVariant, (v/2)));
     QMetaObject::invokeMethod(m_qmlView, "speedLCD",
                               Q_RETURN_ARG(QVariant,returnedValue2),
-                              Q_ARG(QVariant, v));
-    //qDebug() << "¡¡¡Atp::updateSpeed: posLed" << v;
+                              Q_ARG(QVariant, v),
+                              Q_ARG(QVariant, digitoFraccion));
+    qDebug() << "¡¡¡Atp::updateSpeed: posLed" << v << digitoFraccion;
 }
 
 void Atp::updateTargetSpeed(double speed){
@@ -76,6 +86,15 @@ void Atp::setFserv(bool v){
     qDebug() << "Atp::setFserv: " << v;
 }
 
+void Atp::setFservBlink(bool v){
+
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "setFServBlink",
+                              Q_RETURN_ARG(QVariant,returnedValue),
+                              Q_ARG(QVariant, v));
+    qDebug() << "Atp::setFServBlink: " << v;
+}
+
 void Atp::setFrenoUrg(bool v){
 
     QVariant returnedValue;
@@ -83,6 +102,15 @@ void Atp::setFrenoUrg(bool v){
                               Q_RETURN_ARG(QVariant,returnedValue),
                               Q_ARG(QVariant, v));
     qDebug() << "Atp::setFrenoUrg: " << v;
+}
+
+void Atp::setFrenoUrgBlink(bool v){
+
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "setFrenoUrgBlink",
+                              Q_RETURN_ARG(QVariant,returnedValue),
+                              Q_ARG(QVariant, v));
+    qDebug() << "Atp::setFrenoUrgBlink: " << v;
 }
 
 void Atp::setCorte(bool v){
@@ -94,6 +122,15 @@ void Atp::setCorte(bool v){
     qDebug() << "Atp::setCorte: " << v;
 }
 
+void Atp::setCorteBlink(bool v){
+
+        QVariant returnedValue;
+        QMetaObject::invokeMethod(m_qmlView, "setCorteBlink",
+                                  Q_RETURN_ARG(QVariant,returnedValue),
+                                  Q_ARG(QVariant, v));
+        qDebug() << "Atp::setCorteBlink: " << v;
+}
+
 void Atp::setFalla(bool v){
 
     QVariant returnedValue;
@@ -101,6 +138,24 @@ void Atp::setFalla(bool v){
                               Q_RETURN_ARG(QVariant,returnedValue),
                               Q_ARG(QVariant, v));
     qDebug() << "Atp::setFalla: " << v;
+}
+
+void Atp::setBlinkSpeedTarget(bool v){
+
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "setBlinkSpeedTarget",
+                              Q_RETURN_ARG(QVariant,returnedValue),
+                              Q_ARG(QVariant, v));
+    qDebug() << "Atp::setBlinkSpeedTarget: " << v;
+}
+
+void Atp::setReset(bool v){
+
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "setReset",
+                              Q_RETURN_ARG(QVariant,returnedValue),
+                              Q_ARG(QVariant, v));
+    qDebug() << "Atp::setReset: " << v;
 }
 
 Atp::~Atp()

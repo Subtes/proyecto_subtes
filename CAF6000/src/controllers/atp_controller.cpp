@@ -207,7 +207,12 @@ void Atp_Controller::breakTo0(){
 /**********************************************************************************/
 
 void Atp_Controller::updateTargetSpeed(double speed){
-    m_view->updateTargetSpeed(speed);
+//    m_view->setCorteBlink(true);
+//    m_view->setFrenoUrgBlink(true);
+//    m_view->setFservBlink(true);
+//    m_view->updateTargetSpeed(57);
+//    m_view->setBlinkSpeedTarget(true);
+
     this->speedTarget = speed;
     this->updateAllowedSpeed(speed*0.9);
 }
@@ -240,6 +245,8 @@ void Atp_Controller::updateSpeed(double speed){
     };
     if (dif<0.5){
         //break
+        emit this->exceededSpeed05();
+
     }
 
 }
