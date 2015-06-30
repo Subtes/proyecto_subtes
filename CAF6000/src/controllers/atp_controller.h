@@ -30,10 +30,13 @@ signals:
     void desableBreakEmergency();
     void cutTraction();
     void enableTraction();
-    void exceededSpeed();
     void speedRecovered();
     void subteStoped();
     void signalAnden();
+    void exceededSpeed20();
+    void exceededSpeed15();
+    void exceededSpeed10();
+    void exceededSpeed05();
 
 public slots:
     void updateTargetSpeed(double speed);
@@ -58,6 +61,9 @@ private:
     Atp *m_view = NULL;
     SubteStatus *m_subte = NULL;
     EventHandler *m_eventHandler = NULL;
+
+    double speedTarget;
+    double speed;
 
     //Maquina de estados:
       //Estados:

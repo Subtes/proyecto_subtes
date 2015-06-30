@@ -6,6 +6,9 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     this->m_view = view;
     this->m_eventHandler = eventHandler;
 
+    this->speedTarget = 0.0;
+    this->speed = 0.0;
+
         //Maquina de Estado ATP, solo version CMC
     this->m_machineATP = new QStateMachine();
 
@@ -61,15 +64,15 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     //1.2 --> r1.0
     e_turnOn2->addTransition(this,SIGNAL(enableTraction()),e_rolling);
     //r1.0 --> r1.1
-    e_rolling->addTransition(this, SIGNAL(exceededSpeed()),e_controlLess2);
+    e_rolling->addTransition(this, SIGNAL(exceededSpeed20()),e_controlLess2);
     //r1.1 --> r1.2
-    e_controlLess2->addTransition(this,SIGNAL(exceededSpeed()),e_controlLess1_5);
+    e_controlLess2->addTransition(this,SIGNAL(exceededSpeed15()),e_controlLess1_5);
     //r1.2 --> r1.3
-    e_controlLess1_5->addTransition(this, SIGNAL(exceededSpeed()),e_controlLess1_0);
+    e_controlLess1_5->addTransition(this, SIGNAL(exceededSpeed10()),e_controlLess1_0);
     //r1.3 --> r1.4
-    e_controlLess1_0->addTransition(e_controlLess0_5);
+    e_controlLess1_0->addTransition(this,SIGNAL(exceededSpeed05()),e_controlLess0_5);
     //r1.4 --> r1.5
-    e_controlLess0_5->addTransition(e_breakingTo0);
+    e_controlLess0_5->addTransition(this,SIGNAL(subteStoped()),e_breakingTo0);
     //r1.5 --> B0
     e_breakingTo0->addTransition(this,SIGNAL(subteStoped()),e_rolling);
 
@@ -92,6 +95,11 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     connect(e_turnOn0,SIGNAL(entered()),this, SLOT(turnOn0()));
     connect(e_turnOn1,SIGNAL(entered()),this, SLOT(turnOn1()));
     connect(e_turnOn2,SIGNAL(entered()),this, SLOT(turnOn2()));
+    connect(e_controlLess2,SIGNAL(entered()),this,SLOT(speedExceededLessThan2()));
+    connect(e_controlLess1_5,SIGNAL(entered()),this,SLOT(speedExceededLessThan1_5()));
+    connect(e_controlLess1_0,SIGNAL(entered()),this,SLOT(speedExceededLessThan1_0()));
+    connect(e_controlLess0_5,SIGNAL(entered()),this,SLOT(speedExceededLessThan0_5()));
+    connect(e_breakingTo0,SIGNAL(entered()),this,SLOT(breakTo0()));
 
         //Conexiones del ATP al resto del mundo.
         //Conecciones externas:
@@ -114,7 +122,10 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
 //Inicia la maquina de estados, o sea el ATP, deberia estar conectado a la senal salida de Plataforma.
 void Atp_Controller::initATP(){
     this->m_machineATP->start();
+    this->speed = 0.0;
+    this->speedTarget = 0.0;
     qDebug() << "Atp_Controller::initATP ---> ATP iniciado en e_turnOn0";
+    this->t_timerToTurnOn->setInterval(10000);
 }
 
 void Atp_Controller::reset(){
@@ -124,6 +135,10 @@ void Atp_Controller::reset(){
 
 void Atp_Controller::turnOn0(){
     qDebug() << "Atp_Controller::turnOn0()";
+    this->m_view->setCMC(true);
+    this->m_view->updateTargetSpeed(0.0);
+    this->m_view->updateAllowedSpeed(15.0);
+    this->t_timerToTurnOn->start();
     qDebug() << "Velocidad Objetivo: 0, Blinking";
     qDebug() << "Velocidad Permitida: 15";
     qDebug() << "Timer of 10 second activated";
@@ -132,15 +147,23 @@ void Atp_Controller::turnOn0(){
 void Atp_Controller::turnOn1(){
     qDebug() << "Atp_Controller::turnOn1()";
     qDebug() << "Atp_Controller::turnOn1 --> C.Traccion ON";
+    this->m_view->setCorte(true);
     //Cortar Traccion
+    qDebug() << "Corte traccion... ";
+    emit this->cutTraction();
     qDebug() << "Velocidad Objetivo: 0";
+    this->m_view->updateTargetSpeed(0.0);
 }
 
 void Atp_Controller::turnOn2(){
     qDebug() << "Atp_Controller::turnOn2()";
     qDebug() << "Atp_Controller::turnOn2 --> C.Traccion OFF";
+    this->m_view->setCorte(false);
     qDebug() << "Liberar Corte Traccion";
+    emit this->enableTraction();
     qDebug() << "Velocidad Objetivo: 0";
+    this->m_view->updateTargetSpeed(0.0);
+
 }
 
 void Atp_Controller::rolling(){
@@ -185,6 +208,8 @@ void Atp_Controller::breakTo0(){
 
 void Atp_Controller::updateTargetSpeed(double speed){
     m_view->updateTargetSpeed(speed);
+    this->speedTarget = speed;
+    this->updateAllowedSpeed(speed*0.9);
 }
 
 void Atp_Controller::updateAllowedSpeed(double speed){
@@ -196,7 +221,27 @@ void Atp_Controller::updateSpeed(double speed){
     //Controla velocidad con permitida y acciona
         //Si todo bien update en vista real speed
         //en else voy a emitir una senal privada cuando no verifique ahi engancho
-    m_view->updateSpeed(speed);
+
+    this->m_view->updateSpeed(speed);
+    this->speed = speed;
+    double dif = abs(this->speed - this->speedTarget);
+
+    if (2<=dif){
+        emit this->speedRecovered();
+    };
+    if (1.5<=dif && dif<2.0){
+        emit this->exceededSpeed20();
+    };
+    if (1.0<=dif && dif<1.5){
+        emit this->exceededSpeed15();
+    };
+    if (0.5<=dif && dif<1.0){
+        emit this->exceededSpeed10();
+    };
+    if (dif<0.5){
+        //break
+    }
+
 }
 
 Atp_Controller::~Atp_Controller(){
