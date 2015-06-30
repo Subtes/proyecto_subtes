@@ -11,7 +11,7 @@ BoardLeft::BoardLeft(QWidget *parent, SubteStatus * subte, EventHandler *eventHa
 
     ui->setupUi(this);
 
-    m_atp = new Atp_Controller(subte, ui->widget_atp);
+    m_atp = new Atp_Controller(subte, ui->widget_atp, eventHandler);
 
     connect(m_subte,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(m_subte,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
