@@ -24,9 +24,14 @@ public:
     ~Atp_Controller();
 
 signals:
-    void breakEmergencie();
-    void breakServices();
+    void enableBreakEmergency();
+    void desableBreakEmergency();
     void cutTraction();
+    void enableTraction();
+    void exceededSpeed();
+    void speedRecovered();
+    void subteStoped();
+    void signalAnden(int);
 
 public slots:
     void updateTargetSpeed(double speed);
@@ -34,13 +39,18 @@ public slots:
     void updateSpeed(double speed);
     //Inicia la maquina de estados, por ahora es siempre CMC primer Estado.
     void initATP();
+    void reset();
 
 private slots:
-    void speedExceededLessThan2();
     void turnOn0();
     void turnOn1();
     void turnOn2();
     void rolling();
+    void speedExceededLessThan2();
+    void speedExceededLessThan1_5();
+    void speedExceededLessThan1_0();
+    void speedExceededLessThan0_5();
+    void breakTo0();
 
 private:
     Atp *m_view = NULL;
