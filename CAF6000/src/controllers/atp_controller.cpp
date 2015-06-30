@@ -1,6 +1,6 @@
 #include "atp_controller.h"
 
-Atp_Controller::Atp_Controller(SubteStatus *subte, Atp * view, EventHandler *eventHandler)
+Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *eventHandler)
 {
     this->m_subte = subte;
     this->m_view = view;
@@ -93,12 +93,14 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp * view, EventHandler *eve
     connect(e_turnOn1,SIGNAL(entered()),this, SLOT(turnOn1()));
     connect(e_turnOn2,SIGNAL(entered()),this, SLOT(turnOn2()));
 
+        //Conexiones del ATP al resto del mundo.
         //Conecciones externas:
     //connect(alguien,SIGNAL(senal salida paltaforma), this, SLOT(initATP()));
+    connect(subte,SIGNAL(speedChanged(double)),this,SLOT(updateSpeed(double)));
+    connect(subte,SIGNAL(targetSpeedChanged(double)),this,SLOT(updateTargetSpeed(double)));
+    connect(this, SIGNAL(cutTraction()),subte,SLOT(cutTraction()));
+    connect(this, SIGNAL(enableTraction()),subte,SLOT(enableTraction()));
 
-    //Las conecciones a continuacion ya no irian. Sirven si no quiero el ATP.
-    //connect(subte,SIGNAL(speedChanged(double)),this,SLOT(updateSpeed(double)));
-    //connect(subte,SIGNAL(targetSpeedChanged(double)),this,SLOT(updateTargetSpeed(double)));
 
 }
 

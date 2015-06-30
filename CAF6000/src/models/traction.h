@@ -16,6 +16,7 @@ private:
     Brake *m_brake;
     CSCP *m_cscp;
     ATP_model *m_atp;
+
     bool m_hombreVivo;
 
     int m_traction;

@@ -102,6 +102,8 @@ public slots:
     void ranaCERO();
     void ranaAT();
     void tractionLeverChanged(int value);
+    void cutTraction();
+    void enableTraction();
 };
 
 #endif // SUBTESTATUS_H

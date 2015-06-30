@@ -11,6 +11,7 @@
 #include "src/models/subtestatus.h"
 #include "src/controllers/eventhandler.h"
 
+
 /**
  * @brief The Atp_Controller class
  */
@@ -20,7 +21,8 @@ class Atp_Controller : public QObject
     Q_OBJECT
 
 public:
-    Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *eventHandler);
+
+    Atp_Controller (SubteStatus *model, Atp *view, EventHandler *eventHandler);
     ~Atp_Controller();
 
 signals:

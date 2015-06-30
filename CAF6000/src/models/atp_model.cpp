@@ -5,6 +5,7 @@ ATP_model::ATP_model()
     m_allowedSpeed = 0;
     m_targetSpeed = 0;
     m_code = "";
+    m_traction=false;
 }
 
 ATP_model::~ATP_model()
@@ -14,7 +15,7 @@ ATP_model::~ATP_model()
 
 bool ATP_model::tractionReady()
 {
-    return true;
+    return m_traction;
 }
 
 void ATP_model::reset()
@@ -52,4 +53,14 @@ std::string ATP_model::code() const
 void ATP_model::setCode(const std::string &code)
 {
     m_code = code;
+}
+
+void ATP_model::cutTraction()
+{
+    m_traction = false;
+}
+
+void ATP_model::enableTraction()
+{
+    m_traction = true;
 }

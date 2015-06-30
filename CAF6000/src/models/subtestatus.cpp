@@ -340,3 +340,13 @@ void SubteStatus::tractionLeverChanged(int value){
 void SubteStatus::loadFinish(){
     this->m_splash->setHidden(true);
 }
+
+void SubteStatus::cutTraction(){
+    qDebug() << "SubteStatus::cutTraction()";
+    m_ATP_model->cutTraction();
+}
+
+void SubteStatus::enableTraction(){
+    qDebug() << "SubteStatus::enableTraction()";
+    m_ATP_model->enableTraction();
+}
