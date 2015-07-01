@@ -64,6 +64,7 @@ private:
 
     double speedTarget;
     double speed;
+    double allowedSpeed;
 
     //Maquina de estados:
       //Estados:
