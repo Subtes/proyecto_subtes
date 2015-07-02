@@ -173,6 +173,7 @@ void SubteStatus::emergencyBrakeActived(){
     m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
     qDebug() << "c_traccion: "<< m_traction->getTraction();
     qDebug() << "c_freno_emergencia: con";
+    emit setaFired();
 }
 
 void SubteStatus::emergencyBrakeReleased(){

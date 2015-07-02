@@ -15,33 +15,35 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
 
         //Estados
     this->e_turnOn0 = new QState();
-    this->e_turnOn1 = new QState();
-    this->e_turnOn2 = new QState();
+//    this->e_turnOn1 = new QState();
+//    this->e_turnOn2 = new QState();
     this->e_rolling = new QState();
     this->e_controlLess2 = new QState();
     this->e_controlLess1_5 = new QState();
     this->e_controlLess1_0 = new QState();
     this->e_controlLess0_5 = new QState();
     this->e_breakingTo0 = new QState();
-    this->e_breaking0 = new QState();
-    this->e_nearToStation = new QState();
-    this->e_curveBraking = new QState();
-    this->e_nearToPlatform = new QState();
+//    this->e_breaking0 = new QState();
+//    this->e_nearToStation = new QState();
+//    this->e_curveBraking = new QState();
+//    this->e_nearToPlatform = new QState();
+    this->e_setaFired = new QState();
 
         //Agrego los estados
     this->m_machineATP->addState(this->e_turnOn0);
-    this->m_machineATP->addState(this->e_turnOn1);
-    this->m_machineATP->addState(this->e_turnOn2);
+//    this->m_machineATP->addState(this->e_turnOn1);
+//    this->m_machineATP->addState(this->e_turnOn2);
     this->m_machineATP->addState(this->e_rolling);
     this->m_machineATP->addState(this->e_controlLess2);
     this->m_machineATP->addState(this->e_controlLess1_5);
     this->m_machineATP->addState(this->e_controlLess1_0);
     this->m_machineATP->addState(this->e_controlLess0_5);
     this->m_machineATP->addState(this->e_breakingTo0);
-    this->m_machineATP->addState(this->e_breaking0);
-    this->m_machineATP->addState(this->e_nearToStation);
-    this->m_machineATP->addState(this->e_curveBraking);
-    this->m_machineATP->addState(this->e_nearToPlatform);
+//    this->m_machineATP->addState(this->e_breaking0);
+//    this->m_machineATP->addState(this->e_nearToStation);
+//    this->m_machineATP->addState(this->e_curveBraking);
+//    this->m_machineATP->addState(this->e_nearToPlatform);
+    this->m_machineATP->addState(this->e_setaFired);
 
         //Estado Final
     this->e_Final_State = new QFinalState();
@@ -59,29 +61,46 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
 
         //Transiciones
     //1.0 --> 1.1
-    e_turnOn0->addTransition(t_timerToTurnOn,SIGNAL(timeout()),e_turnOn1);
+    //e_turnOn0->addTransition(t_timerToTurnOn,SIGNAL(timeout()),e_rolling);
+    e_turnOn0->addTransition(e_rolling);
     //1.1 --> 1.2
-    e_turnOn1->addTransition(this,SIGNAL(signalAnden()),e_turnOn2);
+    //e_turnOn1->addTransition(this,SIGNAL(signalAnden()),e_turnOn2);
     //1.2 --> r1.0
-    e_turnOn2->addTransition(this,SIGNAL(enableTraction()),e_rolling);
+    //e_turnOn2->addTransition(this,SIGNAL(enableTraction()),e_rolling);
     //r1.0 --> r1.1
     e_rolling->addTransition(this, SIGNAL(exceededSpeed20()),e_controlLess2);
+    e_rolling->addTransition(this, SIGNAL(exceededSpeed15()),e_controlLess1_5);
+    e_rolling->addTransition(this, SIGNAL(exceededSpeed10()),e_controlLess1_0);
+    e_rolling->addTransition(this, SIGNAL(exceededSpeed10()),e_controlLess0_5);
+
+    //e_rolling->addTransition(this, SIGNAL(exceededSpeed05()),e_breakingTo0);
+    e_rolling->addTransition(this, SIGNAL(setaFired()),e_setaFired);
     //r1.1 --> r1.2
     e_controlLess2->addTransition(this,SIGNAL(exceededSpeed15()),e_controlLess1_5);
+    e_controlLess2->addTransition(this,SIGNAL(exceededSpeed10()),e_controlLess1_0);
+    e_controlLess2->addTransition(this, SIGNAL(setaFired()),e_setaFired);
     //r1.2 --> r1.3
     e_controlLess1_5->addTransition(this, SIGNAL(exceededSpeed10()),e_controlLess1_0);
+    e_controlLess1_5->addTransition(this, SIGNAL(setaFired()),e_setaFired);
     //r1.3 --> r1.4
     e_controlLess1_0->addTransition(this,SIGNAL(exceededSpeed05()),e_controlLess0_5);
+    e_controlLess1_0->addTransition(this, SIGNAL(setaFired()),e_setaFired);
     //r1.4 --> r1.5
     e_controlLess0_5->addTransition(this,SIGNAL(subteStoped()),e_breakingTo0);
+    e_controlLess0_5->addTransition(this, SIGNAL(setaFired()),e_setaFired);
     //r1.5 --> B0
     e_breakingTo0->addTransition(e_rolling);
-
+    e_setaFired->addTransition(this,SIGNAL(subteStoped()),e_breakingTo0);
 
         //Arcos Back:
     e_controlLess2->addTransition(this,SIGNAL(speedRecovered()),e_rolling);
     e_controlLess1_5->addTransition(this,SIGNAL(speedRecovered()),e_rolling);
     e_controlLess1_0->addTransition(this,SIGNAL(speedRecovered()),e_rolling);
+
+//    e_controlLess2->addTransition(this,SIGNAL(speedRecovered()),e_rolling);
+//    e_controlLess1_5->addTransition(this,SIGNAL(speedRecovered()),e_rolling);
+//    e_controlLess1_0->addTransition(this,SIGNAL(speedRecovered()),e_rolling);
+
 
     //r2.0 --> r2.1
     //r2.1 --> r2.2
@@ -93,24 +112,26 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
 
         //Acciones:
     connect(e_turnOn0,SIGNAL(entered()),this, SLOT(turnOn0()));
-    connect(e_turnOn1,SIGNAL(entered()),this, SLOT(turnOn1()));
-    connect(e_turnOn2,SIGNAL(entered()),this, SLOT(turnOn2()));
+//    connect(e_turnOn1,SIGNAL(entered()),this, SLOT(turnOn1()));
+//    connect(e_turnOn2,SIGNAL(entered()),this, SLOT(turnOn2()));
     connect(e_controlLess2,SIGNAL(entered()),this,SLOT(speedExceededLessThan2()));
     connect(e_controlLess1_5,SIGNAL(entered()),this,SLOT(speedExceededLessThan1_5()));
     connect(e_controlLess1_0,SIGNAL(entered()),this,SLOT(speedExceededLessThan1_0()));
     connect(e_controlLess0_5,SIGNAL(entered()),this,SLOT(speedExceededLessThan0_5()));
     connect(e_breakingTo0,SIGNAL(entered()),this,SLOT(breakTo0()));
+    connect(e_setaFired,SIGNAL(entered()),this,SLOT(setaFiredRoutine()));
 
         //Conexiones del ATP al resto del mundo.
         //Conecciones externas:
     connect(subte,SIGNAL(speedChanged(double)),this,SLOT(updateSpeed(double)));
     connect(subte,SIGNAL(targetSpeedChanged(double)),this,SLOT(updateTargetSpeed(double)));
+    connect(subte,SIGNAL(setaFired()),this,SIGNAL(setaFiredRoutine()));
     connect(this, SIGNAL(cutTraction()),subte,SLOT(cutTraction()));
     connect(this, SIGNAL(enableTraction()),subte,SLOT(enableTraction()));
     connect(this, SIGNAL(enableBreakEmergency()),subte,SLOT(emergencyBrakeActived()));
     connect(this, SIGNAL(desableBreakEmergency()),subte,SLOT(emergencyBrakeReleased()));
     connect(eventHandler,SIGNAL(kPressed()),this,SLOT(initATP()));
-    connect(eventHandler,SIGNAL(lPressed()),this,SLOT(reset()));
+    connect(eventHandler,SIGNAL(lPressed()),this,SLOT(resetATP()));
     connect(eventHandler,SIGNAL(iCambioSenial1()),SIGNAL(signalAnden()));
     connect(eventHandler,SIGNAL(cPressed()),SIGNAL(enableTraction()));
 
@@ -123,21 +144,31 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
 void Atp_Controller::initATP(){
     this->m_machineATP->start();
     this->speed = 0.0;
-    this->speedTarget = 0.0;
+    if ((this->m_subte->targetSpeed())>= 1.0){
+            this->speedTarget = 0.0;
+    }
+    this->allowedSpeed = 15.0;
     qDebug() << "Atp_Controller::initATP ---> ATP iniciado en e_turnOn0";
     this->t_timerToTurnOn->setInterval(10000);
 }
 
-void Atp_Controller::reset(){
+void Atp_Controller::resetATP(){
     this->m_machineATP->stop();
-    qDebug() << "Atp_Controller::reset() ---> ATP machine stop";
+    qDebug() << "Atp_Controller::resetATP() ---> ATP machine stop";
 }
 
 void Atp_Controller::turnOn0(){
     qDebug() << "Atp_Controller::turnOn0()";
     this->m_view->setCMC(true);
-    this->m_view->updateTargetSpeed(0.0);
-    this->m_view->updateAllowedSpeed(15.0);
+    if (this->speedTarget >= 1.0){
+        //this->m_view->updateTargetSpeed(this->speedTarget);
+        qDebug() << "velocidad updateSpeedTarget paso 0 inicio ATP recibida" << this->speedTarget;
+        this->updateTargetSpeed(this->speedTarget);
+    } else{
+        this->updateTargetSpeed(0.0);
+    }
+
+    //this->m_view->updateAllowedSpeed(15.0);
     this->t_timerToTurnOn->start();
     qDebug() << "Velocidad Objetivo: 0, Blinking";
     qDebug() << "Velocidad Permitida: 15";
@@ -169,6 +200,18 @@ void Atp_Controller::turnOn2(){
 void Atp_Controller::rolling(){
     //Actualiza speedReal en ATP widget
     qDebug() << "Atp_Controller::rolling() --> updatedSpeed() ATP";
+    this->m_view->setCorte(false);
+    this->m_view->setCorteBlink(false);
+    this->m_view->setFrenoUrg(false);
+    this->m_view->setFrenoUrgBlink(false);
+}
+
+void Atp_Controller::resetViewState(){
+    //Actualiza speedReal en ATP widget
+    this->m_view->setCorte(false);
+    this->m_view->setCorteBlink(false);
+    this->m_view->setFrenoUrg(false);
+    this->m_view->setFrenoUrgBlink(false);
 }
 
 void Atp_Controller::speedExceededLessThan2(){
@@ -188,13 +231,16 @@ void Atp_Controller::speedExceededLessThan1_5(){
 
 void Atp_Controller::speedExceededLessThan1_0(){
     //Freno: ON (blink)
+    this->m_view->setCorteBlink(false);
+    this->m_view->setCorte(true);
     this->m_view->setFrenoUrgBlink(true);
     qDebug() << "Atp_Controller::speedExceededLessThan1_0()";
 }
 
 void Atp_Controller::speedExceededLessThan0_5(){
     //Frneo: ON
-    this->m_view->setFrenoUrg(false);
+    this->m_view->setCorte(true);
+    this->m_view->setFrenoUrgBlink(false);
     this->m_view->setFrenoUrg(true);
     emit enableBreakEmergency();
     qDebug() << "Atp_Controller::speedExceededLessThan0_5()";
@@ -211,6 +257,12 @@ void Atp_Controller::breakTo0(){
     qDebug() << "Atp_Controller::breakTo0()";
     this->m_view->setFrenoUrg(false);
     this->m_view->setCorte(false);
+    this->m_view->updateTargetSpeed(this->speedTarget);
+}
+
+void Atp_Controller::setaFiredRoutine(){
+        this->m_view->setFrenoUrg(true);
+        qDebug()<<"Atp_Controller::setaFired()";
 }
 
 /**********************************************************************************/
@@ -241,35 +293,67 @@ void Atp_Controller::updateSpeed(double speed){
     this->m_view->updateSpeed(speed);
 
     this->speed = speed;
-    double dif = abs(this->speed - this->allowedSpeed);
-    qDebug() << "Diferencia speed - allowedSpeed: "<< dif;
+    double dif = (double)(this->allowedSpeed - this->speed);
+    qDebug() << "Atp_Controller::updateSpeed Diferencia speed - allowedSpeed: "<< dif;
+    qDebug() << "allowed: " << this->allowedSpeed << "speed: " << this->speed;
 
-    if (2<=dif){
+    if (5.0<dif){
         emit this->speedRecovered();
         qDebug() << "emit this->speedRecovered();";
     };
-    if (1.5<=dif && dif<2.0){
+    if (3.5<dif && dif<=5.0){
         emit this->exceededSpeed20();
         qDebug()<< "emit this->exceededSpeed20();";
     };
-    if (1.0<=dif && dif<1.5){
+    if (2.5<dif && dif<=3.5){
         emit this->exceededSpeed15();
         qDebug()<<"emit this->exceededSpeed15();";
     };
-    if (0.5<=dif && dif<1.0){
+    if (1.5<dif && dif<=2.5){
         emit this->exceededSpeed10();
         qDebug()<<"emit this->exceededSpeed10();";
     };
-    if (dif<0.5){
+    if (0.0<dif && dif<=1.5){
         //break
         emit this->exceededSpeed05();
         qDebug()<<"emit this->exceededSpeed05();";
     };
 
-    if ((-0.01<=(speed-0))&&((speed-0)<=0.01)){
+    if ((-0.1<speed && speed<=0.0)){
         emit this->subteStoped();
         qDebug()<<"emit this->subteStoped();";
     };
+    if (this->allowedSpeed <= this->speed){
+        emit this->exceededSpeed05();
+        qDebug() << "Violacion de velocidad permitida, ATP";
+    }
+
+//    if (2.0<dif){
+//        emit this->speedRecovered();
+//        qDebug() << "emit this->speedRecovered();";
+//    };
+//    if (1.5<dif && dif<=2.0){
+//        emit this->exceededSpeed20();
+//        qDebug()<< "emit this->exceededSpeed20();";
+//    };
+//    if (1.0<dif && dif<=1.5){
+//        emit this->exceededSpeed15();
+//        qDebug()<<"emit this->exceededSpeed15();";
+//    };
+//    if (0.5<dif && dif<=1.0){
+//        emit this->exceededSpeed10();
+//        qDebug()<<"emit this->exceededSpeed10();";
+//    };
+//    if (0.0<dif && dif<=0.5){
+//        //break
+//        emit this->exceededSpeed05();
+//        qDebug()<<"emit this->exceededSpeed05();";
+//    };
+
+//    if ((-0.1<speed && speed<=0.01)){
+//        emit this->subteStoped();
+//        qDebug()<<"emit this->subteStoped();";
+//    };
 }
 
 Atp_Controller::~Atp_Controller(){

@@ -46,6 +46,8 @@ signals:
     speedChanged(double s_speed);
     allowedSpeedChanged(double s_speed);
     targetSpeedChanged(double s_speed);
+        //Usado por ATP
+    setaFired();
 
 public:
     SubteStatus();

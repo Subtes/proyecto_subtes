@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     BoardCenter * m_c = new BoardCenter(0,m_subte,m_eventHandler);
     BoardLeft *m_l = new BoardLeft(0,m_subte,m_eventHandler);
     //m_l->probarATP(54.8);
-    BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
+    //BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
     //BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
 
     QDesktopWidget *desktop = a.desktop();
@@ -51,19 +51,19 @@ int main(int argc, char *argv[])
 
     m_h->move(s0.topLeft());
     m_l->move(s1.topLeft());
-    m_r->move(s2.topLeft());
     m_c->move(s3.topLeft());
+//    m_t->move(s2.topLeft());
 
     m_h->showNormal();
     m_l->showNormal();
     m_c->showNormal();
-    m_r->showNormal();
+//    m_t->showNormal();
 
     }else{
         m_h->showNormal();
         m_l->showNormal();
         m_c->showNormal();
-        m_r->showNormal();
+//        m_t->showNormal();
     }
 
     // DEPENDENCY INJECTION

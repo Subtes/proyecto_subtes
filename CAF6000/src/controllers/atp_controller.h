@@ -37,14 +37,16 @@ signals:
     void exceededSpeed15();
     void exceededSpeed10();
     void exceededSpeed05();
+    void setaFired();
 
 public slots:
     void updateTargetSpeed(double speed);
     void updateAllowedSpeed(double speed);
     void updateSpeed(double speed);
+    void setaFiredRoutine();
     //Inicia la maquina de estados, por ahora es siempre CMC primer Estado.
     void initATP();
-    void reset();
+    void resetATP();
 
 private slots:
     void turnOn0();
@@ -56,6 +58,7 @@ private slots:
     void speedExceededLessThan1_0();
     void speedExceededLessThan0_5();
     void breakTo0();
+    void resetViewState();
 
 private:
     Atp *m_view = NULL;
@@ -94,6 +97,8 @@ private:
     QState *e_curveBraking = NULL;
     //Parado, proximidad al anden, circulacion 15 maximo Target=0
     QState *e_nearToPlatform = NULL;
+    //Estado seta disparado
+    QState *e_setaFired = NULL;
 
         //Estado Final:
     QFinalState *e_Final_State = NULL;

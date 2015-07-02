@@ -36,7 +36,7 @@ void Atp::updateSpeed(double speed){
                               Q_RETURN_ARG(QVariant,returnedValue2),
                               Q_ARG(QVariant, v),
                               Q_ARG(QVariant, digitoFraccion));
-    qDebug() << "¡¡¡Atp::updateSpeed: posLed" << v << digitoFraccion;
+    //qDebug() << "¡¡¡Atp::updateSpeed: posLed" << v << digitoFraccion;
 }
 
 void Atp::updateTargetSpeed(double speed){

@@ -646,6 +646,7 @@ Rectangle {
     }
 
     function setFrenoUrg(value){
+        //blinkFrenoUrg.stop();
         if (value === true){
             imFurg.opacity = 1
         }else{
@@ -662,6 +663,7 @@ Rectangle {
     }
 
     function setCorte(value){
+        //blinkCorte.stop();
         if (value === true){
             imCorte.opacity = 1
         }else{
@@ -704,7 +706,7 @@ Rectangle {
             properties: "opacity"
             to: 0
             from: 1
-            duration: 1000
+            duration: 800
             target: imCorte
         }
     }
@@ -716,7 +718,7 @@ Rectangle {
             properties: "opacity"
             to: 0
             from: 1
-            duration: 1000
+            duration: 800
             target: imFurg
         }
     }
@@ -728,7 +730,7 @@ Rectangle {
             properties: "opacity"
             to: 0
             from: 1
-            duration: 1100
+            duration: 1000
             targets: [ims0, ims1, ims2]
         }
     }

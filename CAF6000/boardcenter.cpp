@@ -54,26 +54,26 @@ void BoardCenter::startBoard()
     TractionBypass_Controller *tractionBypass = new TractionBypass_Controller(m_subte,ui->bypassTraccion);
     SpeedGaugeLeds_Controller *speedGauge = new SpeedGaugeLeds_Controller(m_subte,ui->velocimetro);
 
-    ui->velocimetro->setVisible(true);
-    ui->velocimetro->setVisible(true);
-    ui->bypassFreno->setVisible(true);
-    ui->bypassTraccion->setVisible(true);
-    ui->abrirDerecha->setVisible(true);
-    ui->abrirIzquierda->setVisible(true);
-    ui->cerrarIzquierda->setVisible(true);
-    ui->cerrarDerecha->setVisible(true);
-    ui->selectorIzquierda->setVisible(true);
-    ui->selectorDerecha->setVisible(true);
-    ui->wiper->setVisible(true);
-    ui->luzCabina->setVisible(true);
-    ui->iluminacionPulsadores->setVisible(true);
-    ui->silbato->setVisible(true);
-    ui->faros->setVisible(true);
-    ui->antivaho->setVisible(true);
-    ui->iluminacionReducPulsad->setVisible(true);
-    ui->megafonia->setVisible(true);
-    ui->publicoCabina->setVisible(true);
-    ui->anulacionEmergencia->setVisible(true);
+//    ui->velocimetro->setVisible(true);
+//    ui->velocimetro->setVisible(true);
+//    ui->bypassFreno->setVisible(true);
+//    ui->bypassTraccion->setVisible(true);
+//    ui->abrirDerecha->setVisible(true);
+//    ui->abrirIzquierda->setVisible(true);
+//    ui->cerrarIzquierda->setVisible(true);
+//    ui->cerrarDerecha->setVisible(true);
+//    ui->selectorIzquierda->setVisible(true);
+//    ui->selectorDerecha->setVisible(true);
+//    ui->wiper->setVisible(true);
+//    ui->luzCabina->setVisible(true);
+//    ui->iluminacionPulsadores->setVisible(true);
+//    ui->silbato->setVisible(true);
+//    ui->faros->setVisible(true);
+//    ui->antivaho->setVisible(true);
+//    ui->iluminacionReducPulsad->setVisible(true);
+//    ui->megafonia->setVisible(true);
+//    ui->publicoCabina->setVisible(true);
+//    ui->anulacionEmergencia->setVisible(true);
 
     ui->cerrarDerecha->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
     ui->cerrarIzquierda->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
@@ -92,7 +92,7 @@ void BoardCenter::startBoard()
 
     //ui->splash->setVisible(false);
     //ui->splash->resize(0,0);
-    this->raise();
+    //this->raise();
 
     this->setEnabled(false);
 }
