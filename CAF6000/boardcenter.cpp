@@ -11,25 +11,25 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eve
 
     ui->setupUi(this);
 
-    ui->velocimetro->setVisible(false);
-    ui->bypassFreno->setVisible(false);
-    ui->bypassTraccion->setVisible(false);
-    ui->abrirDerecha->setVisible(false);
-    ui->abrirIzquierda->setVisible(false);
-    ui->cerrarIzquierda->setVisible(false);
-    ui->cerrarDerecha->setVisible(false);
-    ui->selectorIzquierda->setVisible(false);
-    ui->selectorDerecha->setVisible(false);
-    ui->wiper->setVisible(false);
-    ui->luzCabina->setVisible(false);
-    ui->iluminacionPulsadores->setVisible(false);
-    ui->silbato->setVisible(false);
-    ui->faros->setVisible(false);
-    ui->antivaho->setVisible(false);
-    ui->iluminacionReducPulsad->setVisible(false);
-    ui->megafonia->setVisible(false);
-    ui->publicoCabina->setVisible(false);
-    ui->anulacionEmergencia->setVisible(false);
+//    ui->velocimetro->setVisible(false);
+//    ui->bypassFreno->setVisible(false);
+//    ui->bypassTraccion->setVisible(false);
+//    ui->abrirDerecha->setVisible(false);
+//    ui->abrirIzquierda->setVisible(false);
+//    ui->cerrarIzquierda->setVisible(false);
+//    ui->cerrarDerecha->setVisible(false);
+//    ui->selectorIzquierda->setVisible(false);
+//    ui->selectorDerecha->setVisible(false);
+//    ui->wiper->setVisible(false);
+//    ui->luzCabina->setVisible(false);
+//    ui->iluminacionPulsadores->setVisible(false);
+//    ui->silbato->setVisible(false);
+//    ui->faros->setVisible(false);
+//    ui->antivaho->setVisible(false);
+//    ui->iluminacionReducPulsad->setVisible(false);
+//    ui->megafonia->setVisible(false);
+//    ui->publicoCabina->setVisible(false);
+//    ui->anulacionEmergencia->setVisible(false);
 
     //ui->splash->setVisible(true);
     //ui->splash->resize(this->width(),this->height());

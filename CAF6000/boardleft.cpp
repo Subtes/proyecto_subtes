@@ -32,8 +32,10 @@ void BoardLeft::disableScreen()
 }
 void BoardLeft::resetControls(){
     if (m_atp){
+       // m_atp->initATP();
         m_atp->updateSpeed(0.0);
         m_atp->updateTargetSpeed(0.0);
+
     }
 }
 

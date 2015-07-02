@@ -21,7 +21,7 @@ void ENetHelper::initENet(ENetClient *eNetClient, EventHandler *eventHandler){
         qDebug() << "ERROR AL CONECTAR CON EL SERVIDOR";
         qDebug() << "Intento conectar con:: servidor " << serverIp.c_str() << " , puerto "<< serverPort << " , host "<< controlsHostName.c_str();
     }
-    eNetClient->Suscribirse(instructionsHostName,"i_estado_simulador");
+    eNetClient->Suscribirse(instructionsHostName,"i_iniciar_simulador");
     eNetClient->CambiarValorClave("c_listo","0");
 
 }

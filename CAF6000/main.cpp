@@ -26,12 +26,11 @@ int main(int argc, char *argv[])
     BoardHardware *m_h = new BoardHardware(0,m_subte,m_eventHandler);
     BoardCenter * m_c = new BoardCenter(0,m_subte,m_eventHandler);
     BoardLeft *m_l = new BoardLeft(0,m_subte,m_eventHandler);
-    //m_l->probarATP(54.8);
     //BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
     //BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
 
     QDesktopWidget *desktop = a.desktop();
-    if(desktop->screenCount() == 4){
+    if(desktop->screenCount() == 3){
         qDebug() << "Entre en For de pantallas igual 4: ";
         for(int i = 0; i < desktop->screenCount(); i++){
             qDebug() << "Dimensiones --> "<< desktop->screenGeometry(i);
@@ -40,7 +39,7 @@ int main(int argc, char *argv[])
     QRect s0 = desktop->screenGeometry(0);
     QRect s1 = desktop->screenGeometry(1);
     QRect s2 = desktop->screenGeometry(2);
-    QRect s3 = desktop->screenGeometry(3);
+    //QRect s3 = desktop->screenGeometry(3);
 
     /**
      * Dimensiones -->  QRect(0,0 1024x768)
@@ -51,19 +50,22 @@ int main(int argc, char *argv[])
 
     m_h->move(s0.topLeft());
     m_l->move(s1.topLeft());
-    m_c->move(s3.topLeft());
-//    m_t->move(s2.topLeft());
+    m_c->move(s2.topLeft());
+    //m_t->move(s3.topLeft());
 
     m_h->showNormal();
     m_l->showNormal();
     m_c->showNormal();
-//    m_t->showNormal();
+//    m_h->showFullScreen();
+//    m_l->showFullScreen();
+//    m_c->showFullScreen();
+    //m_t->showNormal();
 
     }else{
         m_h->showNormal();
         m_l->showNormal();
         m_c->showNormal();
-//        m_t->showNormal();
+        //m_t->showNormal();
     }
 
     // DEPENDENCY INJECTION

@@ -146,6 +146,9 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     //Acciones, rutinas a realizar en los estados:
 //Inicia la maquina de estados, o sea el ATP, deberia estar conectado a la senal salida de Plataforma.
 void Atp_Controller::initATP(){
+//    if (this->m_machineATP->isRunning()){
+//        this->resetATP();
+//    }
     this->m_machineATP->start();
     this->speed = 0.0;
     if ((this->m_subte->targetSpeed())>= 1.0){
@@ -156,8 +159,14 @@ void Atp_Controller::initATP(){
     this->t_timerToTurnOn->setInterval(10000);
 }
 
+
 void Atp_Controller::resetATP(){
     this->m_machineATP->stop();
+//    this->m_view->setCMC(false);
+//    this->m_view->setCorte(false);
+//    this->m_view->setCorteBlink(false);
+//    this->m_view->setFrenoUrg(false);
+//    this->m_view->setFrenoUrgBlink(false);
     qDebug() << "Atp_Controller::resetATP() ---> ATP machine stop";
 }
 
@@ -243,7 +252,7 @@ void Atp_Controller::speedExceededLessThan1_0(){
     this->m_view->setCorteBlink(false);
     this->m_view->setCorte(true);
     this->m_view->setFrenoUrgBlink(true);
-    this->m_view->setFrenoUrg(false)
+    this->m_view->setFrenoUrg(false);
     qDebug() << "Atp_Controller::speedExceededLessThan1_0()";
 }
 

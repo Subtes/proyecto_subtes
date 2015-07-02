@@ -2,11 +2,12 @@
 #define _F2 0x71
 #define _F3 0x72
 #define _F4 0x73
+#define _F5 0x73
 #define _K 0x4B
 #define _L 0x4C
 #define _A 0x41
 #define _R 0x52
-//#define _F 0x46
+#define _tF 0x46
 #define _T 0x54
 #define _B 0x42
 
@@ -57,6 +58,7 @@ private:
     bool F2_down;
     bool F3_down;
     bool F4_down;
+    bool F5_down;
     bool K_down;
     bool L_down;
     bool A_down;
@@ -107,7 +109,6 @@ signals:
 public slots:
     void processKeyPressed(DWORD k);
     void processKeyReleased(DWORD k);
-
 };
 
 #endif // EVENTHANDLER_H
