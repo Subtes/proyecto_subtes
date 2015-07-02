@@ -431,7 +431,7 @@ Rectangle {
             auxD3=d
         }else{
             auxD3=0;
-            console.log("QML atp: decimal velocidad 0 --",d);
+            //console.log("QML atp: decimal velocidad 0 --",d);
         }
 
         digitsL0[dL0old].opacity = 0;
@@ -498,13 +498,13 @@ Rectangle {
     //calculate digits
     function getD1(v){
         v = parseInt(v);
-        console.log("getD1 -------> ",v);
+        //console.log("getD1 -------> ",v);
         return (parseInt(v/10));
     }
 
     function getD2(v){
         v = parseInt(v);
-        console.log("SEGUNDO Digito LDC: ------>",v - ((parseInt(v/10)*10)));
+        //console.log("SEGUNDO Digito LDC: ------>",v - ((parseInt(v/10)*10)));
         return (v - ((parseInt(v/10)*10)));
     }
 

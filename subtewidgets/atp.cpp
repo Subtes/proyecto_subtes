@@ -146,7 +146,7 @@ void Atp::setBlinkSpeedTarget(bool v){
     QMetaObject::invokeMethod(m_qmlView, "setBlinkSpeedTarget",
                               Q_RETURN_ARG(QVariant,returnedValue),
                               Q_ARG(QVariant, v));
-    qDebug() << "Atp::setBlinkSpeedTarget: " << v;
+    //qDebug() << "Atp::setBlinkSpeedTarget: " << v;
 }
 
 void Atp::setReset(bool v){
@@ -155,7 +155,7 @@ void Atp::setReset(bool v){
     QMetaObject::invokeMethod(m_qmlView, "setReset",
                               Q_RETURN_ARG(QVariant,returnedValue),
                               Q_ARG(QVariant, v));
-    qDebug() << "Atp::setReset: " << v;
+    //qDebug() << "Atp::setReset: " << v;
 }
 
 Atp::~Atp()
