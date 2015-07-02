@@ -62,9 +62,9 @@ int main(int argc, char *argv[])
     //m_t->showNormal();
 
     }else{
-        m_h->showNormal();
-        m_l->showNormal();
-        m_c->showNormal();
+        m_h->showMaximized();
+        m_l->showMaximized();
+        m_c->showMaximized();
         //m_t->showNormal();
     }
 
