@@ -1,6 +1,9 @@
 #include "eventhandler.h"
+#include <QSplashScreen>
+#include <QPixmap>
+#include <Qt>
 
-EventHandler::EventHandler()
+EventHandler::EventHandler(QDesktopWidget *desktop)
 {
     F1_down = false;
     F2_down = false;
@@ -36,10 +39,31 @@ EventHandler::EventHandler()
     connect(kel,SIGNAL(keyPressed(DWORD)),this,SLOT(processKeyPressed(DWORD)));
     connect(kel,SIGNAL(keyReleased(DWORD)),this,SLOT(processKeyReleased(DWORD)));
 
+    m_imageSplash = QPixmap(":/resources/splash.jpg");
+
+    m_splash1 = new QSplashScreen(m_imageSplash);
+    m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
+    m_splash2 = new QSplashScreen(m_imageSplash);
+    m_splash2->setWindowFlags(Qt::WindowStaysOnTopHint);
+    m_splash3 = new QSplashScreen(m_imageSplash);
+    m_splash3->setWindowFlags(Qt::WindowStaysOnTopHint);
+//    m_splash->showMaximized();
+
+    QRect s0 = desktop->screenGeometry(0);
+    QRect s1 = desktop->screenGeometry(1);
+    QRect s2 = desktop->screenGeometry(2);
+
+    m_splash1->move(s0.topLeft());
+    m_splash2->move(s1.topLeft());
+    m_splash3->move(s2.topLeft());
+
+    m_splash1->showMaximized();
+    m_splash2->showMaximized();
+    m_splash3->showMaximized();
+
 }
 
-EventHandler::~EventHandler()
-{
+EventHandler::~EventHandler(){
 }
 
 void EventHandler::initConnection()
@@ -61,6 +85,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     qDebug() << "processValueChanged:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() ;
 
     if(key.compare("i_iniciar_simulador") == 0){
+        //Cargar Splash
         if (value.compare("con") == 0){
             qDebug() << "i_iniciar_simulador con recibido" ;
 
@@ -70,9 +95,14 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
                 qDebug() << "!splashPassed" ;
                 splashPassed = true;
                 emit controlReady();
+                //Bajar splash
+                m_splash1->hide();
+                m_splash2->hide();
+                m_splash3->hide();
+                qDebug() << "Bajando Splashhh";
             }
 
-            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estado_simulador");
+            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estado0_simulador");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_velocidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_tramo_vel");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
@@ -94,6 +124,8 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         } else if (value.compare("des") == 0){
             qDebug() << "i_iniciar_simulador des recibido" ;
             qDebug() << "APAGARRRRRRRRRRRRR" ;
+            //c_listo en 0 tirar al cerrar;
+            emit downLoaderBoarders();
         }
     }
 

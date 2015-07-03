@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     // CONTROLLER DISPATCHER
-    EventHandler *m_eventHandler = new EventHandler();
+    EventHandler *m_eventHandler = new EventHandler(a.desktop());
 
     // MODEL
     SubteStatus * m_subte = new SubteStatus();

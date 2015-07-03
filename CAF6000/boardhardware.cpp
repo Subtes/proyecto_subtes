@@ -30,11 +30,26 @@ BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte, EventHandler 
     connect(eventHandler,SIGNAL(rPressed()),this,SLOT(ranaAT()));
     connect(eventHandler,SIGNAL(fPressed()),this,SLOT(setaON()));
     connect(eventHandler,SIGNAL(tPressed()),this,SLOT(setaOFF()));
+
+    //Load Board
+    connect(eventHandler,SIGNAL(downLoaderBoarders()),this,SLOT(downLoadBoard()));
+
+    //Splash
+    //connect(this,SIGNAL(readyLoad()),eventHandler, SLOT());
 }
 
 BoardHardware::~BoardHardware()
 {
     delete ui;
+}
+
+//bool BoardHardware::loadOk(){
+//    emit readyLoad();
+//    return true;
+//}
+
+void BoardHardware::downLoadBoard(){
+    qDebug()<<"bajando tablerooooo";
 }
 
 void BoardHardware::startBoard(){

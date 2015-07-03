@@ -28,6 +28,10 @@
 #include <QObject>
 #include <ENetClient.h>
 #include <Windows.h>
+#include <QSplashScreen>
+#include <QPixmap>
+#include <QDesktopWidget>
+
 #include "src/controllers/enethelper.h"
 #include "src/controllers/keypresseater.h"
 #include "src/models/subtestatus.h"
@@ -40,7 +44,7 @@ class EventHandler : public QObject
     Q_OBJECT
 
 public:
-    EventHandler();
+    EventHandler(QDesktopWidget *desk);
     ~EventHandler();
 
     void processValueChanged(std::string host, std::string key, std::string value);
@@ -53,6 +57,10 @@ private:
     ENetClient * m_eNetClient;
     ENetHelper * m_eNetHelper;
     SubteStatus * m_subte;
+    QSplashScreen *m_splash1;
+    QSplashScreen *m_splash2;
+    QSplashScreen *m_splash3;
+    QPixmap m_imageSplash;
 
     bool F1_down;
     bool F2_down;
@@ -105,6 +113,8 @@ signals:
     f4Pressed();
 
     cPressed();
+
+    downLoaderBoarders();
 
 public slots:
     void processKeyPressed(DWORD k);
