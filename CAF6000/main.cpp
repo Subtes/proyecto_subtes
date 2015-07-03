@@ -73,5 +73,6 @@ int main(int argc, char *argv[])
     m_subte->setHandler(m_eventHandler);
     m_eventHandler->initConnection();
 
+    QObject::connect(m_eventHandler,SIGNAL(closeApp()),qApp,SLOT(quit()));
     return a.exec();
 }

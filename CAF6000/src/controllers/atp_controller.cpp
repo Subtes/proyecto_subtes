@@ -137,7 +137,7 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     connect(eventHandler,SIGNAL(kPressed()),this,SLOT(initATP()));
     connect(eventHandler,SIGNAL(lPressed()),this,SLOT(resetATP()));
     connect(eventHandler,SIGNAL(iCambioSenial1()),SIGNAL(signalAnden()));
-    connect(eventHandler,SIGNAL(cPressed()),SIGNAL(enableTraction()));
+    connect(eventHandler,SIGNAL(frenoEstDes()),SIGNAL(enableTraction()));
 
 
 }
@@ -157,6 +157,7 @@ void Atp_Controller::initATP(){
     this->allowedSpeed = 15.0;
     qDebug() << "Atp_Controller::initATP ---> ATP iniciado en e_turnOn0";
     this->t_timerToTurnOn->setInterval(10000);
+
 }
 
 
@@ -173,6 +174,7 @@ void Atp_Controller::resetATP(){
 void Atp_Controller::turnOn0(){
     qDebug() << "Atp_Controller::turnOn0()";
     this->m_view->setCMC(true);
+    this->enableTraction();
     if (this->speedTarget >= 1.0){
         //this->m_view->updateTargetSpeed(this->speedTarget);
         qDebug() << "velocidad updateSpeedTarget paso 0 inicio ATP recibida" << this->speedTarget;

@@ -113,8 +113,10 @@ signals:
     f4Pressed();
 
     cPressed();
+    frenoEstDes();
 
     downLoaderBoarders();
+    closeApp();
 
 public slots:
     void processKeyPressed(DWORD k);

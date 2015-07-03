@@ -65,7 +65,7 @@ void Atp::setCMC(bool v){
     QMetaObject::invokeMethod(m_qmlView, "setCMC",
                               Q_RETURN_ARG(QVariant,returnedValue),
                               Q_ARG(QVariant, v));
-    qDebug() << "Atp::setCMC: " << v;
+    //qDebug() << "Atp::setCMC: " << v;
 }
 
 void Atp::setCL(bool v){
@@ -74,7 +74,7 @@ void Atp::setCL(bool v){
     QMetaObject::invokeMethod(m_qmlView, "setCL",
                               Q_RETURN_ARG(QVariant,returnedValue),
                               Q_ARG(QVariant, v));
-    qDebug() << "Atp::setCL: " << v;
+   // qDebug() << "Atp::setCL: " << v;
 }
 
 void Atp::setFserv(bool v){
@@ -83,7 +83,7 @@ void Atp::setFserv(bool v){
     QMetaObject::invokeMethod(m_qmlView, "setFserv",
                               Q_RETURN_ARG(QVariant,returnedValue),
                               Q_ARG(QVariant, v));
-    qDebug() << "Atp::setFserv: " << v;
+  //  qDebug() << "Atp::setFserv: " << v;
 }
 
 void Atp::setFservBlink(bool v){
@@ -92,7 +92,7 @@ void Atp::setFservBlink(bool v){
     QMetaObject::invokeMethod(m_qmlView, "setFServBlink",
                               Q_RETURN_ARG(QVariant,returnedValue),
                               Q_ARG(QVariant, v));
-    qDebug() << "Atp::setFServBlink: " << v;
+   // qDebug() << "Atp::setFServBlink: " << v;
 }
 
 void Atp::setFrenoUrg(bool v){
@@ -101,7 +101,7 @@ void Atp::setFrenoUrg(bool v){
     QMetaObject::invokeMethod(m_qmlView, "setFrenoUrg",
                               Q_RETURN_ARG(QVariant,returnedValue),
                               Q_ARG(QVariant, v));
-    qDebug() << "Atp::setFrenoUrg: " << v;
+ //   qDebug() << "Atp::setFrenoUrg: " << v;
 }
 
 void Atp::setFrenoUrgBlink(bool v){
@@ -110,7 +110,7 @@ void Atp::setFrenoUrgBlink(bool v){
     QMetaObject::invokeMethod(m_qmlView, "setFrenoUrgBlink",
                               Q_RETURN_ARG(QVariant,returnedValue),
                               Q_ARG(QVariant, v));
-    qDebug() << "Atp::setFrenoUrgBlink: " << v;
+   // qDebug() << "Atp::setFrenoUrgBlink: " << v;
 }
 
 void Atp::setCorte(bool v){
@@ -119,7 +119,7 @@ void Atp::setCorte(bool v){
     QMetaObject::invokeMethod(m_qmlView, "setCorte",
                               Q_RETURN_ARG(QVariant,returnedValue),
                               Q_ARG(QVariant, v));
-    qDebug() << "Atp::setCorte: " << v;
+  //  qDebug() << "Atp::setCorte: " << v;
 }
 
 void Atp::setCorteBlink(bool v){
@@ -128,7 +128,7 @@ void Atp::setCorteBlink(bool v){
         QMetaObject::invokeMethod(m_qmlView, "setCorteBlink",
                                   Q_RETURN_ARG(QVariant,returnedValue),
                                   Q_ARG(QVariant, v));
-        qDebug() << "Atp::setCorteBlink: " << v;
+    //    qDebug() << "Atp::setCorteBlink: " << v;
 }
 
 void Atp::setFalla(bool v){
@@ -137,7 +137,7 @@ void Atp::setFalla(bool v){
     QMetaObject::invokeMethod(m_qmlView, "setFalla",
                               Q_RETURN_ARG(QVariant,returnedValue),
                               Q_ARG(QVariant, v));
-    qDebug() << "Atp::setFalla: " << v;
+   // qDebug() << "Atp::setFalla: " << v;
 }
 
 void Atp::setBlinkSpeedTarget(bool v){
