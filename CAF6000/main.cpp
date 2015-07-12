@@ -4,10 +4,11 @@
 #include <QSplashScreen>
 
 #include "boardcenter.h"
-#include "boardhardware.h"
+//#include "boardhardware.h"
 #include "boardleft.h"
 #include "boardright.h"
 #include "boardtop.h"
+#include "hardwareboard.h"
 
 #include "src/controllers/eventhandler.h"
 #include "src/controllers/keypresseater.h"
@@ -28,7 +29,8 @@ int main(int argc, char *argv[])
     SubteStatus * m_subte = new SubteStatus();
 
     // VIEWS
-   // BoardHardware *m_h = new BoardHardware(0,m_subte,m_eventHandler);
+    //BoardHardware *m_h = new BoardHardware(0,m_subte,m_eventHandler);
+    HardwareBoard *m_h = new HardwareBoard(0,m_subte,m_eventHandler);
     BoardCenter * m_c = new BoardCenter(0,m_subte,m_eventHandler);
     BoardLeft *m_l = new BoardLeft(0,m_subte,m_eventHandler);
     BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
@@ -67,7 +69,7 @@ int main(int argc, char *argv[])
     //m_t->showNormal();
 
     }else{
-       // m_h->showMaximized();
+        m_h->show();
         m_r->show();
         m_l->show();
         m_c->show();

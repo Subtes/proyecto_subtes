@@ -39,7 +39,8 @@ SOURCES += main.cpp\
     src/models/brake.cpp \
     src/models/cscp.cpp \
     src/controllers/keypresseater.cpp \
-    src/models/atp_model.cpp
+    src/models/atp_model.cpp \
+    hardwareboard.cpp
 
 HEADERS  += boardcenter.h \
     boardright.h \
@@ -66,14 +67,16 @@ HEADERS  += boardcenter.h \
     src/models/brake.h \
     src/models/cscp.h \
     src/controllers/keypresseater.h \
-    src/models/atp_model.h
+    src/models/atp_model.h \
+    hardwareboard.h
 
 
 FORMS    += boardcenter.ui \
     boardright.ui \
     boardleft.ui \
     boardhardware.ui \
-    boardtop.ui
+    boardtop.ui \
+    hardwareboard.ui
 
 INCLUDEPATH +=  ../subtewidgets \
                 $$PWD/../ENet

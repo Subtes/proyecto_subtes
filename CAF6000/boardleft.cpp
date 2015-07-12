@@ -21,6 +21,7 @@ BoardLeft::BoardLeft(QWidget *parent, SubteStatus * subte, EventHandler *eventHa
 
 void BoardLeft::startBoard(){
     this->m_atp = new Atp_Controller(this->m_subte,this->ui->widget_atp,this->m_eventHandler);
+        qDebug() << "board Left ATP startBoard";
 }
 void BoardLeft::enableScreen()
 {
@@ -28,13 +29,13 @@ void BoardLeft::enableScreen()
 }
 void BoardLeft::disableScreen()
 {
-    this->setEnabled(false);
+    //this->setEnabled(false);
 }
 void BoardLeft::resetControls(){
     if (m_atp){
        // m_atp->initATP();
-        m_atp->updateSpeed(0.0);
-        m_atp->updateTargetSpeed(0.0);
+        //m_atp->updateSpeed(0.0);
+        m_atp->updateTargetSpeed(5.0);
 
     }
 }

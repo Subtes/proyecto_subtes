@@ -169,6 +169,7 @@ void Atp_Controller::resetATP(){
 //    this->m_view->setFrenoUrg(false);
 //    this->m_view->setFrenoUrgBlink(false);
     qDebug() << "Atp_Controller::resetATP() ---> ATP machine stop";
+    emit this->reset();
 }
 
 void Atp_Controller::turnOn0(){

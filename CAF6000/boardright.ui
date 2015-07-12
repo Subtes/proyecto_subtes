@@ -26,94 +26,97 @@
      <height>768</height>
     </size>
    </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/resources/board_right_BKG.jpg);</string>
-   </property>
    <widget class="SingleButton" name="CONDisy_widget" native="true">
     <property name="geometry">
      <rect>
-      <x>803</x>
-      <y>29</y>
-      <width>72</width>
-      <height>72</height>
+      <x>730</x>
+      <y>30</y>
+      <width>78</width>
+      <height>78</height>
      </rect>
     </property>
     <property name="maximumSize">
      <size>
-      <width>72</width>
-      <height>72</height>
+      <width>78</width>
+      <height>78</height>
      </size>
     </property>
    </widget>
    <widget class="SingleButton" name="DESDisy_widget" native="true">
     <property name="geometry">
      <rect>
-      <x>916</x>
-      <y>29</y>
-      <width>72</width>
-      <height>72</height>
+      <x>870</x>
+      <y>40</y>
+      <width>78</width>
+      <height>78</height>
      </rect>
     </property>
     <property name="maximumSize">
      <size>
-      <width>72</width>
-      <height>72</height>
+      <width>78</width>
+      <height>78</height>
+     </size>
+    </property>
+    <property name="baseSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
      </size>
     </property>
    </widget>
    <widget class="SingleButton" name="calientapies" native="true">
     <property name="geometry">
      <rect>
-      <x>803</x>
-      <y>152</y>
-      <width>72</width>
-      <height>72</height>
+      <x>730</x>
+      <y>150</y>
+      <width>78</width>
+      <height>78</height>
      </rect>
     </property>
     <property name="maximumSize">
      <size>
-      <width>72</width>
-      <height>72</height>
+      <width>78</width>
+      <height>78</height>
      </size>
     </property>
    </widget>
    <widget class="SingleButton" name="frenoRetencion" native="true">
     <property name="geometry">
      <rect>
-      <x>916</x>
-      <y>152</y>
-      <width>72</width>
-      <height>72</height>
+      <x>890</x>
+      <y>150</y>
+      <width>78</width>
+      <height>78</height>
      </rect>
     </property>
     <property name="maximumSize">
      <size>
-      <width>72</width>
-      <height>72</height>
+      <width>78</width>
+      <height>78</height>
      </size>
     </property>
    </widget>
    <widget class="SingleButton" name="desacople" native="true">
     <property name="geometry">
      <rect>
-      <x>916</x>
-      <y>498</y>
-      <width>72</width>
-      <height>72</height>
+      <x>870</x>
+      <y>530</y>
+      <width>78</width>
+      <height>78</height>
      </rect>
     </property>
     <property name="maximumSize">
      <size>
-      <width>72</width>
-      <height>72</height>
+      <width>78</width>
+      <height>78</height>
      </size>
     </property>
    </widget>
    <widget class="Wiper" name="maniobra" native="true">
     <property name="geometry">
      <rect>
-      <x>803</x>
-      <y>500</y>
+      <x>700</x>
+      <y>530</y>
       <width>78</width>
       <height>78</height>
      </rect>
@@ -128,10 +131,10 @@
    <widget class="QQuickWidget" name="manometro">
     <property name="geometry">
      <rect>
-      <x>811</x>
-      <y>273</y>
-      <width>180</width>
-      <height>180</height>
+      <x>770</x>
+      <y>280</y>
+      <width>161</width>
+      <height>161</height>
      </rect>
     </property>
     <property name="maximumSize">

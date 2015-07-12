@@ -37,13 +37,13 @@ void BoardRight::startBoard()
 {
     qDebug() << "board right startBoard";
 
-    ui->maniobra->setVisible(true);
-    ui->manometro->setVisible(true);
-    ui->DESDisy_widget->setVisible(true);
-    ui->CONDisy_widget->setVisible(true);
-    ui->calientapies->setVisible(true);
-    ui->frenoRetencion->setVisible(true);
-    ui->desacople->setVisible(true);
+//    ui->maniobra->setVisible(true);
+//    ui->manometro->setVisible(true);
+//    ui->DESDisy_widget->setVisible(true);
+//    ui->CONDisy_widget->setVisible(true);
+//    ui->calientapies->setVisible(true);
+//    ui->frenoRetencion->setVisible(true);
+//    ui->desacople->setVisible(true);
 
     CircuitBreakerCON_Controller * CON_Disyuntor = new CircuitBreakerCON_Controller(m_subte,ui->CONDisy_widget );
     CircuitBreakerDES_Controller * DES_Disyuntor = new CircuitBreakerDES_Controller(m_subte,ui->DESDisy_widget );
@@ -52,8 +52,8 @@ void BoardRight::startBoard()
     ui->calientapies->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blue.png"));
     ui->desacople->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
 
-    ui->manometro->setClearColor(Qt::transparent);
-    ui->manometro->setAttribute(Qt::WA_AlwaysStackOnTop);
+//    ui->manometro->setClearColor(Qt::transparent);
+//    ui->manometro->setAttribute(Qt::WA_AlwaysStackOnTop);
 
 //    ui->splash->setVisible(false);
 //    ui->splash->resize(0,0);

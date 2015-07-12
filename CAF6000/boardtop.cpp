@@ -115,11 +115,11 @@ void BoardTop::startBoard()
 
     ui->llaveManual->setButtonImage(QUrl("qrc:/resources/techo_manual_down.png"),QUrl("qrc:/resources/techo_manual_up.png"));
 
-    ui->seta->setClearColor(Qt::transparent);
-    ui->seta->setAttribute(Qt::WA_AlwaysStackOnTop);
+//    ui->seta->setClearColor(Qt::transparent);
+//    ui->seta->setAttribute(Qt::WA_AlwaysStackOnTop);
 
-    ui->llave->setClearColor(Qt::transparent);
-    ui->llave->setAttribute(Qt::WA_AlwaysStackOnTop);
+//    ui->llave->setClearColor(Qt::transparent);
+//    ui->llave->setAttribute(Qt::WA_AlwaysStackOnTop);
 
 //    ui->splash->setVisible(false);
 //    ui->splash->resize(0,0);

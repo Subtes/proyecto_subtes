@@ -25,87 +25,103 @@
   <property name="styleSheet">
    <string notr="true">background-image: url(:/resources/board_hardware_BKG.jpg);</string>
   </property>
-  <widget class="FootHorn" name="horn" native="true">
+  <widget class="QWidget" name="centralWidget" native="true">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>560</y>
-     <width>150</width>
-     <height>205</height>
-    </rect>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>150</width>
-     <height>205</height>
-    </size>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::TabFocus</enum>
-   </property>
-  </widget>
-  <widget class="TractionLever" name="traction" native="true">
-   <property name="geometry">
-    <rect>
-     <x>799</x>
+     <x>10</x>
      <y>10</y>
-     <width>210</width>
-     <height>580</height>
+     <width>1024</width>
+     <height>768</height>
     </rect>
    </property>
    <property name="maximumSize">
     <size>
-     <width>210</width>
-     <height>580</height>
+     <width>1024</width>
+     <height>768</height>
     </size>
    </property>
-   <property name="focusPolicy">
-    <enum>Qt::TabFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/resources/nada);</string>
-   </property>
-  </widget>
-  <widget class="Rana" name="ranaDevice" native="true">
-   <property name="geometry">
-    <rect>
-     <x>220</x>
-     <y>-10</y>
-     <width>250</width>
-     <height>460</height>
-    </rect>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>250</width>
-     <height>460</height>
-    </size>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::TabFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/resources/nada);</string>
-   </property>
-  </widget>
-  <widget class="Seta_Button" name="setaButton" native="true">
-   <property name="geometry">
-    <rect>
-     <x>31</x>
-     <y>212</y>
-     <width>150</width>
-     <height>150</height>
-    </rect>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>150</width>
-     <height>150</height>
-    </size>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::TabFocus</enum>
-   </property>
+   <widget class="FootHorn" name="horn" native="true">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>370</y>
+      <width>150</width>
+      <height>205</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>150</width>
+      <height>205</height>
+     </size>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+   </widget>
+   <widget class="Rana" name="ranaDevice" native="true">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>380</y>
+      <width>250</width>
+      <height>460</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>250</width>
+      <height>460</height>
+     </size>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/nada);</string>
+    </property>
+   </widget>
+   <widget class="Seta_Button" name="setaButton" native="true">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>490</y>
+      <width>150</width>
+      <height>150</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>150</width>
+      <height>150</height>
+     </size>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+   </widget>
+   <widget class="TractionLever" name="traction" native="true">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>380</y>
+      <width>210</width>
+      <height>580</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>210</width>
+      <height>580</height>
+     </size>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/nada);</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <customwidgets>
