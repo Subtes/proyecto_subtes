@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui quick quickwidgets  widgets xml
+QT += core gui quick quickwidgets  widgets xml multimedia
 #greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #declarative
 TARGET = CAF6000

@@ -10,6 +10,15 @@
     <height>205</height>
    </rect>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>150</width>
+    <height>205</height>
+   </size>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -21,6 +30,12 @@
      <width>150</width>
      <height>205</height>
     </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>150</width>
+     <height>205</height>
+    </size>
    </property>
    <property name="resizeMode">
     <enum>QQuickWidget::SizeRootObjectToView</enum>

@@ -1,4 +1,4 @@
-QT += core gui quick quickwidgets  widgets
+QT += core gui quick quickwidgets multimedia widgets
 #declarative
 TEMPLATE = lib
 

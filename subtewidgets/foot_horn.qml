@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import QtMultimedia 5.0
+//import QtMultimedia 5.4
 
 Rectangle {
     id: pedal
@@ -11,11 +11,11 @@ Rectangle {
 
     signal pedalPressed
     signal pedalReleased
-
-    SoundEffect {
-        id: horn
-        source: "resources/Train_Honk_Horn_Distance-Mike_Koenig-1905511933.wav"
-        }
+//MMB
+//    SoundEffect {
+//        id: horn
+//        source: "resources/train.wav"
+//        }
 
     function press() {
         horn.play();

@@ -13,7 +13,6 @@
         <file>resources/redON.png</file>
         <file>resources/bocina_down.png</file>
         <file>resources/bocina_up.png</file>
-        <file>resources/Train_Honk_Horn_Distance-Mike_Koenig-1905511933.wav</file>
         <file>resources/selector_bkg.png</file>
         <file>resources/selector_handler.png</file>
         <file>resources/BKG_palanca2.png</file>
@@ -113,5 +112,6 @@
         <file>resources/ATPoFoSERV.PNG</file>
         <file>resources/ATPoFreEmrg.PNG</file>
         <file>resources/ATPoLed2.png</file>
+        <file>resources/train.wav</file>
     </qresource>
 </RCC>

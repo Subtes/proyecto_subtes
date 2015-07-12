@@ -55,16 +55,16 @@ void HardwareBoard::downLoadBoard(){
 void HardwareBoard::startBoard(){
     qDebug() << "board hardware startBoard";
 
-//    m_horn = new Horn_Controller(m_subte,ui->horn);
-//    m_tractionLever = new TractionLever_Controller(m_subte,ui->traction);
-//    m_rana = new Rana_Controller(m_subte,ui->ranaDevice);
-//    m_hombreVivo = new HombreVivo_Controller(m_subte,ui->traction);
-//    m_setaButton = new Seta_Controller(m_subte, ui->setaButton);
+    m_horn = new Horn_Controller(m_subte,ui->horn);
+    m_tractionLever = new TractionLever_Controller(m_subte,ui->traction);
+    m_rana = new Rana_Controller(m_subte,ui->ranaDevice);
+    m_hombreVivo = new HombreVivo_Controller(m_subte,ui->traction);
+    m_setaButton = new Seta_Controller(m_subte, ui->setaButton);
 
-//    ui->horn->setVisible(true);
-//    ui->ranaDevice->setVisible(true);
-//    ui->setaButton->setVisible(true);
-//    ui->traction->setVisible(true);
+    ui->horn->setVisible(true);
+    ui->ranaDevice->setVisible(true);
+    ui->setaButton->setVisible(true);
+    ui->traction->setVisible(true);
 
     //ui->splash->setVisible(false);
     //ui->splash->resize(0,0);

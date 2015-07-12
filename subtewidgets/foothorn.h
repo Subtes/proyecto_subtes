@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QQuickItem>
+#include <QtMultimedia>
 
 namespace Ui {
 class FootHorn;

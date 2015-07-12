@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="focusPolicy">
-   <enum>Qt::ClickFocus</enum>
+   <enum>Qt::StrongFocus</enum>
   </property>
   <property name="windowTitle">
    <string>HardWare</string>
@@ -32,8 +32,109 @@
      <height>768</height>
     </size>
    </property>
+   <widget class="Seta_Button" name="setaButton" native="true">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>220</y>
+      <width>130</width>
+      <height>130</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>130</width>
+      <height>130</height>
+     </size>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+   </widget>
+   <widget class="Rana" name="ranaDevice" native="true">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>60</y>
+      <width>350</width>
+      <height>389</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>350</width>
+      <height>389</height>
+     </size>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+   </widget>
+   <widget class="FootHorn" name="horn" native="true">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>550</y>
+      <width>105</width>
+      <height>202</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>105</width>
+      <height>205</height>
+     </size>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+   </widget>
+   <widget class="TractionLever" name="traction" native="true">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>150</y>
+      <width>281</width>
+      <height>280</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>281</width>
+      <height>280</height>
+     </size>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+   </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FootHorn</class>
+   <extends>QWidget</extends>
+   <header>foothorn.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TractionLever</class>
+   <extends>QWidget</extends>
+   <header>tractionlever.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Rana</class>
+   <extends>QWidget</extends>
+   <header>rana.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Seta_Button</class>
+   <extends>QWidget</extends>
+   <header>seta_button.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
