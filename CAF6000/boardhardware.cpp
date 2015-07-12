@@ -61,10 +61,10 @@ void BoardHardware::startBoard(){
     m_hombreVivo = new HombreVivo_Controller(m_subte,ui->traction);
     m_setaButton = new Seta_Controller(m_subte, ui->setaButton);
 
-//    ui->horn->setVisible(true);
-//    ui->ranaDevice->setVisible(true);
-//    ui->setaButton->setVisible(true);
-//    ui->traction->setVisible(true);
+    ui->horn->setVisible(true);
+    ui->ranaDevice->setVisible(true);
+    ui->setaButton->setVisible(true);
+    ui->traction->setVisible(true);
 
     //ui->splash->setVisible(false);
     //ui->splash->resize(0,0);

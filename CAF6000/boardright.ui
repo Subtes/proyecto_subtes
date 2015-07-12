@@ -20,6 +20,12 @@
    <string>BOARD RIGHT</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="maximumSize">
+    <size>
+     <width>1024</width>
+     <height>768</height>
+    </size>
+   </property>
    <property name="styleSheet">
     <string notr="true">background-image: url(:/resources/board_right_BKG.jpg);</string>
    </property>
@@ -32,6 +38,12 @@
       <height>72</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>72</width>
+      <height>72</height>
+     </size>
+    </property>
    </widget>
    <widget class="SingleButton" name="DESDisy_widget" native="true">
     <property name="geometry">
@@ -41,6 +53,12 @@
       <width>72</width>
       <height>72</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>72</width>
+      <height>72</height>
+     </size>
     </property>
    </widget>
    <widget class="SingleButton" name="calientapies" native="true">
@@ -52,6 +70,12 @@
       <height>72</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>72</width>
+      <height>72</height>
+     </size>
+    </property>
    </widget>
    <widget class="SingleButton" name="frenoRetencion" native="true">
     <property name="geometry">
@@ -61,6 +85,12 @@
       <width>72</width>
       <height>72</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>72</width>
+      <height>72</height>
+     </size>
     </property>
    </widget>
    <widget class="SingleButton" name="desacople" native="true">
@@ -72,6 +102,12 @@
       <height>72</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>72</width>
+      <height>72</height>
+     </size>
+    </property>
    </widget>
    <widget class="Wiper" name="maniobra" native="true">
     <property name="geometry">
@@ -81,6 +117,12 @@
       <width>78</width>
       <height>78</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
     </property>
    </widget>
    <widget class="QQuickWidget" name="manometro">
@@ -92,6 +134,12 @@
       <height>180</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>180</width>
+      <height>180</height>
+     </size>
+    </property>
     <property name="resizeMode">
      <enum>QQuickWidget::SizeRootObjectToView</enum>
     </property>
@@ -99,16 +147,6 @@
      <url>
       <string>qrc:/manometer.qml</string>
      </url>
-    </property>
-   </widget>
-   <widget class="Splash" name="splash" native="true">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>0</width>
-      <height>0</height>
-     </rect>
     </property>
    </widget>
   </widget>
@@ -120,15 +158,9 @@
    <header>QQuickWidget</header>
   </customwidget>
   <customwidget>
-   <class>Splash</class>
-   <extends>QWidget</extends>
-   <header>splash.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>SingleButton</class>
    <extends>QWidget</extends>
-   <header>singlebutton.h</header>
+   <header location="global">singlebutton.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

@@ -4,14 +4,14 @@
 #
 #-------------------------------------------------
 
-QT += core gui quick quickwidgets declarative widgets xml
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
+QT += core gui quick quickwidgets  widgets xml
+#greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+#declarative
 TARGET = CAF6000
 
 TEMPLATE = app
 
-CONFIG += release c++11
+CONFIG += debug c++11
 
 SOURCES += main.cpp\
     boardcenter.cpp \

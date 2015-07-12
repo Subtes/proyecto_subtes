@@ -11,38 +11,38 @@ BoardTop::BoardTop(QWidget *parent, SubteStatus * subte, EventHandler *eventHand
 
     ui->setupUi(this);
 
-    ui->bateriaCON->setVisible(false);
-    ui->bateriaDES->setVisible(false);
-    ui->pantografoCON->setVisible(false);
-    ui->pantografoDES->setVisible(false);
-    ui->compAuxCON->setVisible(false);
-    ui->compAuxDES->setVisible(false);
-    ui->compPpalCON->setVisible(false);
-    ui->compPpalDES->setVisible(false);
-    ui->convertidorCON->setVisible(false);
-    ui->convertidorDES->setVisible(false);
-    ui->alumbradoCON->setVisible(false);
-    ui->alumbradoDES->setVisible(false);
-    ui->aireCON->setVisible(false);
-    ui->aireDES->setVisible(false);
-    ui->frenoCON->setVisible(false);
-    ui->frenoDES->setVisible(false);
-    ui->megaforniaCON->setVisible(false);
-    ui->megaforniaDES->setVisible(false);
-    ui->automaticoManualCON->setVisible(false);
-    ui->automaticoManualDES->setVisible(false);
-    ui->puetaEnMarchaCON->setVisible(false);
-    ui->puestaEnMarchaDES->setVisible(false);
-    ui->llaveManual->setVisible(false);
-    ui->seta->setVisible(false);
-    ui->seta->setVisible(false);
-    ui->llave->setVisible(false);
-    ui->llave->setVisible(false);
-    ui->emergenciaSICAS->setVisible(false);
+//    ui->bateriaCON->setVisible(false);
+//    ui->bateriaDES->setVisible(false);
+//    ui->pantografoCON->setVisible(false);
+//    ui->pantografoDES->setVisible(false);
+//    ui->compAuxCON->setVisible(false);
+//    ui->compAuxDES->setVisible(false);
+//    ui->compPpalCON->setVisible(false);
+//    ui->compPpalDES->setVisible(false);
+//    ui->convertidorCON->setVisible(false);
+//    ui->convertidorDES->setVisible(false);
+//    ui->alumbradoCON->setVisible(false);
+//    ui->alumbradoDES->setVisible(false);
+//    ui->aireCON->setVisible(false);
+//    ui->aireDES->setVisible(false);
+//    ui->frenoCON->setVisible(false);
+//    ui->frenoDES->setVisible(false);
+//    ui->megaforniaCON->setVisible(false);
+//    ui->megaforniaDES->setVisible(false);
+//    ui->automaticoManualCON->setVisible(false);
+//    ui->automaticoManualDES->setVisible(false);
+//    ui->puetaEnMarchaCON->setVisible(false);
+//    ui->puestaEnMarchaDES->setVisible(false);
+//    ui->llaveManual->setVisible(false);
+//    ui->seta->setVisible(false);
+//    ui->seta->setVisible(false);
+//    ui->llave->setVisible(false);
+//    ui->llave->setVisible(false);
+//    ui->emergenciaSICAS->setVisible(false);
 
 
-    ui->splash->setVisible(true);
-    ui->splash->resize(this->width(),this->height());
+//    ui->splash->setVisible(true);
+//    ui->splash->resize(this->width(),this->height());
 
     connect(m_eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(m_eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
@@ -60,34 +60,34 @@ void BoardTop::startBoard()
 {
     qDebug() << "board top startBoard";
 
-    ui->bateriaCON->setVisible(true);
-    ui->bateriaDES->setVisible(true);
-    ui->pantografoCON->setVisible(true);
-    ui->pantografoDES->setVisible(true);
-    ui->compAuxCON->setVisible(true);
-    ui->compAuxDES->setVisible(true);
-    ui->compPpalCON->setVisible(true);
-    ui->compPpalDES->setVisible(true);
-    ui->convertidorCON->setVisible(true);
-    ui->convertidorDES->setVisible(true);
-    ui->alumbradoCON->setVisible(true);
-    ui->alumbradoDES->setVisible(true);
-    ui->aireCON->setVisible(true);
-    ui->aireDES->setVisible(true);
-    ui->frenoCON->setVisible(true);
-    ui->frenoDES->setVisible(true);
-    ui->megaforniaCON->setVisible(true);
-    ui->megaforniaDES->setVisible(true);
-    ui->automaticoManualCON->setVisible(true);
-    ui->automaticoManualDES->setVisible(true);
-    ui->puetaEnMarchaCON->setVisible(true);
-    ui->puestaEnMarchaDES->setVisible(true);
-    ui->llaveManual->setVisible(true);
-    ui->seta->setVisible(true);
-    ui->seta->setVisible(true);
-    ui->llave->setVisible(true);
-    ui->llave->setVisible(true);
-    ui->emergenciaSICAS->setVisible(true);
+//    ui->bateriaCON->setVisible(true);
+//    ui->bateriaDES->setVisible(true);
+//    ui->pantografoCON->setVisible(true);
+//    ui->pantografoDES->setVisible(true);
+//    ui->compAuxCON->setVisible(true);
+//    ui->compAuxDES->setVisible(true);
+//    ui->compPpalCON->setVisible(true);
+//    ui->compPpalDES->setVisible(true);
+//    ui->convertidorCON->setVisible(true);
+//    ui->convertidorDES->setVisible(true);
+//    ui->alumbradoCON->setVisible(true);
+//    ui->alumbradoDES->setVisible(true);
+//    ui->aireCON->setVisible(true);
+//    ui->aireDES->setVisible(true);
+//    ui->frenoCON->setVisible(true);
+//    ui->frenoDES->setVisible(true);
+//    ui->megaforniaCON->setVisible(true);
+//    ui->megaforniaDES->setVisible(true);
+//    ui->automaticoManualCON->setVisible(true);
+//    ui->automaticoManualDES->setVisible(true);
+//    ui->puetaEnMarchaCON->setVisible(true);
+//    ui->puestaEnMarchaDES->setVisible(true);
+//    ui->llaveManual->setVisible(true);
+//    ui->seta->setVisible(true);
+//    ui->seta->setVisible(true);
+//    ui->llave->setVisible(true);
+//    ui->llave->setVisible(true);
+//    ui->emergenciaSICAS->setVisible(true);
 
     ui->bateriaCON->setButtonImage(QUrl("qrc:/resources/red_CON_techo.png"),QUrl("qrc:/resources/redON_CON_techo.png"));
     ui->bateriaDES->setButtonImage(QUrl("qrc:/resources/greenON_DES_techo.png"),QUrl("qrc:/resources/green_DES_techo.png"));
@@ -121,11 +121,11 @@ void BoardTop::startBoard()
     ui->llave->setClearColor(Qt::transparent);
     ui->llave->setAttribute(Qt::WA_AlwaysStackOnTop);
 
-    ui->splash->setVisible(false);
-    ui->splash->resize(0,0);
-    this->raise();
+//    ui->splash->setVisible(false);
+//    ui->splash->resize(0,0);
+//    this->raise();
 
-    this->setEnabled(false);
+    //this->setEnabled(false);
 }
 
 void BoardTop::enableScreen()

@@ -16,6 +16,9 @@
     <height>768</height>
    </size>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::ClickFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>BOARD HARDWARE</string>
   </property>
@@ -31,6 +34,15 @@
      <height>205</height>
     </rect>
    </property>
+   <property name="maximumSize">
+    <size>
+     <width>150</width>
+     <height>205</height>
+    </size>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::TabFocus</enum>
+   </property>
   </widget>
   <widget class="TractionLever" name="traction" native="true">
    <property name="geometry">
@@ -40,6 +52,15 @@
      <width>210</width>
      <height>580</height>
     </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>210</width>
+     <height>580</height>
+    </size>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::TabFocus</enum>
    </property>
    <property name="styleSheet">
     <string notr="true">background-image: url(:/resources/nada);</string>
@@ -54,6 +75,15 @@
      <height>460</height>
     </rect>
    </property>
+   <property name="maximumSize">
+    <size>
+     <width>250</width>
+     <height>460</height>
+    </size>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::TabFocus</enum>
+   </property>
    <property name="styleSheet">
     <string notr="true">background-image: url(:/resources/nada);</string>
    </property>
@@ -67,15 +97,18 @@
      <height>150</height>
     </rect>
    </property>
+   <property name="maximumSize">
+    <size>
+     <width>150</width>
+     <height>150</height>
+    </size>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::TabFocus</enum>
+   </property>
   </widget>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>Splash</class>
-   <extends>QWidget</extends>
-   <header>splash.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>FootHorn</class>
    <extends>QWidget</extends>

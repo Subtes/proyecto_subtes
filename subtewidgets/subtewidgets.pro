@@ -1,8 +1,8 @@
-QT += core gui quick quickwidgets declarative widgets
-
+QT += core gui quick quickwidgets  widgets
+#declarative
 TEMPLATE = lib
 
-CONFIG += order staticlib
+CONFIG += debug staticlib order
 
 HEADERS += \
     panel_buttons2.h \

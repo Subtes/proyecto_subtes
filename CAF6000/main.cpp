@@ -14,6 +14,11 @@
 
 int main(int argc, char *argv[])
 {
+    //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+    QApplication::setAttribute(Qt::AA_UseOpenGLES,true);
+    //QApplication::setAttribute(Qt::AA_UseDesktopOpenGL,true);
+    //QApplication::setAttribute(Qt::AA_UseSoftwareOpenGL,true);
+
     QApplication a(argc, argv);
 
     // CONTROLLER DISPATCHER
@@ -23,11 +28,11 @@ int main(int argc, char *argv[])
     SubteStatus * m_subte = new SubteStatus();
 
     // VIEWS
-    BoardHardware *m_h = new BoardHardware(0,m_subte,m_eventHandler);
+   // BoardHardware *m_h = new BoardHardware(0,m_subte,m_eventHandler);
     BoardCenter * m_c = new BoardCenter(0,m_subte,m_eventHandler);
     BoardLeft *m_l = new BoardLeft(0,m_subte,m_eventHandler);
-    //BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
-    //BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
+    BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
+    BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
 
     QDesktopWidget *desktop = a.desktop();
     if(desktop->screenCount() == 3){
@@ -36,9 +41,9 @@ int main(int argc, char *argv[])
             qDebug() << "Dimensiones --> "<< desktop->screenGeometry(i);
         }
 
-    QRect s0 = desktop->screenGeometry(0);
-    QRect s1 = desktop->screenGeometry(1);
-    QRect s2 = desktop->screenGeometry(2);
+//    QRect s0 = desktop->screenGeometry(0);
+//    QRect s1 = desktop->screenGeometry(1);
+//    QRect s2 = desktop->screenGeometry(2);
     //QRect s3 = desktop->screenGeometry(3);
 
     /**
@@ -48,24 +53,25 @@ int main(int argc, char *argv[])
      * Dimensiones -->  QRect(-1024,0 1024x768)
      */
 
-    m_h->move(s0.topLeft());
-    m_l->move(s1.topLeft());
-    m_c->move(s2.topLeft());
-    //m_t->move(s3.topLeft());
+//    m_h->move(s0.topLeft());
+//    m_l->move(s1.topLeft());
+//    //m_c->move(s2.topLeft());
+//    //m_t->move(s3.topLeft());
 
-    m_h->showNormal();
-    m_l->showNormal();
-    m_c->showNormal();
+//    m_h->showNormal();
+//    m_l->showNormal();
+   // m_c->showNormal();
 //    m_h->showFullScreen();
 //    m_l->showFullScreen();
 //    m_c->showFullScreen();
     //m_t->showNormal();
 
     }else{
-        m_h->showMaximized();
-        m_l->showMaximized();
-        m_c->showMaximized();
-        //m_t->showNormal();
+       // m_h->showMaximized();
+        m_r->show();
+        m_l->show();
+        m_c->show();
+        m_t->show();
     }
 
     // DEPENDENCY INJECTION

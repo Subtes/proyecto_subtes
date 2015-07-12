@@ -94,7 +94,7 @@ void BoardCenter::startBoard()
     //ui->splash->resize(0,0);
     //this->raise();
 
-    this->setEnabled(false);
+    //this->setEnabled(false);
 }
 
 void BoardCenter::enableScreen()

@@ -11,7 +11,7 @@ Rectangle {
     signal buttonReleased()
 
     property bool nestled: false
-    property bool lighted: true    
+    property bool lighted: true
     property bool onPressDriver: false
 
     Image {

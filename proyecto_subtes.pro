@@ -1,8 +1,9 @@
-QT += declarative
+QT +=
+#declarative
 
 TEMPLATE = subdirs
 
-CONFIG     +=  ordered c++11
+CONFIG     += debug ordered c++11
 
 
 SUBDIRS =   subtewidgets/subtewidgets.pro \

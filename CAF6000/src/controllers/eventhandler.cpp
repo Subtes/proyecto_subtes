@@ -39,27 +39,27 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
     connect(kel,SIGNAL(keyPressed(DWORD)),this,SLOT(processKeyPressed(DWORD)));
     connect(kel,SIGNAL(keyReleased(DWORD)),this,SLOT(processKeyReleased(DWORD)));
 
-    m_imageSplash = QPixmap(":/resources/splash.jpg");
+//    m_imageSplash = QPixmap(":/resources/splash.jpg");
 
-    m_splash1 = new QSplashScreen(m_imageSplash);
-    m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
-    m_splash2 = new QSplashScreen(m_imageSplash);
-    m_splash2->setWindowFlags(Qt::WindowStaysOnTopHint);
-    m_splash3 = new QSplashScreen(m_imageSplash);
-    m_splash3->setWindowFlags(Qt::WindowStaysOnTopHint);
+//    m_splash1 = new QSplashScreen(m_imageSplash);
+//    m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
+//    m_splash2 = new QSplashScreen(m_imageSplash);
+//    m_splash2->setWindowFlags(Qt::WindowStaysOnTopHint);
+//    m_splash3 = new QSplashScreen(m_imageSplash);
+//    m_splash3->setWindowFlags(Qt::WindowStaysOnTopHint);
 //    m_splash->showMaximized();
 
-    QRect s0 = desktop->screenGeometry(0);
-    QRect s1 = desktop->screenGeometry(1);
-    QRect s2 = desktop->screenGeometry(2);
+//    QRect s0 = desktop->screenGeometry(0);
+//    QRect s1 = desktop->screenGeometry(1);
+//    QRect s2 = desktop->screenGeometry(2);
 
-    m_splash1->move(s0.topLeft());
-    m_splash2->move(s1.topLeft());
-    m_splash3->move(s2.topLeft());
+//    m_splash1->move(s0.topLeft());
+//    m_splash2->move(s1.topLeft());
+//    m_splash3->move(s2.topLeft());
 
-    m_splash1->showMaximized();
-    m_splash2->showMaximized();
-    m_splash3->showMaximized();
+//    m_splash1->showMaximized();
+//    m_splash2->showMaximized();
+//    m_splash3->showMaximized();
 
 }
 
@@ -96,9 +96,9 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
                 splashPassed = true;
                 emit controlReady();
                 //Bajar splash
-                m_splash1->hide();
-                m_splash2->hide();
-                m_splash3->hide();
+//                m_splash1->hide();
+//                m_splash2->hide();
+//                m_splash3->hide();
                 qDebug() << "Bajando Splashhh";
             }
 
@@ -156,6 +156,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
 
         else if(value.compare("1") == 0){
             emit controlEnable();
+            qDebug()<<"Tableros enable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
         }
 
         else if(value.compare("2") == 0){

@@ -23,6 +23,12 @@
    <string notr="true">background-image: url(:/resources/board_top_BKG.jpg);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="maximumSize">
+    <size>
+     <width>1024</width>
+     <height>768</height>
+    </size>
+   </property>
    <widget class="QQuickWidget" name="voltmeter">
     <property name="geometry">
      <rect>
@@ -31,6 +37,12 @@
       <width>211</width>
       <height>211</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>211</width>
+      <height>211</height>
+     </size>
     </property>
     <property name="resizeMode">
      <enum>QQuickWidget::SizeRootObjectToView</enum>
@@ -50,6 +62,12 @@
       <height>212</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>212</width>
+      <height>212</height>
+     </size>
+    </property>
     <property name="resizeMode">
      <enum>QQuickWidget::SizeRootObjectToView</enum>
     </property>
@@ -67,6 +85,12 @@
       <width>212</width>
       <height>212</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>212</width>
+      <height>212</height>
+     </size>
     </property>
     <property name="resizeMode">
      <enum>QQuickWidget::SizeRootObjectToView</enum>
@@ -86,6 +110,12 @@
       <height>78</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
+    </property>
    </widget>
    <widget class="SingleButton" name="automaticoManualDES" native="true">
     <property name="geometry">
@@ -95,6 +125,12 @@
       <width>78</width>
       <height>78</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
     </property>
    </widget>
    <widget class="SingleButton" name="bateriaDES" native="true">
@@ -106,6 +142,12 @@
       <height>78</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
+    </property>
    </widget>
    <widget class="SingleButton" name="bateriaCON" native="true">
     <property name="geometry">
@@ -115,6 +157,12 @@
       <width>78</width>
       <height>78</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
     </property>
    </widget>
    <widget class="SingleButton" name="pantografoDES" native="true">
@@ -126,6 +174,12 @@
       <height>78</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
+    </property>
    </widget>
    <widget class="SingleButton" name="pantografoCON" native="true">
     <property name="geometry">
@@ -135,6 +189,12 @@
       <width>78</width>
       <height>78</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
     </property>
    </widget>
    <widget class="SingleButton" name="compAuxDES" native="true">
@@ -146,6 +206,12 @@
       <height>78</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
+    </property>
    </widget>
    <widget class="SingleButton" name="compAuxCON" native="true">
     <property name="geometry">
@@ -155,6 +221,12 @@
       <width>78</width>
       <height>78</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
     </property>
    </widget>
    <widget class="SingleButton" name="convertidorDES" native="true">
@@ -166,6 +238,12 @@
       <height>78</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
+    </property>
    </widget>
    <widget class="SingleButton" name="convertidorCON" native="true">
     <property name="geometry">
@@ -175,6 +253,12 @@
       <width>78</width>
       <height>78</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
     </property>
    </widget>
    <widget class="SingleButton" name="compPpalDES" native="true">
@@ -186,6 +270,12 @@
       <height>78</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
+    </property>
    </widget>
    <widget class="SingleButton" name="compPpalCON" native="true">
     <property name="geometry">
@@ -195,6 +285,12 @@
       <width>78</width>
       <height>78</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
     </property>
    </widget>
    <widget class="SingleButton" name="alumbradoDES" native="true">
@@ -206,6 +302,12 @@
       <height>78</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
+    </property>
    </widget>
    <widget class="SingleButton" name="alumbradoCON" native="true">
     <property name="geometry">
@@ -215,6 +317,12 @@
       <width>78</width>
       <height>78</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
     </property>
    </widget>
    <widget class="SingleButton" name="aireDES" native="true">
@@ -226,6 +334,12 @@
       <height>78</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
+    </property>
    </widget>
    <widget class="SingleButton" name="aireCON" native="true">
     <property name="geometry">
@@ -235,6 +349,12 @@
       <width>78</width>
       <height>78</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
     </property>
    </widget>
    <widget class="SingleButton" name="megaforniaDES" native="true">
@@ -246,6 +366,12 @@
       <height>78</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
+    </property>
    </widget>
    <widget class="SingleButton" name="megaforniaCON" native="true">
     <property name="geometry">
@@ -255,6 +381,12 @@
       <width>78</width>
       <height>78</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
     </property>
    </widget>
    <widget class="SingleButton" name="frenoDES" native="true">
@@ -266,6 +398,12 @@
       <height>78</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
+    </property>
    </widget>
    <widget class="SingleButton" name="frenoCON" native="true">
     <property name="geometry">
@@ -275,6 +413,12 @@
       <width>78</width>
       <height>78</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
     </property>
    </widget>
    <widget class="SingleButton" name="emergenciaSICAS" native="true">
@@ -286,6 +430,12 @@
       <height>78</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
+    </property>
    </widget>
    <widget class="SingleButton" name="puetaEnMarchaCON" native="true">
     <property name="geometry">
@@ -295,6 +445,12 @@
       <width>78</width>
       <height>78</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
     </property>
    </widget>
    <widget class="SingleButton" name="automaticoManualCON" native="true">
@@ -306,6 +462,12 @@
       <height>78</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
+    </property>
    </widget>
    <widget class="SingleButton" name="llaveManual" native="true">
     <property name="geometry">
@@ -316,6 +478,12 @@
       <height>78</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>78</width>
+      <height>78</height>
+     </size>
+    </property>
    </widget>
    <widget class="QQuickWidget" name="llave">
     <property name="geometry">
@@ -325,6 +493,12 @@
       <width>100</width>
       <height>180</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>100</width>
+      <height>180</height>
+     </size>
     </property>
     <property name="resizeMode">
      <enum>QQuickWidget::SizeRootObjectToView</enum>
@@ -344,6 +518,12 @@
       <height>140</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>140</width>
+      <height>140</height>
+     </size>
+    </property>
     <property name="resizeMode">
      <enum>QQuickWidget::SizeRootObjectToView</enum>
     </property>
@@ -351,16 +531,6 @@
      <url>
       <string>qrc:/setaTecho.qml</string>
      </url>
-    </property>
-   </widget>
-   <widget class="Splash" name="splash" native="true">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>0</width>
-      <height>0</height>
-     </rect>
     </property>
    </widget>
   </widget>
@@ -372,15 +542,9 @@
    <header>QQuickWidget</header>
   </customwidget>
   <customwidget>
-   <class>Splash</class>
-   <extends>QWidget</extends>
-   <header>splash.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>SingleButton</class>
    <extends>QWidget</extends>
-   <header>singlebutton.h</header>
+   <header location="global">singlebutton.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

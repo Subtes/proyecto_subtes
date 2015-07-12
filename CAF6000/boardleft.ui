@@ -23,6 +23,12 @@
    <string notr="true">background-image: url(:/resources/board_left_BKG.PNG);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="maximumSize">
+    <size>
+     <width>1024</width>
+     <height>768</height>
+    </size>
+   </property>
    <widget class="Atp" name="widget_atp" native="true">
     <property name="geometry">
      <rect>

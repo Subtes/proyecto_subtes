@@ -129,7 +129,7 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
         //Conecciones externas:
     connect(subte,SIGNAL(speedChanged(double)),this,SLOT(updateSpeed(double)));
     connect(subte,SIGNAL(targetSpeedChanged(double)),this,SLOT(updateTargetSpeed(double)));
-    connect(subte,SIGNAL(setaFired()),this,SIGNAL(setaFiredRoutine()));
+    //connect(subte,SIGNAL(setaFired()),this,SIGNAL(setaFiredRoutine()));
     connect(this, SIGNAL(cutTraction()),subte,SLOT(cutTraction()));
     connect(this, SIGNAL(enableTraction()),subte,SLOT(enableTraction()));
     connect(this, SIGNAL(enableBreakEmergency()),subte,SLOT(emergencyBrakeActived()));
