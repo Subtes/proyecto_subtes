@@ -2,13 +2,16 @@
 
 //TODO:: cambiar los notifyValueChanged por signal/slot
 //el modelo emite señales y el event handler los intercepta y conecta
+#include <QThread>
+#include <QSplashScreen>
+#include <QPixmap>
 
 SubteStatus::SubteStatus()
 {
     m_cscp = new CSCP();
     m_brake = new Brake();
-    m_atp = new ATP();
-    m_traction = new Traction(m_brake,m_cscp,m_atp);
+    m_ATP_model = new ATP_model();
+    m_traction = new Traction(m_brake,m_cscp, m_ATP_model);
 
     m_speed = 0;
 
@@ -16,11 +19,20 @@ SubteStatus::SubteStatus()
     m_emergencyOverride = false;
     m_seta = false;
     m_rana = "0";
+
+    //initENet();
+
+//    m_pixMapSplash = QPixmap(":/subtewidgets/resources/splash.jpg");
+//    this->m_splash = new QSplashScreen(m_pixMapSplash);
+//    this->m_splash->setWindowFlags(Qt::WindowStaysOnTopHint);
+
+    //connect(this,SIGNAL(controlReady()),this,SLOT(loadFinish()));
 }
 
 SubteStatus::~SubteStatus()
 {
 }
+
 
 void SubteStatus::setHandler(EventHandler *eventHandler)
 {
@@ -32,7 +44,7 @@ void SubteStatus::reset()
     //STATUS
     m_cscp->reset();
     m_brake->reset();
-    m_atp->reset();
+    m_ATP_model->reset();
     m_traction->reset();
     m_speed = 0;
 
@@ -53,12 +65,12 @@ double SubteStatus::speed() const
 
 double SubteStatus::targetSpeed() const
 {
-    return m_atp->targetSpeed();
+    return m_ATP_model->targetSpeed();
 }
 
 double SubteStatus::allowedSpeed() const
 {
-    return m_atp->allowedSpeed();
+    return m_ATP_model->allowedSpeed();
 }
 
 int SubteStatus::traction() const
@@ -108,12 +120,12 @@ void SubteStatus::updateSpeed(double value){
 }
 
 void SubteStatus::updateTargetSpeed(double value){
-    m_atp->setTargetSpeed(value);
+    //m_atp->setTargetSpeed(value);
     emit targetSpeedChanged(value);
 }
 
 void SubteStatus::updateAllowedSpeed(double value){
-    m_atp->setAllowedSpeed(value);
+    //m_atp->setAllowedSpeed(value);
     emit allowedSpeedChanged(value);
 }
 
@@ -161,6 +173,7 @@ void SubteStatus::emergencyBrakeActived(){
     m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
     qDebug() << "c_traccion: "<< m_traction->getTraction();
     qDebug() << "c_freno_emergencia: con";
+    emit setaFired();
 }
 
 void SubteStatus::emergencyBrakeReleased(){
@@ -174,15 +187,15 @@ void SubteStatus::emergencyBrakeReleased(){
 void SubteStatus::hombreVivoPressed(){
     if(m_speed == 0){
         m_traction->setHombreVivo(true);
-        m_eventHandler->notifyValueChanged("c_dispositivo_hombre_muerto","con");
-        qDebug() << "c_dispositivo_hombre_muerto: pressed";
+        m_eventHandler->notifyValueChanged("c_hombreVivo","con");
+        qDebug() << "c_hombreVivo: pressed";
     }
 }
 
 void SubteStatus::hombreVivoReleased(){
     m_traction->setHombreVivo(false);
-    m_eventHandler->notifyValueChanged("c_dispositivo_hombre_muerto","des");
-    qDebug() << "c_dispositivo_hombre_muerto: released";
+    m_eventHandler->notifyValueChanged("c_hombreVivo","des");
+    qDebug() << "c_hombreVivo: released";
 
     m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
     qDebug() << "c_traccion: "<< m_traction->getTraction();
@@ -256,11 +269,13 @@ void SubteStatus::hornOff()
     m_horn = false;
 }
 
+
 void SubteStatus::emergencyOverridePressed(){
     m_emergencyOverride = !m_emergencyOverride;
     if(m_emergencyOverride){
         qDebug() << "c_emergencyOverride: con";
         m_eventHandler->notifyValueChanged("c_emergencyOverride","con");
+
 
     }else{
         qDebug() << "c_emergencyOverride: des";
@@ -321,4 +336,22 @@ void SubteStatus::tractionLeverChanged(int value){
         m_eventHandler->notifyValueChanged("c_regulador_de_mando",std::to_string(value));
         m_traction->setLastPosition(value);
     }
+}
+
+//void SubteStatus::loadFinish(){
+//    this->m_splash->setHidden(true);
+//}
+
+//void SubteStatus::loadStart(){
+//    this->m_splash->showMaximized();
+//}
+
+void SubteStatus::cutTraction(){
+    qDebug() << "SubteStatus::cutTraction()";
+    m_ATP_model->cutTraction();
+}
+
+void SubteStatus::enableTraction(){
+    qDebug() << "SubteStatus::enableTraction()";
+    m_ATP_model->enableTraction();
 }

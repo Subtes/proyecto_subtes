@@ -11,13 +11,13 @@ BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte, EventHandler 
 
     ui->setupUi(this);
 
-    ui->horn->setVisible(false);
-    ui->ranaDevice->setVisible(false);
-    ui->setaButton->setVisible(false);
-    ui->traction->setVisible(false);
+//    ui->horn->setVisible(false);
+//    ui->ranaDevice->setVisible(false);
+//    ui->setaButton->setVisible(false);
+//    ui->traction->setVisible(false);
 
-    ui->splash->setVisible(true);
-    ui->splash->resize(this->width(),this->height());
+    //ui->splash->setVisible(true);
+    //ui->splash->resize(this->width(),this->height());
 
     connect(eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
@@ -30,11 +30,26 @@ BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte, EventHandler 
     connect(eventHandler,SIGNAL(rPressed()),this,SLOT(ranaAT()));
     connect(eventHandler,SIGNAL(fPressed()),this,SLOT(setaON()));
     connect(eventHandler,SIGNAL(tPressed()),this,SLOT(setaOFF()));
+
+    //Load Board
+    connect(eventHandler,SIGNAL(downLoaderBoarders()),this,SLOT(downLoadBoard()));
+
+    //Splash
+    //connect(this,SIGNAL(readyLoad()),eventHandler, SLOT());
 }
 
 BoardHardware::~BoardHardware()
 {
     delete ui;
+}
+
+//bool BoardHardware::loadOk(){
+//    emit readyLoad();
+//    return true;
+//}
+
+void BoardHardware::downLoadBoard(){
+    qDebug()<<"bajando tablerooooo";
 }
 
 void BoardHardware::startBoard(){
@@ -46,14 +61,14 @@ void BoardHardware::startBoard(){
     m_hombreVivo = new HombreVivo_Controller(m_subte,ui->traction);
     m_setaButton = new Seta_Controller(m_subte, ui->setaButton);
 
-    ui->horn->setVisible(true);
-    ui->ranaDevice->setVisible(true);
-    ui->setaButton->setVisible(true);
-    ui->traction->setVisible(true);
+//    ui->horn->setVisible(true);
+//    ui->ranaDevice->setVisible(true);
+//    ui->setaButton->setVisible(true);
+//    ui->traction->setVisible(true);
 
-    ui->splash->setVisible(false);
-    ui->splash->resize(0,0);
-    this->raise();
+    //ui->splash->setVisible(false);
+    //ui->splash->resize(0,0);
+    //this->raise();
 
     this->setEnabled(false);
 }

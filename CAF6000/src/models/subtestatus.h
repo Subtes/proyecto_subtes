@@ -3,10 +3,17 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QtXml>
+#include <QFile>
+#include <QSplashScreen>
+#include <QPixmap>
+
 #include "src/controllers/eventhandler.h"
 #include "src/models/cscp.h"
 #include "src/models/brake.h"
 #include "src/models/traction.h"
+#include "src/models/atp_model.h"
+
 
 class EventHandler;
 
@@ -15,13 +22,16 @@ class SubteStatus : public QObject
     Q_OBJECT
 
 private:
+    bool splashPassed;
+    QSplashScreen *m_splash = NULL;
+    QPixmap m_pixMapSplash;
 
     EventHandler *m_eventHandler;
 
     // SUBTE STATUS
     CSCP *m_cscp;
     Brake *m_brake;
-    ATP *m_atp;
+    ATP_model *m_ATP_model;
     Traction *m_traction;
     double m_speed;
 
@@ -36,6 +46,8 @@ signals:
     speedChanged(double s_speed);
     allowedSpeedChanged(double s_speed);
     targetSpeedChanged(double s_speed);
+        //Usado por ATP
+    setaFired();
 
 public:
     SubteStatus();
@@ -82,6 +94,7 @@ public slots:
     void closeRightDoors();
     void pressedCON();
     void pressedDES();
+    //void loadFinish();
     void hornOn();
     void hornOff();
     void emergencyOverridePressed();
@@ -91,6 +104,8 @@ public slots:
     void ranaCERO();
     void ranaAT();
     void tractionLeverChanged(int value);
+    void cutTraction();
+    void enableTraction();
 };
 
 #endif // SUBTESTATUS_H
