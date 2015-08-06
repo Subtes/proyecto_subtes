@@ -1,10 +1,10 @@
 import QtQuick 2.0
-import QtMultimedia 5.0
+//import QtMultimedia 5.0
 
 Rectangle {
     id: pedal
     width: 150
-    height: 214
+    height: 150
     color: "#00000000"
     border.color: "#00000000"
     focus: true
@@ -12,20 +12,20 @@ Rectangle {
     signal pedalPressed
     signal pedalReleased
 
-    SoundEffect {
-        id: horn
-        source: "resources/Train_Honk_Horn_Distance-Mike_Koenig-1905511933.wav"
-        }
+//    SoundEffect {
+//        id: horn
+//        source: "resources/Train_Honk_Horn_Distance-Mike_Koenig-1905511933.wav"
+//        }
 
     function press() {
-        horn.play();
+        //horn.play();
         down.opacity = 1;
         up.opacity = 0;
         pedal.pedalPressed();
     }
 
     function release() {
-        horn.stop();
+        //horn.stop();
         down.opacity = 0;
         up.opacity = 1;
         pedal.pedalReleased();

@@ -10,7 +10,7 @@ TARGET = CAF6000
 TEMPLATE = app
 
 #release
-CONFIG +=  c++11
+CONFIG +=  c++11 release
 
 SOURCES += main.cpp\
     boardcenter.cpp \
@@ -75,8 +75,8 @@ HEADERS  += boardcenter.h \
 FORMS    += boardcenter.ui \
     boardright.ui \
     boardleft.ui \
-    boardhardware.ui \
-    boardtop.ui
+    boardtop.ui \
+    boardhardware.ui
 
 INCLUDEPATH +=  ../subtewidgets \
                 $$PWD/../ENet

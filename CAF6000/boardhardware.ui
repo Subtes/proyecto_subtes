@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>BoardHardware</class>
- <widget class="QWidget" name="BoardHardware">
+ <widget class="QMainWindow" name="BoardHardware">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,66 +17,97 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>BOARD HARDWARE</string>
+   <string>Hardware CAF6000</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-image: url(:/resources/board_hardware_BKG.jpg);</string>
   </property>
-  <widget class="FootHorn" name="horn" native="true">
-   <property name="geometry">
-    <rect>
-     <x>430</x>
-     <y>560</y>
-     <width>150</width>
-     <height>205</height>
-    </rect>
+  <widget class="QWidget" name="centralwidget">
+   <property name="maximumSize">
+    <size>
+     <width>1024</width>
+     <height>768</height>
+    </size>
    </property>
-  </widget>
-  <widget class="TractionLever" name="traction" native="true">
-   <property name="geometry">
-    <rect>
-     <x>799</x>
-     <y>10</y>
-     <width>210</width>
-     <height>580</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/resources/nada);</string>
-   </property>
-  </widget>
-  <widget class="Rana" name="ranaDevice" native="true">
-   <property name="geometry">
-    <rect>
-     <x>220</x>
-     <y>0</y>
-     <width>250</width>
-     <height>460</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/resources/nada);
-padding-top: -25px;</string>
-   </property>
-  </widget>
-  <widget class="Seta_Button" name="setaButton" native="true">
-   <property name="geometry">
-    <rect>
-     <x>31</x>
-     <y>212</y>
-     <width>150</width>
-     <height>150</height>
-    </rect>
-   </property>
+   <widget class="FootHorn" name="horn" native="true">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>560</y>
+      <width>150</width>
+      <height>205</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>150</width>
+      <height>205</height>
+     </size>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+   </widget>
+   <widget class="Rana" name="ranaDevice" native="true">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>5</y>
+      <width>250</width>
+      <height>500</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>250</width>
+      <height>650</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/nada);
+padding-top: 0px;
+
+</string>
+    </property>
+   </widget>
+   <widget class="Seta_Button" name="setaButton" native="true">
+    <property name="geometry">
+     <rect>
+      <x>31</x>
+      <y>212</y>
+      <width>150</width>
+      <height>150</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>150</width>
+      <height>150</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="TractionLever" name="traction" native="true">
+    <property name="geometry">
+     <rect>
+      <x>799</x>
+      <y>10</y>
+      <width>210</width>
+      <height>580</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>210</width>
+      <height>622</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/nada);</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>Splash</class>
-   <extends>QWidget</extends>
-   <header>splash.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>FootHorn</class>
    <extends>QWidget</extends>

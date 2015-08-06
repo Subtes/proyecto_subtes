@@ -1,10 +1,11 @@
+/* Juego de Local */
 #include <QApplication>
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QSplashScreen>
 
-#include "boardcenter.h"
 #include "boardhardware.h"
+#include "boardcenter.h"
 #include "boardleft.h"
 #include "boardright.h"
 #include "boardtop.h"
@@ -14,6 +15,11 @@
 
 int main(int argc, char *argv[])
 {
+    //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+    QApplication::setAttribute(Qt::AA_UseOpenGLES,true);
+    //QApplication::setAttribute(Qt::AA_UseDesktopOpenGL,true);
+    //QApplication::setAttribute(Qt::AA_UseSoftwareOpenGL,true);
+
     QApplication a(argc, argv);
 
     // CONTROLLER DISPATCHER
@@ -26,11 +32,12 @@ int main(int argc, char *argv[])
     BoardHardware *m_h = new BoardHardware(0,m_subte,m_eventHandler);
     BoardCenter * m_c = new BoardCenter(0,m_subte,m_eventHandler);
     BoardLeft *m_l = new BoardLeft(0,m_subte,m_eventHandler);
+    BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
     BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
 
     QDesktopWidget *desktop = a.desktop();
 
-    if(desktop->screenCount() == 3){
+    if(desktop->screenCount() == 4){
         qDebug() << "Entre en For de pantallas igual 4: ";
         for(int i = 0; i < desktop->screenCount(); i++){
             qDebug() << "Dimensiones --> "<< desktop->screenGeometry(i);
@@ -41,16 +48,41 @@ int main(int argc, char *argv[])
         QRect s2 = desktop->screenGeometry(2);//Dimensiones -->  QRect(1024,0 1024x768)
         QRect s3 = desktop->screenGeometry(3);//Dimensiones -->  QRect(-1024,0 1024x768)
 
-        m_h->move(s0.topLeft());
-        m_l->move(s1.topLeft());
-        m_c->move(s2.topLeft());
-        m_t->move(s3.topLeft());
-    }
 
-    m_t->showNormal();
-    m_h->showNormal();
-    m_l->showNormal();
-    m_c->showNormal();
+    /**
+     * Dimensiones -->  QRect(0,0 1024x768)
+     * Dimensiones -->  QRect(1024,0 1024x768)
+     * Dimensiones -->  QRect(-1024,0 1024x768)
+     * Dimensiones -->  QRect(0,-768 1024x768)
+     */
+
+
+        m_t->showFullScreen();
+        m_h->showFullScreen();
+        m_l->showFullScreen();
+
+
+        QTabWidget *tabRight = new QTabWidget(0);
+        tabRight->addTab(m_c,QObject::tr("Center"));
+        tabRight->addTab(m_r,QObject::tr("RightPanel"));
+
+        tabRight->showFullScreen();
+
+        m_h->move(s0.topLeft());
+        m_l->move(s2.topLeft());
+        m_t->move(s3.topLeft());
+
+        tabRight->move(s1.topLeft());
+
+
+    }else{
+
+          m_h->showNormal();
+          m_l->showNormal();
+          m_c->showNormal();
+          m_t->showNormal();
+          m_r->showNormal();
+    }
 
     // DEPENDENCY INJECTION
     m_eventHandler->setModel(m_subte);

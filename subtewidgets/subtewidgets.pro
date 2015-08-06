@@ -4,11 +4,9 @@ QT += core gui quick quickwidgets widgets
 TEMPLATE = lib
 
 #order
-CONFIG +=  staticlib
+CONFIG +=  release
 
 HEADERS += \
-    panel_buttons2.h \
-    panel_buttons3.h \
     tractionlever.h \
     speedgauge.h \
     foothorn.h \
@@ -17,12 +15,9 @@ HEADERS += \
     seta_button.h \
     singlebutton.h \
     speedgaugeleds.h \
-    splash.h \
     atp.h
 
 SOURCES += \
-    panel_buttons2.cpp \
-    panel_buttons3.cpp \
     tractionlever.cpp \
     speedgauge.cpp \
     foothorn.cpp \
@@ -31,12 +26,9 @@ SOURCES += \
     seta_button.cpp \
     singlebutton.cpp \
     speedgaugeleds.cpp \
-    splash.cpp \
     atp.cpp
 
 FORMS += \
-    panel_buttons2.ui \
-    panel_buttons3.ui \
     tractionlever.ui \
     speedgauge.ui \
     foothorn.ui \
@@ -45,7 +37,6 @@ FORMS += \
     seta_button.ui \
     singlebutton.ui \
     speedgaugeleds.ui \
-    splash.ui \
     atp.ui
 
 RESOURCES += \

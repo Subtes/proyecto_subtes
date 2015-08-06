@@ -29,6 +29,12 @@
    <string notr="true">background-image: url(:/resources/board_top_BKG.jpg);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="maximumSize">
+    <size>
+     <width>1024</width>
+     <height>768</height>
+    </size>
+   </property>
    <widget class="QQuickWidget" name="voltmeter">
     <property name="geometry">
      <rect>
