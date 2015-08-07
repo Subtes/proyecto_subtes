@@ -2,6 +2,7 @@
 #include <QSplashScreen>
 #include <QPixmap>
 #include <Qt>
+#include <stdio.h>
 
 EventHandler::EventHandler(QDesktopWidget *desktop)
 {
@@ -47,7 +48,7 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
     m_splash2->setWindowFlags(Qt::WindowStaysOnTopHint);
     m_splash3 = new QSplashScreen(m_imageSplash);
     m_splash3->setWindowFlags(Qt::WindowStaysOnTopHint);
-//    m_splash->showMaximized();
+//  m_splash->showMaximized();
 
     QRect s0 = desktop->screenGeometry(0);
     QRect s1 = desktop->screenGeometry(1);
@@ -88,7 +89,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         //Cargar Splash
         if (value.compare("con") == 0){
             qDebug() << "i_iniciar_simulador con recibido" ;
-
             m_eNetClient->CambiarValorClave("c_listo","0");
 
             if(!splashPassed){
@@ -110,20 +110,20 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_intensidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_llego_senial");
+            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cargar_estado");
 
             m_subte->reset();
             emit controlReset();
 
             m_eNetClient->CambiarValorClave("c_rana",m_subte->rana());
-            m_eNetClient->CambiarValorClave("c_regulador_de_mando",std::to_string((int)m_subte->tractionLeverPosition()));
+            m_eNetClient->CambiarValorClave("c_regulador_mando",std::to_string((int)m_subte->tractionLeverPosition()));
             m_eNetClient->CambiarValorClave("c_traccion",std::to_string((int)m_subte->traction()));
             m_eNetClient->CambiarValorClave("c_freno_emergencia","des");
 
             emit controlDisable();
             m_eNetClient->CambiarValorClave("c_listo","1");
 
-        } else if (value.compare("des") == 0){
-            qDebug() << "CHAU CHAU CHAUUUUU";
+        }else if (value.compare("des") == 0){
             m_eNetClient->CambiarValorClave("c_listo","0");
             m_eNetClient->CambiarValorClave("c_regulador_mando","");
             m_eNetClient->CambiarValorClave("c_llave_atp","");
@@ -134,7 +134,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         }
     }
 
-    if(key.compare("i_estado_simulador") == 0){
+    else if(key.compare("i_estado_simulador") == 0){
         if (value.compare("0") == 0){
 
             qDebug() << "i_estado_simulador 0 recibido" ;
@@ -164,7 +164,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     }
 
     else if(key.compare("v_llego_senial") == 0){
-        qDebug() << "VVVV" << value.c_str();
         std::string direction = "";
         // find the last occurrence of ';'
         size_t pos = value.find_last_of(";");
@@ -219,6 +218,11 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         }
     }
 
+    else if(key.compare("i_cargar_estado") == 0){
+        qDebug() << "carga de ejercicio recibida." ;
+        emit cargarEstado(std::stoi(value));
+    }
+
 }
 
 void EventHandler::processKeyPressed(DWORD k)
@@ -245,6 +249,7 @@ void EventHandler::processKeyPressed(DWORD k)
         qDebug() << "F5 key pressed";
     }  else if ( k == _K && !K_down ){
         this->notifyValueChanged("c_llave_atp","con");
+        this->notifyValueChanged("c_modo_conduccion","atp");
         K_down = true;
         qDebug() << "K key pressed";
         emit kPressed();

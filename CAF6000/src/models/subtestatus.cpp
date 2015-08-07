@@ -31,6 +31,10 @@ SubteStatus::SubteStatus()
 
 SubteStatus::~SubteStatus()
 {
+    delete m_cscp;
+    delete m_brake;
+    delete m_ATP_model;
+    delete m_traction;
 }
 
 
@@ -354,4 +358,54 @@ void SubteStatus::cutTraction(){
 void SubteStatus::enableTraction(){
     qDebug() << "SubteStatus::enableTraction()";
     m_ATP_model->enableTraction();
+}
+
+void SubteStatus::setBatteryConnector(bool status){
+    if (status){
+        m_eventHandler->notifyValueChanged("c_pulsador_bateria","con");
+        qDebug() << "c_pulsador_bateria: con";
+    }else{
+        m_eventHandler->notifyValueChanged("c_pulsador_bateria","des");
+        qDebug() << "c_pulsador_bateria: des";
+    }
+}
+void SubteStatus::setConmutadorPuestaServicio(bool status){
+    if (status){
+        m_eventHandler->notifyValueChanged("c_conmutador_puesta_en_servicio","automatica");
+        qDebug() << "c_conmutador_puesta_en_servicio: automatica";
+    }else{
+        m_eventHandler->notifyValueChanged("c_conmutador_puesta_en_servicio","manual");
+        qDebug() << "c_conmutador_puesta_en_servicio :manual";
+    }
+}
+
+void SubteStatus::setConmutadorPuestaServicioAutomatica(bool status){
+    if (status){
+        m_eventHandler->notifyValueChanged("c_estado_sicas","ok");
+        qDebug() << "c_estado_sicas: ok";
+        m_eventHandler->notifyValueChanged("c_conmutador_puesta_en_servicio_automatica","con");
+        qDebug() << "c_conmutador_puesta_en_servicio_automatica :con";
+        m_eventHandler->notifyValueChanged("c_disyuntor","con");
+        qDebug() << "c_disyuntor: con";
+    }else{
+        m_eventHandler->notifyValueChanged("c_conmutador_puesta_en_servicio_automatica","des");
+        qDebug() << "c_conmutador_puesta_en_servicio_automatica: des";
+    }
+}
+
+void SubteStatus::setPantographConnector(bool status){}
+void SubteStatus::setCompressorAuxConnector(bool status){}
+void SubteStatus::setConverterConnector(bool status){}
+void SubteStatus::setMainCompressorConnector(bool status){}
+void SubteStatus::setLightingConnector(bool status){}
+void SubteStatus::setAirConnector(bool status){}
+void SubteStatus::setMegaphoneConnector(bool status){}
+void SubteStatus::setRetentionBrakeConnector(bool status){
+    if (status){
+        m_eventHandler->notifyValueChanged("c_freno_estacionamiento","con");
+        qDebug() << "c_freno_estacionamiento: con";
+    }else{
+        m_eventHandler->notifyValueChanged("c_freno_estacionamiento","des");
+        qDebug() << "c_freno_estacionamiento: des";
+    }
 }

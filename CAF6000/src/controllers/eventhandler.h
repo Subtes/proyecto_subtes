@@ -95,28 +95,22 @@ signals:
     controlEnable();
     controlReset();
     iCambioSenial1();
-
     bPressed();
     bReleased();
-
     aPressed();
     ceroPressed();
     rPressed();
-
     fPressed();
     tPressed();
-
     kPressed();
     lPressed();
-
     f3Pressed();
     f4Pressed();
-
     cPressed();
     frenoEstDes();
-
     downLoaderBoarders();
     closeApp();
+    cargarEstado(int);
 
 public slots:
     void processKeyPressed(DWORD k);

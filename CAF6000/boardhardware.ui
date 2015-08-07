@@ -49,13 +49,14 @@
    <property name="geometry">
     <rect>
      <x>220</x>
-     <y>-10</y>
+     <y>0</y>
      <width>250</width>
      <height>460</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-image: url(:/resources/nada);</string>
+    <string notr="true">background-image: url(:/resources/nada);
+padding-top: -25px;</string>
    </property>
   </widget>
   <widget class="Seta_Button" name="setaButton" native="true">
