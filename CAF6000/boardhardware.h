@@ -35,7 +35,6 @@ public slots:
     void ranaAT();
     void setaON();
     void setaOFF();
-    void downLoadBoard();
 
 private:
     Ui::BoardHardware *ui;
