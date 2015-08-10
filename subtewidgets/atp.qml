@@ -10,6 +10,7 @@ Rectangle {
 
     property int velTramo0: 0
     property int velTramo1: 10
+    property int velTramo15: 15
     property int velTramo2: 20
     property int velTramo3: 30
     property int velTramo4: 40
@@ -225,7 +226,7 @@ Rectangle {
                 y: 0
                 width: 60
                 height: 70
-                opacity: 1
+                opacity: 0
                 source: "resources/ATP_0S.png"
             }
         }
@@ -242,7 +243,7 @@ Rectangle {
                 y: 0
                 width: 60
                 height: 70
-                opacity: 1
+                opacity: 0
                 source: "resources/ATP_0S.png"
             }
         }
@@ -259,7 +260,7 @@ Rectangle {
                 y: 0
                 width: 60
                 height: 70
-                opacity: 1
+                opacity: 0
                 source: "resources/ATP_0S.png"
             }
         }
@@ -278,6 +279,7 @@ Rectangle {
                 width: 104
                 height: 104
                 source: "resources/ATP_PuntoL.png"
+                opacity: 1
             }
         }
 
@@ -295,6 +297,7 @@ Rectangle {
                 width: 70
                 height: 70
                 source: "resources/ATP_PuntoS.png"
+                opacity: 1
             }
         }
     }
@@ -357,7 +360,7 @@ Rectangle {
     }//Row LED
 
     function allowedSpeed(x){
-
+        console.log("Dentro del QML", x);
         for (indexLedAllow=0; indexLedAllow<=(x-1); indexLedAllow++){
             ledsSpeedAllowed[indexLedAllow].opacity=1;
         };
@@ -370,11 +373,24 @@ Rectangle {
 
         v = parseInt(v);
 
+        ims1.opacity=1;
+        ims2.opacity=1;
+
         if (v === velTramo0){
             //0
             ims0.opacity=1;
         }else{
             ims0.opacity=0;
+        };
+
+        if (v === velTramo15){
+            //15
+            image10.opacity=1;
+            ims1.opacity=0;
+            image05.opacity=1;
+        }else{
+            image10.opacity=0;
+            image05.opacity=0;
         };
 
         if (v === velTramo1){
@@ -524,6 +540,23 @@ Rectangle {
             height: 70
             opacity: 0
             source: "resources/ATP_1S.png"
+        }
+    }
+    //05
+    Item {
+        id: s05
+        x: 784
+        y: 197
+        width: 60
+        height: 70
+        Image {
+            id: image05
+            x: 0
+            y: 0
+            width: 60
+            height: 70
+            opacity: 0
+            source: "resources/ATP_5S.png"
         }
     }
     //20

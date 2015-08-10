@@ -3,13 +3,17 @@
 #define _F3 0x72
 #define _F4 0x73
 #define _F5 0x73
+
+#define _A 0x41
+#define _B 0x42
 #define _K 0x4B
 #define _L 0x4C
-#define _A 0x41
 #define _R 0x52
 #define _tF 0x46
 #define _T 0x54
-#define _B 0x42
+
+#define _H 0x48
+#define _J 0x4A
 
 #define _CERO 0x30
 #define _UNO 0x31
@@ -70,14 +74,16 @@ private:
     bool F3_down;
     bool F4_down;
     bool F5_down;
-    bool K_down;
-    bool L_down;
     bool A_down;
-    bool R_down;
-    bool F_down;
-    bool T_down;
     bool B_down;
     bool C_down;
+    bool F_down;
+    bool H_down;
+    bool J_down;
+    bool K_down;
+    bool L_down;
+    bool R_down;
+    bool T_down;
     bool CERO_down;
     bool UNO_down;
     bool DOS_down;
@@ -114,6 +120,9 @@ signals:
     downLoaderBoarders();
     closeApp();
     cargarEstado(int);
+    accelerationInstant(double);
+    nextToEstation();
+    departureEstation();
 
 public slots:
     void processKeyPressed(DWORD k);

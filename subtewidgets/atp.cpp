@@ -25,7 +25,7 @@ void Atp::updateSpeed(double speed){
     int digitoFraccion,v;
 
     frac = modf(speed,&entera);
-    qDebug() << frac;
+    //qDebug() << frac;
     digitoFraccion = (int)(frac*10);
     v = (int)entera;
 
@@ -43,7 +43,7 @@ void Atp::updateTargetSpeed(double speed){
 
     QVariant returnedValue;
     int v = (int)speed;
-    QMetaObject::invokeMethod(m_qmlView, "targetSpeed",
+    QMetaObject::invokeMethod(m_qmlView, "targetSpeed", Qt::DirectConnection,
                               Q_RETURN_ARG(QVariant,returnedValue),
                               Q_ARG(QVariant, v));
     //qDebug() << "Atp::updateTargetSpeed: " << speed;
@@ -56,7 +56,7 @@ void Atp::updateAllowedSpeed(double speed){
     QMetaObject::invokeMethod(m_qmlView, "allowedSpeed",
                               Q_RETURN_ARG(QVariant,returnedValue),
                               Q_ARG(QVariant, v));
-    //qDebug() << "Atp::updateAllowedSpeed: " << v;
+    qDebug() << "Atp::updateAllowedSpeed: " << v;
 }
 
 void Atp::setCMC(bool v){

@@ -6,6 +6,7 @@
 #include <QState>
 #include <QFinalState>
 #include <QStateMachine>
+#include <QString>
 
 #include <atp.h>
 #include "src/models/subtestatus.h"
@@ -15,6 +16,7 @@
 /**
  * @brief The Atp_Controller class
  */
+
 
 class Atp_Controller : public QObject
 {
@@ -33,86 +35,154 @@ signals:
     void speedRecovered();
     void subteStoped();
     void signalAnden();
-    void exceededSpeed20();
-    void exceededSpeed15();
-    void exceededSpeed10();
-    void exceededSpeed05();
-    void setaFired();
     void reset();
+    void enableBreakService(int);
+    void desableBreakService(int);
+    void offATP();
+
+    void _1AtoB();
+    void _2BtoA();
+    void _3BtoC();
+    void _4CtoB();
+    void _5CtoD();
+    void _6DtoC();
+
+    void allowedSpeedChange(double);
+    //void targetSpeedChange(double);
 
 public slots:
+
     void updateTargetSpeed(double speed);
     void updateAllowedSpeed(double speed);
     void updateSpeed(double speed);
-    void setaFiredRoutine();
-    //Inicia la maquina de estados, por ahora es siempre CMC primer Estado.
+    void setDrivingMode(int);
+    //Inicia la maquina de estados
     void initATP();
     void resetATP();
 
+    void setSpeedTarget(double s);
+    void setACE(double a);
+
+    void departureEstation();
+
+    void evalCalculateDistance();
+    void calculateDistance();
+
 private slots:
-    void turnOn0();
-    void turnOn1();
-    void turnOn2();
-    void rolling();
-    void speedExceededLessThan2();
-    void speedExceededLessThan1_5();
-    void speedExceededLessThan1_0();
-    void speedExceededLessThan0_5();
-    void breakTo0();
-    void resetViewState();
+
+    void routingA();
+    void routingB();
+    void routingC();
+    void routingD();
+
+    void setAllowedSpeed(double s);
+    void transitionGT();
+
+    void superviseSpeed();
+
+    void nextToEstation();
 
 private:
     Atp *m_view = NULL;
     SubteStatus *m_subte = NULL;
     EventHandler *m_eventHandler = NULL;
 
-    double speedTarget;
-    double speed;
-    double allowedSpeed;
+    double m_speed;
+    double m_speedPrevious;
+
+    double m_speedTarget;
+    double m_speedTargetPrevious;
+
+    double m_speedAllowed;
+    double m_speedAllowedPrevious;
+
+    //Tasa desaceleracion
+    double m_A1 = 0.7;
+
+    //Atraso de freno
+    double m_A_freno;
+
+    //Grade maximo de la via
+    double m_Gm;
+
+    //Tada de la curva de reduccion de codigo
+    double m_Tc;
+
+    //Jerk de frenado
+    double m_Jerk;
+
+    //Speed Critique
+    double m_speedCritique;
+
+    //Driving Mode
+    bool m_drivingModeCMC;
+    bool m_drivingModeCL;
+    bool m_drivingModeAL;
+    bool m_drivingModeAT;
+
+    //Speed Target Signal
+    //HH Hacer que directamente reciba los codigo de via y según eso traduce a la speedTarget
+    double m_AF_0 = 0;
+    double m_AF_1 = 15;
+    double m_AF_2 = 15;
+    double m_AF_3 = 25;
+    double m_AF_4 = 30;
+    double m_AF_5 = 40;
+    double m_AF_6 = 50;
+    double m_AF_7 = 60;
+
+    //Target Signal Recived
+    QString m_AF;
+    QString m_AF_previous;
+
+    //Instant Acceleration
+    double m_ACE;
+
+    //Offset
+    double m_OS_ACT;
+    double m_OS_LCT;
+    double m_OS_AFS;
+    double m_OS_LFS;
+    double m_OS_AFE;
+
+    //uTVC (inhabilitado, curva, constante).
+    int m_uTVC;
+
+    //Distance GD
+    double m_distanceGD;
+    //Control Distance GD
+    bool m_changeDistance;
 
     //Maquina de estados:
-      //Estados:
-    //Estado Arranque 1.0
-    QState *e_turnOn0 = NULL;
-    //Estado Arranque 1.1
-    QState *e_turnOn1 = NULL;
-    //Estado Arranque 1.2
-    QState *e_turnOn2 = NULL;
-    //Estado En Recorrido, Subte operando
-    QState *e_rolling = NULL;
-    //Estado Diferencia Speed - Allowed < 2
-    QState *e_controlLess2 = NULL;
-    //Estado Diferencia Speed - Allowed < 1,5
-    QState *e_controlLess1_5 = NULL;
-    //Estado Diferencia Speed - Allowed < 1,0
-    QState *e_controlLess1_0 = NULL;
-    //Estado Diferencia Speed - Allowed < 0,5
-    QState *e_controlLess0_5 = NULL;
-    //Estado Frenando a cero disparo por Allowed - Speed > 3
-    QState *e_breakingTo0 = NULL;
-    //Estado Frenado=0, libero corte traccion y freno
-    QState *e_breaking0 = NULL;
-    //Proximidad Anden 383 mts
-    QState *e_nearToStation = NULL;
-    //Curva frenado, se frena el tren a cero segun curva.
-    QState *e_curveBraking = NULL;
-    //Parado, proximidad al anden, circulacion 15 maximo Target=0
-    QState *e_nearToPlatform = NULL;
-    //Estado seta disparado
-    QState *e_setaFired = NULL;
+        //Estados:
+    QState *m_e_A = NULL;
+    QState *m_e_B = NULL;
+    QState *m_e_C = NULL;
+    QState *m_e_D = NULL;
 
         //Estado Final:
-    QFinalState *e_Final_State = NULL;
+    QFinalState *m_e_Final_State = NULL;
 
         //Maquina de Estados:
     QStateMachine *m_machineATP = NULL;
 
         //Timer's:
-    //Timer arranque para dar lugar al arranque en plataforma
-    QTimer *t_timerToTurnOn = NULL;
-    //Timer configurado en tiempo de raccion del motor man y los sistemas
-    QTimer *t_reactionMotorMan = NULL;
+    QTimer *m_t_evalChangeSpeed = NULL;
+    QTimer *m_t_shot = NULL;
 
+    //Timer T1 tiempo de la Transicion Gradual por Tiempo --> 3000
+    int m_t_TGT;
+
+    //Test if ATP is on
+    bool m_onATP;
+    QHash<int,int> *m_speedAD = NULL;
+
+    void set_uTVC();
+    void transitionGD();
+
+    void critiqueSpeed(int);
+    void onATP();
+    void off_ATP();
 
 };
 

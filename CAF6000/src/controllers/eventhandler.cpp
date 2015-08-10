@@ -11,14 +11,18 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
     F3_down = false;
     F4_down = false;
     F5_down = false;
-    K_down = false;
-    L_down = false;
+
     A_down = false;
-    R_down = false;
-    F_down = false;
-    T_down = false;
     B_down = false;
     C_down = false;
+    F_down = false;
+    H_down = false;
+    J_down = false;
+    K_down = false;
+    L_down = false;
+    R_down = false;
+    T_down = false;
+
     CERO_down = false;
     UNO_down = false;
     DOS_down = false;
@@ -131,12 +135,14 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_intensidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_llego_senial");
+            //m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_llego_senial");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_intensidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_presion_cilindro");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_presion_freno");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_proximo_a_estacion");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
             m_subte->reset();
             emit controlReset();
 
@@ -144,7 +150,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_regulador_mando",std::to_string((int)m_subte->tractionLeverPosition()));
             m_eNetClient->CambiarValorClave("c_traccion",std::to_string((int)m_subte->traction()));
             m_eNetClient->CambiarValorClave("c_freno_emergencia","des");
-
             m_eNetClient->CambiarValorClave("c_averia","x");
 
             emit controlDisable();
@@ -155,7 +160,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_regulador_mando","");
             m_eNetClient->CambiarValorClave("c_llave_atp","");
             m_eNetClient->CambiarValorClave("c_modo_conduccion","");
-
             m_eNetClient->CambiarValorClave("c_averia","");
 
             Sleep(1000);
@@ -226,7 +230,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     }
 
     else if(key.compare("v_velocidad") == 0){
-        qDebug() << "cambio de velocidad recibido." ;
+        //qDebug() << "cambio de velocidad recibido." ;
         m_subte->updateSpeed(std::stod(value));
     }
 
@@ -252,18 +256,19 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         emit cargarEstado(std::stoi(value));
     }
 
+
     else if(key.compare("v_voltaje") == 0){
         qDebug() << "cambio de voltaje recibido." ;
         m_subte->updateVolt(std::stod(value));
     }
 
     else if(key.compare("v_intensidad") == 0){
-        qDebug() << "cambio de intensidad recibido." ;
+        //qDebug() << "cambio de intensidad recibido." ;
         m_subte->updateAmm(std::stod(value));
     }
 
     else if(key.compare("v_esfuerzo") == 0){
-        qDebug() << "cambio de esfuerzo recibido." ;
+        //qDebug() << "cambio de esfuerzo recibido." ;
         m_subte->updateEffort(std::stod(value));
     }
     else if(key.compare("v_presion_cilindro") == 0){
@@ -283,6 +288,21 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         }
         catch(...){
              qDebug() << "presion de frenado incorrecta." ;
+        }
+    }
+
+    else if (key.compare("a_ACE") == 0){
+        qDebug() << " ACE, aceleracion instantanea";
+        emit accelerationInstant(std::stod(value));
+    }
+
+    else if (key.compare("v_proximo_a_estacion") == 0){
+        if (value.compare("1") == 0){
+            qDebug() << " v_proximo_a_estacion, --> 1";
+            emit nextToEstation();
+        }else{
+            qDebug() << "v_proximo_a_estacion, --> 0";
+            emit departureEstation();
         }
     }
 
@@ -387,6 +407,14 @@ void EventHandler::processKeyPressed(DWORD k)
         NUEVE_down = true;
         this->notifyValueChanged("c_pulsador_bateria","des");
         qDebug() << "9 key pressed";
+    } else if ( k == _H && !H_down  ){
+        H_down = true;
+        qDebug() << "H key pressed, nextToEstation";
+        this->processValueChanged(m_eNetHelper->instructionsHostName, "v_proximo_a_estacion", "1");
+    } else if ( k == _J && !J_down  ){
+        J_down = true;
+        qDebug() << "J key pressed, departureFromEstation";
+        this->processValueChanged(m_eNetHelper->instructionsHostName, "v_proximo_a_estacion", "0");;
     }
 }
 
@@ -428,9 +456,9 @@ void EventHandler::processKeyReleased(DWORD k){
         B_down = false;
         qDebug() << "B key released";
         emit bReleased();
-    } else if ( k == 0x43 ){
-        qDebug() << "C key released";
-        C_down = false;
+//    } else if ( k == 0x43 ){
+//        qDebug() << "C key released";
+//        C_down = false;
     } else if ( k == _CERO ){
         qDebug() << "0 key released";
         CERO_down = false;
@@ -461,6 +489,12 @@ void EventHandler::processKeyReleased(DWORD k){
     } else if ( k == _NUEVE ){
         NUEVE_down = false;
         qDebug() << "9 key released";
+    } else if ( k == _H ){
+        H_down = false;
+        qDebug() << "H key released";
+    } else if ( k == _J ){
+        J_down = false;
+        qDebug() << "J key released";
     }
 }
 
