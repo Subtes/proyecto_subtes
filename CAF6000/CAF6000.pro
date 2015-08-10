@@ -10,7 +10,7 @@ TARGET = CAF6000
 TEMPLATE = app
 
 #release
-CONFIG +=  c++11 release
+CONFIG +=  c++11
 
 SOURCES += main.cpp \
     baseboard.cpp \

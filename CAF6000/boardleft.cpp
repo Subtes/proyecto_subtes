@@ -56,8 +56,7 @@ void BoardLeft::resetControls(){
  */
 void BoardLeft::loadState(int state){
     if (m_atp){
-        m_atp->updateSpeed(0.0);
-        m_atp->updateTargetSpeed(0.0);
+        m_atp->resetATP();
     }
 
     if(state == APAGADO){
