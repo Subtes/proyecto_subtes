@@ -40,6 +40,14 @@ signals:
     void setaFired();
     void reset();
 
+    void _1AtoB();
+    void _2BtoA();
+    void _3BtoC();
+    void _4CtoB();
+    void _5CtoD();
+    void _6DtoC();
+
+
 public slots:
     void updateTargetSpeed(double speed);
     void updateAllowedSpeed(double speed);
@@ -48,6 +56,9 @@ public slots:
     //Inicia la maquina de estados, por ahora es siempre CMC primer Estado.
     void initATP();
     void resetATP();
+
+    void onATP();
+    void offATP();
 
 private slots:
     void turnOn0();
@@ -61,6 +72,11 @@ private slots:
     void breakTo0();
     void resetViewState();
 
+    void routingA();
+    void routingB();
+    void routingC();
+    void routingD();
+
 private:
     Atp *m_view = NULL;
     SubteStatus *m_subte = NULL;
@@ -71,35 +87,11 @@ private:
     double allowedSpeed;
 
     //Maquina de estados:
-      //Estados:
-    //Estado Arranque 1.0
-    QState *e_turnOn0 = NULL;
-    //Estado Arranque 1.1
-    QState *e_turnOn1 = NULL;
-    //Estado Arranque 1.2
-    QState *e_turnOn2 = NULL;
-    //Estado En Recorrido, Subte operando
-    QState *e_rolling = NULL;
-    //Estado Diferencia Speed - Allowed < 2
-    QState *e_controlLess2 = NULL;
-    //Estado Diferencia Speed - Allowed < 1,5
-    QState *e_controlLess1_5 = NULL;
-    //Estado Diferencia Speed - Allowed < 1,0
-    QState *e_controlLess1_0 = NULL;
-    //Estado Diferencia Speed - Allowed < 0,5
-    QState *e_controlLess0_5 = NULL;
-    //Estado Frenando a cero disparo por Allowed - Speed > 3
-    QState *e_breakingTo0 = NULL;
-    //Estado Frenado=0, libero corte traccion y freno
-    QState *e_breaking0 = NULL;
-    //Proximidad Anden 383 mts
-    QState *e_nearToStation = NULL;
-    //Curva frenado, se frena el tren a cero segun curva.
-    QState *e_curveBraking = NULL;
-    //Parado, proximidad al anden, circulacion 15 maximo Target=0
-    QState *e_nearToPlatform = NULL;
-    //Estado seta disparado
-    QState *e_setaFired = NULL;
+        //Estados:
+    QState *e_A = NULL;
+    QState *e_B = NULL;
+    QState *e_C = NULL;
+    QState *e_D = NULL;
 
         //Estado Final:
     QFinalState *e_Final_State = NULL;
@@ -108,10 +100,10 @@ private:
     QStateMachine *m_machineATP = NULL;
 
         //Timer's:
-    //Timer arranque para dar lugar al arranque en plataforma
-    QTimer *t_timerToTurnOn = NULL;
-    //Timer configurado en tiempo de raccion del motor man y los sistemas
-    QTimer *t_reactionMotorMan = NULL;
+//    //Timer arranque para dar lugar al arranque en plataforma
+//    QTimer *t_timerToTurnOn = NULL;
+//    //Timer configurado en tiempo de raccion del motor man y los sistemas
+//    QTimer *t_reactionMotorMan = NULL;
 
 
 };
