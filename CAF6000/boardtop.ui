@@ -29,66 +29,6 @@
    <string notr="true">background-image: url(:/resources/board_top_BKG.jpg);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <property name="maximumSize">
-    <size>
-     <width>1024</width>
-     <height>768</height>
-    </size>
-   </property>
-   <widget class="QQuickWidget" name="voltmeter">
-    <property name="geometry">
-     <rect>
-      <x>301</x>
-      <y>14</y>
-      <width>211</width>
-      <height>211</height>
-     </rect>
-    </property>
-    <property name="resizeMode">
-     <enum>QQuickWidget::SizeRootObjectToView</enum>
-    </property>
-    <property name="source">
-     <url>
-      <string>qrc:/voltmeter.qml</string>
-     </url>
-    </property>
-   </widget>
-   <widget class="QQuickWidget" name="ammeter">
-    <property name="geometry">
-     <rect>
-      <x>545</x>
-      <y>13</y>
-      <width>212</width>
-      <height>212</height>
-     </rect>
-    </property>
-    <property name="resizeMode">
-     <enum>QQuickWidget::SizeRootObjectToView</enum>
-    </property>
-    <property name="source">
-     <url>
-      <string>qrc:/ammeter.qml</string>
-     </url>
-    </property>
-   </widget>
-   <widget class="QQuickWidget" name="effortmeter">
-    <property name="geometry">
-     <rect>
-      <x>789</x>
-      <y>13</y>
-      <width>212</width>
-      <height>212</height>
-     </rect>
-    </property>
-    <property name="resizeMode">
-     <enum>QQuickWidget::SizeRootObjectToView</enum>
-    </property>
-    <property name="source">
-     <url>
-      <string>qrc:/effortmeter.qml</string>
-     </url>
-    </property>
-   </widget>
    <widget class="SingleButton" name="puestaEnMarchaDES" native="true">
     <property name="geometry">
      <rect>
@@ -365,6 +305,54 @@
      </url>
     </property>
    </widget>
+   <widget class="AnalogGauge" name="effortmeter" native="true">
+    <property name="geometry">
+     <rect>
+      <x>789</x>
+      <y>14</y>
+      <width>212</width>
+      <height>212</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>212</width>
+      <height>212</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="AnalogGauge" name="ammeter" native="true">
+    <property name="geometry">
+     <rect>
+      <x>545</x>
+      <y>14</y>
+      <width>212</width>
+      <height>212</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>212</width>
+      <height>212</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="AnalogGauge" name="voltmeter" native="true">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>14</y>
+      <width>212</width>
+      <height>212</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>212</width>
+      <height>212</height>
+     </size>
+    </property>
+   </widget>
   </widget>
  </widget>
  <customwidgets>
@@ -377,6 +365,12 @@
    <class>SingleButton</class>
    <extends>QWidget</extends>
    <header>singlebutton.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AnalogGauge</class>
+   <extends>QWidget</extends>
+   <header>analoggauge.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

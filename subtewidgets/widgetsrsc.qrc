@@ -113,5 +113,6 @@
         <file>resources/ATPoFoSERV.PNG</file>
         <file>resources/ATPoFreEmrg.PNG</file>
         <file>resources/ATPoLed2.png</file>
+        <file>resources/ATPoCorR.PNG</file>
     </qresource>
 </RCC>

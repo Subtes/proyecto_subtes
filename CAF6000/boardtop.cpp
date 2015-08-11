@@ -47,6 +47,8 @@ void BoardTop::startBoard()
     m_connectors->setConmutadorPuestaServicio(ui->llaveManual,ui->puestaEnMarchaDES,ui->puetaEnMarchaCON,ui->automaticoManualDES,ui->automaticoManualCON);
     m_connectors->setRetentionBrake(ui->frenoCON,ui->frenoDES);
 
+    m_topGauges = new TopGauges_Controller(m_subte,ui->voltmeter,ui->ammeter,ui->effortmeter);
+
     this->setEnabled(false);
 }
 

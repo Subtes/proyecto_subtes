@@ -125,14 +125,16 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             }
 
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estado_simulador");
-            m_eNetClient->Suscribirse(m_eNetHelper->controlsHostName,"c_freno_estacionamiento");
+            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cargar_estado");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_velocidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_tramo_vel");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_intensidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_llego_senial");
-            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cargar_estado");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_intensidad");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
 
             m_subte->reset();
             emit controlReset();
@@ -243,6 +245,21 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     else if(key.compare("i_cargar_estado") == 0){
         qDebug() << "carga de ejercicio recibida." ;
         emit cargarEstado(std::stoi(value));
+    }
+
+    else if(key.compare("v_voltaje") == 0){
+        qDebug() << "cambio de voltaje recibido." ;
+        m_subte->updateVolt(std::stod(value));
+    }
+
+    else if(key.compare("v_intensidad") == 0){
+        qDebug() << "cambio de intensidad recibido." ;
+        m_subte->updateAmm(std::stod(value));
+    }
+
+    else if(key.compare("v_esfuerzo") == 0){
+        qDebug() << "cambio de esfuerzo recibido." ;
+        m_subte->updateEffort(std::stod(value));
     }
 
 }
