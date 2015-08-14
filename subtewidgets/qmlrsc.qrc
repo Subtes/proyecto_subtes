@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>panel_buttons3.qml</file>
-        <file>panel_buttons2.qml</file>
         <file>speedgauge.qml</file>
         <file>foot_horn.qml</file>
         <file>wiperSelector.qml</file>
@@ -16,8 +14,6 @@
         <file>effortmeter.qml</file>
         <file>setaTecho.qml</file>
         <file>llaveTecho.qml</file>
-        <file>SplashScreen.qml</file>
         <file>atp.qml</file>
-        <file>resources/ATPoCorR.PNG</file>
     </qresource>
 </RCC>

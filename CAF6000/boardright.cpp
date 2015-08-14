@@ -19,8 +19,8 @@ BoardRight::BoardRight(QWidget *parent, SubteStatus * subte, EventHandler *event
     ui->frenoRetencion->setVisible(false);
     ui->desacople->setVisible(false);
 
-    ui->splash->setVisible(true);
-    ui->splash->resize(this->width(),this->height());
+//    ui->splash->setVisible(true);
+//    ui->splash->resize(this->width(),this->height());
 
     connect(m_eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(m_eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
@@ -55,9 +55,9 @@ void BoardRight::startBoard()
     ui->manometro->setClearColor(Qt::transparent);
     ui->manometro->setAttribute(Qt::WA_AlwaysStackOnTop);
 
-    ui->splash->setVisible(false);
-    ui->splash->resize(0,0);
-    this->raise();
+//    ui->splash->setVisible(false);
+//    ui->splash->resize(0,0);
+//    this->raise();
 
     this->setEnabled(false);
 }

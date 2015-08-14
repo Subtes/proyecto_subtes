@@ -38,6 +38,7 @@ signals:
     void exceededSpeed10();
     void exceededSpeed05();
     void setaFired();
+    void reset();
 
 public slots:
     void updateTargetSpeed(double speed);

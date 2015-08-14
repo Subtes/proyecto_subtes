@@ -42,25 +42,41 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
 
     m_imageSplash = QPixmap(":/resources/splash.jpg");
 
-    m_splash1 = new QSplashScreen(m_imageSplash);
-    m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
-    m_splash2 = new QSplashScreen(m_imageSplash);
-    m_splash2->setWindowFlags(Qt::WindowStaysOnTopHint);
-    m_splash3 = new QSplashScreen(m_imageSplash);
-    m_splash3->setWindowFlags(Qt::WindowStaysOnTopHint);
-//  m_splash->showMaximized();
+    if(desktop->screenCount() == 4){
+        qDebug() << "Entre en For de pantallas igual 4: ";
 
-    QRect s0 = desktop->screenGeometry(0);
-    QRect s1 = desktop->screenGeometry(1);
-    QRect s2 = desktop->screenGeometry(2);
+        m_splash1 = new QSplashScreen(m_imageSplash);
+        m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
+        m_splash2 = new QSplashScreen(m_imageSplash);
+        m_splash2->setWindowFlags(Qt::WindowStaysOnTopHint);
+        m_splash3 = new QSplashScreen(m_imageSplash);
+        m_splash3->setWindowFlags(Qt::WindowStaysOnTopHint);
+        m_splash4 = new QSplashScreen(m_imageSplash);
+        m_splash4->setWindowFlags(Qt::WindowStaysOnTopHint);
 
-    m_splash1->move(s0.topLeft());
-    m_splash2->move(s1.topLeft());
-    m_splash3->move(s2.topLeft());
 
-    m_splash1->showMaximized();
-    m_splash2->showMaximized();
-    m_splash3->showMaximized();
+        QRect s0 = desktop->screenGeometry(0);
+        QRect s1 = desktop->screenGeometry(1);
+        QRect s2 = desktop->screenGeometry(2);
+        QRect s3 = desktop->screenGeometry(3);
+
+
+        m_splash1->move(s0.topLeft());
+        m_splash2->move(s1.topLeft());
+        m_splash3->move(s2.topLeft());
+        m_splash4->move(s3.topLeft());
+
+        m_splash1->showMaximized();
+        m_splash2->showMaximized();
+        m_splash3->showMaximized();
+        m_splash4->showMaximized();
+
+    }else{
+        m_splash1 = new QSplashScreen(m_imageSplash);
+        m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
+        m_splash1->showMaximized();
+    }
+
 
 }
 
@@ -95,10 +111,16 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
                 qDebug() << "!splashPassed" ;
                 splashPassed = true;
                 emit controlReady();
-                //Bajar splash
-                m_splash1->hide();
-                m_splash2->hide();
-                m_splash3->hide();
+                    //Bajar splash
+                if(desktop->screenCount() == 4){
+                    m_splash1->hide();
+                    m_splash2->hide();
+                    m_splash3->hide();
+                    m_splash4->hide();
+                }else{
+                    m_splash1->hide();
+                }
+
                 qDebug() << "Bajando Splashhh";
             }
 

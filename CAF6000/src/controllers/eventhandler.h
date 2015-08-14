@@ -57,9 +57,12 @@ private:
     ENetClient * m_eNetClient;
     ENetHelper * m_eNetHelper;
     SubteStatus * m_subte;
+
     QSplashScreen *m_splash1;
     QSplashScreen *m_splash2;
     QSplashScreen *m_splash3;
+    QSplashScreen *m_splash4;
+    QDesktopWidget *desktop;
     QPixmap m_imageSplash;
 
     bool F1_down;

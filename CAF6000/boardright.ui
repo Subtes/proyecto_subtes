@@ -28,8 +28,8 @@
      <rect>
       <x>803</x>
       <y>29</y>
-      <width>72</width>
-      <height>72</height>
+      <width>78</width>
+      <height>78</height>
      </rect>
     </property>
    </widget>
@@ -38,8 +38,8 @@
      <rect>
       <x>916</x>
       <y>29</y>
-      <width>72</width>
-      <height>72</height>
+      <width>78</width>
+      <height>78</height>
      </rect>
     </property>
    </widget>
@@ -48,8 +48,8 @@
      <rect>
       <x>803</x>
       <y>152</y>
-      <width>72</width>
-      <height>72</height>
+      <width>78</width>
+      <height>78</height>
      </rect>
     </property>
    </widget>
@@ -58,8 +58,8 @@
      <rect>
       <x>916</x>
       <y>152</y>
-      <width>72</width>
-      <height>72</height>
+      <width>78</width>
+      <height>78</height>
      </rect>
     </property>
    </widget>
@@ -68,8 +68,8 @@
      <rect>
       <x>916</x>
       <y>498</y>
-      <width>72</width>
-      <height>72</height>
+      <width>78</width>
+      <height>78</height>
      </rect>
     </property>
    </widget>
@@ -86,10 +86,10 @@
    <widget class="QQuickWidget" name="manometro">
     <property name="geometry">
      <rect>
-      <x>811</x>
+      <x>807</x>
       <y>273</y>
-      <width>180</width>
-      <height>180</height>
+      <width>188</width>
+      <height>182</height>
      </rect>
     </property>
     <property name="resizeMode">
@@ -101,16 +101,6 @@
      </url>
     </property>
    </widget>
-   <widget class="Splash" name="splash" native="true">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>0</width>
-      <height>0</height>
-     </rect>
-    </property>
-   </widget>
   </widget>
  </widget>
  <customwidgets>
@@ -118,12 +108,6 @@
    <class>QQuickWidget</class>
    <extends>QWidget</extends>
    <header>QQuickWidget</header>
-  </customwidget>
-  <customwidget>
-   <class>Splash</class>
-   <extends>QWidget</extends>
-   <header>splash.h</header>
-   <container>1</container>
   </customwidget>
   <customwidget>
    <class>SingleButton</class>

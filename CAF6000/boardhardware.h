@@ -49,4 +49,5 @@ private:
     SpeedGaugeLeds_Controller *m_speedGauge;
 };
 
+
 #endif // BOARDHARDWARE_H
