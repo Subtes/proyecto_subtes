@@ -46,10 +46,10 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     e_B->addTransition(this,SIGNAL(_2BtoA()),e_A);
     //B --to--> C
     e_B->addTransition(this,SIGNAL(_3BtoC()),e_C);
-    //C --to--> D
-    e_C->addTransition(this,SIGNAL(_5CtoD()),e_D);
     //C <--to--B Back
     e_C->addTransition(this,SIGNAL(_4CtoB()),e_B);
+    //C --to--> D
+    e_C->addTransition(this,SIGNAL(_5CtoD()),e_D);
     //D --to--> C Back
     e_D->addTransition(this,SIGNAL(_6DtoC()),e_C);
 
@@ -67,32 +67,52 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
 
 
     //Conexiones del ATP al resto del mundo.
-        //Conecciones externas:
+
+        //Conecciones Externas:
     connect(subte,SIGNAL(speedChanged(double)),this,SLOT(updateSpeed(double)));
     connect(subte,SIGNAL(targetSpeedChanged(double)),this,SLOT(updateTargetSpeed(double)));
     //connect(subte,SIGNAL(setaFired()),this,SIGNAL(setaFiredRoutine()));
-    connect(this, SIGNAL(cutTraction()),subte,SLOT(cutTraction()));
-    connect(this, SIGNAL(enableTraction()),subte,SLOT(enableTraction()));
-    connect(this, SIGNAL(enableBreakEmergency()),subte,SLOT(emergencyBrakeActived()));
-    connect(this, SIGNAL(desableBreakEmergency()),subte,SLOT(emergencyBrakeReleased()));
     connect(eventHandler,SIGNAL(kPressed()),this,SLOT(initATP()));
     connect(eventHandler,SIGNAL(lPressed()),this,SLOT(resetATP()));
     connect(eventHandler,SIGNAL(iCambioSenial1()),SIGNAL(signalAnden()));
     connect(eventHandler,SIGNAL(frenoEstDes()),SIGNAL(enableTraction()));
 
+        //Salidas Externas:
+    connect(this, SIGNAL(cutTraction()),subte,SLOT(cutTraction()));
+    connect(this, SIGNAL(enableTraction()),subte,SLOT(enableTraction()));
+    connect(this, SIGNAL(enableBreakEmergency()),subte,SLOT(emergencyBrakeActived()));
+    connect(this, SIGNAL(desableBreakEmergency()),subte,SLOT(emergencyBrakeReleased()));
 
 }
 
-/**********************************************************************************/
+/**************************************** Nuevo ATP ******************************************/
     //Acciones, rutinas a realizar en los estados:
-void onATP();
-void offATP();
-void routingA();
-void routingB();
-void routingC();
-void routingD();
+void Atp_Controller::onATP(){
+
+}
+
+void Atp_Controller::offATP(){
+
+}
+
+void Atp_Controller::routingA(){
+
+}
+
+void Atp_Controller::routingB(){
+
+}
+
+void Atp_Controller::routingC(){
+
+}
+
+void Atp_Controller::routingD(){
+
+}
 
 
+/*****************************************************************************************************/
 
 //Inicia la maquina de estados, o sea el ATP, deberia estar conectado a la senal salida de Plataforma.
 void Atp_Controller::initATP(){
@@ -302,33 +322,6 @@ void Atp_Controller::updateSpeed(double speed){
         emit this->subteStoped();
         qDebug()<<"emit this->subteStoped();";
     };
-
- //    if (5.0<dif){
-//        emit this->speedRecovered();
-//        qDebug() << "emit this->speedRecovered();";
-//    };
-//    if (3.5<dif && dif<=5.0){
-//        emit this->exceededSpeed20();
-//        qDebug()<< "emit this->exceededSpeed20();";
-//    };
-//    if (2.5<dif && dif<=3.5){
-//        emit this->exceededSpeed15();
-//        qDebug()<<"emit this->exceededSpeed15();";
-//    };
-//    if (1.5<dif && dif<=2.5){
-//        emit this->exceededSpeed10();
-//        qDebug()<<"emit this->exceededSpeed10();";
-//    };
-//    if (0.0<dif && dif<=1.5){
-//        //break
-//        emit this->exceededSpeed05();
-//        qDebug()<<"emit this->exceededSpeed05();";
-//    };
-
-//    if ((-0.1<speed && speed<=0.0)){
-//        emit this->subteStoped();
-//        qDebug()<<"emit this->subteStoped();";
-//    };
 
 }
 
