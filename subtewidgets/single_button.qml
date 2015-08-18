@@ -13,6 +13,7 @@ Rectangle {
     property bool nestled: false
     property bool lighted: true    
     property bool onPressDriver: false
+    property bool lightManager: true
 
     Image {
         id: offImage
@@ -132,21 +133,21 @@ Rectangle {
 
         onPressed: {
             button.buttonPressed()
-            if(button.onPressDriver){
+            if(lightManager && button.onPressDriver){
                 processClick()
             }
         }
 
         onReleased: {
             button.buttonReleased()
-            if(button.onPressDriver){
+            if(lightManager && button.onPressDriver){
                 processClick()
             }
         }
 
         onClicked: {
             button.buttonClicked()
-            if(!button.onPressDriver){
+            if(lightManager && !button.onPressDriver){
                 processClick()
             }
         }

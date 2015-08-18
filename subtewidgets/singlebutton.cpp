@@ -83,6 +83,10 @@ void SingleButton::setOnClickAsDriver(){
      m_qmlView->setProperty("onPressDriver", false );
 }
 
+void SingleButton::setLightManagement(bool status){
+     m_qmlView->setProperty("lightManager", status );
+}
+
 void SingleButton::startBlink()
 {
     QVariant returnedValue;
@@ -99,15 +103,19 @@ void SingleButton::stopBlink()
 
 void SingleButton::turnOn()
 {
+    qDebug() << "turn on";
     QVariant state = m_qmlView->property("state");
-    if(QString::compare(state.toString(),"buttonOffState")==0)
-        m_qmlView->setProperty("state", "buttonOnState" );
-    else if(QString::compare(state.toString(),"buttonOffStateNestled")==0)
-        m_qmlView->setProperty("state", "buttonOnStateNestled" );
+    if(QString::compare(state.toString(),"buttonOffState")==0){
+        m_qmlView->setProperty("state", "buttonOnState" );}
+    else if(QString::compare(state.toString(),"buttonOffStateNestled")==0){
+        m_qmlView->setProperty("state", "buttonOnStateNestled" );}
+    else {
+    }
 }
 
 void SingleButton::turnOff()
 {
+    qDebug() << "turn off";
     QVariant state = m_qmlView->property("state");
     if(QString::compare(state.toString(),"buttonOnState")==0)
         m_qmlView->setProperty("state", "buttonOffState" );

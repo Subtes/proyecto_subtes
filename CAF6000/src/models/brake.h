@@ -10,6 +10,7 @@ private:
     bool m_parkingBrake;
     double m_brake;
     double m_lastBrake;
+    bool m_bypass;
 
 
 public:
@@ -26,6 +27,8 @@ public:
     void setParkingBrake(bool parkingBrake);
     double lastBrake() const;
     void setLastBrake(double lastBrake);
+    bool bypass() const;
+    void setBypass(bool status);
 };
 
 #endif // BRAKE_H

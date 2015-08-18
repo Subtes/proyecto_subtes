@@ -28,7 +28,9 @@ void BoardCenter::startBoard()
     Wiper_Controller *wiper = new Wiper_Controller(m_subte,ui->wiper);
     EmergencyOverride_Controller *emergencyOverride = new EmergencyOverride_Controller(m_subte,ui->anulacionEmergencia);
     TractionBypass_Controller *tractionBypass = new TractionBypass_Controller(m_subte,ui->bypassTraccion);
+    BrakeBypass_Controller *brakesBypass = new BrakeBypass_Controller(m_subte,ui->bypassFreno);
     SpeedGaugeLeds_Controller *speedGauge = new SpeedGaugeLeds_Controller(m_subte,ui->velocimetro);
+    Doors_Controller *doors = new Doors_Controller(m_subte, ui->abrirIzquierda, ui->cerrarIzquierda, ui->selectorIzquierda, ui->abrirDerecha, ui->cerrarDerecha, ui->selectorDerecha, ui->silbato);
 
     ui->cerrarDerecha->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
     ui->cerrarIzquierda->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
@@ -74,8 +76,6 @@ void BoardCenter::resetControls(){
     ui->modoConduccion->setClearColor(Qt::transparent);
     ui->modoConduccion->setAttribute(Qt::WA_AlwaysStackOnTop);
 
-    ui->bypassFreno->turnOff();
-    ui->bypassTraccion->turnOff();
     ui->anulacionEmergencia->turnOff();
     ui->velocimetro->updateSpeed(0.0);
     ui->velocimetro->updateTargetSpeed(0.0);
