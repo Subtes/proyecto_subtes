@@ -9,10 +9,7 @@ Rectangle {
 
     Image {
         id: background
-        x: 0
-        y: 0
-        width: 260
-        height: 260
+        anchors.fill: parent
         source: "resources/velocimetroLed_Bkg.PNG"
     }
 

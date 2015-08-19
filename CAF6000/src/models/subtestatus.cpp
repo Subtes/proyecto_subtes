@@ -14,6 +14,9 @@ SubteStatus::SubteStatus()
     m_traction = new Traction(m_brake,m_cscp, m_ATP_model);
 
     m_speed = 0;
+    m_effort = 0;
+    m_volts = 0;
+    m_amps = 0;
 
     m_horn = false;
     m_emergencyOverride = false;
@@ -149,6 +152,7 @@ void SubteStatus::washer()
 {
     qDebug() << "c_lavaParabrisas: on";
     m_eventHandler->notifyValueChanged("c_lavaParabrisas","on");
+    emit effortChanged(60.5);
 }
 
 void SubteStatus::tractionReceived(int value){
@@ -177,6 +181,8 @@ void SubteStatus::emergencyBrakeActived(){
     m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
     qDebug() << "c_traccion: "<< m_traction->getTraction();
     qDebug() << "c_freno_emergencia: con";
+
+    //RIESGO DE CICLO!!! UN SLOT NO DEBERIA EMITIR UNA SEÑAL FOWARDEADA
     emit setaFired();
 }
 
@@ -408,4 +414,22 @@ void SubteStatus::setRetentionBrakeConnector(bool status){
         m_eventHandler->notifyValueChanged("c_freno_estacionamiento","des");
         qDebug() << "c_freno_estacionamiento: des";
     }
+}
+
+void SubteStatus::updateEffort(double value)
+{
+    m_effort = value;
+    emit effortChanged(m_effort);
+}
+
+void SubteStatus::updateVolt(double value)
+{
+    m_volts = value;
+    emit voltChanged(m_volts);
+}
+
+void SubteStatus::updateAmm(double value)
+{
+    m_amps = value;
+    emit ampsChanged(m_amps);
 }

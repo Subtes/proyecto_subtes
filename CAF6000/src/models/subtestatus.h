@@ -22,10 +22,6 @@ class SubteStatus : public QObject
     Q_OBJECT
 
 private:
-    bool splashPassed;
-    QSplashScreen *m_splash = NULL;
-    QPixmap m_pixMapSplash;
-
     EventHandler *m_eventHandler;
 
     // SUBTE STATUS
@@ -34,6 +30,9 @@ private:
     ATP_model *m_ATP_model;
     Traction *m_traction;
     double m_speed;
+    double m_effort;
+    double  m_volts;
+    double m_amps;
 
     // CONTROL STATUS
     bool m_horn;
@@ -46,7 +45,11 @@ signals:
     speedChanged(double s_speed);
     allowedSpeedChanged(double s_speed);
     targetSpeedChanged(double s_speed);
-        //Usado por ATP
+    effortChanged(double s_effort);
+    voltChanged(double s_effort);
+    ampsChanged(double s_effort);
+
+    //Usado por ATP
     setaFired();
 
 public:
@@ -94,7 +97,6 @@ public slots:
     void closeRightDoors();
     void pressedCON();
     void pressedDES();
-    //void loadFinish();
     void hornOn();
     void hornOff();
     void emergencyOverridePressed();
@@ -117,6 +119,10 @@ public slots:
     void setAirConnector(bool status);
     void setMegaphoneConnector(bool status);
     void setRetentionBrakeConnector(bool status);
+    void updateEffort(double value);
+    void updateVolt(double value);
+    void updateAmm(double value);
+
 };
 
 #endif // SUBTESTATUS_H

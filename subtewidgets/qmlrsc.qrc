@@ -9,11 +9,9 @@
         <file>speedgaugeLed.qml</file>
         <file>mode_selector.qml</file>
         <file>manometer.qml</file>
-        <file>ammeter.qml</file>
-        <file>voltmeter.qml</file>
-        <file>effortmeter.qml</file>
         <file>setaTecho.qml</file>
         <file>llaveTecho.qml</file>
         <file>atp.qml</file>
+        <file>analog_gauge.qml</file>
     </qresource>
 </RCC>

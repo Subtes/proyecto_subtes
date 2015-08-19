@@ -40,7 +40,8 @@ SOURCES += main.cpp\
     src/controllers/keypresseater.cpp \
     src/models/atp_model.cpp \
     src/controllers/topboardconnectors_controller.cpp \
-    src/models/connectors.cpp
+    src/models/connectors.cpp \
+    src/controllers/topgauges_controller.cpp
 
 HEADERS  += boardcenter.h \
     boardright.h \
@@ -69,7 +70,8 @@ HEADERS  += boardcenter.h \
     src/controllers/keypresseater.h \
     src/models/atp_model.h \
     src/controllers/topboardconnectors_controller.h \
-    src/models/connectors.h
+    src/models/connectors.h \
+    src/controllers/topgauges_controller.h
 
 
 FORMS    += boardcenter.ui \

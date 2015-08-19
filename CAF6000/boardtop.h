@@ -5,7 +5,7 @@
 #include "src/models/subtestatus.h"
 #include "src/controllers/eventhandler.h"
 #include "src/controllers/topboardconnectors_controller.h"
-
+#include "src/controllers/topgauges_controller.h"
 namespace Ui {
 class BoardTop;
 }
@@ -24,6 +24,8 @@ private:
     EventHandler *m_eventHandler;
 
     TopBoardConnectors_Controller *m_connectors;
+    TopGauges_Controller *m_topGauges;
+
 
 public slots:
     void startBoard();
