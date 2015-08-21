@@ -1,4 +1,5 @@
 #include "atp_controller.h"
+#include <QtMath>
 
 Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *eventHandler)
 {
@@ -9,6 +10,8 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     this->speedTarget = 0.0;
     this->speed = 0.0;
     this->allowedSpeed = 0.0;
+
+    this->drivingModeCMC = true;
 
         //Maquina de Estado ATP, solo version CMC
     this->m_machineATP = new QStateMachine();
@@ -129,7 +132,6 @@ void Atp_Controller::initATP(){
     this->t_timerToTurnOn->setInterval(10000);
 
 }
-
 
 void Atp_Controller::resetATP(){
     this->m_machineATP->stop();
@@ -269,15 +271,17 @@ void Atp_Controller::updateTargetSpeed(double speed){
 //    m_view->setBlinkSpeedTarget(true);
     this->m_view->updateTargetSpeed(speed);
 
-    this->speedTarget = speed;
-    this->updateAllowedSpeed(speed*0.9);
+    //this->speedTarget = speed;
+    //this->updateAllowedSpeed(speed*0.9);
+    this->setSpeedTarget(speed);
+    this->updateAllowedSpeed(speed);
 }
 
-void Atp_Controller::updateAllowedSpeed(double speed){
-    this->m_view->updateAllowedSpeed(speed);
+//void Atp_Controller::updateAllowedSpeed(double speed){
+//    this->m_view->updateAllowedSpeed(speed);
 
-    this->allowedSpeed = speed;
-}
+//    this->allowedSpeed = speed;
+//}
 
 void Atp_Controller::updateSpeed(double speed){
     //Tiene dos conecciones por lo menos
@@ -328,4 +332,150 @@ void Atp_Controller::updateSpeed(double speed){
 Atp_Controller::~Atp_Controller(){
 
 }
+
+void Atp_Controller::cmc(double v){
+
+    this->m_view->updateSpeed(speed);
+
+    this->speed = speed;
+    double dif = (double)(this->allowedSpeed - this->speed);
+    qDebug() << "Atp_Controller::updateSpeed Diferencia speed - allowedSpeed: "<< dif;
+    qDebug() << "allowed: " << this->allowedSpeed << "speed: " << this->speed;
+
+    if (this->allowedSpeed <= this->speed){
+        emit this->exceededSpeed05();
+        qDebug() << "Violacion de velocidad permitida, ATP";
+    }
+
+    if (2.0<dif){
+        emit this->speedRecovered();
+        qDebug() << "emit this->speedRecovered();";
+    };
+
+    /*
+     * Siempre que exista una variación en la Velocidad Objetivo, la Velocidad Permitida
+     * podrá sufrir variación.
+     * A continuación se describen las diversas transiciones posibles, siendo que el orden sigue la
+     * prioridad decreciente. De esta manera, solamente si la primera transición no es identificada es
+     * que las transiciones subsiguientes podrán ocurrir.
+     */
+
+    // Determinar Velocidad Permitida:
+    // Evaluo si es peldano:
+            //Velocidad <= 0.00; || Vobj_ant < Vobj_nueva || [(Vobj_ant >= Vobj_nueva) && (Velocidad <= (Vobj_nueva - 5.00 Km/h))] || [AF_1 -> AF_0 || AF_2 -> AF_0]
+                            // ---> Transicion Peldano: Velocidad Permitida = Vobj_nueva
+
+        //Caso Contrario si es gradual por Tiempo:
+                // (Vobj_nueva < Vobj_ant) && (Vobj_nueva != AF_1)
+                               //  ---> Transicion Gradual por Tiempo (3s ; 0,7 m/s2)
+
+            //Caso Contrario si Transicion Gradual por Distancia
+                // (Vobj_nueva < Vobj_ant) && (Vobj_nueva == AF_1)
+                               //  ---> Transicion Gradual por Distancia
+
+
+}
+
+/**
+ * Siempre que exista una variación en la Velocidad Objetivo, la Velocidad Permitida
+ * podrá sufrir variación.
+ * A continuación se describen las diversas transiciones posibles, siendo que el orden sigue la
+ * prioridad decreciente. De esta manera, solamente si la primera transición no es identificada es
+ * que las transiciones subsiguientes podrán ocurrir.
+ */
+void Atp_Controller::updateAllowedSpeed(double speedTargetNew){
+//    this->m_view->updateAllowedSpeed(speed);
+//    this->allowedSpeed = speed;
+
+    if ( (m_speed <= 0.00)||(m_speedTargetPrevious < m_speedTarget)||((m_speedTargetPrevious >= m_speedTarget)&&(m_speed <= (m_speedTarget - 5.00)))||
+         (m_AF == "0" && m_AF_previous == "1")||(m_AF == "0" && m_AF_previous == "2")){
+        //Transicion Peldano
+        setAllowedSpeed(speedTargetNew);
+    }else if ((m_speedTarget < m_speedTargetPrevious)&&(m_speedTarget != m_AF_1)){
+        //Transicion Gradual por Tiempo (3 seg; 0,7 m/s2)
+        //m_t_TGT->start();
+        //Conectar con transitionGT() agregar variable con los 3000
+        QTimer::singleShot(3000,this,SLOT(transitionGT()));
+    }else if ((m_speedTarget < m_speedTargetPrevious)&&(m_speedTarget == m_AF_1)){
+        //Transicion Gradual por distancia
+
+    }
+}
+
+void Atp_Controller::setAllowedSpeed(double s){
+    m_allowedSpeedPrevious = m_allowedSpeed;
+    m_allowedSpeed = s;
+    emit allowedSpeedChange(s);
+}
+
+void Atp_Controller::setSpeedTarget(speed){
+    m_speedTargetPrevious = m_speedTarget;
+    m_speedTarget = speed;
+    m_AF = QString::number(m_speedTarget);
+    m_AF_previous = QString::number(m_speedTargetPrevious);
+    emit targetSpeedChange(speed);
+}
+
+void Atp_Controller::transitionGT(){
+    // V = Vo + At
+    int t = static_cast<int>(((m_speedTarget - m_speedTargetPrevious)*0.277777777777778)/(-0.7));
+
+    QTime timeLap = new QTime(0,0,0);
+
+    double vAllowed;
+    vAllowed = m_speedTargetPrevious + (-0.7).(timeLap.second());
+    setAllowedSpeed(vAllowed);
+
+    int lap = 0;
+
+    timeLap.start();
+    //WHILE timeLAP ...
+    while (timeLap.operator <(t) || m_speedAllowed > m_speedTarget /* alcanzo AllowedSpeed */){
+        //wait && update speedAllowed
+        lap = timeLap.elapsed();
+        if (lap % 2 == 0){
+            //update allowedSpeed hacer calculo en funcion del tiempo transcurrido
+            vAllowed = m_speedTargetPrevious + (-0.7).(timeLap.second());
+            setAllowedSpeed(vAllowed);
+        }
+        //QTimer::singleShot(1500,this,SLOT(transitionGT()));
+
+    }
+
+    setAllowedSpeed(m_speedTarget);
+
+}
+
+void Atp_Controller::transitionGD(double v){
+    // V = 3.6*RAIZ(2*Aref*D)
+    double a = -0.6;
+    double dp = 403.0;
+    double tbp = 1.6;
+    double d_ini = 0;
+    double d = 0;
+    double = v_aux;
+    QTime timeLapsed = new QTime(0,0,0);
+
+
+    d_ini = dp - m_speed*0.277777777777778*tbp;
+
+    timeLapsed.start();
+    while (timeLapsed.operator >=()){
+        d = d_ini + m_speed*0.277777777777778*t + 0.5*a*(t*t);
+        v_aux = 3.6*qSqrt(2*a*d);
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
 

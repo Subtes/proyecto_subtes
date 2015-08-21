@@ -6,6 +6,7 @@
 #include <QState>
 #include <QFinalState>
 #include <QStateMachine>
+#include <QString>
 
 #include <atp.h>
 #include "src/models/subtestatus.h"
@@ -47,6 +48,8 @@ signals:
     void _5CtoD();
     void _6DtoC();
 
+    void allowedSpeedChange(double);
+    void targetSpeedChange(double);
 
 public slots:
     void updateTargetSpeed(double speed);
@@ -76,6 +79,9 @@ private slots:
     void routingB();
     void routingC();
     void routingD();
+    void cmc(double v);
+
+    void setAllowedSpeed(double s);
 
 private:
     Atp *m_view = NULL;
@@ -85,6 +91,31 @@ private:
     double speedTarget;
     double speed;
     double allowedSpeed;
+
+    double m_speed;
+    double m_speedPrevious;
+
+    double m_speedTarget;
+    double m_speedTargetPrevious;
+
+    double m_speedAllowed;
+    double m_speedAllowedPrevious;
+
+    double m_A1 = 0.7;
+
+    bool m_drivingModeCMC;
+
+    double m_AF_0 = 0;
+    double m_AF_1 = 15;
+    double m_AF_2 = 15;
+    double m_AF_3 = 25;
+    double m_AF_4 = 30;
+    double m_AF_5 = 40;
+    double m_AF_6 = 50;
+    double m_AF_7 = 60;
+
+    QString m_AF;
+    QString m_AF_previous;
 
     //Maquina de estados:
         //Estados:
@@ -100,11 +131,12 @@ private:
     QStateMachine *m_machineATP = NULL;
 
         //Timer's:
-//    //Timer arranque para dar lugar al arranque en plataforma
-//    QTimer *t_timerToTurnOn = NULL;
-//    //Timer configurado en tiempo de raccion del motor man y los sistemas
-//    QTimer *t_reactionMotorMan = NULL;
-
+    //Timer arranque para dar lugar al arranque en plataforma
+    QTimer *t_timerToTurnOn = NULL;
+    //Timer configurado en tiempo de raccion del motor man y los sistemas
+    QTimer *t_reactionMotorMan = NULL;
+    //Timer T1 tiempo de la Transicion Gradual por Tiempo
+    QTimer *m_t_TGT = NULL;
 
 };
 
