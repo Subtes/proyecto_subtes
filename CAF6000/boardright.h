@@ -6,7 +6,7 @@
 #include "src/controllers/eventhandler.h"
 #include "src/controllers/circuitbreakercon_controller.h"
 #include "src/controllers/circuitbreakerdes_controller.h"
-
+#include "src/controllers/manometer_controller.h"
 namespace Ui {
 class BoardRight;
 }
@@ -23,6 +23,7 @@ private:
     Ui::BoardRight *ui;
     SubteStatus *m_subte;
     EventHandler *m_eventHandler;
+    Manometer_Controller * m_manometer;
 
 public slots:
     void startBoard();

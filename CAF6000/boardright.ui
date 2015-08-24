@@ -83,7 +83,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QQuickWidget" name="manometro">
+   <widget class="Manometer" name="manometer" native="true">
     <property name="geometry">
      <rect>
       <x>807</x>
@@ -92,23 +92,16 @@
       <height>182</height>
      </rect>
     </property>
-    <property name="resizeMode">
-     <enum>QQuickWidget::SizeRootObjectToView</enum>
-    </property>
-    <property name="source">
-     <url>
-      <string>qrc:/manometer.qml</string>
-     </url>
+    <property name="maximumSize">
+     <size>
+      <width>188</width>
+      <height>182</height>
+     </size>
     </property>
    </widget>
   </widget>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>QQuickWidget</class>
-   <extends>QWidget</extends>
-   <header>QQuickWidget</header>
-  </customwidget>
   <customwidget>
    <class>SingleButton</class>
    <extends>QWidget</extends>
@@ -118,7 +111,13 @@
   <customwidget>
    <class>Wiper</class>
    <extends>QWidget</extends>
-   <header location="global">wiper.h</header>
+   <header>wiper.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Manometer</class>
+   <extends>QWidget</extends>
+   <header>manometer.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
