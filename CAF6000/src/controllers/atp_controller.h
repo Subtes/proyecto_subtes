@@ -55,7 +55,8 @@ public slots:
     void updateTargetSpeed(double speed);
     void updateAllowedSpeed(double speed);
     void updateSpeed(double speed);
-    void setaFiredRoutine();
+    //void setaFiredRoutine();
+    void setDrivingMode(int);
     //Inicia la maquina de estados, por ahora es siempre CMC primer Estado.
     void initATP();
     void resetATP();
@@ -63,17 +64,19 @@ public slots:
     void onATP();
     void offATP();
 
+    void setSpeedTarget(double s);
+
 private slots:
-    void turnOn0();
-    void turnOn1();
-    void turnOn2();
-    void rolling();
-    void speedExceededLessThan2();
-    void speedExceededLessThan1_5();
-    void speedExceededLessThan1_0();
-    void speedExceededLessThan0_5();
-    void breakTo0();
-    void resetViewState();
+//    void turnOn0();
+//    void turnOn1();
+//    void turnOn2();
+//    void rolling();
+//    void speedExceededLessThan2();
+//    void speedExceededLessThan1_5();
+//    void speedExceededLessThan1_0();
+//    void speedExceededLessThan0_5();
+//    void breakTo0();
+//    void resetViewState();
 
     void routingA();
     void routingB();
@@ -82,6 +85,7 @@ private slots:
     void cmc(double v);
 
     void setAllowedSpeed(double s);
+    void transitionGT();
 
 private:
     Atp *m_view = NULL;
@@ -101,10 +105,31 @@ private:
     double m_speedAllowed;
     double m_speedAllowedPrevious;
 
+    //Tasa desaceleracion
     double m_A1 = 0.7;
 
-    bool m_drivingModeCMC;
+    //Atraso de freno
+    double m_A_freno;
 
+    //Grade maximo de la via
+    double m_Gm;
+
+    //Tada de la curva de reduccion de codigo
+    double m_Tc;
+
+    //Jerk de frenado
+    double m_Jerk;
+
+    //Speed Critique
+    double m_speedCritique;
+
+    //Driving Mode
+    bool m_drivingModeCMC;
+    bool m_drivingModeCL;
+    bool m_drivingModeAL;
+    bool m_drivingModeAT;
+
+    //Target Signal
     double m_AF_0 = 0;
     double m_AF_1 = 15;
     double m_AF_2 = 15;
@@ -114,18 +139,32 @@ private:
     double m_AF_6 = 50;
     double m_AF_7 = 60;
 
+    //Target Signal Recived
     QString m_AF;
     QString m_AF_previous;
 
+    //Instant Acceleration
+    double m_ACE;
+
+    //Offset
+    double m_OS_ACT;
+    double m_OS_LCT;
+    double m_OS_AFS;
+    double m_OS_LFS;
+    double m_OS_AFE;
+
+    //uTVC (inhabilitado, curva, constante).
+    int m_uTVC;
+
     //Maquina de estados:
         //Estados:
-    QState *e_A = NULL;
-    QState *e_B = NULL;
-    QState *e_C = NULL;
-    QState *e_D = NULL;
+    QState *m_e_A = NULL;
+    QState *m_e_B = NULL;
+    QState *m_e_C = NULL;
+    QState *m_e_D = NULL;
 
         //Estado Final:
-    QFinalState *e_Final_State = NULL;
+    QFinalState *m_e_Final_State = NULL;
 
         //Maquina de Estados:
     QStateMachine *m_machineATP = NULL;
@@ -137,6 +176,11 @@ private:
     QTimer *t_reactionMotorMan = NULL;
     //Timer T1 tiempo de la Transicion Gradual por Tiempo
     QTimer *m_t_TGT = NULL;
+
+    void set_uTVC();
+    void transitionGD();
+    void superviseSpeed();
+    void critiqueSpeed();
 
 };
 

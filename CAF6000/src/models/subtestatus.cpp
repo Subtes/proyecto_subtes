@@ -2,7 +2,6 @@
 
 //TODO:: cambiar los notifyValueChanged por signal/slot
 //el modelo emite señales y el event handler los intercepta y conecta
-
 #include <QThread>
 #include <QSplashScreen>
 #include <QPixmap>
@@ -27,6 +26,7 @@ SubteStatus::SubteStatus()
     m_emergencyOverride = false;
     m_seta = false;
     m_rana = "0";
+    m_CMC = true;
 }
 
 SubteStatus::~SubteStatus()
@@ -489,4 +489,12 @@ double SubteStatus::getPressureRed() const
 double SubteStatus::getPressureWhite() const
 {
     return m_pressure_white;
+
+void SubteStatus::setDrivingModeATP(bool status){
+    m_CMC = status;
+}
+
+bool SubteStatus::getDrivingModeATP(){
+    return m_CMC;
+
 }
