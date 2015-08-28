@@ -34,11 +34,6 @@ signals:
     void speedRecovered();
     void subteStoped();
     void signalAnden();
-    void exceededSpeed20();
-    void exceededSpeed15();
-    void exceededSpeed10();
-    void exceededSpeed05();
-    void setaFired();
     void reset();
 
     void _1AtoB();
@@ -49,52 +44,37 @@ signals:
     void _6DtoC();
 
     void allowedSpeedChange(double);
-    void targetSpeedChange(double);
+    //void targetSpeedChange(double);
 
 public slots:
+
     void updateTargetSpeed(double speed);
     void updateAllowedSpeed(double speed);
     void updateSpeed(double speed);
-    //void setaFiredRoutine();
     void setDrivingMode(int);
-    //Inicia la maquina de estados, por ahora es siempre CMC primer Estado.
+    //Inicia la maquina de estados
     void initATP();
     void resetATP();
 
-    void onATP();
-    void offATP();
-
     void setSpeedTarget(double s);
+    void setACE(double a);
 
 private slots:
-//    void turnOn0();
-//    void turnOn1();
-//    void turnOn2();
-//    void rolling();
-//    void speedExceededLessThan2();
-//    void speedExceededLessThan1_5();
-//    void speedExceededLessThan1_0();
-//    void speedExceededLessThan0_5();
-//    void breakTo0();
-//    void resetViewState();
 
     void routingA();
     void routingB();
     void routingC();
     void routingD();
-    void cmc(double v);
 
     void setAllowedSpeed(double s);
     void transitionGT();
+
+    void superviseSpeed();
 
 private:
     Atp *m_view = NULL;
     SubteStatus *m_subte = NULL;
     EventHandler *m_eventHandler = NULL;
-
-    double speedTarget;
-    double speed;
-    double allowedSpeed;
 
     double m_speed;
     double m_speedPrevious;
@@ -130,6 +110,7 @@ private:
     bool m_drivingModeAT;
 
     //Target Signal
+    //HH Hacer que directamente reciba los codigo de via y según eso traduce a la speedTarget
     double m_AF_0 = 0;
     double m_AF_1 = 15;
     double m_AF_2 = 15;
@@ -156,6 +137,11 @@ private:
     //uTVC (inhabilitado, curva, constante).
     int m_uTVC;
 
+    //Distance GD
+    double m_distanceGD;
+    //Control Distance GD
+    bool m_changeDistance;
+
     //Maquina de estados:
         //Estados:
     QState *m_e_A = NULL;
@@ -174,13 +160,16 @@ private:
     QTimer *t_timerToTurnOn = NULL;
     //Timer configurado en tiempo de raccion del motor man y los sistemas
     QTimer *t_reactionMotorMan = NULL;
-    //Timer T1 tiempo de la Transicion Gradual por Tiempo
-    QTimer *m_t_TGT = NULL;
+
+    //Timer T1 tiempo de la Transicion Gradual por Tiempo --> 3000
+    int m_t_TGT;
 
     void set_uTVC();
     void transitionGD();
-    void superviseSpeed();
-    void critiqueSpeed();
+
+    void critiqueSpeed(int);
+    void onATP();
+    void offATP();
 
 };
 

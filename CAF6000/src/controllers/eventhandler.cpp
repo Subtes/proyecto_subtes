@@ -11,14 +11,18 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
     F3_down = false;
     F4_down = false;
     F5_down = false;
-    K_down = false;
-    L_down = false;
+
     A_down = false;
-    R_down = false;
-    F_down = false;
-    T_down = false;
     B_down = false;
     C_down = false;
+    F_down = false;
+    H_down = false;
+    J_down = false;
+    K_down = false;
+    L_down = false;
+    R_down = false;
+    T_down = false;
+
     CERO_down = false;
     UNO_down = false;
     DOS_down = false;
@@ -252,6 +256,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         emit cargarEstado(std::stoi(value));
     }
 
+
     else if(key.compare("v_voltaje") == 0){
         qDebug() << "cambio de voltaje recibido." ;
         m_subte->updateVolt(std::stod(value));
@@ -284,6 +289,11 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         catch(...){
              qDebug() << "presion de frenado incorrecta." ;
         }
+    }
+
+    else if (key.compare("a_ACE") == 0){
+        qDebug() << " ACE, aceleracion instantanea";
+        emit accelerationInstant(std::stod(value));
     }
 
 }
@@ -387,6 +397,12 @@ void EventHandler::processKeyPressed(DWORD k)
         NUEVE_down = true;
         this->notifyValueChanged("c_pulsador_bateria","des");
         qDebug() << "9 key pressed";
+    } else if ( k == _H && !H_down  ){
+        H_down = true;
+        qDebug() << "H key pressed";
+    } else if ( k == _J && !J_down  ){
+        J_down = true;
+        qDebug() << "J key pressed";
     }
 }
 
@@ -428,9 +444,9 @@ void EventHandler::processKeyReleased(DWORD k){
         B_down = false;
         qDebug() << "B key released";
         emit bReleased();
-    } else if ( k == 0x43 ){
-        qDebug() << "C key released";
-        C_down = false;
+//    } else if ( k == 0x43 ){
+//        qDebug() << "C key released";
+//        C_down = false;
     } else if ( k == _CERO ){
         qDebug() << "0 key released";
         CERO_down = false;
@@ -461,6 +477,12 @@ void EventHandler::processKeyReleased(DWORD k){
     } else if ( k == _NUEVE ){
         NUEVE_down = false;
         qDebug() << "9 key released";
+    } else if ( k == _H ){
+        H_down = false;
+        qDebug() << "H key released";
+    } else if ( k == _J ){
+        J_down = false;
+        qDebug() << "J key released";
     }
 }
 
