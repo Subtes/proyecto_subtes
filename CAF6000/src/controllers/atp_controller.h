@@ -70,6 +70,7 @@ private slots:
     void transitionGT();
 
     void superviseSpeed();
+    void evalCalculateDistance();
 
 private:
     Atp *m_view = NULL;
@@ -160,6 +161,8 @@ private:
     QTimer *t_timerToTurnOn = NULL;
     //Timer configurado en tiempo de raccion del motor man y los sistemas
     QTimer *t_reactionMotorMan = NULL;
+
+    QTimer *m_t_evalChangeSpeed = NULL;
 
     //Timer T1 tiempo de la Transicion Gradual por Tiempo --> 3000
     int m_t_TGT;

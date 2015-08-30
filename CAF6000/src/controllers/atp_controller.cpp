@@ -66,6 +66,8 @@ void Atp_Controller::initATP(){
     }
 
     set_uTVC();
+    m_t_evalChangeSpeed->setInterval(500);
+    m_t_evalChangeSpeed->start();
 }
 
 void Atp_Controller::resetATP(){
@@ -295,10 +297,10 @@ void Atp_Controller::transitionGD(){
     timeLap->start();
 
     while (d_ini >= 1 || m_speedAllowed <= m_speedTarget){
-        QTimer::singleShot(500,this,SLOT(calculateDistance()));
+        QTimer::singleShot(500,this,SLOT(evalCalculateDistance()));
         //--d_ini;
         if (m_distanceGD){
-            d_ini -= m_speed*timeLap;
+            d_ini -= (m_speed*0.277777777777778)*((timeLap->elapsed())/1000);
         }
         v_aux = static_cast<int>(3.6*qSqrt(2*a*d_ini));
         //if (v_aux <= m_speedAllowed){
@@ -309,7 +311,7 @@ void Atp_Controller::transitionGD(){
     critiqueSpeed(2);
 }
 
-void Atp_Controller::calculateDistance(){
+void Atp_Controller::evalCalculateDistance(){
     m_distanceGD = !m_distanceGD;
 }
 
@@ -399,6 +401,10 @@ void Atp_Controller::onATP(){
     connect(m_e_B,SIGNAL(entered()),this,SLOT(routingB()));
     connect(m_e_C,SIGNAL(entered()),this,SLOT(routingC()));
     connect(m_e_D,SIGNAL(entered()),this,SLOT(routingD()));
+    connect(m_t_evalChangeSpeed, SIGNAL(timeout()),this,SLOT(superviseSpeed()));
+
+    //Timer
+    m_t_evalChangeSpeed = new QTimer();
 }
 
 void Atp_Controller::offATP(){
