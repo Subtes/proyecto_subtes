@@ -269,24 +269,6 @@
      </rect>
     </property>
    </widget>
-   <widget class="QQuickWidget" name="llave">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>550</y>
-      <width>100</width>
-      <height>180</height>
-     </rect>
-    </property>
-    <property name="resizeMode">
-     <enum>QQuickWidget::SizeRootObjectToView</enum>
-    </property>
-    <property name="source">
-     <url>
-      <string>qrc:/llaveTecho.qml</string>
-     </url>
-    </property>
-   </widget>
    <widget class="QQuickWidget" name="seta">
     <property name="geometry">
      <rect>
@@ -353,13 +335,23 @@
      </size>
     </property>
    </widget>
+   <widget class="LlaveTecho" name="llaveTecho" native="true">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>550</y>
+      <width>100</width>
+      <height>180</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
  <customwidgets>
   <customwidget>
    <class>QQuickWidget</class>
    <extends>QWidget</extends>
-   <header>QQuickWidget</header>
+   <header>QtQuickWidgets/QQuickWidget</header>
   </customwidget>
   <customwidget>
    <class>SingleButton</class>
@@ -371,6 +363,12 @@
    <class>AnalogGauge</class>
    <extends>QWidget</extends>
    <header>analoggauge.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LlaveTecho</class>
+   <extends>QWidget</extends>
+   <header>llavetecho.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

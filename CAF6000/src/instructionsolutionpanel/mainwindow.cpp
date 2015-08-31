@@ -55,63 +55,68 @@ void MainWindow::clickActionDecision(QModelIndex hoja, QModelIndex root)
 
     nrocoche.remove(0,nrocoche.size()-1); //Me quedo con el ultimo caracter, seria el nro de coche.
 
+    if (nrocoche.operator ==("1"))
+        nrocoche = "";
+    else
+        nrocoche = ("_" + nrocoche);
+
     if (category.operator ==("Grifos")){
         if (father.operator ==("B-138"))
             if (action.operator ==("CON"))
-                m_eventHandler->notifyValueChanged("c_grifob138_"+nrocoche.toStdString(),"con");
+                m_eventHandler->notifyValueChanged("c_grifob138"+nrocoche.toStdString(),"con");
             else
-                m_eventHandler->notifyValueChanged("c_grifob138_"+nrocoche.toStdString(),"des");
+                m_eventHandler->notifyValueChanged("c_grifob138"+nrocoche.toStdString(),"des");
         if (father.operator ==("L-2"))
             if (action.operator ==("CON"))
-                m_eventHandler->notifyValueChanged("c_grifol2_"+nrocoche.toStdString(),"con");
+                m_eventHandler->notifyValueChanged("c_grifol2"+nrocoche.toStdString(),"con");
             else
-                m_eventHandler->notifyValueChanged("c_grifol2_"+nrocoche.toStdString(),"des");
+                m_eventHandler->notifyValueChanged("c_grifol2"+nrocoche.toStdString(),"des");
         if (father.operator ==("B-73"))
             if (action.operator ==("CON"))
-                m_eventHandler->notifyValueChanged("c_grifob73_"+nrocoche.toStdString(),"con");
+                m_eventHandler->notifyValueChanged("c_grifob73"+nrocoche.toStdString(),"con");
             else
-                m_eventHandler->notifyValueChanged("c_grifob73_"+nrocoche.toStdString(),"des");
+                m_eventHandler->notifyValueChanged("c_grifob73"+nrocoche.toStdString(),"des");
     }
     else{
         if (category.operator ==("Termicos")){
             if (father.operator ==("57F1"))
                 if (action.operator ==("CON"))
-                    m_eventHandler->notifyValueChanged("c_termico_57f1_"+nrocoche.toStdString(),"con");
+                    m_eventHandler->notifyValueChanged("c_termico_57f1"+nrocoche.toStdString(),"con");
                 else
-                    m_eventHandler->notifyValueChanged("c_termico_57f1_"+nrocoche.toStdString(),"des");
+                    m_eventHandler->notifyValueChanged("c_termico_57f1"+nrocoche.toStdString(),"des");
             if (father.operator ==("53F1"))
                 if (action.operator ==("CON"))
-                    m_eventHandler->notifyValueChanged("c_termico_53f1_"+nrocoche.toStdString(),"con");
+                    m_eventHandler->notifyValueChanged("c_termico_53f1"+nrocoche.toStdString(),"con");
                 else
-                    m_eventHandler->notifyValueChanged("c_termico_53f1_"+nrocoche.toStdString(),"des");
+                    m_eventHandler->notifyValueChanged("c_termico_53f1"+nrocoche.toStdString(),"des");
             if (father.operator ==("33F1"))
                 if (action.operator ==("CON"))
-                    m_eventHandler->notifyValueChanged("c_termico_33f1_"+nrocoche.toStdString(),"con");
+                    m_eventHandler->notifyValueChanged("c_termico_33f1"+nrocoche.toStdString(),"con");
                 else
-                    m_eventHandler->notifyValueChanged("c_termico_33f1_"+nrocoche.toStdString(),"des");
+                    m_eventHandler->notifyValueChanged("c_termico_33f1"+nrocoche.toStdString(),"des");
         }
         else{
             if (category.operator ==("Pupitre")){
                 if (father.operator ==("RANA"))
                     if (action.operator ==("AD"))
-                        m_eventHandler->notifyValueChanged("c_rana_"+nrocoche.toStdString(),"ad");
+                        m_eventHandler->notifyValueChanged("c_rana"+nrocoche.toStdString(),"ad");
                     else
                         if (action.operator ==("0"))
-                            m_eventHandler->notifyValueChanged("c_rana_"+nrocoche.toStdString(),"0");
+                            m_eventHandler->notifyValueChanged("c_rana"+nrocoche.toStdString(),"0");
                         else
-                            m_eventHandler->notifyValueChanged("c_rana_"+nrocoche.toStdString(),"at");
+                            m_eventHandler->notifyValueChanged("c_rana"+nrocoche.toStdString(),"at");
                  if (father.operator ==("SETA"))
                      if (action.operator ==("CON"))
-                         m_eventHandler->notifyValueChanged("c_seta_"+nrocoche.toStdString(),"con");
+                         m_eventHandler->notifyValueChanged("c_seta_emergencia"+nrocoche.toStdString(),"con");
                      else
                          if (action.operator ==("DES"))
-                             m_eventHandler->notifyValueChanged("c_seta_"+nrocoche.toStdString(),"des");
+                             m_eventHandler->notifyValueChanged("c_seta_emergencia"+nrocoche.toStdString(),"des");
                          else
-                             m_eventHandler->notifyValueChanged("c_seta_"+nrocoche.toStdString(),"inhabilitado");
+                             m_eventHandler->notifyValueChanged("c_seta_emergencia"+nrocoche.toStdString(),"inhabilitado");
             }
         }
     }
-    qDebug() << "Clickeado!!!!" + action + " " + father + " " + category + " " + root.data(0).toString()+ " " + "c_rana_" + nrocoche;
+    qDebug() << "Clickeado!!!!" + action + " " + father + " " + category + " " + root.data(0).toString()+ " " + "c_rana" + nrocoche;
     //m_eventHandler->notifyValueChanged("c_grifoB138_N",action.toStdString());
     //qDebug() << "Clickeado!!!!" + (hoja.data(0)).toString();
 }

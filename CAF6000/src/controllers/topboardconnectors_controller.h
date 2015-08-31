@@ -27,11 +27,13 @@ public:
     void setMegaphone(SingleButton *megaphoneCon, SingleButton *megaphoneDes);
     void setRetentionBrake(SingleButton *retentionBrakeCon, SingleButton *retentionBrakeDes);
 
+    void setNivel(int n);
     void setEstado(int state);
     void reset();
 
 private:
 
+    int m_nivel=0;
     void resetToMarcha();
     void resetToApagado();
 

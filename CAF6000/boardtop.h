@@ -4,6 +4,7 @@
 #include "baseboard.h"
 #include "src/controllers/topboardconnectors_controller.h"
 #include "src/controllers/topgauges_controller.h"
+#include "src/controllers/key_topboard_controller.h"
 
 namespace Ui {
 class BoardTop;
@@ -23,12 +24,16 @@ public slots:
     void disableScreen();
     void resetControls();
     void loadState(int state);
+    void cargarEstado(int);
+    void keyON();
+    void keyOFF();
 
 private:
     Ui::BoardTop *ui;
 
     TopBoardConnectors_Controller *m_connectors;
     TopGauges_Controller *m_topGauges;
+    Key_TopBoard_Controller *m_keyTopBoard;
 };
 
 #endif // BOARDTOP_H

@@ -26,9 +26,9 @@ public:
     void setaPressed();
     void setaReleased();
 
-signals:
-    void setaActivate();
-    void setaDeactivated();
+//signals:
+    //void setaActivate();
+    //void setaDeactivated();
 
 private slots:
     //Acction launched from item ui

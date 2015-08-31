@@ -10,7 +10,7 @@ TARGET = CAF6000
 TEMPLATE = app
 
 #release
-CONFIG +=  c++11
+CONFIG +=  c++11 release
 
 
 SOURCES += main.cpp \
@@ -53,8 +53,8 @@ SOURCES += main.cpp \
     src/controllers/failures_controller.cpp \
     src/controllers/sicasmac_controller.cpp \
     src/controllers/hombremuerto_controller.cpp \
-    src/controllers/llavemodoconduccion_controller.cpp
-
+    src/controllers/llavemodoconduccion_controller.cpp \
+    src/controllers/key_topboard_controller.cpp
 
 HEADERS  += baseboard.h \
     boardcenter.h \
@@ -95,7 +95,8 @@ HEADERS  += baseboard.h \
     src/controllers/failures_controller.h \
     src/controllers/sicasmac_controller.h \
     src/controllers/hombremuerto_controller.h \
-    src/controllers/llavemodoconduccion_controller.h
+    src/controllers/llavemodoconduccion_controller.h \
+    src/controllers/key_topboard_controller.h
 
 FORMS    += boardcenter.ui \
     boardright.ui \
@@ -122,5 +123,3 @@ RESOURCES += ../subtewidgets/widgetsrsc.qrc \
             boardrsc.qrc
 
 DESTDIR = $$PWD
-
-DISTFILES +=
