@@ -141,6 +141,8 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_presion_cilindro");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_presion_freno");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_proximo_a_estacion");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
             m_subte->reset();
             emit controlReset();
 
@@ -148,7 +150,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_regulador_mando",std::to_string((int)m_subte->tractionLeverPosition()));
             m_eNetClient->CambiarValorClave("c_traccion",std::to_string((int)m_subte->traction()));
             m_eNetClient->CambiarValorClave("c_freno_emergencia","des");
-
             m_eNetClient->CambiarValorClave("c_averia","x");
 
             emit controlDisable();
@@ -159,7 +160,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_regulador_mando","");
             m_eNetClient->CambiarValorClave("c_llave_atp","");
             m_eNetClient->CambiarValorClave("c_modo_conduccion","");
-
             m_eNetClient->CambiarValorClave("c_averia","");
 
             Sleep(1000);
@@ -296,6 +296,13 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         emit accelerationInstant(std::stod(value));
     }
 
+    else if (key.compare("v_proximo_a_estacion") == 0){
+        if (value.compare("1") == 0){
+            qDebug() << " v_proximo_estacion, --> 1";
+            emit nextToEstation();
+        }
+    }
+
 }
 
 void EventHandler::processKeyPressed(DWORD k)
@@ -399,10 +406,12 @@ void EventHandler::processKeyPressed(DWORD k)
         qDebug() << "9 key pressed";
     } else if ( k == _H && !H_down  ){
         H_down = true;
-        qDebug() << "H key pressed";
+        qDebug() << "H key pressed, nextToEstation";
+        this->notifyValueChanged("v_proximo_a_estacion","1");
     } else if ( k == _J && !J_down  ){
         J_down = true;
-        qDebug() << "J key pressed";
+        qDebug() << "J key pressed, departureFromEstation";
+        this->notifyValueChanged("v_proximo_a_estacion","0");
     }
 }
 

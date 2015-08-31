@@ -17,6 +17,7 @@
  * @brief The Atp_Controller class
  */
 
+
 class Atp_Controller : public QObject
 {
     Q_OBJECT
@@ -72,6 +73,8 @@ private slots:
     void superviseSpeed();
     void evalCalculateDistance();
 
+    void nextToEstation();
+
 private:
     Atp *m_view = NULL;
     SubteStatus *m_subte = NULL;
@@ -110,7 +113,7 @@ private:
     bool m_drivingModeAL;
     bool m_drivingModeAT;
 
-    //Target Signal
+    //Speed Target Signal
     //HH Hacer que directamente reciba los codigo de via y según eso traduce a la speedTarget
     double m_AF_0 = 0;
     double m_AF_1 = 15;
@@ -157,15 +160,13 @@ private:
     QStateMachine *m_machineATP = NULL;
 
         //Timer's:
-    //Timer arranque para dar lugar al arranque en plataforma
-    QTimer *t_timerToTurnOn = NULL;
-    //Timer configurado en tiempo de raccion del motor man y los sistemas
-    QTimer *t_reactionMotorMan = NULL;
-
     QTimer *m_t_evalChangeSpeed = NULL;
 
     //Timer T1 tiempo de la Transicion Gradual por Tiempo --> 3000
     int m_t_TGT;
+
+    //Test if ATP is on
+    bool m_onATP;
 
     void set_uTVC();
     void transitionGD();

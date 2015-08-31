@@ -121,6 +121,7 @@ signals:
     closeApp();
     cargarEstado(int);
     accelerationInstant(double);
+    nextToEstation();
 
 public slots:
     void processKeyPressed(DWORD k);
