@@ -27,6 +27,7 @@ public:
     void setLighted(bool lighted);
     void setOnPressAsDriver();
     void setOnClickAsDriver();
+    void setLightManagement(bool status);
 
 private:
     Ui::SingleButton *ui;

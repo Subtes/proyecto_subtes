@@ -18,8 +18,9 @@ private:
     SingleButton *m_button;
 
 public slots:
-    void CSCP_checked();
-    void CSCP_unchecked();
+    void updateStatus(bool status);
+    void pressBypass();
+    void releaseBypass();
 
 };
 

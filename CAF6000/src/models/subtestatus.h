@@ -14,7 +14,6 @@
 #include "src/models/traction.h"
 #include "src/models/atp_model.h"
 
-
 class EventHandler;
 
 class SubteStatus : public QObject
@@ -42,15 +41,15 @@ private:
 
 signals:
     // STATE CHANGE NOTIFICATION
-    speedChanged(double s_speed);
-    allowedSpeedChanged(double s_speed);
-    targetSpeedChanged(double s_speed);
+    speedChanged(double speed);
+    allowedSpeedChanged(double speed);
+    targetSpeedChanged(double speed);
+    tractionChanged(double traction);
+    hiloLazoChanged(bool status);
     effortChanged(double s_effort);
     voltChanged(double s_effort);
     ampsChanged(double s_effort);
-
-    //Usado por ATP
-    setaFired();
+    CSCPChanged(bool status);
 
 public:
     SubteStatus();
@@ -61,12 +60,15 @@ public:
 
     // STATUS GETTERS
     bool cscp() const;
+    bool leftDoors() const; //true=open
+    bool rightDoors() const; //true=open
     double speed() const;
     double targetSpeed() const;
     double allowedSpeed() const;
     int traction() const;
     int brake() const;
     bool emergencyBrake() const;
+    bool getHiloLazo();
 
     // CONTROL GETTERS
     bool horn() const;
@@ -89,8 +91,6 @@ public slots:
     void emergencyBrakeReleased();
     void hombreVivoPressed();
     void hombreVivoReleased();
-    void CSCPBypassed();
-    void CSCPActivated();
     void openRightDoors();
     void openLeftDoors();
     void closeLeftDoors();
@@ -122,6 +122,8 @@ public slots:
     void updateEffort(double value);
     void updateVolt(double value);
     void updateAmm(double value);
+    void bypassBrake(bool status);
+    void bypassCSCP(bool status);
 
 };
 

@@ -2,6 +2,7 @@
 
 //TODO:: cambiar los notifyValueChanged por signal/slot
 //el modelo emite señales y el event handler los intercepta y conecta
+
 #include <QThread>
 #include <QSplashScreen>
 #include <QPixmap>
@@ -22,14 +23,6 @@ SubteStatus::SubteStatus()
     m_emergencyOverride = false;
     m_seta = false;
     m_rana = "0";
-
-    //initENet();
-
-//    m_pixMapSplash = QPixmap(":/subtewidgets/resources/splash.jpg");
-//    this->m_splash = new QSplashScreen(m_pixMapSplash);
-//    this->m_splash->setWindowFlags(Qt::WindowStaysOnTopHint);
-
-    //connect(this,SIGNAL(controlReady()),this,SLOT(loadFinish()));
 }
 
 SubteStatus::~SubteStatus()
@@ -39,7 +32,6 @@ SubteStatus::~SubteStatus()
     delete m_ATP_model;
     delete m_traction;
 }
-
 
 void SubteStatus::setHandler(EventHandler *eventHandler)
 {
@@ -63,6 +55,16 @@ void SubteStatus::reset()
 bool SubteStatus::cscp() const
 {
     return m_cscp->evalCircuit();
+}
+
+bool SubteStatus::leftDoors() const
+{
+    return m_cscp->leftDoors();
+}
+
+bool SubteStatus::rightDoors() const
+{
+    return m_cscp->rightDoors();
 }
 
 double SubteStatus::speed() const
@@ -95,6 +97,15 @@ bool SubteStatus::emergencyBrake() const
     return m_brake->getEmergencyBrake();
 }
 
+/**
+ * @brief SubteStatus::getHiloLazo
+ * @return true si se cumple, o false si esta el freno de emergencia activado o existe alguna averia.
+ */
+bool SubteStatus::getHiloLazo()
+{
+    return !m_brake->getEmergencyBrake(); // || averia!
+}
+
 bool SubteStatus::horn() const
 {
     return m_horn;
@@ -121,18 +132,30 @@ int SubteStatus::tractionLeverPosition() const
 }
 
 // SLOTS ///////////////////
+/**
+ * @brief SubteStatus::updateSpeed: checkea que haya un cambio de velocidad, si hay,
+ * actualiza el valor en el modelo y en caso de volver a velocidad 0 reactiva la
+ * evaluacion del sistema de cierre de puertas.
+ * @param value: nueva velocidad
+ */
 void SubteStatus::updateSpeed(double value){
-    m_speed = value;
-    emit speedChanged(m_speed);
+    if(m_speed != value){
+        m_speed = value;
+        emit speedChanged(m_speed);
+        if( m_speed <= 0 && m_cscp->getBypass()){
+            m_cscp->setBypass(false);
+            emit CSCPChanged(m_cscp->evalCircuit());
+        }
+    }
 }
 
 void SubteStatus::updateTargetSpeed(double value){
-    //m_atp->setTargetSpeed(value);
+    m_ATP_model->setTargetSpeed(value);
     emit targetSpeedChanged(value);
 }
 
 void SubteStatus::updateAllowedSpeed(double value){
-    //m_atp->setAllowedSpeed(value);
+    m_ATP_model->setAllowedSpeed(value);
     emit allowedSpeedChanged(value);
 }
 
@@ -152,9 +175,15 @@ void SubteStatus::washer()
 {
     qDebug() << "c_lavaParabrisas: on";
     m_eventHandler->notifyValueChanged("c_lavaParabrisas","on");
-    emit effortChanged(60.5);
 }
 
+/**
+ * @brief SubteStatus::tractionReceived: Cambia la posicion de la palanca de traccion
+ * desde el widget o harware, y se conecta a este slot. El subsistema de traccion decide
+ * si hay traccion o no. en caso de que la diferencia entre la ultima traccion emitida y
+ * la nueva sea mayor a 5, se notifica el cambio en blackboard.
+ * @param value: posicion de la palanca
+ */
 void SubteStatus::tractionReceived(int value){
     double tractionToEmit = m_traction->updateTraction(value);
     qDebug() << "c_traccion: "<< tractionToEmit;
@@ -175,15 +204,16 @@ void SubteStatus::brakeReceived(int value){
     }
 }
 
+/**
+ * @brief SubteStatus::emergencyBrakeActived: se corta el hilo de lazo
+ */
 void SubteStatus::emergencyBrakeActived(){
     m_brake->setEmergencyBrake(true);
     m_eventHandler->notifyValueChanged("c_freno_emergencia","con");
     m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
     qDebug() << "c_traccion: "<< m_traction->getTraction();
     qDebug() << "c_freno_emergencia: con";
-
-    //RIESGO DE CICLO!!! UN SLOT NO DEBERIA EMITIR UNA SEÑAL FOWARDEADA
-    emit setaFired();
+    emit hiloLazoChanged(getHiloLazo());
 }
 
 void SubteStatus::emergencyBrakeReleased(){
@@ -192,6 +222,7 @@ void SubteStatus::emergencyBrakeReleased(){
     m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
     qDebug() << "c_traccion: "<< m_traction->getTraction();
     qDebug() << "c_freno_emergencia: des";
+    emit hiloLazoChanged(getHiloLazo());
 }
 
 void SubteStatus::hombreVivoPressed(){
@@ -216,54 +247,24 @@ void SubteStatus::hombreVivoReleased(){
     }
 }
 
-void SubteStatus::CSCPBypassed()
-{
-    m_cscp->setBypass(true);
-    qDebug() << "CSCP bypassed";
-}
-
-void SubteStatus::CSCPActivated()
-{
-    m_cscp->setBypass(false);
-    qDebug() << "CSCP actived";
-}
-
-void SubteStatus::openLeftDoors()
-{
-    m_cscp->openLeftDoors();
-}
-
-void SubteStatus::openRightDoors()
-{
-    m_cscp->openRightDoors();
-}
-
-void SubteStatus::closeLeftDoors()
-{
-    m_cscp->closeLeftDoors();
-}
-
-void SubteStatus::closeRightDoors()
-{
-    m_cscp->closeRightDoors();
-}
-
-void SubteStatus::pressedCON(){
-    qDebug() << "---> Pressed, CON Disyuntor";
-    /*
-    Para poder conectar los disyuntores, es necesario:
+/**
+ * @brief SubteStatus::pressedCON: Para poder conectar los disyuntores, es necesario:
     Tensión normal de Batería
     Tensión suficiente en el Hilo de Trabajo
     Rana en AD o AT, con mando en su cabina
     Regulador de Mando en posición “0”
     Pulsar “CON”
-    */
+ */
+void SubteStatus::pressedCON(){
+    qDebug() << "Pressed CON Disyuntor";
 }
 
+/**
+ * @brief SubteStatus::pressedDES: /* Para desconectar los disyuntores, solo se pulsa “DES”, en cualquiera de las cabinas de conducción.
+ */
 void SubteStatus::pressedDES(){
-    qDebug() << "---> Pressed, DES Disyuntor";
-    /* Para desconectar los disyuntores, solo se pulsa “DES”, en cualquiera de las cabinas de conducción. */
-}
+    qDebug() << "Pressed DES Disyuntor";
+    }
 
 void SubteStatus::hornOn()
 {
@@ -279,14 +280,11 @@ void SubteStatus::hornOff()
     m_horn = false;
 }
 
-
 void SubteStatus::emergencyOverridePressed(){
     m_emergencyOverride = !m_emergencyOverride;
     if(m_emergencyOverride){
         qDebug() << "c_emergencyOverride: con";
         m_eventHandler->notifyValueChanged("c_emergencyOverride","con");
-
-
     }else{
         qDebug() << "c_emergencyOverride: des";
         m_eventHandler->notifyValueChanged("c_emergencyOverride","des");
@@ -294,27 +292,17 @@ void SubteStatus::emergencyOverridePressed(){
 }
 
 void SubteStatus::setaActivated(){
-    m_brake->setEmergencyBrake(true);
+    emergencyBrakeActived();
     m_seta = true;
-    m_eventHandler->notifyValueChanged("c_freno_emergencia","con");
     m_eventHandler->notifyValueChanged("c_seta_emergencia","con");
-    m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
-
-    qDebug() << "c_freno_emergencia: con";
     qDebug() << "c_seta_emergencia: con";
-    qDebug() << "c_traccion: " << m_traction->getTraction();
 }
 
 void SubteStatus::setaDeactivated(){
-    m_brake->setEmergencyBrake(false);
+    emergencyBrakeReleased();
     m_seta = false;
-    m_eventHandler->notifyValueChanged("c_freno_emergencia","des");
     m_eventHandler->notifyValueChanged("c_seta_emergencia","des");
-    m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
-
-    qDebug() << "c_freno_emergencia: des";
     qDebug() << "c_seta_emergencia: des";
-    qDebug() << "c_traccion: " << m_traction->getTraction();
 }
 
 void SubteStatus::ranaAD(){
@@ -347,14 +335,6 @@ void SubteStatus::tractionLeverChanged(int value){
         m_traction->setLastPosition(value);
     }
 }
-
-//void SubteStatus::loadFinish(){
-//    this->m_splash->setHidden(true);
-//}
-
-//void SubteStatus::loadStart(){
-//    this->m_splash->showMaximized();
-//}
 
 void SubteStatus::cutTraction(){
     qDebug() << "SubteStatus::cutTraction()";
@@ -432,4 +412,57 @@ void SubteStatus::updateAmm(double value)
 {
     m_amps = value;
     emit ampsChanged(m_amps);
+}
+
+void SubteStatus::bypassBrake(bool status)
+{
+    m_brake->setBypass(status);
+    emit tractionChanged(m_traction->getTraction());
+}
+
+void SubteStatus::bypassCSCP(bool status)
+{
+    if(status){
+        m_cscp->setBypass(true);
+        m_eventHandler->notifyValueChanged("c_bypass_traccion","con");
+        qDebug() << "CSCP bypassed";
+    } else {
+        if(m_speed <= 0) {
+            m_cscp->setBypass(false);
+            qDebug() << "CSCP re-actived";
+        }
+        m_eventHandler->notifyValueChanged("c_bypass_traccion","des");
+    }
+
+    emit tractionChanged(m_traction->getTraction());
+    emit CSCPChanged(m_cscp->evalCircuit());
+    qDebug() << "CSCPChanged " + m_cscp->evalCircuit();
+}
+
+void SubteStatus::openLeftDoors()
+{
+    m_cscp->openLeftDoors();
+    emit CSCPChanged(m_cscp->evalCircuit());
+    qDebug() << "CSCPChanged " + m_cscp->evalCircuit();
+}
+
+void SubteStatus::openRightDoors()
+{
+    m_cscp->openRightDoors();
+    emit CSCPChanged(m_cscp->evalCircuit());
+    qDebug() << "CSCPChanged " + m_cscp->evalCircuit();
+}
+
+void SubteStatus::closeLeftDoors()
+{
+    m_cscp->closeLeftDoors();
+    emit CSCPChanged(m_cscp->evalCircuit());
+    qDebug() << "CSCPChanged " + m_cscp->evalCircuit();
+}
+
+void SubteStatus::closeRightDoors()
+{
+    m_cscp->closeRightDoors();
+    emit CSCPChanged(m_cscp->evalCircuit());
+    qDebug() << "CSCPChanged " + m_cscp->evalCircuit();
 }

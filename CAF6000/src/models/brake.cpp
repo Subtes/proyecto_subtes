@@ -7,11 +7,11 @@ Brake::Brake()
     m_parkingBrake = false;
     m_brake = 0;
     m_lastBrake = 0;
+    m_bypass = false;
 }
 
 Brake::~Brake()
 {
-    
 }
 
 bool Brake::braking()
@@ -19,7 +19,7 @@ bool Brake::braking()
     if( m_brake>0 ) qDebug() << "m_brake = " << m_brake;
     if( m_emergencyBrake ) qDebug() << "m_emergencyBrake = " << m_emergencyBrake;
 
-    return ( m_brake>0 || m_emergencyBrake );
+    return ( !m_bypass && (m_brake>0 || m_emergencyBrake) );
 }
 
 void Brake::reset()
@@ -28,6 +28,7 @@ void Brake::reset()
     m_parkingBrake = false;
     m_brake = 0;
     m_lastBrake = 0;
+    m_bypass = false;
 }
 
 bool Brake::getEmergencyBrake() const
@@ -68,4 +69,14 @@ double Brake::lastBrake() const
 void Brake::setLastBrake(double lastBrake)
 {
     m_lastBrake = lastBrake;
+}
+
+bool Brake::bypass() const
+{
+    return m_bypass;
+}
+
+void Brake::setBypass(bool status)
+{
+    m_bypass = status;
 }

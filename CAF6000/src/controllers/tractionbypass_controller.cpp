@@ -8,15 +8,15 @@ TractionBypass_Controller::TractionBypass_Controller(SubteStatus *subte, SingleB
     m_button->setNestled(false);
     m_button->setLighted(true);
     m_button->setOnPressAsDriver();
+    m_button->setLightManagement(false);
 
-    m_button->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
+    m_button->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));    
 
-    if(m_subte->cscp())
-        m_button->turnOn();
+    connect(m_button,SIGNAL(buttonPressed()),this,SLOT(pressBypass()));
+    connect(m_button,SIGNAL(buttonReleased()),this,SLOT(releaseBypass()));
+    connect(m_subte,SIGNAL(CSCPChanged(bool)),this,SLOT(updateStatus(bool)));
 
-    connect(m_button,SIGNAL(buttonPressed()),m_subte,SLOT(CSCPBypassed()));
-    connect(m_button,SIGNAL(buttonReleased()),m_subte,SLOT(CSCPActivated()));
-
+    updateStatus(m_subte->cscp());
 }
 
 TractionBypass_Controller::~TractionBypass_Controller()
@@ -24,12 +24,20 @@ TractionBypass_Controller::~TractionBypass_Controller()
 
 }
 
-void TractionBypass_Controller::CSCP_checked()
+void TractionBypass_Controller::updateStatus(bool status)
 {
-    m_button->turnOn();
+    if(status)
+        m_button->turnOn();
+    else
+        m_button->turnOff();
 }
 
-void TractionBypass_Controller::CSCP_unchecked()
+void TractionBypass_Controller::releaseBypass()
 {
-    m_button->turnOff();
+    m_subte->bypassCSCP(false);
+}
+
+void TractionBypass_Controller::pressBypass()
+{
+    m_subte->bypassCSCP(true);
 }

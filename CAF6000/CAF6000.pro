@@ -41,7 +41,10 @@ SOURCES += main.cpp\
     src/models/atp_model.cpp \
     src/controllers/topboardconnectors_controller.cpp \
     src/models/connectors.cpp \
-    src/controllers/topgauges_controller.cpp
+    src/controllers/topgauges_controller.cpp \
+    src/controllers/brakebypass_controller.cpp \
+    src/controllers/base_controller.cpp \
+    src/controllers/doors_controller.cpp
 
 HEADERS  += boardcenter.h \
     boardright.h \
@@ -71,7 +74,10 @@ HEADERS  += boardcenter.h \
     src/models/atp_model.h \
     src/controllers/topboardconnectors_controller.h \
     src/models/connectors.h \
-    src/controllers/topgauges_controller.h
+    src/controllers/topgauges_controller.h \
+    src/controllers/brakebypass_controller.h \
+    src/controllers/base_controller.h \
+    src/controllers/doors_controller.h
 
 
 FORMS    += boardcenter.ui \
