@@ -23,17 +23,18 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     //connect(eventHandler,SIGNAL(iCambioSenial1()),SIGNAL(signalAnden()));
     connect(eventHandler,SIGNAL(accelerationInstant(double)),this,SLOT(setACE(double)));
     connect(eventHandler,SIGNAL(nextToEstation()),this,SLOT(nextToEstation()));
+    connect(eventHandler,SIGNAL(departureEstation()),this,SLOT(departureEstation()));
 
         //Conexiones de control Internas
     connect(this,SIGNAL(allowedSpeedChange(double)),this,SLOT(superviseSpeed()));
-    //connect(eventHandler,SIGNAL(),SLOT(setACE(double));
-    //connect(eventHandler,SIGNAL(frenoEstDes()),SIGNAL(enableTraction()));
 
         //Salidas Externas:
     connect(this, SIGNAL(cutTraction()),subte,SLOT(cutTraction()));
     connect(this, SIGNAL(enableTraction()),subte,SLOT(enableTraction()));
     connect(this, SIGNAL(enableBreakEmergency()),subte,SLOT(emergencyBrakeActived()));
     connect(this, SIGNAL(desableBreakEmergency()),subte,SLOT(emergencyBrakeReleased()));
+    connect(this, SIGNAL(enableBreakService(int)),subte,SLOT(brakeReceived(int)));
+    connect(this, SIGNAL(desableBreakService(int)),subte,SLOT(brakeReceived(int)));
 
 }
 
@@ -84,17 +85,25 @@ void Atp_Controller::initATP(){
 
     m_speed = 0.0;
     m_speedAllowed = 0.0;
+    m_speedCritique = 0.0;
+    m_speedTargetPrevious = 0.0;
+    m_speedTarget = 0.0;
 
     m_onATP = true;
 
+    if(this->m_subte->targetSpeed()>=0){
+        this->updateTargetSpeed(this->m_subte->targetSpeed());
+    }
     //Intervalo de trabajo del ATP, salva en caso de quedar la velocidad planchada CTE y no recibir muestreo.
-    //m_t_evalChangeSpeed->setInterval(500);
-    //m_t_evalChangeSpeed->start();
+    //VV No estaria haciendo Falta no recuerdo bien porque pense esto, salio de la charla con Fabri, VER.
+//    m_t_evalChangeSpeed->setInterval(500);
+//    m_t_evalChangeSpeed->start();
 }
 
 void Atp_Controller::resetATP(){
 
-    this->offATP();
+    emit offATP();
+    this->off_ATP();
 
     this->m_e_A->deleteLater();
     this->m_e_B->deleteLater();
@@ -160,6 +169,11 @@ void Atp_Controller::nextToEstation(){
     m_speedTargetPrevious = m_speedTarget;
     m_speedTarget = 15.0;
 
+}
+
+void Atp_Controller::departureEstation(){
+    //VV
+    updateTargetSpeed(m_speedTargetPrevious);
 }
 
 void Atp_Controller::updateSpeed(double speed){
@@ -471,7 +485,7 @@ void Atp_Controller::onATP(){
     connect(m_t_evalChangeSpeed, SIGNAL(timeout()),this,SLOT(superviseSpeed()));
 }
 
-void Atp_Controller::offATP(){
+void Atp_Controller::off_ATP(){
 
     this->m_machineATP->stop();
 
@@ -495,6 +509,7 @@ void Atp_Controller::routingA(){
     this->m_view->setCorte(true);
     qDebug() << "Atp_Controller::routingA() ---> Corte, Fserv, FrenoUrg: ON ";
     emit cutTraction();
+    emit enableBreakService(50);
     emit enableBreakEmergency();
 }
 
@@ -506,6 +521,7 @@ void Atp_Controller::routingB(){
     qDebug() << "Atp_Controller::routingB() ---> FrenoUrg: OFF; Corte, Fserv: ON ";
     emit cutTraction();
     emit desableBreakEmergency();
+    emit enableBreakService(0);
     //HH Falta emitir conexion a modelo con freno servicio
 }
 

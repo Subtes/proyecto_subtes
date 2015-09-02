@@ -298,8 +298,11 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
 
     else if (key.compare("v_proximo_a_estacion") == 0){
         if (value.compare("1") == 0){
-            qDebug() << " v_proximo_estacion, --> 1";
+            qDebug() << " v_proximo_a_estacion, --> 1";
             emit nextToEstation();
+        }else{
+            qDebug() << "v_proximo_a_estacion, --> 0";
+            emit departureEstation();
         }
     }
 

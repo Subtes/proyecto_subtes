@@ -122,6 +122,7 @@ signals:
     cargarEstado(int);
     accelerationInstant(double);
     nextToEstation();
+    departureEstation();
 
 public slots:
     void processKeyPressed(DWORD k);

@@ -36,6 +36,9 @@ signals:
     void subteStoped();
     void signalAnden();
     void reset();
+    void enableBreakService(int);
+    void desableBreakService(int);
+    void offATP();
 
     void _1AtoB();
     void _2BtoA();
@@ -59,6 +62,8 @@ public slots:
 
     void setSpeedTarget(double s);
     void setACE(double a);
+
+    void departureEstation();
 
 private slots:
 
@@ -173,7 +178,7 @@ private:
 
     void critiqueSpeed(int);
     void onATP();
-    void offATP();
+    void off_ATP();
 
 };
 
