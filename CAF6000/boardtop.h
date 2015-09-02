@@ -1,16 +1,15 @@
 #ifndef BOARDTOP_H
 #define BOARDTOP_H
 
-#include <QMainWindow>
-#include "src/models/subtestatus.h"
-#include "src/controllers/eventhandler.h"
+#include "baseboard.h"
 #include "src/controllers/topboardconnectors_controller.h"
 #include "src/controllers/topgauges_controller.h"
+
 namespace Ui {
 class BoardTop;
 }
 
-class BoardTop : public QMainWindow
+class BoardTop : public BaseBoard
 {
     Q_OBJECT
 
@@ -18,21 +17,18 @@ public:
     explicit BoardTop(QWidget *parent = 0, SubteStatus *subte = 0, EventHandler *eventHandler = 0);
     ~BoardTop();
 
-private:
-    Ui::BoardTop *ui;
-    SubteStatus *m_subte;
-    EventHandler *m_eventHandler;
-
-    TopBoardConnectors_Controller *m_connectors;
-    TopGauges_Controller *m_topGauges;
-
-
 public slots:
     void startBoard();
     void enableScreen();
     void disableScreen();
     void resetControls();
-    void cargarEstado(int);
+    void loadState(int state);
+
+private:
+    Ui::BoardTop *ui;
+
+    TopBoardConnectors_Controller *m_connectors;
+    TopGauges_Controller *m_topGauges;
 };
 
 #endif // BOARDTOP_H

@@ -480,3 +480,13 @@ void SubteStatus::updatePreassureWhite(double value)
     m_pressure_white = value;
     emit manometerWhiteChange(m_pressure_white);
 }
+
+double SubteStatus::getPressureRed() const
+{
+    return m_pressure_red;
+}
+
+double SubteStatus::getPressureWhite() const
+{
+    return m_pressure_white;
+}

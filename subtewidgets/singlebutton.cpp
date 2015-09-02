@@ -103,7 +103,6 @@ void SingleButton::stopBlink()
 
 void SingleButton::turnOn()
 {
-    qDebug() << "turn on";
     QVariant state = m_qmlView->property("state");
     if(QString::compare(state.toString(),"buttonOffState")==0){
         m_qmlView->setProperty("state", "buttonOnState" );}
@@ -114,7 +113,6 @@ void SingleButton::turnOn()
 
 void SingleButton::turnOff()
 {
-    qDebug() << "turn off";
     QVariant state = m_qmlView->property("state");
     if(QString::compare(state.toString(),"buttonOnState")==0)
         m_qmlView->setProperty("state", "buttonOffState" );

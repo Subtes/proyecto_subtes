@@ -9,6 +9,10 @@ class TopBoardConnectors_Controller : public QObject
 {
     Q_OBJECT
 public:
+
+    static const int EN_MARCHA = 1;
+    static const int APAGADO = 0;
+
     explicit TopBoardConnectors_Controller(SubteStatus *subte);
     ~TopBoardConnectors_Controller();
 
@@ -23,22 +27,19 @@ public:
     void setMegaphone(SingleButton *megaphoneCon, SingleButton *megaphoneDes);
     void setRetentionBrake(SingleButton *retentionBrakeCon, SingleButton *retentionBrakeDes);
 
-    void setNivel(int n);
+    void setEstado(int state);
     void reset();
 
 private:
-    int m_nivel=0;
-    void resetNivel0();
-    void resetNivel1();
-    void resetNivel2();
+
+    void resetToMarcha();
+    void resetToApagado();
 
     SubteStatus *m_subte;
     SingleButton *m_batteryCon;
     SingleButton *m_conmutador;
     SingleButton *m_luzLlaveDes;
     SingleButton *m_luzLlaveCon;
-    bool m_conmutadorPuestaServicioStatus;
-    bool m_enMarcha;
     SingleButton *m_arranqueDes;
     SingleButton *m_arranqueCon;
     SingleButton *m_batteryDes;
@@ -58,6 +59,10 @@ private:
     SingleButton *m_megaphoneDes;
     SingleButton *m_retentionBrakeCon;
     SingleButton *m_retentionBrakeDes;
+
+    bool m_conmutadorPuestaServicioStatus;
+    bool m_enMarcha;
+    int m_lastState=APAGADO;
 
 private slots:
     void batteryConPressed();

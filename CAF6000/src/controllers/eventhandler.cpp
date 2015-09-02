@@ -271,7 +271,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             qDebug() << "Presion de cilindro incorrecta." ;
         }
 
-        }
+    }
     else if(key.compare("v_presion_freno") == 0){
         qDebug() << "cambio de presion de frenado recibido." ;
         try{

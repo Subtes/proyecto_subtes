@@ -2,26 +2,23 @@
 #include "ui_boardtop.h"
 
 BoardTop::BoardTop(QWidget *parent, SubteStatus * subte, EventHandler *eventHandler) :
-    QMainWindow(parent),
+    BaseBoard(parent,subte,eventHandler),
     ui(new Ui::BoardTop)
 {
-    //SUBTE Model
-    m_subte = subte;
-    m_eventHandler = eventHandler;
-
     ui->setupUi(this);
 
     connect(m_eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(m_eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
     connect(m_eventHandler,SIGNAL(controlEnable()),this,SLOT(enableScreen()));
     connect(m_eventHandler,SIGNAL(controlReset()),this,SLOT(resetControls()));
-    connect(m_eventHandler,SIGNAL(cargarEstado(int)),this,SLOT(cargarEstado(int)));
+    connect(m_eventHandler,SIGNAL(cargarEstado(int)),this,SLOT(loadState(int)));
+
+    m_connectors = NULL;
+    m_topGauges = NULL;
 }
 
 BoardTop::~BoardTop()
 {
-    delete m_subte;
-    delete m_eventHandler;
     delete ui;
 }
 
@@ -63,17 +60,25 @@ void BoardTop::disableScreen()
 }
 
 void BoardTop::resetControls(){
+    loadState(lastState);
+}
+
+/**
+ * @brief BoardTop::cargarEstado
+ * @param nivel= 0 si es "apagado" - 1 si es "en_marcha"
+ */
+void BoardTop::loadState(int state)
+{
+    if(state == APAGADO){
+        lastState = APAGADO;
+        m_connectors->setEstado(APAGADO);
+
+    } else if(state== EN_MARCHA){
+        lastState = EN_MARCHA;
+        m_connectors->setEstado(EN_MARCHA);
+    }
+
     m_connectors->reset();
 }
 
-void BoardTop::cargarEstado(int nivel)
-{
-    if(nivel==0){
-        m_connectors->setNivel(0);
-    }else if(nivel==1){
-        m_connectors->setNivel(1);
-    }else if(nivel==2){
-        m_connectors->setNivel(2);
-    }
-    m_connectors->reset();
-}
+

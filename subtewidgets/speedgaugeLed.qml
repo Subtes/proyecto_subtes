@@ -12,6 +12,7 @@ Rectangle {
     property int maxSpeed: 0
     property int greenIndex: 0
     property int yellowIndex: 0
+    property bool onStatus: false
 
     Image {
         id: background
@@ -184,16 +185,18 @@ Rectangle {
             currentSpeed=0
         }
 
-        if (greenIndex>currentSpeed){
-            for(greenIndex; greenIndex>=currentSpeed; greenIndex--){
-                greenLeds[greenIndex].state = "off"
+        if(onStatus){
+            if (greenIndex>currentSpeed){
+                for(greenIndex; greenIndex>=currentSpeed; greenIndex--){
+                    greenLeds[greenIndex].state = "off"
+                }
+                greenIndex++
+            }else if (greenIndex<currentSpeed){
+                for(greenIndex; greenIndex<=currentSpeed; greenIndex++){
+                    greenLeds[greenIndex].state = "on"
+                }
+                greenIndex--
             }
-            greenIndex++
-        }else if (greenIndex<currentSpeed){
-            for(greenIndex; greenIndex<=currentSpeed; greenIndex++){
-                greenLeds[greenIndex].state = "on"
-            }
-            greenIndex--
         }
     }
 
@@ -207,16 +210,32 @@ Rectangle {
         }else{
             maxSpeed=0
         }
-        if (yellowIndex>maxSpeed){
-            for(yellowIndex; yellowIndex>=maxSpeed; yellowIndex--){
-                yellowLeds[yellowIndex].state = "off"
+        if(onStatus){
+            if (yellowIndex>maxSpeed){
+                for(yellowIndex; yellowIndex>=maxSpeed; yellowIndex--){
+                    yellowLeds[yellowIndex].state = "off"
+                }
+                yellowIndex++
+            }else if (yellowIndex<maxSpeed){
+                for(yellowIndex; yellowIndex<=maxSpeed; yellowIndex++){
+                    yellowLeds[yellowIndex].state = "on"
+                }
+                yellowIndex--
             }
-            yellowIndex++
-        }else if (yellowIndex<maxSpeed){
-            for(yellowIndex; yellowIndex<=maxSpeed; yellowIndex++){
-                yellowLeds[yellowIndex].state = "on"
-            }
-            yellowIndex--
         }
+    }
+
+    function turnOff(){
+        updateSpeed(0);
+        updateMaxSpeed(0);
+        red.opacity = 0;
+        onStatus = false;
+    }
+
+    function turnOn(){
+        red.opacity = 1;
+        updateMaxSpeed(55);
+        updateSpeed(99);
+        onStatus = true;
     }
 }
