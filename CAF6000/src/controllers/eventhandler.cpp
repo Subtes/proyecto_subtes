@@ -135,7 +135,8 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_intensidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
-
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_presion_cilindro");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_presion_freno");
             m_subte->reset();
             emit controlReset();
 
@@ -260,6 +261,25 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     else if(key.compare("v_esfuerzo") == 0){
         qDebug() << "cambio de esfuerzo recibido." ;
         m_subte->updateEffort(std::stod(value));
+    }
+    else if(key.compare("v_presion_cilindro") == 0){
+        qDebug() << "cambio de Presion de cilindro recibido." ;
+        try{
+            m_subte->updatePreassureRed(std::stod(value));
+        }
+        catch (...) {
+            qDebug() << "Presion de cilindro incorrecta." ;
+        }
+
+        }
+    else if(key.compare("v_presion_freno") == 0){
+        qDebug() << "cambio de presion de frenado recibido." ;
+        try{
+            m_subte->updatePreassureWhite(std::stod(value));
+        }
+        catch(...){
+             qDebug() << "presion de frenado incorrecta." ;
+        }
     }
 
 }

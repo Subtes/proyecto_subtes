@@ -19,6 +19,10 @@ SubteStatus::SubteStatus()
     m_volts = 0;
     m_amps = 0;
 
+    //Manometer
+    m_pressure_red=0;
+    m_pressure_white = 0;
+
     m_horn = false;
     m_emergencyOverride = false;
     m_seta = false;
@@ -465,4 +469,14 @@ void SubteStatus::closeRightDoors()
     m_cscp->closeRightDoors();
     emit CSCPChanged(m_cscp->evalCircuit());
     qDebug() << "CSCPChanged " + m_cscp->evalCircuit();
+}
+void SubteStatus::updatePreassureRed(double value)
+{
+    m_pressure_red = value;
+    emit manometerRedChange(m_pressure_red);
+}
+void SubteStatus::updatePreassureWhite(double value)
+{
+    m_pressure_white = value;
+    emit manometerWhiteChange(m_pressure_white);
 }

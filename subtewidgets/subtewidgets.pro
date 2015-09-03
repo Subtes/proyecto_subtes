@@ -16,7 +16,8 @@ HEADERS += \
     singlebutton.h \
     speedgaugeleds.h \
     atp.h \
-    analoggauge.h
+    analoggauge.h \
+    manometer.h
 
 SOURCES += \
     tractionlever.cpp \
@@ -28,7 +29,8 @@ SOURCES += \
     singlebutton.cpp \
     speedgaugeleds.cpp \
     atp.cpp \
-    analoggauge.cpp
+    analoggauge.cpp \
+    manometer.cpp
 
 FORMS += \
     tractionlever.ui \
@@ -40,7 +42,8 @@ FORMS += \
     singlebutton.ui \
     speedgaugeleds.ui \
     atp.ui \
-    analoggauge.ui
+    analoggauge.ui \
+    manometer.ui
 
 RESOURCES += \
             qmlrsc.qrc \

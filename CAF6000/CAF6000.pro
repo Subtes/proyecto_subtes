@@ -44,7 +44,9 @@ SOURCES += main.cpp\
     src/controllers/topgauges_controller.cpp \
     src/controllers/brakebypass_controller.cpp \
     src/controllers/base_controller.cpp \
-    src/controllers/doors_controller.cpp
+    src/controllers/doors_controller.cpp \
+    src/controllers/manometer_controller.cpp
+
 
 HEADERS  += boardcenter.h \
     boardright.h \
@@ -77,8 +79,8 @@ HEADERS  += boardcenter.h \
     src/controllers/topgauges_controller.h \
     src/controllers/brakebypass_controller.h \
     src/controllers/base_controller.h \
-    src/controllers/doors_controller.h
-
+    src/controllers/doors_controller.h \
+    src/controllers/manometer_controller.h
 
 FORMS    += boardcenter.ui \
     boardright.ui \

@@ -32,6 +32,10 @@ private:
     double m_effort;
     double  m_volts;
     double m_amps;
+    //MANOMETER NEEDLE
+    double m_pressure_red;
+    double m_pressure_white;
+
 
     // CONTROL STATUS
     bool m_horn;
@@ -50,6 +54,8 @@ signals:
     voltChanged(double s_effort);
     ampsChanged(double s_effort);
     CSCPChanged(bool status);
+    manometerWhiteChange(double s_effort);
+    manometerRedChange(double s_effort);
 
 public:
     SubteStatus();
@@ -124,7 +130,8 @@ public slots:
     void updateAmm(double value);
     void bypassBrake(bool status);
     void bypassCSCP(bool status);
-
+    void updatePreassureRed(double value);
+    void updatePreassureWhite(double value);
 };
 
 #endif // SUBTESTATUS_H
