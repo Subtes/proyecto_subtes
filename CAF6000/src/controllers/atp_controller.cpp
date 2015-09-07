@@ -12,6 +12,8 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
 
     this->m_onATP = false;
 
+    this->onATP();
+
     //Conexiones del ATP.
 
         //Conexiones In-Externas:
@@ -57,9 +59,10 @@ void Atp_Controller::set_uTVC(){
 //Inicia la maquina de estados, o sea el ATP, deberia estar conectado a la senal salida de Plataforma.
 void Atp_Controller::initATP(){
 //VV
-    this->onATP();
-    this->m_machineATP->start();
+//    this->onATP();
+//    this->m_machineATP->start();
 
+    this->m_machineATP->start();
     //HH Deberian ir en setter´s y getter´s luego.
     //Tiempo T1 de la Transicion G Tiempo
     this->m_t_TGT = 3000;
@@ -96,23 +99,25 @@ void Atp_Controller::initATP(){
     }
     //Intervalo de trabajo del ATP, salva en caso de quedar la velocidad planchada CTE y no recibir muestreo.
     //VV No estaria haciendo Falta no recuerdo bien porque pense esto, salio de la charla con Fabri, VER.
-//    m_t_evalChangeSpeed->setInterval(500);
-//    m_t_evalChangeSpeed->start();
+    m_t_evalChangeSpeed->setInterval(500);
+    m_t_evalChangeSpeed->start();
+    //this->updateSpeed(m_speed);
 }
 
 void Atp_Controller::resetATP(){
 
-    emit offATP();
-    this->off_ATP();
+//    emit offATP();
+//    this->off_ATP();
 
-    this->m_e_A->deleteLater();
-    this->m_e_B->deleteLater();
-    this->m_e_C->deleteLater();
-    this->m_e_D->deleteLater();
+//    this->m_e_A->deleteLater();
+//    this->m_e_B->deleteLater();
+//    this->m_e_C->deleteLater();
+//    this->m_e_D->deleteLater();
 
-    this->m_e_Final_State->deleteLater();
-    this->m_machineATP->deleteLater();
+//    this->m_e_Final_State->deleteLater();
+//    this->m_machineATP->deleteLater();
 
+    this->m_machineATP->stop();
     this->m_onATP = false;
 
     qDebug() << "Atp_Controller::resetATP() ---> ATP machine stop";
@@ -194,6 +199,7 @@ void Atp_Controller::setAllowedSpeed(double s){
     m_speedAllowed = s;
     qDebug()<<"velocidad permitida Previa: --->"<<m_speedAllowedPrevious;
     qDebug()<<"velocidad permitida Actual: --->"<<m_speedAllowed;
+    m_view->updateAllowedSpeed(s);
     emit allowedSpeedChange(s);
 
 }
@@ -243,7 +249,7 @@ void Atp_Controller::critiqueSpeed(int op){
 
     m_uTVC = op;
 
-    if ( !m_uTVC ){
+    if ( /*!m_uTVC*/true ){
         m_speedCritique = 0;
     }else if ( m_uTVC == 1 ){
         //Curva
@@ -404,7 +410,7 @@ void Atp_Controller::superviseSpeed(){
     qDebug()<<"m_OS_LCT: "<<m_OS_LCT;
 
     if (m_speed == 0.0){
-        qDebug()<< "_1AtoB: ----> FrenoEmergencia: OFF, FrenoServicio: ON, CorteTraccion: ON ";
+        qDebug()<< " _1AtoB: ----> FrenoEmergencia: OFF, FrenoServicio: ON, CorteTraccion: ON ";
         emit _1AtoB();
     }
     if ((m_speed + m_OS_AFE > m_speedAllowed) || ((m_speed + m_OS_AFE + m_speedCritique > m_speedAllowed) && (m_uTVC!=0)) ){
@@ -547,3 +553,6 @@ void Atp_Controller::routingD(){
 Atp_Controller::~Atp_Controller(){
 
 }
+/**
+ *
+ */
