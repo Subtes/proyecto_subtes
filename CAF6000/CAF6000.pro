@@ -12,7 +12,8 @@ TEMPLATE = app
 #release
 CONFIG +=  c++11 release
 
-SOURCES += main.cpp\
+SOURCES += main.cpp \
+    baseboard.cpp \
     boardcenter.cpp \
     boardright.cpp \
     boardleft.cpp \
@@ -48,7 +49,8 @@ SOURCES += main.cpp\
     src/controllers/manometer_controller.cpp
 
 
-HEADERS  += boardcenter.h \
+HEADERS  += baseboard.h \
+    boardcenter.h \
     boardright.h \
     boardleft.h \
     boardhardware.h \
@@ -81,6 +83,7 @@ HEADERS  += boardcenter.h \
     src/controllers/base_controller.h \
     src/controllers/doors_controller.h \
     src/controllers/manometer_controller.h
+
 
 FORMS    += boardcenter.ui \
     boardright.ui \

@@ -2,29 +2,30 @@
 #include "ui_boardhardware.h"
 
 BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte, EventHandler *eventHandler) :
-    QMainWindow(parent),
+    BaseBoard(parent,subte,eventHandler),
     ui(new Ui::BoardHardware)
 {
-    //SUBTE Model
-    m_subte = subte;
-    m_eventHandler = eventHandler;
-
     ui->setupUi(this);
 
-    //ui->splash->setVisible(true);
-    //ui->splash->resize(this->width(),this->height());
+    connect(m_eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
+    connect(m_eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
+    connect(m_eventHandler,SIGNAL(controlEnable()),this,SLOT(enableScreen()));
+    connect(m_eventHandler,SIGNAL(controlReset()),this,SLOT(resetControls()));
+    connect(m_eventHandler,SIGNAL(cargarEstado(int)),this,SLOT(loadState(int)));
+    connect(m_eventHandler,SIGNAL(bPressed()),this,SLOT(bocinaON()));
+    connect(m_eventHandler,SIGNAL(bReleased()),this,SLOT(bocinaOFF()));
+    connect(m_eventHandler,SIGNAL(aPressed()),this,SLOT(ranaAD()));
+    connect(m_eventHandler,SIGNAL(ceroPressed()),this,SLOT(ranaCERO()));
+    connect(m_eventHandler,SIGNAL(rPressed()),this,SLOT(ranaAT()));
+    connect(m_eventHandler,SIGNAL(fPressed()),this,SLOT(setaON()));
+    connect(m_eventHandler,SIGNAL(tPressed()),this,SLOT(setaOFF()));
 
-    connect(eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
-    connect(eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
-    connect(eventHandler,SIGNAL(controlEnable()),this,SLOT(enableScreen()));
-    connect(eventHandler,SIGNAL(controlReset()),this,SLOT(resetControls()));
-    connect(eventHandler,SIGNAL(bPressed()),this,SLOT(bocinaON()));
-    connect(eventHandler,SIGNAL(bReleased()),this,SLOT(bocinaOFF()));
-    connect(eventHandler,SIGNAL(aPressed()),this,SLOT(ranaAD()));
-    connect(eventHandler,SIGNAL(ceroPressed()),this,SLOT(ranaCERO()));
-    connect(eventHandler,SIGNAL(rPressed()),this,SLOT(ranaAT()));
-    connect(eventHandler,SIGNAL(fPressed()),this,SLOT(setaON()));
-    connect(eventHandler,SIGNAL(tPressed()),this,SLOT(setaOFF()));
+    m_horn = NULL;
+    m_tractionLever = NULL;
+    m_rana = NULL;
+    m_hombreVivo = NULL;
+    m_setaButton = NULL;
+
 }
 
 BoardHardware::~BoardHardware()
@@ -32,7 +33,8 @@ BoardHardware::~BoardHardware()
     delete ui;
 }
 
-void BoardHardware::startBoard(){
+void BoardHardware::startBoard()
+{
     qDebug() << "board hardware startBoard";
 
     m_horn = new Horn_Controller(m_subte,ui->horn);
@@ -56,35 +58,54 @@ void BoardHardware::disableScreen()
 
 void BoardHardware::resetControls()
 {
-    m_tractionLever->setValue(0);
-    m_rana->setValue(0);
-    m_setaButton->resetToOff();
+    loadState(lastState);
 }
 
-void BoardHardware::bocinaON(){
+void BoardHardware::bocinaON()
+{
     m_horn->setBocina(true);
 }
 
-void BoardHardware::bocinaOFF(){
+void BoardHardware::bocinaOFF()
+{
     m_horn->setBocina(false);
 }
 
-void BoardHardware::ranaAD(){
+void BoardHardware::ranaAD()
+{
     m_rana->setValue(1);
 }
 
-void BoardHardware::ranaCERO(){
+void BoardHardware::ranaCERO()
+{
     m_rana->setValue(0);
 }
 
-void BoardHardware::ranaAT(){
+void BoardHardware::ranaAT()
+{
     m_rana->setValue(-1);
 }
 
-void BoardHardware::setaON(){
+void BoardHardware::setaON()
+{
     m_setaButton->setaPressed();
 }
 
-void BoardHardware::setaOFF(){
+void BoardHardware::setaOFF()
+{
     m_setaButton->setaReleased();
+}
+
+void BoardHardware::loadState(int state){
+
+    m_tractionLever->setValue(0);
+    m_rana->setValue(0);
+    m_setaButton->resetToOff();
+
+    if(state == APAGADO){
+        lastState = APAGADO;
+    }
+    else if(state == EN_MARCHA){
+        lastState = EN_MARCHA;
+    }
 }

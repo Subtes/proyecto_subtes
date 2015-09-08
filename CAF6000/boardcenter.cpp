@@ -2,18 +2,23 @@
 #include "ui_boardcenter.h"
 
 BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eventHandler) :
-    QMainWindow(parent),
+    BaseBoard(parent,subte,eventHandler),
     ui(new Ui::BoardCenter)
 {
-    //SUBTE Model
-    m_subte = subte;
-    m_eventHandler = eventHandler;
-
     ui->setupUi(this);
+
+    m_wiper = NULL;
+    m_emergencyOverride = NULL;
+    m_tractionBypass = NULL;
+    m_brakesBypass = NULL;
+    m_speedGauge = NULL;
+    m_doors = NULL;
+
     connect(m_eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(m_eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
     connect(m_eventHandler,SIGNAL(controlEnable()),this,SLOT(enableScreen()));
     connect(m_eventHandler,SIGNAL(controlReset()),this,SLOT(resetControls()));
+    connect(m_eventHandler,SIGNAL(cargarEstado(int)),this,SLOT(loadState(int)));
 }
 
 BoardCenter::~BoardCenter()
@@ -25,18 +30,13 @@ void BoardCenter::startBoard()
 {
     qDebug() << "board center startBoard";
 
-    Wiper_Controller *wiper = new Wiper_Controller(m_subte,ui->wiper);
-    EmergencyOverride_Controller *emergencyOverride = new EmergencyOverride_Controller(m_subte,ui->anulacionEmergencia);
-    TractionBypass_Controller *tractionBypass = new TractionBypass_Controller(m_subte,ui->bypassTraccion);
-    BrakeBypass_Controller *brakesBypass = new BrakeBypass_Controller(m_subte,ui->bypassFreno);
-    SpeedGaugeLeds_Controller *speedGauge = new SpeedGaugeLeds_Controller(m_subte,ui->velocimetro);
-    Doors_Controller *doors = new Doors_Controller(m_subte, ui->abrirIzquierda, ui->cerrarIzquierda, ui->selectorIzquierda, ui->abrirDerecha, ui->cerrarDerecha, ui->selectorDerecha, ui->silbato);
+    m_wiper = new Wiper_Controller(m_subte,ui->wiper);;
+    m_emergencyOverride = new EmergencyOverride_Controller(m_subte,ui->anulacionEmergencia);;
+    m_tractionBypass = new TractionBypass_Controller(m_subte,ui->bypassTraccion);;
+    m_brakesBypass = new BrakeBypass_Controller(m_subte,ui->bypassFreno);;
+    m_speedGauge = new SpeedGaugeLeds_Controller(m_subte,ui->velocimetro);;
+    m_doors = new Doors_Controller(m_subte, ui->abrirIzquierda, ui->cerrarIzquierda, ui->selectorIzquierda, ui->abrirDerecha, ui->cerrarDerecha, ui->selectorDerecha, ui->silbato);
 
-    ui->cerrarDerecha->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
-    ui->cerrarIzquierda->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
-    ui->abrirDerecha->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
-    ui->abrirIzquierda->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
-    ui->silbato->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blueplane.png"));
     ui->megafonia->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blueplane.png"));
     ui->antivaho->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blueplane.png"));
     ui->iluminacionReducPulsad->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blueplane.png"));
@@ -61,22 +61,34 @@ void BoardCenter::disableScreen()
 }
 
 void BoardCenter::resetControls(){
-    ui->cerrarDerecha->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
-    ui->cerrarIzquierda->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
-    ui->abrirDerecha->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
-    ui->abrirIzquierda->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
-    ui->silbato->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blueplane.png"));
-    ui->megafonia->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blueplane.png"));
-    ui->antivaho->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blueplane.png"));
-    ui->iluminacionReducPulsad->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blueplane.png"));
-    ui->iluminacionPulsadores->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blueplane.png"));
-    ui->faros->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blueplane.png"));
-    ui->luzCabina->setButtonImage(QUrl("qrc:/resources/luzcabinaON.png"),QUrl("qrc:/resources/luzcabina.png"));
-    ui->publicoCabina->setButtonImage(QUrl("qrc:/resources/publico-cabinaR.png"),QUrl("qrc:/resources/publico-cabinaL.png"));
-    ui->modoConduccion->setClearColor(Qt::transparent);
-    ui->modoConduccion->setAttribute(Qt::WA_AlwaysStackOnTop);
+    m_doors->reset();
+    loadState(lastState);
+}
 
+void BoardCenter::loadState(int state){
+    ui->megafonia->turnOff();
+    ui->antivaho->turnOff();
+    ui->iluminacionReducPulsad->turnOff();
+    ui->iluminacionPulsadores->turnOff();
+    ui->faros->turnOff();
+    ui->luzCabina->turnOff();
+    ui->publicoCabina->turnOff();
     ui->anulacionEmergencia->turnOff();
-    ui->velocimetro->updateSpeed(0.0);
-    ui->velocimetro->updateTargetSpeed(0.0);
+    ui->velocimetro->updateSpeed(0);
+    ui->velocimetro->updateTargetSpeed(0);
+
+    if(state == APAGADO){
+        lastState = APAGADO;
+        m_doors->turnOff();
+        ui->velocimetro->turnOff();
+        ui->bypassFreno->turnOff();
+        ui->bypassTraccion->turnOff();
+    }
+    else if(state == EN_MARCHA){
+        lastState = EN_MARCHA;
+        m_doors->turnOn();
+        ui->velocimetro->turnOn();
+        ui->bypassFreno->turnOn();
+        ui->bypassTraccion->turnOn();
+    }
 }

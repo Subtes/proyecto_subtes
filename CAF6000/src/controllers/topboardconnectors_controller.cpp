@@ -372,26 +372,25 @@ void TopBoardConnectors_Controller::retentionBrakeDesPressed(){
     m_subte->setRetentionBrakeConnector(false);
 }
 
+void TopBoardConnectors_Controller::setEstado(int state)
+{
+    m_lastState = state;
+}
+
 void TopBoardConnectors_Controller::reset(){
-    if(m_nivel == 0){
-        this->resetNivel0();
-    }else if(m_nivel == 1){
-        this->resetNivel1();
-    }else if(m_nivel == 2){
-        this->resetNivel2();
+    if(m_lastState == APAGADO){
+        resetToApagado();
+    }else{
+        resetToMarcha();
     }
 }
 
-void TopBoardConnectors_Controller::setNivel(int n){
-    m_nivel = n;
-}
-
-void TopBoardConnectors_Controller::resetNivel0(){
+void TopBoardConnectors_Controller::resetToApagado(){
     m_batteryCon->setClickeable(true);
     m_batteryDes->setClickeable(false);
     m_batteryCon->turnOff();
     m_batteryDes->turnOn();
-    m_subte->setBatteryConnector(FALSE);
+    m_subte->setBatteryConnector(false);
 
     m_conmutadorPuestaServicioStatus = false;
     m_conmutador->turnOff();
@@ -450,14 +449,13 @@ void TopBoardConnectors_Controller::resetNivel0(){
     m_retentionBrakeDes->setClickeable(true);
     m_retentionBrakeCon->turnOn();
     m_retentionBrakeDes->turnOff();
+
+    m_lastState = APAGADO;
 }
 
-void TopBoardConnectors_Controller::resetNivel1(){
-    this->resetNivel0();
-}
+void TopBoardConnectors_Controller::resetToMarcha(){
 
-void TopBoardConnectors_Controller::resetNivel2(){
-    this->resetNivel0();
+    resetToApagado();
 
     m_batteryCon->setClickeable(false);
     m_batteryDes->setClickeable(true);
@@ -481,15 +479,7 @@ void TopBoardConnectors_Controller::resetNivel2(){
     m_luzLlaveDes->turnOff();
     m_arranqueCon->turnOff();
     m_arranqueDes->turnOff();
+
+    m_lastState = EN_MARCHA;
+
 }
-
-
-
-
-
-
-
-
-
-
-

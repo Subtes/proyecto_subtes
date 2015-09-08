@@ -75,6 +75,8 @@ public:
     int brake() const;
     bool emergencyBrake() const;
     bool getHiloLazo();
+    double getPressureRed() const;
+    double getPressureWhite() const;
 
     // CONTROL GETTERS
     bool horn() const;
@@ -82,6 +84,8 @@ public:
     bool seta() const;
     std::string rana() const;
     int tractionLeverPosition() const;
+
+
 
 public slots:
     // STATE CHANGE INVOCATIONS - SETTERS

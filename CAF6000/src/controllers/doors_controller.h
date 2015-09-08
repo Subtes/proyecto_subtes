@@ -10,6 +10,9 @@ class Doors_Controller : public Base_Controller
 public:
     Doors_Controller(SubteStatus *subte, SingleButton *openLeftDoors, SingleButton *closeLeftDoors, SingleButton *selectLeftDoors, SingleButton *openRightDoors, SingleButton *closeRightDoors, SingleButton *selectRightDoors, SingleButton *silbato);
     ~Doors_Controller();
+    void reset();
+    void turnOn();
+    void turnOff();
 
 public slots:
     void enableLeftPanel();

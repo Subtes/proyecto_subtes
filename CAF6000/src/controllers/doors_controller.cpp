@@ -2,7 +2,7 @@
 
 Doors_Controller::Doors_Controller(SubteStatus *subte, SingleButton *openLeftDoors, SingleButton *closeLeftDoors, SingleButton *selectLeftDoors, SingleButton *openRightDoors, SingleButton *closeRightDoors, SingleButton *selectRightDoors, SingleButton *silbato)
     : Base_Controller(subte)
-{
+{   
     m_selectLeftDoors = selectLeftDoors;
     m_openLeftDoors = openLeftDoors;
     m_closeLeftDoors = closeLeftDoors;
@@ -11,14 +11,18 @@ Doors_Controller::Doors_Controller(SubteStatus *subte, SingleButton *openLeftDoo
     m_closeRightDoors = closeRightDoors;
     m_silbato = silbato;
 
-    m_closeLeftDoors->setClickeable(false);
+    m_closeRightDoors->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
+    m_closeLeftDoors->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
+    m_openRightDoors->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
+    m_openLeftDoors->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
+    m_silbato->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blueplane.png"));
+
     m_closeLeftDoors->setLightManagement(false);
-    m_closeRightDoors->setClickeable(false);
     m_closeRightDoors->setLightManagement(false);
-    m_openLeftDoors->setClickeable(false);
     m_openLeftDoors->setLightManagement(false);
-    m_openRightDoors->setClickeable(false);
     m_openRightDoors->setLightManagement(false);
+
+    turnOn();
 
     connect(m_closeLeftDoors,SIGNAL(buttonClicked()),this,SLOT(closeLeft()));
     connect(m_openLeftDoors,SIGNAL(buttonClicked()),this,SLOT(openLeft()));
@@ -29,6 +33,37 @@ Doors_Controller::Doors_Controller(SubteStatus *subte, SingleButton *openLeftDoo
 }
 
 Doors_Controller::~Doors_Controller(){}
+
+void Doors_Controller::reset()
+{
+    m_closeLeftDoors->turnOff();
+    m_closeRightDoors->turnOff();
+    m_openLeftDoors->turnOff();
+    m_openRightDoors->turnOff();
+    m_selectLeftDoors->turnOff();
+    m_selectRightDoors->turnOff();
+    m_silbato->turnOff();
+    m_closeLeftDoors->setClickeable(false);
+    m_closeRightDoors->setClickeable(false);
+    m_openLeftDoors->setClickeable(false);
+    m_openRightDoors->setClickeable(false);
+}
+
+void Doors_Controller::turnOff()
+{
+    m_selectLeftDoors->setClickeable(false);
+    m_selectRightDoors->setClickeable(false);
+    m_silbato->setClickeable(false);
+    reset();
+}
+
+void Doors_Controller::turnOn()
+{
+    m_selectLeftDoors->setClickeable(true);
+    m_selectRightDoors->setClickeable(true);
+    m_silbato->setClickeable(true);
+    reset();
+}
 
 void Doors_Controller::openLeft(){
     m_subte->openLeftDoors();

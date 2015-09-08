@@ -23,6 +23,8 @@ private:
 public slots:
     void updateTargetSpeed(double speed);
     void updateSpeed(double speed);
+    void turnOff();
+    void turnOn();
 };
 
 #endif // SPEEDGAUGELEDS_H

@@ -21,10 +21,23 @@ SpeedGaugeLeds::~SpeedGaugeLeds()
 void SpeedGaugeLeds::updateSpeed(double speed){
 
     QVariant returnedValue;
-
     QMetaObject::invokeMethod(m_qmlView, "updateSpeed",
             Q_RETURN_ARG(QVariant, returnedValue),
-            Q_ARG(QVariant, speed));
+                              Q_ARG(QVariant, speed));
+}
+
+void SpeedGaugeLeds::turnOff()
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "turnOff",
+            Q_RETURN_ARG(QVariant, returnedValue));
+}
+
+void SpeedGaugeLeds::turnOn()
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "turnOn",
+            Q_RETURN_ARG(QVariant, returnedValue));
 }
 
 void SpeedGaugeLeds::updateTargetSpeed(double speed){
