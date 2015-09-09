@@ -31,10 +31,10 @@ void BoardCenter::startBoard()
     qDebug() << "board center startBoard";
 
     m_wiper = new Wiper_Controller(m_subte,ui->wiper);;
-    m_emergencyOverride = new EmergencyOverride_Controller(m_subte,ui->anulacionEmergencia);;
-    m_tractionBypass = new TractionBypass_Controller(m_subte,ui->bypassTraccion);;
-    m_brakesBypass = new BrakeBypass_Controller(m_subte,ui->bypassFreno);;
-    m_speedGauge = new SpeedGaugeLeds_Controller(m_subte,ui->velocimetro);;
+    m_emergencyOverride = new EmergencyOverride_Controller(m_subte,ui->anulacionEmergencia);
+    m_tractionBypass = new TractionBypass_Controller(m_subte,ui->bypassTraccion);
+    m_brakesBypass = new BrakeBypass_Controller(m_subte,ui->bypassFreno);
+    m_speedGauge = new SpeedGaugeLeds_Controller(m_subte,ui->velocimetro);
     m_doors = new Doors_Controller(m_subte, ui->abrirIzquierda, ui->cerrarIzquierda, ui->selectorIzquierda, ui->abrirDerecha, ui->cerrarDerecha, ui->selectorDerecha, ui->silbato);
 
     ui->megafonia->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blueplane.png"));
@@ -48,6 +48,12 @@ void BoardCenter::startBoard()
     ui->modoConduccion->setAttribute(Qt::WA_AlwaysStackOnTop);
 
     this->setEnabled(false);
+
+    connect(ui->bypassFrenoTraccion,SIGNAL(pressed()),m_brakesBypass,SLOT(bypassBrakePressed()));
+    connect(ui->bypassFrenoTraccion,SIGNAL(pressed()),m_tractionBypass,SLOT(pressBypass()));
+    connect(ui->bypassFrenoTraccion,SIGNAL(released()),m_brakesBypass,SLOT(bypassBrakeReleased()));
+    connect(ui->bypassFrenoTraccion,SIGNAL(released()),m_tractionBypass,SLOT(releaseBypass()));
+
 }
 
 void BoardCenter::enableScreen()
@@ -83,6 +89,10 @@ void BoardCenter::loadState(int state){
         ui->velocimetro->turnOff();
         ui->bypassFreno->turnOff();
         ui->bypassTraccion->turnOff();
+
+        //TODO: remove this! setear perilla de modo de conduccion a ATP (maniobra)
+        m_eventHandler->notifyValueChanged("c_modo_conduccion","atp");
+
     }
     else if(state == EN_MARCHA){
         lastState = EN_MARCHA;
@@ -90,5 +100,8 @@ void BoardCenter::loadState(int state){
         ui->velocimetro->turnOn();
         ui->bypassFreno->turnOn();
         ui->bypassTraccion->turnOn();
+
+        //TODO: remove this! setear perilla de modo de conduccion a ATP (maniobra)
+        m_eventHandler->notifyValueChanged("c_modo_conduccion","atp");
     }
 }

@@ -40,10 +40,12 @@
 
 #include "src/controllers/enethelper.h"
 #include "src/controllers/keypresseater.h"
+#include "src/controllers/failures_controller.h"
 #include "src/models/subtestatus.h"
 
 class SubteStatus;
 class ENetHelper;
+class Failures_Controller;
 
 class EventHandler : public QObject
 {
@@ -58,10 +60,12 @@ public:
     void initConnection();
 
     void setModel(SubteStatus *subte);
+    void setFailures(Failures_Controller *failures);
 
 private:
     ENetClient * m_eNetClient;
     ENetHelper * m_eNetHelper;
+    Failures_Controller * m_failures;
     SubteStatus * m_subte;
 
     QSplashScreen *m_splash1;

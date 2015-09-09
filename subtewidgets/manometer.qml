@@ -38,7 +38,7 @@ Rectangle {
             angle: 0
             Behavior on angle {
                 PropertyAnimation{
-                  duration : 1500
+                  duration : 750
                   easing {type: Easing.OutBack}
                 }
             }
@@ -58,7 +58,7 @@ Rectangle {
             angle: 0
             Behavior on angle {
                 PropertyAnimation{
-                    duration : 1500
+                    duration : 750
                     easing {type: Easing.OutBack}
                 }
             }

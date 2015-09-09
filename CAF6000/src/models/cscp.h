@@ -9,9 +9,10 @@ private:
     static const bool OPEN = true;
     static const bool CLOSE = false;
 
-    bool bypass;
+    bool m_bypass;
     bool m_leftDoors;
     bool m_rightDoors;
+    bool m_averia;
 
     bool m_rightDoorsPanel;
     bool m_leftDoorsPanel;
@@ -29,6 +30,8 @@ public:
     void openRightDoors();
     void closeLeftDoors();
     void closeRightDoors();
+    bool averia() const;
+    void setAveria(bool averia);
 };
 
 #endif // CSCP_H
