@@ -37,7 +37,7 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     connect(eventHandler,SIGNAL(departureEstation()),this,SLOT(departureEstation()));
 
         //Conexiones de control Internas
-    //connect(this,SIGNAL(allowedSpeedChange(double)),this,SLOT(superviseSpeed()));
+    connect(this,SIGNAL(allowedSpeedChange(double)),this,SLOT(superviseSpeed()));
 
         //Salidas Externas:
     connect(this, SIGNAL(cutTraction()),subte,SLOT(cutTraction()));
@@ -406,46 +406,42 @@ void Atp_Controller::transitionGD(){
     qDebug()<<"Comienzo de reloj GD: "<< timeLap->toString();
     timeLap->start();
 
-    QElapsedTimer timer;
-    timer.start();
+//    QElapsedTimer timer;
+//    timer.start();
     //slowOperation();  // we want to measure the time of this slowOperation()
     qDebug() << "COLO d_ini---->  " << d_ini;
     qDebug() << "speedallowed---->  " << m_speedAllowed;
     qDebug() << "speedtarget---->  " << m_speedTarget;
-    qDebug() << "timer elpsed---->  " << timer.elapsed();
+//    qDebug() << "timer elpsed---->  " << timer.elapsed();
 
     double calc;
     double sp;
 
     qDebug()<<" ******** GD ******** Recalculando distancia y Allowed Speed ********* GD *******";
-    while ((d_ini >= 0) && (m_speedAllowed > m_speedTarget)){
-        //QTimer::singleShot(500,this,SLOT(evalCalculateDistance()));
-        //--d_ini;
-        //if (m_changeDistance){
-            //d_ini -= (m_speed*0.277777777777778)*((timeLap->elapsed())/100);
-            //d_ini = d_ini +  (m_speed*0.277777777777778)*((timer.elapsed())/1000)+(0.5*-a*(((timer.elapsed())/1000)*((timer.elapsed())/1000)));
-        calc = (static_cast<double>(timer.elapsed())/static_cast<double>(1000));
-        sp = (m_speed*0.277777777777778);
-        d_ini = 403 - sp*calc;
-            qDebug() << " +++++++++++++++++ Mauri ++++++++++++++++++++++++++ ";
-            qDebug() << "timer elpsed---->  " << timer.elapsed() << " calc: " << calc;
-            qDebug() << " d_ini---->  " << d_ini;
-            qDebug() << " m_speed " << m_speed << " sp: " << sp;
-            qDebug() << " +++++++++++++++++++++++++++++++++++++++++++ ";
-//            qDebug() <<"   ++++ Recalculando distancia y Allowed Speed ++++ ";
-//            qDebug() << " tiempo Transucrrido GD: *****  "<< timeLap->elapsed() << "  " << ((timeLap->elapsed())/100);
-//            qDebug() << " d_ini: "<< d_ini << " Velocidad: " << m_speed;
-//            qDebug() << "  ++++++++++++++++++++++++++++++++++++++++++++++++ ";
-        //}
-        if (d_ini>=0){
-            v_aux=(m_speedAD->operator [](d_ini));
-            qDebug()<<" Velocidad Permitida de curva GD:  ---->  "<< v_aux;
-        }
-        if (v_aux <= m_speedTargetPrevious){
-            setAllowedSpeed(((v_aux>15.0)?v_aux:15.0));
-            qDebug()<<" ***** NUEVA Velocidad Permitida de curva GD:  ---->  "<< ((v_aux>15.0)?v_aux:15.0);
-        }
-    }
+//    while ((d_ini >= 0) && (m_speedAllowed > m_speedTarget)){
+//        //QTimer::singleShot(500,this,SLOT(evalCalculateDistance()));
+//        calc = (static_cast<double>(timer.elapsed())/static_cast<double>(1000));
+//        sp = (m_speed*0.277777777777778);
+//        d_ini = 403 - sp*calc;
+//            qDebug() << " +++++++++++++++++ Mauri ++++++++++++++++++++++++++ ";
+//            qDebug() << "timer elpsed---->  " << timer.elapsed() << " calc: " << calc;
+//            qDebug() << " d_ini---->  " << d_ini;
+//            qDebug() << " m_speed " << m_speed << " sp: " << sp;
+//            qDebug() << " +++++++++++++++++++++++++++++++++++++++++++ ";
+
+//        if (d_ini>=0){
+//            v_aux=(m_speedAD->operator [](d_ini));
+//            qDebug()<<" Velocidad Permitida de curva GD:  ---->  "<< v_aux;
+//        }
+//        if (v_aux <= m_speedTargetPrevious){
+//            setAllowedSpeed(((v_aux>15.0)?v_aux:15.0));
+//            qDebug()<<" ***** NUEVA Velocidad Permitida de curva GD:  ---->  "<< ((v_aux>15.0)?v_aux:15.0);
+//        }
+//    }
+    QTime dieTime= QTime::currentTime().addSecs(5);
+    while (QTime::currentTime() < dieTime)
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+
     qDebug()<<" <--------- Fin Bucle ------- Transicion GD: ---------------------------->";
     critiqueSpeed(2);
     setAllowedSpeed(15.0);
