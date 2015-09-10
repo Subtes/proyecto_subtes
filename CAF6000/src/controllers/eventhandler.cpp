@@ -145,6 +145,8 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_traccion",std::to_string((int)m_subte->traction()));
             m_eNetClient->CambiarValorClave("c_freno_emergencia","des");
 
+            m_eNetClient->CambiarValorClave("c_averia","x");
+
             emit controlDisable();
             m_eNetClient->CambiarValorClave("c_listo","1");
 
@@ -153,6 +155,8 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_regulador_mando","");
             m_eNetClient->CambiarValorClave("c_llave_atp","");
             m_eNetClient->CambiarValorClave("c_modo_conduccion","");
+
+            m_eNetClient->CambiarValorClave("c_averia","");
 
             Sleep(1000);
             emit closeApp();

@@ -46,7 +46,10 @@ SOURCES += main.cpp \
     src/controllers/brakebypass_controller.cpp \
     src/controllers/base_controller.cpp \
     src/controllers/doors_controller.cpp \
-    src/controllers/manometer_controller.cpp
+    src/controllers/manometer_controller.cpp \
+    src/instructionsolutionpanel/treeitem.cpp \
+    src/instructionsolutionpanel/treemodel.cpp \
+    src/instructionsolutionpanel/mainwindow.cpp
 
 
 HEADERS  += baseboard.h \
@@ -82,14 +85,18 @@ HEADERS  += baseboard.h \
     src/controllers/brakebypass_controller.h \
     src/controllers/base_controller.h \
     src/controllers/doors_controller.h \
-    src/controllers/manometer_controller.h
+    src/controllers/manometer_controller.h \
+    src/instructionsolutionpanel/treeitem.h \
+    src/instructionsolutionpanel/treemodel.h \
+    src/instructionsolutionpanel/mainwindow.h
 
 
 FORMS    += boardcenter.ui \
     boardright.ui \
     boardleft.ui \
     boardtop.ui \
-    boardhardware.ui
+    boardhardware.ui \
+    src/instructionsolutionpanel/mainwindow.ui
 
 INCLUDEPATH +=  ../subtewidgets \
                 $$PWD/../ENet
@@ -109,3 +116,5 @@ RESOURCES += ../subtewidgets/widgetsrsc.qrc \
             boardrsc.qrc
 
 DESTDIR = $$PWD
+
+DISTFILES +=

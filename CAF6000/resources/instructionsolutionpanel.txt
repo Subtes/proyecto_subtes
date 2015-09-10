@@ -1,0 +1,10 @@
+Coche 1
+    Grifos
+        B-138				Micromicef
+        L-2				Unidad de Freno
+Coche 2
+    Grifos
+        B-73				Cilindros de Freno
+    Termicos
+        52F1				Lazo de Emergencia
+        33F1				Equipo Antibloqueo
