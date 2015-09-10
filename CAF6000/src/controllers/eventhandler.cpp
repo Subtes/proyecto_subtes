@@ -135,7 +135,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_intensidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_llego_senial");
+            //m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_llego_senial");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_intensidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
@@ -230,7 +230,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     }
 
     else if(key.compare("v_velocidad") == 0){
-        qDebug() << "cambio de velocidad recibido." ;
+        //qDebug() << "cambio de velocidad recibido." ;
         m_subte->updateSpeed(std::stod(value));
     }
 
@@ -263,12 +263,12 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     }
 
     else if(key.compare("v_intensidad") == 0){
-        qDebug() << "cambio de intensidad recibido." ;
+        //qDebug() << "cambio de intensidad recibido." ;
         m_subte->updateAmm(std::stod(value));
     }
 
     else if(key.compare("v_esfuerzo") == 0){
-        qDebug() << "cambio de esfuerzo recibido." ;
+        //qDebug() << "cambio de esfuerzo recibido." ;
         m_subte->updateEffort(std::stod(value));
     }
     else if(key.compare("v_presion_cilindro") == 0){
@@ -410,11 +410,11 @@ void EventHandler::processKeyPressed(DWORD k)
     } else if ( k == _H && !H_down  ){
         H_down = true;
         qDebug() << "H key pressed, nextToEstation";
-        this->notifyValueChanged("v_proximo_a_estacion","1");
+        this->processValueChanged(m_eNetHelper->instructionsHostName, "v_proximo_a_estacion", "1");
     } else if ( k == _J && !J_down  ){
         J_down = true;
         qDebug() << "J key pressed, departureFromEstation";
-        this->notifyValueChanged("v_proximo_a_estacion","0");
+        this->processValueChanged(m_eNetHelper->instructionsHostName, "v_proximo_a_estacion", "0");;
     }
 }
 

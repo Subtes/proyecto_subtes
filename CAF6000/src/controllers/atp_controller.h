@@ -65,6 +65,9 @@ public slots:
 
     void departureEstation();
 
+    void evalCalculateDistance();
+    void calculateDistance();
+
 private slots:
 
     void routingA();
@@ -76,7 +79,6 @@ private slots:
     void transitionGT();
 
     void superviseSpeed();
-    void evalCalculateDistance();
 
     void nextToEstation();
 
@@ -166,12 +168,14 @@ private:
 
         //Timer's:
     QTimer *m_t_evalChangeSpeed = NULL;
+    QTimer *m_t_shot = NULL;
 
     //Timer T1 tiempo de la Transicion Gradual por Tiempo --> 3000
     int m_t_TGT;
 
     //Test if ATP is on
     bool m_onATP;
+    QHash<int,int> *m_speedAD = NULL;
 
     void set_uTVC();
     void transitionGD();
