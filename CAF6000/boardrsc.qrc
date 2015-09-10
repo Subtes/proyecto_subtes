@@ -5,5 +5,6 @@
         <file>resources/board_top_BKG.jpg</file>
         <file>resources/board_hardware_BKG.jpg</file>
         <file>../subtewidgets/resources/splash.jpg</file>
+        <file>resources/instructionsolutionpanel.txt</file>
     </qresource>
 </RCC>

@@ -9,6 +9,7 @@
 #include "boardleft.h"
 #include "boardright.h"
 #include "boardtop.h"
+#include "src/instructionsolutionpanel/mainwindow.h"
 
 #include "src/controllers/eventhandler.h"
 #include "src/controllers/keypresseater.h"
@@ -16,7 +17,7 @@
 int main(int argc, char *argv[])
 {
     //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-    QApplication::setAttribute(Qt::AA_UseOpenGLES,true);
+    //QApplication::setAttribute(Qt::AA_UseOpenGLES,true);
     //QApplication::setAttribute(Qt::AA_UseDesktopOpenGL,true);
     //QApplication::setAttribute(Qt::AA_UseSoftwareOpenGL,true);
 
@@ -34,6 +35,7 @@ int main(int argc, char *argv[])
     BoardLeft *m_l = new BoardLeft(0,m_subte,m_eventHandler);
     BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
     BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
+    MainWindow *m_tree = new MainWindow(0,m_eventHandler);
 
     QDesktopWidget *desktop = a.desktop();
 
@@ -65,6 +67,7 @@ int main(int argc, char *argv[])
         QTabWidget *tabRight = new QTabWidget(0);
         tabRight->addTab(m_c,QObject::tr("Center"));
         tabRight->addTab(m_r,QObject::tr("RightPanel"));
+        tabRight->addTab(m_tree,QObject::tr("TreePanel"));
 
         tabRight->showFullScreen();
 
@@ -79,9 +82,16 @@ int main(int argc, char *argv[])
 
           m_h->showNormal();
           m_l->showNormal();
-          m_c->showNormal();
+          //m_c->showNormal();
           m_t->showNormal();
-          m_r->showNormal();
+          //m_r->showNormal();
+
+          QTabWidget *tabRight = new QTabWidget(0);
+          tabRight->addTab(m_c,QObject::tr("Center"));
+          tabRight->addTab(m_r,QObject::tr("RightPanel"));
+          tabRight->addTab(m_tree,QObject::tr("TreePanel"));
+
+          tabRight->showNormal();
     }
 
     // DEPENDENCY INJECTION
