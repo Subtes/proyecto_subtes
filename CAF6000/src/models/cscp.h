@@ -13,6 +13,9 @@ private:
     bool m_leftDoors;
     bool m_rightDoors;
 
+    bool m_rightDoorsPanel;
+    bool m_leftDoorsPanel;
+
 public:
     CSCP();
     ~CSCP();

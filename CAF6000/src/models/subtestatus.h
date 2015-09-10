@@ -56,10 +56,18 @@ signals:
     voltChanged(double s_effort);
     ampsChanged(double s_effort);
     CSCPChanged(bool status);
+    rightDoorsOpened();
+    rightDoorsClosed();
+    leftDoorsOpened();
+    leftDoorsClosed();
     manometerWhiteChange(double s_effort);
     manometerRedChange(double s_effort);
 
 public:
+
+    static const bool PUERTAS_CERRADAS = true;
+    static const bool PUERTAS_ABIERTAS = false;
+
     SubteStatus();
     ~SubteStatus();
 
@@ -68,8 +76,8 @@ public:
 
     // STATUS GETTERS
     bool cscp() const;
-    bool leftDoors() const; //true=open
-    bool rightDoors() const; //true=open
+    bool leftDoors() const;
+    bool rightDoors() const;
     double speed() const;
     double targetSpeed() const;
     double allowedSpeed() const;
@@ -88,8 +96,6 @@ public:
     int tractionLeverPosition() const;
     bool getDrivingModeATP();
     void setDrivingModeATP(bool status);
-
-
 
 public slots:
     // STATE CHANGE INVOCATIONS - SETTERS
@@ -141,11 +147,8 @@ public slots:
     void bypassCSCP(bool status);
     void updatePreassureRed(double value);
     void updatePreassureWhite(double value);
-
-
-    //void setDrivingModeATP(bool status);
-
-
+    void updateLeftDoorsButtons(bool state);
+    void updateRightDoorsButtons(bool state);
 };
 
 #endif // SUBTESTATUS_H

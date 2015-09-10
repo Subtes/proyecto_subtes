@@ -58,11 +58,9 @@ int main(int argc, char *argv[])
      * Dimensiones -->  QRect(0,-768 1024x768)
      */
 
-
         m_t->showFullScreen();
         m_h->showFullScreen();
         m_l->showFullScreen();
-
 
         QTabWidget *tabRight = new QTabWidget(0);
         tabRight->addTab(m_c,QObject::tr("Center"));
@@ -76,7 +74,6 @@ int main(int argc, char *argv[])
         m_t->move(s3.topLeft());
 
         tabRight->move(s1.topLeft());
-
 
     }else{
 

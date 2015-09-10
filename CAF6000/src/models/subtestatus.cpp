@@ -467,11 +467,27 @@ void SubteStatus::closeRightDoors()
     emit CSCPChanged(m_cscp->evalCircuit());
     qDebug() << "CSCPChanged " + m_cscp->evalCircuit();
 }
+
+void SubteStatus::updateLeftDoorsButtons(bool state) {
+    if (state == SubteStatus::PUERTAS_ABIERTAS) //open
+        m_eventHandler->notifyValueChanged("c_pulsador_puertas", "izquierda;abrir");
+    else
+        m_eventHandler->notifyValueChanged("c_pulsador_puertas", "izquierda;cerrar");
+}
+
+void SubteStatus::updateRightDoorsButtons(bool state) {
+    if (state == SubteStatus::PUERTAS_ABIERTAS) //open
+        m_eventHandler->notifyValueChanged("c_pulsador_puertas", "derecha;abrir");
+    else
+        m_eventHandler->notifyValueChanged("c_pulsador_puertas", "derecha;cerrar");
+}
+
 void SubteStatus::updatePreassureRed(double value)
 {
     m_pressure_red = value;
     emit manometerRedChange(m_pressure_red);
 }
+
 void SubteStatus::updatePreassureWhite(double value)
 {
     m_pressure_white = value;
