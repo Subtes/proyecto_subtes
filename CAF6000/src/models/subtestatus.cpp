@@ -489,6 +489,7 @@ double SubteStatus::getPressureRed() const
 double SubteStatus::getPressureWhite() const
 {
     return m_pressure_white;
+}
 
 void SubteStatus::setDrivingModeATP(bool status){
     m_CMC = status;
