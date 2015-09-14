@@ -56,7 +56,7 @@ void Atp::updateAllowedSpeed(double speed){
     QMetaObject::invokeMethod(m_qmlView, "allowedSpeed",
                               Q_RETURN_ARG(QVariant,returnedValue),
                               Q_ARG(QVariant, v));
-    qDebug() << "Atp::updateAllowedSpeed: " << v;
+    //qDebug() << "Atp::updateAllowedSpeed: " << v;
 }
 
 void Atp::setCMC(bool v){
