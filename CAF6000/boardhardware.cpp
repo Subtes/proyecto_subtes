@@ -99,13 +99,14 @@ void BoardHardware::setaOFF()
 void BoardHardware::loadState(int state){
 
     m_tractionLever->setValue(0);
-    m_rana->setValue(0);
     m_setaButton->resetToOff();
 
     if(state == APAGADO){
         lastState = APAGADO;
+        m_rana->setValue(0);
     }
     else if(state == EN_MARCHA){
         lastState = EN_MARCHA;
+        m_rana->setValue(1);
     }
 }

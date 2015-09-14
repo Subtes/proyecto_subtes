@@ -28,8 +28,11 @@ Doors_Controller::Doors_Controller(SubteStatus *subte, SingleButton *openLeftDoo
     connect(m_openLeftDoors,SIGNAL(buttonClicked()),this,SLOT(openLeft()));
     connect(m_closeRightDoors,SIGNAL(buttonClicked()),this,SLOT(closeRight()));
     connect(m_openRightDoors,SIGNAL(buttonClicked()),this,SLOT(openRight()));
+
     connect(m_selectLeftDoors,SIGNAL(buttonClicked()),this,SLOT(enableLeftPanel()));
     connect(m_selectRightDoors,SIGNAL(buttonClicked()),this,SLOT(enableRightPanel()));
+
+    connect(m_subte,SIGNAL(CSCPChanged(bool)),this,SLOT(updatePanel(bool)));
 }
 
 Doors_Controller::~Doors_Controller(){}
@@ -65,26 +68,6 @@ void Doors_Controller::turnOn()
     reset();
 }
 
-void Doors_Controller::openLeft(){
-    m_subte->openLeftDoors();
-    updateLeft();
-}
-
-void Doors_Controller::closeLeft(){
-    m_subte->closeLeftDoors();
-    updateLeft();
-}
-
-void Doors_Controller::openRight(){
-    m_subte->openRightDoors();
-    updateRight();
-}
-
-void Doors_Controller::closeRight(){
-    m_subte->closeRightDoors();
-    updateRight();
-}
-
 void Doors_Controller::enableLeftPanel(){
     if(!m_selectLeftDoors->buttonState()){
         updateLeft();
@@ -109,10 +92,10 @@ void Doors_Controller::enableRightPanel(){
 
 void Doors_Controller::updateLeft(){
     if(m_subte->leftDoors()){
-        m_closeLeftDoors->turnOff();
+        //m_closeLeftDoors->turnOff();
         m_openLeftDoors->turnOn();
     }else{
-        m_closeLeftDoors->turnOn();
+        //m_closeLeftDoors->turnOn();
         m_openLeftDoors->turnOff();
     }
     m_closeLeftDoors->setClickeable(m_subte->leftDoors());
@@ -121,12 +104,51 @@ void Doors_Controller::updateLeft(){
 
 void Doors_Controller::updateRight(){
     if(m_subte->rightDoors()){
-        m_closeRightDoors->turnOff();
+        //m_closeRightDoors->turnOff();
         m_openRightDoors->turnOn();
     }else{
-        m_closeRightDoors->turnOn();
+        //m_closeRightDoors->turnOn();
         m_openRightDoors->turnOff();
     }
     m_closeRightDoors->setClickeable(m_subte->rightDoors());
     m_openRightDoors->setClickeable(!m_subte->rightDoors());
 }
+
+void Doors_Controller::updatePanel(bool b){
+    if(m_subte->leftDoors()){
+        //m_closeLeftDoors->turnOff();
+        m_openLeftDoors->turnOn();
+    }else{
+        //m_closeLeftDoors->turnOn();
+        m_openLeftDoors->turnOff();
+    }
+    m_closeLeftDoors->setClickeable(m_subte->leftDoors());
+    m_openLeftDoors->setClickeable(!m_subte->leftDoors());
+
+    if(m_subte->rightDoors()){
+        //m_closeRightDoors->turnOff();
+        m_openRightDoors->turnOn();
+    }else{
+        //m_closeRightDoors->turnOn();
+        m_openRightDoors->turnOff();
+    }
+    m_closeRightDoors->setClickeable(m_subte->rightDoors());
+    m_openRightDoors->setClickeable(!m_subte->rightDoors());
+}
+
+void Doors_Controller::closeLeft(){
+    m_subte->updateLeftDoorsButtons(SubteStatus::PUERTAS_CERRADAS);
+}
+
+void Doors_Controller::closeRight(){
+    m_subte->updateRightDoorsButtons(SubteStatus::PUERTAS_CERRADAS);
+}
+
+void Doors_Controller::openLeft(){
+    m_subte->updateLeftDoorsButtons(SubteStatus::PUERTAS_ABIERTAS);
+}
+
+void Doors_Controller::openRight(){
+    m_subte->updateRightDoorsButtons(SubteStatus::PUERTAS_ABIERTAS);
+}
+

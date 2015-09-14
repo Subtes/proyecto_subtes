@@ -29,11 +29,14 @@
 #define EVENTHANDLER_H
 
 #include <QObject>
-#include <ENetClient.h>
-#include <Windows.h>
 #include <QSplashScreen>
 #include <QPixmap>
 #include <QDesktopWidget>
+
+#include <vector>
+#include <stdio.h>
+#include <ENetClient.h>
+#include <Windows.h>
 
 #include "src/controllers/enethelper.h"
 #include "src/controllers/keypresseater.h"
@@ -68,6 +71,8 @@ private:
     QDesktopWidget *desktop;
     QPixmap m_imageSplash;
 
+    bool splashPassed;
+
     bool F1_down;
     bool F2_down;
     bool F3_down;
@@ -94,14 +99,15 @@ private:
     bool OCHO_down;
     bool NUEVE_down;
 
-    //TODO:: SACAR ESTOOOOOOOO
-    bool splashPassed;
+    std::vector<std::string> split(std::string,char);
 
 signals:
     controlReady();
     controlDisable();
     controlEnable();
     controlReset();
+    cargarEstado(int);
+    closeApp();
     iCambioSenial1();
     bPressed();
     bReleased();
@@ -116,9 +122,8 @@ signals:
     f4Pressed();
     cPressed();
     frenoEstDes();
+    doorsChanged(bool);
     downLoaderBoarders();
-    closeApp();
-    cargarEstado(int);
     accelerationInstant(double);
     nextToEstation();
     departureEstation();

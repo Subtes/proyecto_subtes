@@ -5,7 +5,7 @@ ATP_model::ATP_model()
     m_allowedSpeed = 0;
     m_targetSpeed = 0;
     m_code = "";
-    m_traction=false;
+    m_traction=true;
 }
 
 ATP_model::~ATP_model()

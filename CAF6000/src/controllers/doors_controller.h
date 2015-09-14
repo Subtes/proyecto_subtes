@@ -18,8 +18,8 @@ public slots:
     void enableLeftPanel();
     void enableRightPanel();
     void openLeft();
-    void closeLeft();
     void openRight();
+    void closeLeft();
     void closeRight();
 
 private:
@@ -31,8 +31,10 @@ private:
     SingleButton *m_closeRightDoors;
     SingleButton *m_silbato;
 
+private slots:
     void updateLeft();
     void updateRight();
+    void updatePanel(bool b);
 };
 
 #endif // DOORS_CONTROLLER_H

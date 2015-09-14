@@ -1,8 +1,4 @@
 #include "eventhandler.h"
-#include <QSplashScreen>
-#include <QPixmap>
-#include <Qt>
-#include <stdio.h>
 
 EventHandler::EventHandler(QDesktopWidget *desktop)
 {
@@ -58,12 +54,10 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
         m_splash4 = new QSplashScreen(m_imageSplash);
         m_splash4->setWindowFlags(Qt::WindowStaysOnTopHint);
 
-
         QRect s0 = desktop->screenGeometry(0);
         QRect s1 = desktop->screenGeometry(1);
         QRect s2 = desktop->screenGeometry(2);
         QRect s3 = desktop->screenGeometry(3);
-
 
         m_splash1->move(s0.topLeft());
         m_splash2->move(s1.topLeft());
@@ -80,8 +74,6 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
         m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
         m_splash1->showMaximized();
     }
-
-
 }
 
 EventHandler::~EventHandler(){
@@ -112,10 +104,9 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_listo","0");
 
             if(!splashPassed){
-                qDebug() << "!splashPassed" ;
                 splashPassed = true;
                 emit controlReady();
-                    //Bajar splash
+                //Bajar splash
                 if(desktop->screenCount() == 4){
                     m_splash1->hide();
                     m_splash2->hide();
@@ -124,8 +115,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
                 }else{
                     m_splash1->hide();
                 }
-
-                qDebug() << "Bajando Splashhh";
             }
 
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estado_simulador");
@@ -136,13 +125,10 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_intensidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_llego_senial");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_intensidad");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_presion_cilindro");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_presion_freno");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_presion_alimentacion");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_proximo_a_estacion");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_estado_puertas");
             m_subte->reset();
             emit controlReset();
 
@@ -197,34 +183,26 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     }
 
     else if(key.compare("v_llego_senial") == 0){
-        std::string direction = "";
-        // find the last occurrence of ';'
-        size_t pos = value.find_last_of(";");
-        // make sure the poisition is valid
-        if (pos != std::string::npos)
-            direction = value.substr(pos+1);
-        else
-            qDebug() << "No se pudo encontrar 'separador ;' en el codigo de via recibido";
+        qDebug() << "cambio de llego senial." ;
 
-        if(direction.compare("0")==0){
-            qDebug() << "entro por sentido" <<direction.c_str();
-            std::string state = "";
-            // find the first occurrence of ';'
-            pos = value.find_first_of(";");
+        if(value.compare("none") != 0){
 
-            // make sure the poisition is valid
-            if (pos != std::string::npos)
-                state = value.substr(pos+1,1);
-            else
-                qDebug() << "No se pudo encontrar 'separador ;' en el codigo de via recibido";
+            QString message = value.c_str();
+            QStringList parameters = message.split(";");
 
-            if (state.compare("0")==0){
-                m_subte->setaActivated();
-                qDebug() << "c_freno_emergencia: con";
-                m_eNetClient->CambiarValorClave("c_freno_emergencia","con");
-                m_subte->tractionReceived(0);
-                qDebug() << "c_traccion: " << m_subte->traction();
-                m_eNetClient->CambiarValorClave("c_traccion",std::to_string(m_subte->traction()));
+            std::string direction = parameters.at(2).toStdString();
+            std::string state = parameters.at(1).toStdString();
+
+            if(direction.compare("0")==0){
+                qDebug() << "entro por sentido" <<direction.c_str();
+                if (state.compare("0")==0){
+                    m_subte->emergencyBrakeActived();
+                    qDebug() << "c_freno_emergencia: con";
+                    m_eNetClient->CambiarValorClave("c_freno_emergencia","con");
+                    m_subte->tractionReceived(0);
+                    qDebug() << "c_traccion: " << m_subte->traction();
+                    m_eNetClient->CambiarValorClave("c_traccion",std::to_string(m_subte->traction()));
+                }
             }
         }
     }
@@ -279,9 +257,8 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         catch (...) {
             qDebug() << "Presion de cilindro incorrecta." ;
         }
-
     }
-    else if(key.compare("v_presion_freno") == 0){
+    else if(key.compare("v_presion_alimentacion") == 0){
         qDebug() << "cambio de presion de frenado recibido." ;
         try{
             m_subte->updatePreassureWhite(std::stod(value));
@@ -306,6 +283,34 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         }
     }
 
+    else if(key.compare("v_estado_puertas") == 0){
+        qDebug() << "cambio de estado de puertas";
+
+        QString message = value.c_str();
+        QStringList parameters = message.split(";");
+        std::string side = parameters.at(0).toStdString();
+        std::string state = parameters.at(1).toStdString();
+
+        if(side.compare("derecha") == 0){
+            if(state.compare("abierto") == 0){
+                m_subte->openRightDoors();
+                qDebug() << "puertas derechas abiertas";
+            }
+            else if(state.compare("cerrado") == 0){
+                m_subte->closeRightDoors();
+                qDebug() << "puertas derechas cerradas";
+            }
+        } else {
+            if(state.compare("abierto") == 0){
+                m_subte->openLeftDoors();
+                qDebug() << "puertas izquierdas abiertas";
+            }
+            else if(state.compare("cerrado") == 0){
+                m_subte->closeLeftDoors();
+                qDebug() << "puertas izquierdas abiertas";
+            }
+        }
+    }
 }
 
 void EventHandler::processKeyPressed(DWORD k)
