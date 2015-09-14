@@ -3,8 +3,6 @@ QT += core gui quick quickwidgets widgets
 
 TEMPLATE = lib
 
-#order
-#release
 CONFIG +=
 
 HEADERS += \

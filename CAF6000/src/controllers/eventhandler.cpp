@@ -135,7 +135,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_intensidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
-            //m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_llego_senial");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_llego_senial");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_intensidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
@@ -456,9 +456,6 @@ void EventHandler::processKeyReleased(DWORD k){
         B_down = false;
         qDebug() << "B key released";
         emit bReleased();
-//    } else if ( k == 0x43 ){
-//        qDebug() << "C key released";
-//        C_down = false;
     } else if ( k == _CERO ){
         qDebug() << "0 key released";
         CERO_down = false;

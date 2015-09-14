@@ -190,10 +190,8 @@ void SubteStatus::washer()
  */
 void SubteStatus::tractionReceived(int value){
     double tractionToEmit = m_traction->updateTraction(value);
-    //qDebug() << "c_traccion: "<< tractionToEmit;
     if((value<10) || (abs(tractionToEmit - m_traction->lastTraction()) >= 5)){
         m_eventHandler->notifyValueChanged("c_traccion",std::to_string(tractionToEmit));
-        //qDebug() << "c_traccion: "<< tractionToEmit;
         m_traction->setLastTraction(tractionToEmit);
     }
 }
@@ -203,7 +201,6 @@ void SubteStatus::brakeReceived(int value){
     m_traction->updateTraction();
     if((value<10) || (abs(value - m_brake->lastBrake()) >= 5)){
         m_eventHandler->notifyValueChanged("c_freno",std::to_string(value));
-        //qDebug() << "c_freno: "<< value;
         m_brake->setLastBrake(value);
     }
 }
@@ -264,7 +261,7 @@ void SubteStatus::pressedCON(){
 }
 
 /**
- * @brief SubteStatus::pressedDES: /* Para desconectar los disyuntores, solo se pulsa “DES”, en cualquiera de las cabinas de conducción.
+ * @brief SubteStatus::pressedDES:  Para desconectar los disyuntores, solo se pulsa “DES”, en cualquiera de las cabinas de conducción.
  */
 void SubteStatus::pressedDES(){
     qDebug() << "Pressed DES Disyuntor";
