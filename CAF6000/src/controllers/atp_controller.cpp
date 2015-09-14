@@ -1,4 +1,10 @@
 #include "atp_controller.h"
+#include <QtMath>
+#include <QTimer>
+#include <QElapsedTimer>
+
+#include <math.h>
+#include <stdio.h>
 
 Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *eventHandler)
 {
@@ -6,307 +12,209 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     this->m_view = view;
     this->m_eventHandler = eventHandler;
 
-    this->speedTarget = 0.0;
-    this->speed = 0.0;
-    this->allowedSpeed = 0.0;
+    this->m_onATP = false;
 
-        //Maquina de Estado ATP, solo version CMC
-    this->m_machineATP = new QStateMachine();
+    this->onATP();
+    //this->m_machineATP->start();
 
-        //Estados
-    this->e_turnOn0 = new QState();
-//    this->e_turnOn1 = new QState();
-//    this->e_turnOn2 = new QState();
-    this->e_rolling = new QState();
-    this->e_controlLess2 = new QState();
-    this->e_controlLess1_5 = new QState();
-    this->e_controlLess1_0 = new QState();
-    this->e_controlLess0_5 = new QState();
-    this->e_breakingTo0 = new QState();
-//    this->e_breaking0 = new QState();
-//    this->e_nearToStation = new QState();
-//    this->e_curveBraking = new QState();
-//    this->e_nearToPlatform = new QState();
-    this->e_setaFired = new QState();
+    this->m_t_shot = new QTimer(this);
 
-        //Agrego los estados
-    this->m_machineATP->addState(this->e_turnOn0);
-//    this->m_machineATP->addState(this->e_turnOn1);
-//    this->m_machineATP->addState(this->e_turnOn2);
-    this->m_machineATP->addState(this->e_rolling);
-    this->m_machineATP->addState(this->e_controlLess2);
-    this->m_machineATP->addState(this->e_controlLess1_5);
-    this->m_machineATP->addState(this->e_controlLess1_0);
-    this->m_machineATP->addState(this->e_controlLess0_5);
-    this->m_machineATP->addState(this->e_breakingTo0);
-//    this->m_machineATP->addState(this->e_breaking0);
-//    this->m_machineATP->addState(this->e_nearToStation);
-//    this->m_machineATP->addState(this->e_curveBraking);
-//    this->m_machineATP->addState(this->e_nearToPlatform);
-    this->m_machineATP->addState(this->e_setaFired);
+    //m_distanceGD = 0;
+    m_changeDistance = false;
 
-        //Estado Final
-    this->e_Final_State = new QFinalState();
+    //Conexiones del ATP.
 
-        //Creo los Timer
-    this->t_reactionMotorMan = new QTimer(this->e_nearToStation);
-    this->t_timerToTurnOn = new QTimer(this->e_turnOn0);
-
-        //Seteo los timer
-    this->t_reactionMotorMan->setInterval(5000);
-    this->t_timerToTurnOn->setInterval(10000);
-
-        //Seteamos estado inicial
-    this->m_machineATP->setInitialState(this->e_turnOn0);
-
-        //Transiciones
-    //1.0 --> 1.1
-    //e_turnOn0->addTransition(t_timerToTurnOn,SIGNAL(timeout()),e_rolling);
-    e_turnOn0->addTransition(e_rolling);
-    //1.1 --> 1.2
-    //e_turnOn1->addTransition(this,SIGNAL(signalAnden()),e_turnOn2);
-    //1.2 --> r1.0
-    //e_turnOn2->addTransition(this,SIGNAL(enableTraction()),e_rolling);
-    //r1.0 --> r1.1
-    e_rolling->addTransition(this, SIGNAL(exceededSpeed20()),e_controlLess2);
-    e_rolling->addTransition(this, SIGNAL(exceededSpeed15()),e_controlLess1_5);
-    e_rolling->addTransition(this, SIGNAL(exceededSpeed10()),e_controlLess1_0);
-    e_rolling->addTransition(this, SIGNAL(exceededSpeed05()),e_controlLess0_5);
-    e_rolling->addTransition(this, SIGNAL(subteStoped()),e_breakingTo0);
-
-    //e_rolling->addTransition(this, SIGNAL(exceededSpeed05()),e_breakingTo0);
-    e_rolling->addTransition(this, SIGNAL(setaFired()),e_setaFired);
-    //r1.1 --> r1.2
-    e_controlLess2->addTransition(this,SIGNAL(exceededSpeed15()),e_controlLess1_5);
-    e_controlLess2->addTransition(this,SIGNAL(exceededSpeed10()),e_controlLess1_0);
-    e_controlLess2->addTransition(this,SIGNAL(exceededSpeed05()),e_controlLess0_5);
-    e_controlLess2->addTransition(this, SIGNAL(setaFired()),e_setaFired);
-    //r1.2 --> r1.3
-    e_controlLess1_5->addTransition(this, SIGNAL(exceededSpeed10()),e_controlLess1_0);
-    e_controlLess1_5->addTransition(this, SIGNAL(setaFired()),e_setaFired);
-    e_controlLess1_5->addTransition(this, SIGNAL(exceededSpeed05()),e_controlLess0_5);
-    //r1.3 --> r1.4
-    e_controlLess1_0->addTransition(this,SIGNAL(exceededSpeed05()),e_controlLess0_5);
-    e_controlLess1_0->addTransition(this, SIGNAL(setaFired()),e_setaFired);
-    //r1.4 --> r1.5
-    e_controlLess0_5->addTransition(this,SIGNAL(subteStoped()),e_breakingTo0);
-    e_controlLess0_5->addTransition(this, SIGNAL(setaFired()),e_setaFired);
-    //r1.5 --> B0
-    e_breakingTo0->addTransition(e_rolling);
-    e_setaFired->addTransition(this,SIGNAL(subteStoped()),e_breakingTo0);
-
-        //Arcos Back:
-    e_controlLess2->addTransition(this,SIGNAL(speedRecovered()),e_rolling);
-    e_controlLess1_5->addTransition(this,SIGNAL(speedRecovered()),e_rolling);
-    e_controlLess1_0->addTransition(this,SIGNAL(speedRecovered()),e_rolling);
-
-//    e_controlLess2->addTransition(this,SIGNAL(speedRecovered()),e_rolling);
-//    e_controlLess1_5->addTransition(this,SIGNAL(speedRecovered()),e_rolling);
-//    e_controlLess1_0->addTransition(this,SIGNAL(speedRecovered()),e_rolling);
-
-
-    //r2.0 --> r2.1
-    //r2.1 --> r2.2
-    //r2.2 --> r2.3
-    //r2.3 --> Finalk
-
-        //Transicion Final
-    e_rolling->addTransition(this,SIGNAL(reset()),e_Final_State);
-
-        //Acciones:
-    connect(e_turnOn0,SIGNAL(entered()),this, SLOT(turnOn0()));
-    connect(e_rolling, SIGNAL(entered()),this,SLOT(rolling()));
-//    connect(e_turnOn1,SIGNAL(entered()),this, SLOT(turnOn1()));
-//    connect(e_turnOn2,SIGNAL(entered()),this, SLOT(turnOn2()));
-    connect(e_controlLess2,SIGNAL(entered()),this,SLOT(speedExceededLessThan2()));
-    connect(e_controlLess1_5,SIGNAL(entered()),this,SLOT(speedExceededLessThan1_5()));
-    connect(e_controlLess1_0,SIGNAL(entered()),this,SLOT(speedExceededLessThan1_0()));
-    connect(e_controlLess0_5,SIGNAL(entered()),this,SLOT(speedExceededLessThan0_5()));
-    connect(e_breakingTo0,SIGNAL(entered()),this,SLOT(breakTo0()));
-    connect(e_setaFired,SIGNAL(entered()),this,SLOT(setaFiredRoutine()));
-
-        //Conexiones del ATP al resto del mundo.
-        //Conecciones externas:
+        //Conexiones Externas-IN:
     connect(subte,SIGNAL(speedChanged(double)),this,SLOT(updateSpeed(double)));
     connect(subte,SIGNAL(targetSpeedChanged(double)),this,SLOT(updateTargetSpeed(double)));
-    //connect(subte,SIGNAL(setaFired()),this,SIGNAL(setaFiredRoutine()));
+    //connect(this->m_t_shot,SIGNAL(timeout()),this,SLOT(evalCalculateDistance()));
+
+    connect(eventHandler,SIGNAL(kPressed()),this,SLOT(initATP()));
+    connect(eventHandler,SIGNAL(lPressed()),this,SLOT(resetATP()));
+    //connect(eventHandler,SIGNAL(iCambioSenial1()),SIGNAL(signalAnden()));
+    connect(eventHandler,SIGNAL(accelerationInstant(double)),this,SLOT(setACE(double)));
+    connect(eventHandler,SIGNAL(nextToEstation()),this,SLOT(nextToEstation()));
+    connect(eventHandler,SIGNAL(departureEstation()),this,SLOT(departureEstation()));
+
+        //Conexiones de control Internas
+    connect(this,SIGNAL(allowedSpeedChange(double)),this,SLOT(superviseSpeed()));
+
+        //Salidas Externas:
     connect(this, SIGNAL(cutTraction()),subte,SLOT(cutTraction()));
     connect(this, SIGNAL(enableTraction()),subte,SLOT(enableTraction()));
     connect(this, SIGNAL(enableBreakEmergency()),subte,SLOT(emergencyBrakeActived()));
     connect(this, SIGNAL(desableBreakEmergency()),subte,SLOT(emergencyBrakeReleased()));
-    connect(eventHandler,SIGNAL(kPressed()),this,SLOT(initATP()));
-    connect(eventHandler,SIGNAL(lPressed()),this,SLOT(resetATP()));
-    connect(eventHandler,SIGNAL(iCambioSenial1()),SIGNAL(signalAnden()));
-    connect(eventHandler,SIGNAL(frenoEstDes()),SIGNAL(enableTraction()));
-
+    connect(this, SIGNAL(enableBreakService(int)),subte,SLOT(brakeReceived(int)));
+    connect(this, SIGNAL(desableBreakService(int)),subte,SLOT(brakeReceived(int)));
 
 }
 
-/**********************************************************************************/
+/**************************************** Nuevo ATP ******************************************/
     //Acciones, rutinas a realizar en los estados:
+
+void Atp_Controller::set_uTVC(){
+/**
+  * Va a ser 0 si no es CMC, caso contrario va a ser CTE porque si es CMC
+  * y esta iniciando arranca con velocidad 0. O sea arrancaría con una transición peldaño.
+  */
+    if (!m_drivingModeCMC){
+        m_uTVC = 0;
+    }
+    else{
+        m_uTVC = 2;
+    }
+}
+
 //Inicia la maquina de estados, o sea el ATP, deberia estar conectado a la senal salida de Plataforma.
 void Atp_Controller::initATP(){
-//    if (this->m_machineATP->isRunning()){
-//        this->resetATP();
-//    }
-    this->m_machineATP->start();
-    this->speed = 0.0;
-    if ((this->m_subte->targetSpeed())>= 1.0){
-            this->speedTarget = 0.0;
-    }
-    this->allowedSpeed = 15.0;
-    qDebug() << "Atp_Controller::initATP ---> ATP iniciado en e_turnOn0";
-    this->t_timerToTurnOn->setInterval(10000);
+//VV
+//    this->onATP();
 
+
+    //HH Deberian ir en setter´s y getter´s luego.
+    //Tiempo T1 de la Transicion G Tiempo
+    //VV volver a 3000 luego de las pruebas.
+    this->m_t_TGT = 3000;
+    //VV aceleración instantánea, cambiar por la el modelo fisico cunado lo terminen.
+    this->m_ACE = 0.5;
+    //JF – Jerk de frenado: 0.89m/s3 (peor caso para 1 coche sin freno – vea [REF-9]).
+    this->m_Jerk = 0.89;
+    //Grade máximo de la vía (en módulo):
+    this->m_Gm = 3.75;
+    //TC – Tasa de la curva de reducción de código: 0,7m/s2.
+    this->m_Tc = 0.7;
+    //AF – Atraso de freno: 1.75s (incluye peor caso de reacción de freno del tren, en 1 coche
+    //[REF-9]: 1.25s y tiempo de reacción del ATP: 0.50s).
+    this->m_A_freno = 1.75;
+
+    if(this->m_subte->getDrivingModeATP()){
+        setDrivingMode(0);
+    }else{
+        setDrivingMode(1);
+    }
+
+    set_uTVC();
+
+    m_speed = 0.0;
+    m_speedAllowed = 0.0;
+    m_speedCritique = 0.0;
+    m_speedTargetPrevious = 0.0;
+    m_speedTarget = 60.0;
+
+    this->calculateDistance();
+
+    m_onATP = true;
+
+    if(this->m_subte->targetSpeed()>0){
+        this->updateTargetSpeed(this->m_subte->targetSpeed());
+    }else{
+        this->updateTargetSpeed(60.0);
+    }
+
+    //Intervalo de trabajo del ATP, salva en caso de quedar la velocidad planchada CTE y no recibir muestreo.
+    //VV No estaria haciendo Falta no recuerdo bien porque pense esto, salio de la charla con Fabri, VER. (Luego de la limpieza de codigo quitar, parece que hace falta por una cuestionde refresco)
+    //this->updateSpeed(m_speed);
+    this->m_machineATP->start();
+    m_t_evalChangeSpeed->setInterval(500);
+    m_t_evalChangeSpeed->start();
 }
 
-
 void Atp_Controller::resetATP(){
-    this->m_machineATP->stop();
-//    this->m_view->setCMC(false);
-//    this->m_view->setCorte(false);
-//    this->m_view->setCorteBlink(false);
-//    this->m_view->setFrenoUrg(false);
-//    this->m_view->setFrenoUrgBlink(false);
+
+//    emit offATP();
+//    this->off_ATP();
+
+//    this->m_e_A->deleteLater();
+//    this->m_e_B->deleteLater();
+//    this->m_e_C->deleteLater();
+//    this->m_e_D->deleteLater();
+
+//    this->m_e_Final_State->deleteLater();
+//    this->m_machineATP->deleteLater();
+
+    this->m_onATP = false;
+    this->off_ATP();
+
     qDebug() << "Atp_Controller::resetATP() ---> ATP machine stop";
 }
 
-void Atp_Controller::turnOn0(){
-    qDebug() << "Atp_Controller::turnOn0()";
-    this->m_view->setCMC(true);
-    this->enableTraction();
-    if (this->speedTarget >= 1.0){
-        //this->m_view->updateTargetSpeed(this->speedTarget);
-        qDebug() << "velocidad updateSpeedTarget paso 0 inicio ATP recibida" << this->speedTarget;
-        this->updateTargetSpeed(this->speedTarget);
-    } else{
-        this->updateTargetSpeed(0.0);
+void Atp_Controller::setDrivingMode(int d){
+ //VV Falta chequear off sets, y ver modo AL AT si van en true y se prende falla en ATP.
+    switch(d){
+    case 0:
+        m_drivingModeCMC = true;
+        this->m_view->setCMC(true);
+        this->m_view->setCL(false);
+        m_OS_ACT = 4.0;
+        m_OS_LCT = 5.0;
+        m_OS_AFS = 2.0;
+        m_OS_LFS = 3.0;
+        m_OS_AFE = 0.0;
+        break;
+    case 1:
+        m_drivingModeCL = true;
+        this->m_view->setCL(true);
+        this->m_view->setCMC(false);
+        m_OS_ACT = 2.0;
+        m_OS_LCT = 3.0;
+        m_OS_AFS = 1.0;
+        m_OS_LFS = 2.0;
+        m_OS_AFE = 0.0;
+        break;
+    case 2:
+        m_drivingModeAL = true;
+        this->m_view->setFalla(true);
+        m_OS_ACT = 0.0;
+        m_OS_LCT = 1.0;
+        m_OS_AFS = -100.0;
+        m_OS_LFS = -100.0;
+        m_OS_AFE = -100.0;
+        break;
+     case 3:
+        m_drivingModeAT = true;
+        this->m_view->setFalla(true);
+        m_OS_ACT = -100.0;
+        m_OS_LCT = -100.0;
+        m_OS_AFS = -100.0;
+        m_OS_LFS = -100.0;
+        m_OS_AFE = -100.0;
+        break;
     }
-
-    //this->m_view->updateAllowedSpeed(15.0);
-    this->t_timerToTurnOn->start();
-    qDebug() << "Velocidad Objetivo: 0, Blinking";
-    qDebug() << "Velocidad Permitida: 15";
-    qDebug() << "Timer of 10 second activated";
 }
-
-void Atp_Controller::turnOn1(){
-    qDebug() << "Atp_Controller::turnOn1()";
-    qDebug() << "Atp_Controller::turnOn1 --> C.Traccion ON";
-    this->m_view->setCorte(true);
-    //Cortar Traccion
-    qDebug() << "Corte traccion... ";
-    emit this->cutTraction();
-    qDebug() << "Velocidad Objetivo: 0";
-    this->m_view->updateTargetSpeed(0.0);
-}
-
-void Atp_Controller::turnOn2(){
-    qDebug() << "Atp_Controller::turnOn2()";
-    qDebug() << "Atp_Controller::turnOn2 --> C.Traccion OFF";
-    this->m_view->setCorte(false);
-    qDebug() << "Liberar Corte Traccion";
-    emit this->enableTraction();
-    qDebug() << "Velocidad Objetivo: 0";
-    this->m_view->updateTargetSpeed(0.0);
-
-}
-
-void Atp_Controller::rolling(){
-    //Actualiza speedReal en ATP widget
-    qDebug() << "Atp_Controller::rolling() --> updatedSpeed() ATP";
-    this->m_view->setCorte(false);
-    this->m_view->setCorteBlink(false);
-    this->m_view->setFrenoUrg(false);
-    this->m_view->setFrenoUrgBlink(false);
-}
-
-void Atp_Controller::resetViewState(){
-    //Actualiza speedReal en ATP widget
-    this->m_view->setCorte(false);
-    this->m_view->setCorteBlink(false);
-    this->m_view->setFrenoUrg(false);
-    this->m_view->setFrenoUrgBlink(false);
-}
-
-void Atp_Controller::speedExceededLessThan2(){
-    //C.T.: ON (blinking)
-    this->m_view->setCorte(false);
-    this->m_view->setCorteBlink(true);
-    this->m_view->setFrenoUrg(false);
-    this->m_view->setFrenoUrgBlink(false);
-    qDebug() << "Atp_Controller::speedExceededLessThan2()";
-}
-
-void Atp_Controller::speedExceededLessThan1_5(){
-    //C.T.: ON
-    this->m_view->setFrenoUrg(false);
-    this->m_view->setFrenoUrgBlink(false);
-    this->m_view->setCorteBlink(false);
-    this->m_view->setCorte(true);
-
-    emit cutTraction();
-    qDebug() << "Atp_Controller::speedExceededLessThan1_5()";
-}
-
-void Atp_Controller::speedExceededLessThan1_0(){
-    //Freno: ON (blink)
-    this->m_view->setCorteBlink(false);
-    this->m_view->setCorte(true);
-    this->m_view->setFrenoUrgBlink(true);
-    this->m_view->setFrenoUrg(false);
-    qDebug() << "Atp_Controller::speedExceededLessThan1_0()";
-}
-
-void Atp_Controller::speedExceededLessThan0_5(){
-    //Frneo: ON
-    this->m_view->setCorte(true);
-    this->m_view->setCorteBlink(false);
-    this->m_view->setFrenoUrg(true);
-    this->m_view->setFrenoUrgBlink(false);
-    emit enableBreakEmergency();
-    qDebug() << "Atp_Controller::speedExceededLessThan0_5()";
-}
-
-void Atp_Controller::breakTo0(){
-    //Anulacion corte traccion
-    emit enableTraction();
-
-    //Anulacion freno emergencia
-//    emit desableBreakEmergency();
-
-    //Apagado luces CTraccion Freno
-    qDebug() << "Atp_Controller::breakTo0()";
-//    this->m_view->setFrenoUrg(false);
-//    this->m_view->setCorte(false);
-    this->m_view->updateTargetSpeed(this->speedTarget);
-}
-
-void Atp_Controller::setaFiredRoutine(){
-        this->m_view->setCorte(false);
-        this->m_view->setFrenoUrgBlink(false);
-        this->m_view->setFrenoUrg(true);
-        qDebug()<<"Atp_Controller::setaFired()"<<"--> setFalse to Corte, FreUrgBlink";
-}
-
-/**********************************************************************************/
 
 void Atp_Controller::updateTargetSpeed(double speed){
-//    m_view->setCorteBlink(true);
-//    m_view->setFrenoUrgBlink(true);
-//    m_view->setFservBlink(true);
-//    m_view->updateTargetSpeed(57);
-//    m_view->setBlinkSpeedTarget(true);
-    this->m_view->updateTargetSpeed(speed);
 
-    this->speedTarget = speed;
-    this->updateAllowedSpeed(speed*0.9);
+    if (m_onATP){
+
+        this->m_view->updateTargetSpeed(speed);
+        this->setSpeedTarget(speed);
+        this->updateAllowedSpeed(speed);
+
+    }
 }
 
-void Atp_Controller::updateAllowedSpeed(double speed){
-    this->m_view->updateAllowedSpeed(speed);
+void Atp_Controller::nextToEstation(){
 
-    this->allowedSpeed = speed;
+//Esto es un Parche debido al modelo!! ojo ver. Es porque no manda señales manda velocidades que no son unicas.
+    if (m_onATP){
+
+        this->m_view->updateTargetSpeed(0.0);
+        this->m_view->setBlinkSpeedTarget(true);
+        m_AF_previous = m_AF;
+        m_AF = "1";
+        m_speedTargetPrevious = m_speedTarget;
+        m_speedTarget = 15.0;
+        this->updateAllowedSpeed(m_speedTargetPrevious);
+
+    }
+
+}
+
+void Atp_Controller::departureEstation(){
+    //VV
+    qDebug()<<" <--- DEPARTURE ESTATION, Setting Speed Target with Previous: ---> ";
+    this->m_view->setBlinkSpeedTarget(false);
+    updateTargetSpeed(m_speedTargetPrevious);
 }
 
 void Atp_Controller::updateSpeed(double speed){
@@ -314,75 +222,453 @@ void Atp_Controller::updateSpeed(double speed){
     //Controla velocidad con permitida y acciona
         //Si todo bien update en vista real speed
         //en else voy a emitir una senal privada cuando no verifique ahi engancho
-    this->m_view->updateSpeed(speed);
+   if (m_onATP){
+       this->m_view->updateSpeed(speed);
+       this->m_speed = speed;
+       superviseSpeed();
+   }
+}
 
-    this->speed = speed;
-    double dif = (double)(this->allowedSpeed - this->speed);
-    qDebug() << "Atp_Controller::updateSpeed Diferencia speed - allowedSpeed: "<< dif;
-    qDebug() << "allowed: " << this->allowedSpeed << "speed: " << this->speed;
+void Atp_Controller::setAllowedSpeed(double s){
 
-    if (this->allowedSpeed <= this->speed){
-        emit this->exceededSpeed05();
-        qDebug() << "Violacion de velocidad permitida, ATP";
+        m_speedAllowedPrevious = m_speedAllowed;
+        m_speedAllowed = s;
+//        qDebug()<<" <--- Set ALLOWED SPEED: ---> ";
+//        qDebug()<<"velocidad permitida Previa: ---> "<< m_speedAllowedPrevious;
+//        qDebug()<<"velocidad permitida Actual: ---> "<< m_speedAllowed;
+        m_view->updateAllowedSpeed(s);
+        emit allowedSpeedChange(s);
+
+}
+
+void Atp_Controller::setSpeedTarget(double speed){
+
+    int s = static_cast<int>(speed);
+    switch(s){
+        case 0:
+            m_AF_previous = m_AF;
+            m_AF = "0";
+        break;
+        case 15:
+            m_AF_previous = m_AF;
+            m_AF = "2";
+        break;
+        case 25:
+            m_AF_previous = m_AF;
+            m_AF = "3";
+        break;
+        case 30:
+            m_AF_previous = m_AF;
+            m_AF = "4";
+        break;
+        case 40:
+            m_AF_previous = m_AF;
+            m_AF = "5";
+        break;
+        case 50:
+            m_AF_previous = m_AF;
+            m_AF = "6";
+        break;
+        case 60:
+            m_AF_previous = m_AF;
+            m_AF = "7";
+        break;
     }
 
-    if (2.0<dif){
-        emit this->speedRecovered();
-        qDebug() << "emit this->speedRecovered();";
-    };
-    if (1.5<dif && dif<=2.0){
-        emit this->exceededSpeed20();
-        qDebug()<< "emit this->exceededSpeed20();";
-    };
-    if (1.0<dif && dif<=1.5){
-        emit this->exceededSpeed15();
-        qDebug()<<"emit this->exceededSpeed15();";
-    };
-    if (0.5<dif && dif<=1.0){
-        emit this->exceededSpeed10();
-        qDebug()<<"emit this->exceededSpeed10();";
-    };
-    if (dif<=0.5){
-        //break
-        emit this->exceededSpeed05();
-        qDebug()<<"emit this->exceededSpeed05();";
-    };
+    m_speedTargetPrevious = m_speedTarget;
+    m_speedTarget = speed;
+//    m_AF = QString::number(m_speedTarget);
+//    m_AF_previous = QString::number(m_speedTargetPrevious);
+    //emit targetSpeedChange(speed);
+}
 
-    if ((-0.1<speed && speed<=0.01)){
-        emit this->subteStoped();
-        qDebug()<<"emit this->subteStoped();";
-    };
+void Atp_Controller::critiqueSpeed(int op){
 
- //    if (5.0<dif){
-//        emit this->speedRecovered();
-//        qDebug() << "emit this->speedRecovered();";
-//    };
-//    if (3.5<dif && dif<=5.0){
-//        emit this->exceededSpeed20();
-//        qDebug()<< "emit this->exceededSpeed20();";
-//    };
-//    if (2.5<dif && dif<=3.5){
-//        emit this->exceededSpeed15();
-//        qDebug()<<"emit this->exceededSpeed15();";
-//    };
-//    if (1.5<dif && dif<=2.5){
-//        emit this->exceededSpeed10();
-//        qDebug()<<"emit this->exceededSpeed10();";
-//    };
-//    if (0.0<dif && dif<=1.5){
-//        //break
-//        emit this->exceededSpeed05();
-//        qDebug()<<"emit this->exceededSpeed05();";
-//    };
+    m_uTVC = op;
 
-//    if ((-0.1<speed && speed<=0.0)){
-//        emit this->subteStoped();
-//        qDebug()<<"emit this->subteStoped();";
-//    };
+    if (!m_uTVC){
+        m_speedCritique = 0;
+    }else if ( m_uTVC == 1 ){
+        //Curva
+        m_speedCritique = 3.6*((m_ACE + m_Tc)*m_A_freno + pow( (fmin(m_ACE,-0.098*m_Gm)+m_Tc),2 )/(2*m_Jerk) );
+    }else{
+        //CTE
+        m_speedCritique = 3.6*(m_ACE*m_A_freno + pow( (fmin(m_ACE,-0.098*m_Gm)),2 )/(2*m_Jerk));
+    }
+}
 
+/**
+ * @brief Atp_Controller::updateAllowedSpeed
+ * Siempre que exista una variación en la Velocidad Objetivo, la Velocidad Permitida
+ * podrá sufrir variación.
+ * A continuación se describen las diversas transiciones posibles, siendo que el orden sigue la
+ * prioridad decreciente. De esta manera, solamente si la primera transición no es identificada es
+ * que las transiciones subsiguientes podrán ocurrir.
+ * @param speedTargetNew
+ */
+void Atp_Controller::updateAllowedSpeed(double speedTargetNew){
+
+    critiqueSpeed(2);
+
+    if ( (m_speed <= 0.00)||(m_speedTargetPrevious < m_speedTarget)||((m_speedTargetPrevious >= m_speedTarget)&&(m_speed <= (m_speedTarget - 5.00))&&(m_AF != "1"))||
+             (m_AF == "0" && m_AF_previous == "1")||(m_AF == "0" && m_AF_previous == "2")){
+            //Transicion Peldano
+                setAllowedSpeed(speedTargetNew);
+        }else if ((m_speedTarget < m_speedTargetPrevious)&&(/*m_speedTarget != m_AF_1*/m_AF != "1")){
+            //Transicion Gradual por Tiempo (3 seg; 0,7 m/s2)
+            //m_t_TGT->start();
+            //Conectar con transitionGT() agregar setter para variable con los 3000
+            QTimer::singleShot(m_t_TGT,this,SLOT(transitionGT()));
+        }else if ((m_speedTarget < m_speedTargetPrevious)&&(/*m_speedTarget == m_AF_1*/m_AF == "1")){
+            //Transicion Gradual por distancia
+//            m_t_shot->setInterval(500);
+//            m_t_shot->start();
+            transitionGD();
+        }
+}
+
+void Atp_Controller::transitionGT(){
+    // V = Vo + At
+    qDebug()<< "******************  Comenzando Transition GT  **********************************";
+    double t = ((m_speedTarget - m_speedTargetPrevious)*0.277777777777778)/(-0.7);
+    int tAux = static_cast<int>(t*1000);
+    //HH agregar funcion para ver si es mayor a X.5 tomar mayor sino menos (parte entera superior)
+    qDebug()<< " Tiempo de Transicion ---((m_speedTarget - m_speedTargetPrevious)*0.277777777777778)/(-0.7) --> " << t << "tAux" << tAux;
+    QTime lapTime = QTime::currentTime();
+    QTime ts = QTime::currentTime().addMSecs(tAux);
+    qDebug()<< " lapTime Reloj seteado en: ---> " << lapTime.toString();
+    qDebug()<< " ts (tiempo estimado de transicion para Allowed segun New Target) Reloj seteado en: ---> " << ts.toString();
+    qDebug()<< " m_speedTarget: " << m_speedTarget;
+    qDebug()<< " m_speedTargetPrevious: " << m_speedTargetPrevious;
+    double vAllowed;
+    vAllowed = m_speedTargetPrevious;
+    qDebug()<< " vAllowed := m_speedTargetPrevious:  " << m_speedTargetPrevious;
+    setAllowedSpeed(vAllowed);
+
+    if (m_drivingModeCMC) critiqueSpeed(1);
+
+    //WHILE timeLAP ...
+    int lap = 0;
+    lapTime.start();
+    while ((lapTime.currentTime() < ts) && (m_speedAllowed > m_speedTarget) /* alcanzo AllowedSpeed */){
+        //wait && update speedAllowed
+//        qDebug()<<"(m_speedAllowed > m_speedTarget)  "<< (m_speedAllowed > m_speedTarget);
+        lap = lapTime.elapsed();
+//        qDebug()<< "lapTime.toString() " << lapTime.toString();
+//        qDebug()<< "lapTime.currentTime() " << lapTime.currentTime();
+//        qDebug()<< "lapTime.elapsed() "<< lap;
+        if (lap % 2 == 0){
+//            qDebug()<< "---------------------------------IF---------------------------------------------";
+            //update allowedSpeed hacer calculo en funcion del tiempo transcurrido
+            vAllowed = m_speedTargetPrevious + ((-0.7)*(static_cast<double>(lapTime.elapsed())/static_cast<double>(1000)))*3.6;
+            setAllowedSpeed(((vAllowed>m_speedTarget)?vAllowed:m_speedTarget));
+//            qDebug()<< " ((vAllowed>m_speedTarget)?vAllowed:m_speedTarget) ------> " << ((vAllowed>m_speedTarget)?vAllowed:m_speedTarget);
+//            qDebug()<< " vAllowed: "<< vAllowed <<"; " << "m_speedTarget: " << m_speedTarget;
+//            qDebug()<< " lap:  "<< lap;
+//            qDebug()<< "-------------------------------END IF-------------------------------------------";
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+        }
+        //QTimer::singleShot(1500,this,SLOT(transitionGT()));
+    }
+    critiqueSpeed(2);
+    setAllowedSpeed(m_speedTarget);
+    qDebug()<< "ALLOWED SPEED Set TO: " << m_speedTarget;
+    qDebug() << "************************** FIN Transition GT ***************************************";
+
+//    QTime timeDo = QTime::currentTime();
+//    QTime dieTime = timeDo.addSecs(2);
+
+//    qDebug()<< " timeDo.toString() " << timeDo.toString();
+//    qDebug()<< " dieTime.toString() " << dieTime.toString();
+
+//    timeDo.start();
+//    int count= 0;
+//    while (timeDo.currentTime() < dieTime){
+//        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+//        if (count < 80){
+//            m_view->updateSpeed(count);
+//        }
+//        qDebug()<< " timeDo.second() " << timeDo.second();
+//        qDebug()<< " timeDo.elapsed() " << timeDo.elapsed();
+//        count++;
+//    }
+}
+
+/**
+ * @brief Atp_Controller::transitionGD
+ * a: 0.6 Aref, aceleracion de referencia de la curva de plataforma.
+ * dp: distancia estandar de plataforma: 403.
+ * tbp: tiempo de atraso de B-point de reduccion de codigo: 1.6.
+ * d_ini: valor inicial.
+ */
+void Atp_Controller::transitionGD(){
+    // V = 3.6*RAIZ(2*Aref*D)
+    //Aref – Aceleración de referencia
+    double a = 0.6;
+    double dp = 403.0;
+    //Es el tiempo de atraso de B-point
+    double tbp = 1.6;
+    double d_ini = 0;
+    //double d = 0;
+    int v_aux;
+
+    qDebug()<<" <--------------------- Inicio Transicion GD: ---------------------------->";
+    d_ini = dp - m_speed*0.277777777777778*tbp;
+    qDebug() << "d_ini: "<< d_ini;
+
+    v_aux = static_cast<int>(3.6*qSqrt(2*a*d_ini));
+
+    if (v_aux<m_speedAllowed)
+        setAllowedSpeed(v_aux);
+    else setAllowedSpeed(m_speedAllowed);
+    qDebug()<< " (v_aux<m_speedAllowed)?v_aux:m_speedAllowed: " << ((v_aux<m_speedAllowed)?v_aux:m_speedAllowed);
+    qDebug()<< " v_aux " << v_aux;
+    qDebug()<< " m_speedAllowed "<< m_speedAllowed;
+
+    if (m_drivingModeCMC) critiqueSpeed(0);
+
+    //HH Hacerlo global despues
+    QTime *timeLap = new QTime(0,0,0);
+    qDebug()<<"Comienzo de reloj GD: "<< timeLap->toString();
+    timeLap->start();
+
+    QElapsedTimer timer;
+    timer.start();
+    //slowOperation();  // we want to measure the time of this slowOperation()
+//    qDebug() << "d_ini---->  " << d_ini;
+//    qDebug() << "speedallowed---->  " << m_speedAllowed;
+//    qDebug() << "speedtarget---->  " << m_speedTarget;
+//    qDebug() << "timer elpsed---->  " << timer.elapsed();
+
+    double calc;
+    double sp;
+
+    qDebug()<<" ******** GD ******** Recalculando distancia y Allowed Speed ********* GD *******";
+    while ((d_ini >= 0) && (m_speedAllowed > m_speedTarget)){
+        calc = (static_cast<double>(timer.elapsed())/static_cast<double>(1000));
+        sp = (m_speed*0.277777777777778);
+        d_ini = 403 - sp*calc;
+//            qDebug() << " +++++++++++++++++ Mauri ++++++++++++++++++++++++++ ";
+//            qDebug() << "timer elpsed---->  " << timer.elapsed() << " calc: " << calc;
+//            qDebug() << " d_ini---->  " << d_ini;
+//            qDebug() << " m_speed " << m_speed << " sp: " << sp;
+//            qDebug() << " +++++++++++++++++++++++++++++++++++++++++++ ";
+
+        if (d_ini>=0){
+            v_aux=(m_speedAD->operator [](d_ini));
+            //qDebug()<<" Velocidad Permitida de curva GD:  ---->  "<< v_aux;
+        }
+        if (v_aux <= m_speedTargetPrevious){
+            setAllowedSpeed(((v_aux>15.0)?v_aux:15.0));
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+            qDebug()<<" <---- NUEVA Velocidad Permitida de curva GD:  ---->  "<< ((v_aux>15.0)?v_aux:15.0);
+        }
+    }
+//    QTime dieTime= QTime::currentTime().addSecs(3);
+//    while (QTime::currentTime() < dieTime)
+//        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+
+    qDebug()<<" <--------- Fin Bucle ------- Transicion GD: ---------------------------->";
+    critiqueSpeed(2);
+    setAllowedSpeed(15.0);
+    qDebug()<<" +++++++++++++++++++++++ FIN Transicion GD: +++++++++++++++++++++++++++++ ";
+}
+
+void Atp_Controller::calculateDistance(){
+    int d = 403;
+    int v = 0;
+    double a = 0.6;
+    this->m_speedAD = new QHash<int, int>;
+
+    while (d >= 0 ){
+        v = static_cast<int>(3.6*qSqrt(2*a*d));
+        m_speedAD->insert(d,v);
+//        qDebug()<< "d,v: " << d << "," << v;
+        d--;
+    }
+//    QList<int> values = m_speedAD->values();
+//    qDebug() << "Velocidades GD: ";
+//    for (int i = 0; i < values.size(); ++i)
+//        qDebug() << values.at(i) << endl;
+//    qDebug() << "Velocidades GD FIN";
+
+}
+
+void Atp_Controller::evalCalculateDistance(){
+    m_changeDistance = !m_changeDistance;
+    qDebug()<< "Entrando en evalCalculateDistance() ----->" << m_changeDistance;
+}
+
+/**
+  * Supervision de la velocidad
+  * Senales activadoras
+  *  void _1AtoB();
+  *  void _2BtoA();
+  *  void _3BtoC();
+  *  void _4CtoB();
+  *  void _5CtoD();
+  *  void _6DtoC();
+  *   Rutinas
+  *  void routingA();
+  *  void routingB();
+  *  void routingC();
+  *  void routingD();
+  */
+void Atp_Controller::superviseSpeed(){
+//Deberia entrar cada vez que cambia speed o allowed speed
+//    qDebug()<<"-------------------Supervise Speed: ----------------------";
+//    qDebug()<<"m_speed: "<<m_speed;
+//    qDebug()<<"m_speedAllowed: "<<m_speedAllowed;
+//    qDebug()<<"m_speedCritique: "<<m_speedCritique;
+//    qDebug()<<"m_uTVC: "<<m_uTVC;
+//    qDebug()<<"m_OS_AFE: "<<m_OS_AFE;
+//    qDebug()<<"m_OS_LFS: "<<m_OS_LFS;
+//    qDebug()<<"m_OS_AFS: "<<m_OS_AFS;
+//    qDebug()<<"m_OS_ACT: "<<m_OS_ACT;
+//    qDebug()<<"m_OS_LCT: "<<m_OS_LCT;
+
+    if (m_speed == 0.0){
+        //qDebug()<< " _1AtoB: ----> FrenoEmergencia: OFF, FrenoServicio: ON, CorteTraccion: ON ";
+        emit _1AtoB();
+    }
+    if ((m_speed + m_OS_AFE > m_speedAllowed) || ((m_speed + m_OS_AFE + m_speedCritique > m_speedAllowed) && (m_uTVC!=0)) ){
+        //qDebug()<< " _2BtoA: ----> FrenoEmergencia: ON, FrenoServicio: ON, CorteTraccion: ON  ";
+        emit _2BtoA();
+    }
+    if ( ((m_speed + m_OS_LFS <= m_speedAllowed)&& (m_uTVC==0)) || (m_speed + m_OS_LFS + m_speedCritique <= m_speedAllowed) ){
+        //qDebug()<<" _3BtoC: ----> FrenoEmergencia: OFF, FrenoServicio: OFF, CorteTraccion: ON ";
+        emit _3BtoC();
+    }
+    if ( ( m_speed + m_OS_AFS > m_speedAllowed ) || ((m_uTVC!=0) && ((m_speed + m_OS_AFS + m_speedCritique) > m_speedAllowed)) ){
+        //qDebug()<<" _4CtoB: ----> FrenoEmergencia: OFF, FrenoServicio: ON, CorteTraccion: ON ";
+        emit _4CtoB();
+    }
+    if ( (m_speed + m_OS_LCT <= m_speedAllowed && (m_uTVC==0)) || (m_speed + m_OS_LCT + m_speedCritique <= m_speedAllowed) ){
+        //qDebug()<<" _5CtoD: ----> FrenoEmergencia: OFF, FrenoServicio: OFF, CorteTraccion: OFF ";
+        emit _5CtoD();
+    }
+    if ( (m_speed + m_OS_ACT > m_speedAllowed) || ((m_uTVC!=0) && (m_speed + m_OS_ACT + m_speedCritique > m_speedAllowed)) ){
+        //qDebug()<< " _6DtoC: ----> FrenoEmergencia: OFF, FrenoServicio: OFF, CorteTraccion: ON ";
+        emit _6DtoC();
+    }
+
+//    qDebug()<<"----------------------FIN supervise speed-------------------";
+}
+
+void Atp_Controller::onATP(){
+
+    //Maquina de Estado ATP, solo version CMC
+    this->m_machineATP = new QStateMachine();
+
+    //Estados
+    this->m_e_A = new QState();
+    this->m_e_B = new QState();
+    this->m_e_C = new QState();
+    this->m_e_D = new QState();
+
+    //Agrego los estados
+    this->m_machineATP->addState(this->m_e_A);
+    this->m_machineATP->addState(this->m_e_B);
+    this->m_machineATP->addState(this->m_e_C);
+    this->m_machineATP->addState(this->m_e_D);
+
+    //Estado Final
+    this->m_e_Final_State = new QFinalState();
+
+    //Seteamos estado inicial
+    this->m_machineATP->setInitialState(this->m_e_A);
+
+    //Transiciones
+    //A --to--> B
+    m_e_A->addTransition(this,SIGNAL(_1AtoB()),m_e_B);
+    //B --to--> A Back
+    m_e_B->addTransition(this,SIGNAL(_2BtoA()),m_e_A);
+    //B --to--> C
+    m_e_B->addTransition(this,SIGNAL(_3BtoC()),m_e_C);
+    //C <--to--B Back
+    m_e_C->addTransition(this,SIGNAL(_4CtoB()),m_e_B);
+    //C --to--> D
+    m_e_C->addTransition(this,SIGNAL(_5CtoD()),m_e_D);
+    //D --to--> C Back
+    m_e_D->addTransition(this,SIGNAL(_6DtoC()),m_e_C);
+
+    //Transicion Final
+    m_e_A->addTransition(this,SIGNAL(offATP()),m_e_Final_State);
+    m_e_B->addTransition(this,SIGNAL(offATP()),m_e_Final_State);
+    m_e_C->addTransition(this,SIGNAL(offATP()),m_e_Final_State);
+    m_e_D->addTransition(this,SIGNAL(offATP()),m_e_Final_State);
+
+    //Acciones:
+    connect(m_e_A,SIGNAL(entered()),this,SLOT(routingA()));
+    connect(m_e_B,SIGNAL(entered()),this,SLOT(routingB()));
+    connect(m_e_C,SIGNAL(entered()),this,SLOT(routingC()));
+    connect(m_e_D,SIGNAL(entered()),this,SLOT(routingD()));
+
+    //Timer
+    m_t_evalChangeSpeed = new QTimer();
+    connect(m_t_evalChangeSpeed, SIGNAL(timeout()),this,SLOT(superviseSpeed()));
+}
+
+void Atp_Controller::off_ATP(){
+
+    this->m_machineATP->stop();
+
+    this->m_view->setCMC(false);
+    this->m_view->setCL(false);
+    this->m_view->setFalla(false);
+    this->m_view->setCorte(false);
+    this->m_view->setCorteBlink(false);
+    this->m_view->setFrenoUrg(false);
+    this->m_view->setFrenoUrgBlink(false);
+}
+
+void Atp_Controller::setACE(double a){
+    this->m_ACE = a;
+}
+
+void Atp_Controller::routingA(){
+
+    this->m_view->setFrenoUrg(true);
+    this->m_view->setFserv(true);
+    this->m_view->setCorte(true);
+    //qDebug() << "Atp_Controller::routingA() ---> Corte, Fserv, FrenoUrg: ON ";
+    emit cutTraction();
+    emit enableBreakService(50);
+    emit enableBreakEmergency();
+}
+
+void Atp_Controller::routingB(){
+
+    this->m_view->setFrenoUrg(false);
+    this->m_view->setFserv(true);
+    this->m_view->setCorte(true);
+    //qDebug() << "Atp_Controller::routingB() ---> FrenoUrg: OFF; Corte, Fserv: ON ";
+    emit cutTraction();
+    emit desableBreakEmergency();
+    emit enableBreakService(0);
+}
+
+void Atp_Controller::routingC(){
+
+    this->m_view->setFrenoUrg(false);
+    this->m_view->setFserv(false);
+    this->m_view->setCorte(true);
+    //qDebug() << "Atp_Controller::routingC() ---> FrenoUrg, Fserv: OFF; Corte: ON ";
+    emit cutTraction();
+}
+
+void Atp_Controller::routingD(){
+
+    this->m_view->setFrenoUrg(false);
+    this->m_view->setFserv(false);
+    this->m_view->setCorte(false);
+    //qDebug() << "Atp_Controller::routingD() ---> FrenoUrg, Fserv, Corte: OFF; ";
+    emit enableTraction();
 }
 
 Atp_Controller::~Atp_Controller(){
 
 }
-
+/**
+ *
+ */
