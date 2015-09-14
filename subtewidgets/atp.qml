@@ -360,7 +360,7 @@ Rectangle {
     }//Row LED
 
     function allowedSpeed(x){
-        console.log("Dentro del QML", x);
+        //console.log("Dentro del QML", x);
         for (indexLedAllow=0; indexLedAllow<=(x-1); indexLedAllow++){
             ledsSpeedAllowed[indexLedAllow].opacity=1;
         };

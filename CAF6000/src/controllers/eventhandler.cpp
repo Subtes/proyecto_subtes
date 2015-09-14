@@ -103,7 +103,7 @@ void EventHandler::notifyValueChanged(std::string key, std::string value)
 }
 
 void EventHandler::processValueChanged(std::string host, std::string key, std::string value){
-    qDebug() << "processValueChanged:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() ;
+   //qDebug() << "processValueChanged:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() ;
 
     if(key.compare("i_iniciar_simulador") == 0){
         //Cargar Splash

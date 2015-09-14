@@ -74,7 +74,7 @@ void Atp_Controller::initATP(){
     //HH Deberian ir en setter´s y getter´s luego.
     //Tiempo T1 de la Transicion G Tiempo
     //VV volver a 3000 luego de las pruebas.
-    this->m_t_TGT = 500;
+    this->m_t_TGT = 3000;
     //VV aceleración instantánea, cambiar por la el modelo fisico cunado lo terminen.
     this->m_ACE = 0.5;
     //JF – Jerk de frenado: 0.89m/s3 (peor caso para 1 coche sin freno – vea [REF-9]).
@@ -112,7 +112,7 @@ void Atp_Controller::initATP(){
     }
 
     //Intervalo de trabajo del ATP, salva en caso de quedar la velocidad planchada CTE y no recibir muestreo.
-    //VV No estaria haciendo Falta no recuerdo bien porque pense esto, salio de la charla con Fabri, VER.
+    //VV No estaria haciendo Falta no recuerdo bien porque pense esto, salio de la charla con Fabri, VER. (Luego de la limpieza de codigo quitar, parece que hace falta por una cuestionde refresco)
     //this->updateSpeed(m_speed);
     this->m_machineATP->start();
     m_t_evalChangeSpeed->setInterval(500);
@@ -233,9 +233,9 @@ void Atp_Controller::setAllowedSpeed(double s){
 
         m_speedAllowedPrevious = m_speedAllowed;
         m_speedAllowed = s;
-        qDebug()<<" <--- Set ALLOWED SPEED: ---> ";
-        qDebug()<<"velocidad permitida Previa: ---> "<< m_speedAllowedPrevious;
-        qDebug()<<"velocidad permitida Actual: ---> "<< m_speedAllowed;
+//        qDebug()<<" <--- Set ALLOWED SPEED: ---> ";
+//        qDebug()<<"velocidad permitida Previa: ---> "<< m_speedAllowedPrevious;
+//        qDebug()<<"velocidad permitida Actual: ---> "<< m_speedAllowed;
         m_view->updateAllowedSpeed(s);
         emit allowedSpeedChange(s);
 
@@ -286,7 +286,7 @@ void Atp_Controller::critiqueSpeed(int op){
 
     m_uTVC = op;
 
-    if ( /*!m_uTVC*/true ){
+    if (!m_uTVC){
         m_speedCritique = 0;
     }else if ( m_uTVC == 1 ){
         //Curva
@@ -329,40 +329,69 @@ void Atp_Controller::updateAllowedSpeed(double speedTargetNew){
 
 void Atp_Controller::transitionGT(){
     // V = Vo + At
-    qDebug()<< "****************  Comenzando Transition GT  **********************************";
-    int t = static_cast<int>(((m_speedTarget - m_speedTargetPrevious)*0.277777777777778)/(-0.7));
-    qDebug()<< " Tiempo ((m_speedTarget - m_speedTargetPrevious)*0.277777777777778)/(-0.7) --> " << t;
-    QTime *timeLap = new QTime(0,0,0);
-    QTime ts(0,0,t,0);
+    qDebug()<< "******************  Comenzando Transition GT  **********************************";
+    double t = ((m_speedTarget - m_speedTargetPrevious)*0.277777777777778)/(-0.7);
+    int tAux = static_cast<int>(t*1000);
+    //HH agregar funcion para ver si es mayor a X.5 tomar mayor sino menos (parte entera superior)
+    qDebug()<< " Tiempo de Transicion ---((m_speedTarget - m_speedTargetPrevious)*0.277777777777778)/(-0.7) --> " << t << "tAux" << tAux;
+    QTime lapTime = QTime::currentTime();
+    QTime ts = QTime::currentTime().addMSecs(tAux);
+    qDebug()<< " lapTime Reloj seteado en: ---> " << lapTime.toString();
+    qDebug()<< " ts (tiempo estimado de transicion para Allowed segun New Target) Reloj seteado en: ---> " << ts.toString();
     qDebug()<< " m_speedTarget: " << m_speedTarget;
     qDebug()<< " m_speedTargetPrevious: " << m_speedTargetPrevious;
     double vAllowed;
-    vAllowed = m_speedTargetPrevious /*+ (-0.7)*(timeLap->second())*/;
-    qDebug()<< " vAllowed:=m_speedTargetPrevious:  " << m_speedTargetPrevious;
+    vAllowed = m_speedTargetPrevious;
+    qDebug()<< " vAllowed := m_speedTargetPrevious:  " << m_speedTargetPrevious;
     setAllowedSpeed(vAllowed);
 
     if (m_drivingModeCMC) critiqueSpeed(1);
 
-    timeLap->start();
     //WHILE timeLAP ...
     int lap = 0;
-    while ((timeLap->operator <(ts)) || (m_speedAllowed > m_speedTarget) /* alcanzo AllowedSpeed */){
+    lapTime.start();
+    while ((lapTime.currentTime() < ts) && (m_speedAllowed > m_speedTarget) /* alcanzo AllowedSpeed */){
         //wait && update speedAllowed
-        lap = timeLap->elapsed();
+//        qDebug()<<"(m_speedAllowed > m_speedTarget)  "<< (m_speedAllowed > m_speedTarget);
+        lap = lapTime.elapsed();
+//        qDebug()<< "lapTime.toString() " << lapTime.toString();
+//        qDebug()<< "lapTime.currentTime() " << lapTime.currentTime();
+//        qDebug()<< "lapTime.elapsed() "<< lap;
         if (lap % 2 == 0){
+//            qDebug()<< "---------------------------------IF---------------------------------------------";
             //update allowedSpeed hacer calculo en funcion del tiempo transcurrido
-            vAllowed = m_speedTargetPrevious + ((-0.7)*(timeLap->second()))*3.6;
+            vAllowed = m_speedTargetPrevious + ((-0.7)*(static_cast<double>(lapTime.elapsed())/static_cast<double>(1000)))*3.6;
             setAllowedSpeed(((vAllowed>m_speedTarget)?vAllowed:m_speedTarget));
-            qDebug()<< "((vAllowed>m_speedTarget)?vAllowed:m_speedTarget) ------> " << ((vAllowed>m_speedTarget)?vAllowed:m_speedTarget);
-            qDebug()<< " lap:  "<< lap;
+//            qDebug()<< " ((vAllowed>m_speedTarget)?vAllowed:m_speedTarget) ------> " << ((vAllowed>m_speedTarget)?vAllowed:m_speedTarget);
+//            qDebug()<< " vAllowed: "<< vAllowed <<"; " << "m_speedTarget: " << m_speedTarget;
+//            qDebug()<< " lap:  "<< lap;
+//            qDebug()<< "-------------------------------END IF-------------------------------------------";
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
         }
         //QTimer::singleShot(1500,this,SLOT(transitionGT()));
-
     }
     critiqueSpeed(2);
     setAllowedSpeed(m_speedTarget);
     qDebug()<< "ALLOWED SPEED Set TO: " << m_speedTarget;
     qDebug() << "************************** FIN Transition GT ***************************************";
+
+//    QTime timeDo = QTime::currentTime();
+//    QTime dieTime = timeDo.addSecs(2);
+
+//    qDebug()<< " timeDo.toString() " << timeDo.toString();
+//    qDebug()<< " dieTime.toString() " << dieTime.toString();
+
+//    timeDo.start();
+//    int count= 0;
+//    while (timeDo.currentTime() < dieTime){
+//        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+//        if (count < 80){
+//            m_view->updateSpeed(count);
+//        }
+//        qDebug()<< " timeDo.second() " << timeDo.second();
+//        qDebug()<< " timeDo.elapsed() " << timeDo.elapsed();
+//        count++;
+//    }
 }
 
 /**
@@ -388,7 +417,7 @@ void Atp_Controller::transitionGD(){
     qDebug() << "d_ini: "<< d_ini;
 
     v_aux = static_cast<int>(3.6*qSqrt(2*a*d_ini));
-    //setAllowedSpeed(((v_aux<m_speedAllowed)?v_aux:m_speedAllowed));
+
     if (v_aux<m_speedAllowed)
         setAllowedSpeed(v_aux);
     else setAllowedSpeed(m_speedAllowed);
@@ -398,49 +427,46 @@ void Atp_Controller::transitionGD(){
 
     if (m_drivingModeCMC) critiqueSpeed(0);
 
-    //m_distanceGD = 0;
-    //m_changeDistance = false;
-
     //HH Hacerlo global despues
     QTime *timeLap = new QTime(0,0,0);
     qDebug()<<"Comienzo de reloj GD: "<< timeLap->toString();
     timeLap->start();
 
-//    QElapsedTimer timer;
-//    timer.start();
+    QElapsedTimer timer;
+    timer.start();
     //slowOperation();  // we want to measure the time of this slowOperation()
-    qDebug() << "COLO d_ini---->  " << d_ini;
-    qDebug() << "speedallowed---->  " << m_speedAllowed;
-    qDebug() << "speedtarget---->  " << m_speedTarget;
+//    qDebug() << "d_ini---->  " << d_ini;
+//    qDebug() << "speedallowed---->  " << m_speedAllowed;
+//    qDebug() << "speedtarget---->  " << m_speedTarget;
 //    qDebug() << "timer elpsed---->  " << timer.elapsed();
 
     double calc;
     double sp;
 
     qDebug()<<" ******** GD ******** Recalculando distancia y Allowed Speed ********* GD *******";
-//    while ((d_ini >= 0) && (m_speedAllowed > m_speedTarget)){
-//        //QTimer::singleShot(500,this,SLOT(evalCalculateDistance()));
-//        calc = (static_cast<double>(timer.elapsed())/static_cast<double>(1000));
-//        sp = (m_speed*0.277777777777778);
-//        d_ini = 403 - sp*calc;
+    while ((d_ini >= 0) && (m_speedAllowed > m_speedTarget)){
+        calc = (static_cast<double>(timer.elapsed())/static_cast<double>(1000));
+        sp = (m_speed*0.277777777777778);
+        d_ini = 403 - sp*calc;
 //            qDebug() << " +++++++++++++++++ Mauri ++++++++++++++++++++++++++ ";
 //            qDebug() << "timer elpsed---->  " << timer.elapsed() << " calc: " << calc;
 //            qDebug() << " d_ini---->  " << d_ini;
 //            qDebug() << " m_speed " << m_speed << " sp: " << sp;
 //            qDebug() << " +++++++++++++++++++++++++++++++++++++++++++ ";
 
-//        if (d_ini>=0){
-//            v_aux=(m_speedAD->operator [](d_ini));
-//            qDebug()<<" Velocidad Permitida de curva GD:  ---->  "<< v_aux;
-//        }
-//        if (v_aux <= m_speedTargetPrevious){
-//            setAllowedSpeed(((v_aux>15.0)?v_aux:15.0));
-//            qDebug()<<" ***** NUEVA Velocidad Permitida de curva GD:  ---->  "<< ((v_aux>15.0)?v_aux:15.0);
-//        }
-//    }
-    QTime dieTime= QTime::currentTime().addSecs(5);
-    while (QTime::currentTime() < dieTime)
-        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+        if (d_ini>=0){
+            v_aux=(m_speedAD->operator [](d_ini));
+            //qDebug()<<" Velocidad Permitida de curva GD:  ---->  "<< v_aux;
+        }
+        if (v_aux <= m_speedTargetPrevious){
+            setAllowedSpeed(((v_aux>15.0)?v_aux:15.0));
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+            qDebug()<<" <---- NUEVA Velocidad Permitida de curva GD:  ---->  "<< ((v_aux>15.0)?v_aux:15.0);
+        }
+    }
+//    QTime dieTime= QTime::currentTime().addSecs(3);
+//    while (QTime::currentTime() < dieTime)
+//        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 
     qDebug()<<" <--------- Fin Bucle ------- Transicion GD: ---------------------------->";
     critiqueSpeed(2);
