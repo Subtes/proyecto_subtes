@@ -21,10 +21,11 @@ public:
 
 private:
     Ui::BoardRight *ui;
-    SubteStatus *m_subte;
-    EventHandler *m_eventHandler;
     Manometer_Controller * m_manometer;
-    SicasMac_Controller * m_sicasmac;
+    SicasMac_Controller * m_sicasmac;    
+    CircuitBreakerCON_Controller * m_CON_Disyuntor;
+    CircuitBreakerDES_Controller * m_DES_Disyuntor;
+    int lastState=0;
 
 public slots:
     void startBoard();
@@ -32,13 +33,6 @@ public slots:
     void disableScreen();
     void resetControls();
     void loadState(int state);
-
-private:
-
-    CircuitBreakerCON_Controller * m_CON_Disyuntor;
-    CircuitBreakerDES_Controller * m_DES_Disyuntor;
-
-    int lastState=0;
 };
 
 #endif // BOARDRIGHT_H

@@ -100,8 +100,7 @@ void EventHandler::notifyValueChanged(std::string key, std::string value)
 }
 
 void EventHandler::processValueChanged(std::string host, std::string key, std::string value){
-
-    qDebug() << "processValueChanged:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() ;
+   //qDebug() << "processValueChanged:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() ;
 
     if(key.compare("i_iniciar_simulador") == 0){
         //Cargar Splash
@@ -127,6 +126,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cargar_estado");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_averia");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_renglon_sicas");
+            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cambio_senial");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_velocidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_tramo_vel");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
@@ -286,6 +286,8 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     }
 
     else if(key.compare("v_llego_senial") == 0){
+        qDebug() << "cambio de llego senial." ;
+
         if(value.compare("none") != 0){
 
             QString message = value.c_str();
@@ -308,8 +310,17 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     }
 
     else if(key.compare("i_cambio_senial") == 0){
-        if (value.compare("1") == 0){
-            emit iCambioSenial1();
+        try{
+            QString message = value.c_str();
+            QStringList parameters = message.split(";");
+            std::string state = parameters.at(1).toStdString();
+
+                if (state.compare("1")==0){
+                    emit departureEstation();
+                    qDebug() << "senial salida anden recibida, 1";
+                }
+        }catch(...){
+            qDebug()<<"Error en parametros clave;valor recibidos";
         }
     }
 
@@ -361,10 +372,10 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         if (value.compare("1") == 0){
             qDebug() << " v_proximo_a_estacion, --> 1";
             emit nextToEstation();
-        }else{
+        }/*else{
             qDebug() << "v_proximo_a_estacion, --> 0";
             emit departureEstation();
-        }
+        }*/
     }
 
     else if(key.compare("v_estado_puertas") == 0){
@@ -433,6 +444,7 @@ void EventHandler::processKeyPressed(DWORD k)
         qDebug() << "F5 key pressed";
     }  else if ( k == _K && !K_down ){
         this->notifyValueChanged("c_llave_atp","con");
+        this->notifyValueChanged("c_modo_conduccion","atp");
         K_down = true;
         qDebug() << "K key pressed";
         emit kPressed();
