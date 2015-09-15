@@ -32,12 +32,11 @@
 #include <QSplashScreen>
 #include <QPixmap>
 #include <QDesktopWidget>
-
 #include <vector>
 #include <stdio.h>
 #include <ENetClient.h>
 #include <Windows.h>
-
+#include <QString>
 #include "src/controllers/enethelper.h"
 #include "src/controllers/keypresseater.h"
 #include "src/controllers/failures_controller.h"
@@ -131,6 +130,7 @@ signals:
     accelerationInstant(double);
     nextToEstation();
     departureEstation();
+    cargarMensaje(QString);
 
 public slots:
     void processKeyPressed(DWORD k);

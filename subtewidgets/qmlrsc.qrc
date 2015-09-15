@@ -13,5 +13,6 @@
         <file>llaveTecho.qml</file>
         <file>atp.qml</file>
         <file>analog_gauge.qml</file>
+        <file>sicasmac.qml</file>
     </qresource>
 </RCC>

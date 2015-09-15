@@ -7,6 +7,7 @@ TEMPLATE = lib
 #release
 CONFIG +=
 
+
 HEADERS += \
     tractionlever.h \
     speedgauge.h \
@@ -18,7 +19,8 @@ HEADERS += \
     speedgaugeleds.h \
     atp.h \
     analoggauge.h \
-    manometer.h
+    manometer.h \
+    sicasmac.h
 
 SOURCES += \
     tractionlever.cpp \
@@ -31,7 +33,8 @@ SOURCES += \
     speedgaugeleds.cpp \
     atp.cpp \
     analoggauge.cpp \
-    manometer.cpp
+    manometer.cpp \
+    sicasmac.cpp
 
 FORMS += \
     tractionlever.ui \
@@ -44,7 +47,8 @@ FORMS += \
     speedgaugeleds.ui \
     atp.ui \
     analoggauge.ui \
-    manometer.ui
+    manometer.ui \
+    sicasmac.ui
 
 RESOURCES += \
             qmlrsc.qrc \

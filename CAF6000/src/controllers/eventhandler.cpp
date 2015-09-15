@@ -126,6 +126,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estado_simulador");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cargar_estado");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_averia");
+            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_renglon_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_velocidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_tramo_vel");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
@@ -317,6 +318,13 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         qDebug() << "averia recibida." ;
         m_failures->setFailure(value);
     }
+
+    else if(key.compare("i_renglon_sicas") == 0){
+        qDebug() << "renglon sicas recibido." ;
+        QString mensaje = value.c_str();
+        emit cargarMensaje(mensaje);
+    }
+
 }
 
 void EventHandler::processKeyPressed(DWORD k)
