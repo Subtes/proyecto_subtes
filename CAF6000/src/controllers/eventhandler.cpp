@@ -136,7 +136,14 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_regulador_mando",std::to_string((int)m_subte->tractionLeverPosition()));
             m_eNetClient->CambiarValorClave("c_traccion",std::to_string((int)m_subte->traction()));
             m_eNetClient->CambiarValorClave("c_freno_emergencia","des");
-            m_eNetClient->CambiarValorClave("c_averia","x");
+
+            m_eNetClient->CambiarValorClave("c_grifoB138_N","");
+            m_eNetClient->CambiarValorClave("c_grifoL2_N","");
+            m_eNetClient->CambiarValorClave("c_grifoB73_N","");
+            m_eNetClient->CambiarValorClave("c_termico_57f1_N","");
+            m_eNetClient->CambiarValorClave("c_termico_53f1_N","");
+            m_eNetClient->CambiarValorClave("c_termico_33f1_N","");
+
 
             emit controlDisable();
             m_eNetClient->CambiarValorClave("c_listo","1");
@@ -146,7 +153,13 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_regulador_mando","");
             m_eNetClient->CambiarValorClave("c_llave_atp","");
             m_eNetClient->CambiarValorClave("c_modo_conduccion","");
-            m_eNetClient->CambiarValorClave("c_averia","");
+
+            m_eNetClient->CambiarValorClave("c_grifoB138_N","");
+            m_eNetClient->CambiarValorClave("c_grifoL2_N","");
+            m_eNetClient->CambiarValorClave("c_grifoB73_N","");
+            m_eNetClient->CambiarValorClave("c_termico_57f1_N","");
+            m_eNetClient->CambiarValorClave("c_termico_53f1_N","");
+            m_eNetClient->CambiarValorClave("c_termico_33f1_N","");
 
             Sleep(1000);
             emit closeApp();

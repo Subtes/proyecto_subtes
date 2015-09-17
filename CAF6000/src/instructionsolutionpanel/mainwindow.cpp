@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent, EventHandler *eventHandler) :
     connect(ui->view, SIGNAL(clicked(QModelIndex)), this, SLOT(clickAction(QModelIndex)));
 
     QStringList headers;
-    headers << tr("Operacion") << tr("Accion");
+    headers << tr("Operacion");
 
     QFile file(":/resources/instructionsolutionpanel.txt");
     file.open(QIODevice::ReadOnly);
@@ -38,9 +38,56 @@ MainWindow::~MainWindow()
 void MainWindow::clickAction(QModelIndex hoja)
 {
   if (! hoja.model()->hasChildren(hoja))
-  {     
-     QString accion = hoja.data(0).toString();
-     m_eventHandler->notifyValueChanged("c_averia",accion.toStdString());
-     qDebug() << "Clickeado!!!!" + (hoja.data(0)).toString();
+  {
+     QModelIndex root = hoja;
+     while (root.parent().isValid())
+            root = root.parent();
+     clickActionDecision(hoja,root);
  }
+}
+
+void MainWindow::clickActionDecision(QModelIndex hoja, QModelIndex root)
+{
+    QString action = hoja.data(0).toString();
+    QString father = hoja.parent().data(0).toString();
+    QString category = hoja.parent().parent().data(0).toString();
+
+    if (category.operator ==("Grifos")){
+        if (father.operator ==("B-138"))
+            if (action.operator ==("CON"))
+                m_eventHandler->notifyValueChanged("c_grifoB138_N","con");
+            else
+                m_eventHandler->notifyValueChanged("c_grifoB138_N","des");
+        if (father.operator ==("L-2"))
+            if (action.operator ==("CON"))
+                m_eventHandler->notifyValueChanged("c_grifoL2_N","con");
+            else
+                m_eventHandler->notifyValueChanged("c_grifoL2_N","des");
+        if (father.operator ==("B-73"))
+            if (action.operator ==("CON"))
+                m_eventHandler->notifyValueChanged("c_grifoB73_N","con");
+            else
+                m_eventHandler->notifyValueChanged("c_grifoB73_N","des");
+    }
+    else{
+        if (category.operator ==("Termicos"))
+            if (father.operator ==("57F1"))
+                if (action.operator ==("CON"))
+                    m_eventHandler->notifyValueChanged("c_termico_57f1_N","con");
+                else
+                    m_eventHandler->notifyValueChanged("c_termico_57f1_N","des");
+            if (father.operator ==("53F1"))
+                if (action.operator ==("CON"))
+                    m_eventHandler->notifyValueChanged("c_termico_53f1_N","con");
+                else
+                    m_eventHandler->notifyValueChanged("c_termico_53f1_N","des");
+            if (father.operator ==("33F1"))
+                if (action.operator ==("CON"))
+                    m_eventHandler->notifyValueChanged("c_termico_33f1_N","con");
+                else
+                    m_eventHandler->notifyValueChanged("c_termico_33f1_N","des");
+    }
+    qDebug() << "Clickeado!!!!" + action + " " + father + " " + category + " " + root.data(0).toString();
+    //m_eventHandler->notifyValueChanged("c_grifoB138_N",action.toStdString());
+    //qDebug() << "Clickeado!!!!" + (hoja.data(0)).toString();
 }

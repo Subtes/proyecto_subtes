@@ -23,6 +23,7 @@ private:
 
 public slots:
     void clickAction(QModelIndex hoja);
+    void clickActionDecision(QModelIndex hoja,QModelIndex root);
 
 protected:
     EventHandler    *m_eventHandler;
