@@ -89,6 +89,7 @@ int main(int argc, char *argv[])
           tabRight->addTab(m_tree,QObject::tr("TreePanel"));
 
           tabRight->showNormal();
+
     }
 
     // DEPENDENCY INJECTION
