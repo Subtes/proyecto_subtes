@@ -55,37 +55,37 @@ void MainWindow::clickActionDecision(QModelIndex hoja, QModelIndex root)
     if (category.operator ==("Grifos")){
         if (father.operator ==("B-138"))
             if (action.operator ==("CON"))
-                m_eventHandler->notifyValueChanged("c_grifoB138_N","con");
+                m_eventHandler->notifyValueChanged("c_grifob138","con");
             else
-                m_eventHandler->notifyValueChanged("c_grifoB138_N","des");
+                m_eventHandler->notifyValueChanged("c_grifob138","des");
         if (father.operator ==("L-2"))
             if (action.operator ==("CON"))
-                m_eventHandler->notifyValueChanged("c_grifoL2_N","con");
+                m_eventHandler->notifyValueChanged("c_grifol2","con");
             else
-                m_eventHandler->notifyValueChanged("c_grifoL2_N","des");
+                m_eventHandler->notifyValueChanged("c_grifol2","des");
         if (father.operator ==("B-73"))
             if (action.operator ==("CON"))
-                m_eventHandler->notifyValueChanged("c_grifoB73_N","con");
+                m_eventHandler->notifyValueChanged("c_grifob73","con");
             else
-                m_eventHandler->notifyValueChanged("c_grifoB73_N","des");
+                m_eventHandler->notifyValueChanged("c_grifob73","des");
     }
     else{
         if (category.operator ==("Termicos"))
             if (father.operator ==("57F1"))
                 if (action.operator ==("CON"))
-                    m_eventHandler->notifyValueChanged("c_termico_57f1_N","con");
+                    m_eventHandler->notifyValueChanged("c_termico_57f1","con");
                 else
-                    m_eventHandler->notifyValueChanged("c_termico_57f1_N","des");
+                    m_eventHandler->notifyValueChanged("c_termico_57f1","des");
             if (father.operator ==("53F1"))
                 if (action.operator ==("CON"))
-                    m_eventHandler->notifyValueChanged("c_termico_53f1_N","con");
+                    m_eventHandler->notifyValueChanged("c_termico_53f1","con");
                 else
-                    m_eventHandler->notifyValueChanged("c_termico_53f1_N","des");
+                    m_eventHandler->notifyValueChanged("c_termico_53f1","des");
             if (father.operator ==("33F1"))
                 if (action.operator ==("CON"))
-                    m_eventHandler->notifyValueChanged("c_termico_33f1_N","con");
+                    m_eventHandler->notifyValueChanged("c_termico_33f1","con");
                 else
-                    m_eventHandler->notifyValueChanged("c_termico_33f1_N","des");
+                    m_eventHandler->notifyValueChanged("c_termico_33f1","des");
     }
     qDebug() << "Clickeado!!!!" + action + " " + father + " " + category + " " + root.data(0).toString();
     //m_eventHandler->notifyValueChanged("c_grifoB138_N",action.toStdString());

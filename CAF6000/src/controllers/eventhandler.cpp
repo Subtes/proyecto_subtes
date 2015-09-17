@@ -137,12 +137,12 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_traccion",std::to_string((int)m_subte->traction()));
             m_eNetClient->CambiarValorClave("c_freno_emergencia","des");
 
-            m_eNetClient->CambiarValorClave("c_grifoB138_N","");
-            m_eNetClient->CambiarValorClave("c_grifoL2_N","");
-            m_eNetClient->CambiarValorClave("c_grifoB73_N","");
-            m_eNetClient->CambiarValorClave("c_termico_57f1_N","");
-            m_eNetClient->CambiarValorClave("c_termico_53f1_N","");
-            m_eNetClient->CambiarValorClave("c_termico_33f1_N","");
+            m_eNetClient->CambiarValorClave("c_grifob138","con");
+            m_eNetClient->CambiarValorClave("c_grifol2","con");
+            m_eNetClient->CambiarValorClave("c_grifob73","con");
+            m_eNetClient->CambiarValorClave("c_termico_57f1","con");
+            m_eNetClient->CambiarValorClave("c_termico_53f1","con");
+            m_eNetClient->CambiarValorClave("c_termico_33f1","con");
 
 
             emit controlDisable();
@@ -154,12 +154,12 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_llave_atp","");
             m_eNetClient->CambiarValorClave("c_modo_conduccion","");
 
-            m_eNetClient->CambiarValorClave("c_grifoB138_N","");
-            m_eNetClient->CambiarValorClave("c_grifoL2_N","");
-            m_eNetClient->CambiarValorClave("c_grifoB73_N","");
-            m_eNetClient->CambiarValorClave("c_termico_57f1_N","");
-            m_eNetClient->CambiarValorClave("c_termico_53f1_N","");
-            m_eNetClient->CambiarValorClave("c_termico_33f1_N","");
+            m_eNetClient->CambiarValorClave("c_grifob138","");
+            m_eNetClient->CambiarValorClave("c_grifol2","");
+            m_eNetClient->CambiarValorClave("c_grifob73","");
+            m_eNetClient->CambiarValorClave("c_termico_57f1","");
+            m_eNetClient->CambiarValorClave("c_termico_53f1","");
+            m_eNetClient->CambiarValorClave("c_termico_33f1","");
 
             Sleep(1000);
             emit closeApp();
