@@ -114,5 +114,11 @@
         <file>resources/ATPoFreEmrg.PNG</file>
         <file>resources/ATPoLed2.png</file>
         <file>resources/ATPoCorR.PNG</file>
+        <file>resources/sicas_glass.png</file>
+        <file>resources/sicas_f.png</file>
+        <file>resources/sicas_azul.png</file>
+        <file>resources/sicas_bkg.jpg</file>
+        <file>resources/sicas_imgError.png</file>
+        <file>resources/sicas_doors.png</file>
     </qresource>
 </RCC>

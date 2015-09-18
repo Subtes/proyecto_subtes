@@ -30,9 +30,12 @@ void BoardRight::startBoard()
     m_CON_Disyuntor = new CircuitBreakerCON_Controller(m_subte,ui->CONDisy_widget );
     m_DES_Disyuntor = new CircuitBreakerDES_Controller(m_subte,ui->DESDisy_widget );
     m_manometer = new Manometer_Controller(m_subte,ui->manometer);
-
     ui->calientapies->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blue.png"));
     ui->desacople->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
+    m_manometer = new Manometer_Controller(m_subte,ui->manometer);
+    m_sicasmac = new SicasMac_Controller(m_subte,ui->sicasmac);
+
+    connect(m_eventHandler,SIGNAL(cargarMensaje(QString)),m_sicasmac,SLOT(separoMensajes(QString)));
 
     this->setEnabled(false);
 }

@@ -5,6 +5,7 @@
 #include "src/controllers/circuitbreakercon_controller.h"
 #include "src/controllers/circuitbreakerdes_controller.h"
 #include "src/controllers/manometer_controller.h"
+#include "src/controllers/sicasmac_controller.h"
 
 namespace Ui {
 class BoardRight;
@@ -17,6 +18,13 @@ class BoardRight : public BaseBoard
 public:
     explicit BoardRight(QWidget *parent = 0, SubteStatus *subte = 0, EventHandler *eventHandler = 0);
     ~BoardRight();
+
+private:
+    Ui::BoardRight *ui;
+    SubteStatus *m_subte;
+    EventHandler *m_eventHandler;
+    Manometer_Controller * m_manometer;
+    SicasMac_Controller * m_sicasmac;
 
 public slots:
     void startBoard();
