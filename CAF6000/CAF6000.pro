@@ -49,7 +49,8 @@ SOURCES += main.cpp \
     src/controllers/manometer_controller.cpp \
     src/instructionsolutionpanel/treeitem.cpp \
     src/instructionsolutionpanel/treemodel.cpp \
-    src/instructionsolutionpanel/mainwindow.cpp
+    src/instructionsolutionpanel/mainwindow.cpp \
+    src/controllers/failures_controller.cpp
 
 
 HEADERS  += baseboard.h \
@@ -88,8 +89,8 @@ HEADERS  += baseboard.h \
     src/controllers/manometer_controller.h \
     src/instructionsolutionpanel/treeitem.h \
     src/instructionsolutionpanel/treemodel.h \
-    src/instructionsolutionpanel/mainwindow.h
-
+    src/instructionsolutionpanel/mainwindow.h \
+    src/controllers/failures_controller.h
 
 FORMS    += boardcenter.ui \
     boardright.ui \

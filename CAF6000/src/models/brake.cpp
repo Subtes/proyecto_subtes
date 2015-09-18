@@ -8,31 +8,42 @@ Brake::Brake()
     m_brake = 0;
     m_lastBrake = 0;
     m_bypass = false;
+    m_retentioBrake = false;
+    m_averia = false;
 }
 
 Brake::~Brake()
 {
 }
 
+void Brake::linkTraction(Traction *traction)
+{
+    m_traction = traction;
+}
+
 bool Brake::braking()
 {
-    if( m_brake>0 ) qDebug() << "m_brake = " << m_brake;
-    if( m_emergencyBrake ) qDebug() << "m_emergencyBrake = " << m_emergencyBrake;
-
-    return ( !m_bypass && (m_brake>0 || m_emergencyBrake) );
+    if (m_bypass) return false;
+    if(m_averia) return true;
+    return m_brake>0 || m_emergencyBrake;
 }
 
 void Brake::reset()
 {
-    m_emergencyBrake = false;
+    m_emergencyBrake = true;
     m_parkingBrake = false;
     m_brake = 0;
     m_lastBrake = 0;
     m_bypass = false;
+    m_averia = false;
+    m_retentioBrake = false;
 }
 
 bool Brake::getEmergencyBrake() const
 {
+    if (!m_traction->hombreVivo())
+        return true;
+
     return m_emergencyBrake;
 }
 
@@ -79,4 +90,24 @@ bool Brake::bypass() const
 void Brake::setBypass(bool status)
 {
     m_bypass = status;
+}
+
+bool Brake::retentioBrake() const
+{
+    return m_retentioBrake;
+}
+
+void Brake::setRetentioBrake(bool retentioBrake)
+{
+    m_retentioBrake = retentioBrake;
+}
+
+bool Brake::averia() const
+{
+    return m_averia;
+}
+
+void Brake::setAveria(bool averia)
+{
+    m_averia = averia;
 }

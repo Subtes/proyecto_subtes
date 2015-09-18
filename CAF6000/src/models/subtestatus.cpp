@@ -1,17 +1,16 @@
 #include "subtestatus.h"
-
-//TODO:: cambiar los notifyValueChanged por signal/slot
-//el modelo emite señales y el event handler los intercepta y conecta
-#include <QThread>
-#include <QSplashScreen>
-#include <QPixmap>
-
 SubteStatus::SubteStatus()
 {
     m_cscp = new CSCP();
     m_brake = new Brake();
     m_ATP_model = new ATP_model();
-    m_traction = new Traction(m_brake,m_cscp, m_ATP_model);
+    m_traction = new Traction();
+
+    m_brake->linkTraction(m_traction);
+    m_traction->linkBrake(m_brake);
+    m_traction->linkCSCP(m_cscp);
+    m_traction->linkATP(m_ATP_model);
+
 
     m_speed = 0;
     m_effort = 0;
@@ -107,7 +106,7 @@ bool SubteStatus::emergencyBrake() const
  */
 bool SubteStatus::getHiloLazo()
 {
-    return !m_brake->getEmergencyBrake(); // || averia!
+    return !m_brake->getEmergencyBrake() || m_brake->averia();
 }
 
 bool SubteStatus::horn() const
@@ -149,6 +148,9 @@ void SubteStatus::updateSpeed(double value){
         if( m_speed <= 0 && m_cscp->getBypass()){
             m_cscp->setBypass(false);
             emit CSCPChanged(m_cscp->evalCircuit());
+        }
+        if( m_speed <= 0 && m_brake->getEmergencyBrake()){
+            m_brake->setEmergencyBrake(false);
         }
     }
 }
@@ -227,26 +229,34 @@ void SubteStatus::emergencyBrakeReleased(){
 }
 
 void SubteStatus::hombreVivoPressed(){
-    if(m_speed == 0){
-        m_traction->setHombreVivo(true);
-        m_eventHandler->notifyValueChanged("c_hombreVivo","con");
-        qDebug() << "c_hombreVivo: pressed";
+    m_traction->setHombreVivo(true);
+    m_eventHandler->notifyValueChanged("c_dispositivo_hombre_muerto","con");
+    qDebug() << "c_hombreVivo: pressed";
+    emit hiloLazoChanged(getHiloLazo());
+
+    m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
+    qDebug() << "c_traccion: "<< m_traction->getTraction();
+
+    if(m_brake->getEmergencyBrake()){
+        m_eventHandler->notifyValueChanged("c_freno_emergencia","con");
+    } else {
+        m_eventHandler->notifyValueChanged("c_freno_emergencia","des");
     }
 }
 
 void SubteStatus::hombreVivoReleased(){
     m_traction->setHombreVivo(false);
-    m_eventHandler->notifyValueChanged("c_hombreVivo","des");
+    m_eventHandler->notifyValueChanged("c_dispositivo_hombre_muerto","des");
     qDebug() << "c_hombreVivo: released";
+    emit hiloLazoChanged(getHiloLazo());
 
     m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
-    qDebug() << "c_traccion: "<< m_traction->getTraction();
 
-    if(m_speed > 0){
-        m_brake->setEmergencyBrake(true);
+    if(m_brake->getEmergencyBrake()){
         m_eventHandler->notifyValueChanged("c_freno_emergencia","con");
-    }
-}
+    } else {
+        m_eventHandler->notifyValueChanged("c_freno_emergencia","des");
+    }}
 
 /**
  * @brief SubteStatus::pressedCON: Para poder conectar los disyuntores, es necesario:
@@ -418,7 +428,14 @@ void SubteStatus::updateAmm(double value)
 void SubteStatus::bypassBrake(bool status)
 {
     m_brake->setBypass(status);
-    emit tractionChanged(m_traction->getTraction());
+    if(status){
+        m_eventHandler->notifyValueChanged("c_bypass_freno","con");
+        qDebug() << "Brake bypassed";
+    } else {
+        m_eventHandler->notifyValueChanged("c_bypass_freno","des");
+        qDebug() << "Brake reactivated";
+    }
+    m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
 }
 
 void SubteStatus::bypassCSCP(bool status)
@@ -435,7 +452,7 @@ void SubteStatus::bypassCSCP(bool status)
         m_eventHandler->notifyValueChanged("c_bypass_traccion","des");
     }
 
-    emit tractionChanged(m_traction->getTraction());
+    m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
     emit CSCPChanged(m_cscp->evalCircuit());
     qDebug() << "CSCPChanged " + m_cscp->evalCircuit();
 }
@@ -510,5 +527,40 @@ void SubteStatus::setDrivingModeATP(bool status){
 
 bool SubteStatus::getDrivingModeATP(){
     return m_CMC;
+}
 
+void SubteStatus::setTractionFailure()
+{
+    m_traction->setAveria(true);
+    m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
+}
+
+void SubteStatus::setBrakeFailure()
+{
+    m_brake->setAveria(true);
+    emit hiloLazoChanged(getHiloLazo());
+}
+
+void SubteStatus::setCSCPFailure()
+{
+    m_cscp->setAveria(true);
+    emit CSCPChanged(m_cscp->evalCircuit());
+}
+
+void SubteStatus::resolveTractionFailure()
+{
+    m_traction->setAveria(false);
+    m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
+}
+
+void SubteStatus::resolveBrakeFailure()
+{
+    m_brake->setAveria(false);
+    emit hiloLazoChanged(getHiloLazo());
+}
+
+void SubteStatus::resolveCSCPFailure()
+{
+    m_cscp->setAveria(false);
+    emit CSCPChanged(m_cscp->evalCircuit());
 }

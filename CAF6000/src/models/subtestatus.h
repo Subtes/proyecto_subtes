@@ -50,7 +50,6 @@ signals:
     speedChanged(double speed);
     allowedSpeedChanged(double speed);
     targetSpeedChanged(double speed);
-    tractionChanged(double traction);
     hiloLazoChanged(bool status);
     effortChanged(double s_effort);
     voltChanged(double s_effort);
@@ -142,13 +141,18 @@ public slots:
     void updateEffort(double value);
     void updateVolt(double value);
     void updateAmm(double value);
-
     void bypassBrake(bool status);
     void bypassCSCP(bool status);
     void updatePreassureRed(double value);
     void updatePreassureWhite(double value);
     void updateLeftDoorsButtons(bool state);
     void updateRightDoorsButtons(bool state);
+    void setTractionFailure();
+    void setBrakeFailure();
+    void setCSCPFailure();
+    void resolveTractionFailure();
+    void resolveBrakeFailure();
+    void resolveCSCPFailure();
 };
 
 #endif // SUBTESTATUS_H

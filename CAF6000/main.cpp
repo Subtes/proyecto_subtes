@@ -1,4 +1,3 @@
-/* Juego de Local */
 #include <QApplication>
 #include <QDebug>
 #include <QDesktopWidget>
@@ -13,6 +12,7 @@
 
 #include "src/controllers/eventhandler.h"
 #include "src/controllers/keypresseater.h"
+#include "src/controllers/failures_controller.h"
 
 int main(int argc, char *argv[])
 {
@@ -23,11 +23,12 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    // CONTROLLER DISPATCHER
-    EventHandler *m_eventHandler = new EventHandler(a.desktop());
-
     // MODEL
     SubteStatus * m_subte = new SubteStatus();
+
+    // CONTROLLER DISPATCHER
+    EventHandler *m_eventHandler = new EventHandler(a.desktop());
+    Failures_Controller *m_failures = new Failures_Controller(m_subte);
 
     // VIEWS
     BoardHardware *m_h = new BoardHardware(0,m_subte,m_eventHandler);
@@ -94,6 +95,7 @@ int main(int argc, char *argv[])
 
     // DEPENDENCY INJECTION
     m_eventHandler->setModel(m_subte);
+    m_eventHandler->setFailures(m_failures);
     m_subte->setHandler(m_eventHandler);
     m_eventHandler->initConnection();
 

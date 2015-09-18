@@ -4,7 +4,8 @@ CSCP::CSCP()
 {
     m_leftDoors = CLOSE;
     m_rightDoors = CLOSE;
-    bypass = false;
+    m_bypass = false;
+    m_averia = false;
 }
 
 CSCP::~CSCP()
@@ -16,22 +17,35 @@ void CSCP::reset()
 {
     m_leftDoors = CLOSE;
     m_rightDoors = CLOSE;
-    bypass = false;
+    m_bypass = false;
+    m_averia = false;
 }
 
 bool CSCP::evalCircuit()
 {
-    return bypass || (!m_leftDoors && !m_rightDoors);
+    if (m_bypass) return true;
+    if(m_averia) return false;
+    return !m_leftDoors && !m_rightDoors;
 }
 
 bool CSCP::getBypass() const
 {
-    return bypass;
+    return m_bypass;
 }
 
 void CSCP::setBypass(bool value)
 {
-    bypass = value;
+    m_bypass = value;
+}
+
+bool CSCP::averia() const
+{
+    return m_averia;
+}
+
+void CSCP::setAveria(bool averia)
+{
+    m_averia = averia;
 }
 
 bool CSCP::leftDoors() const

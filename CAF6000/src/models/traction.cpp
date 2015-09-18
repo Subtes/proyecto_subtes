@@ -1,12 +1,8 @@
 #include "traction.h"
 #include <QDebug>
 
-Traction::Traction(Brake *b, CSCP* c, ATP_model *a)
+Traction::Traction()
 {
-    m_brake = b;
-    m_cscp = c;
-    m_atp = a;
-
     m_traction = 0;
     m_rana = RANA::CERO;
     m_hombreVivo = false;
@@ -14,12 +10,22 @@ Traction::Traction(Brake *b, CSCP* c, ATP_model *a)
     m_lastTraction = 0;
     m_position = 0;
     m_lastPosition = 0;
-
 }
 
 Traction::~Traction()
 {
+}
 
+void Traction::linkBrake(Brake *b){
+    m_brake = b;
+}
+
+void Traction::linkCSCP(CSCP *c){
+    m_cscp = c;
+}
+
+void Traction::linkATP(ATP_model *a){
+    m_atp = a;
 }
 
 void Traction::reset()
@@ -31,6 +37,8 @@ void Traction::reset()
     m_lastTraction = 0;
     m_position = 0;
     m_lastPosition = 0;
+
+    m_averia = false;
 }
 
 void Traction::setDirection(RANA r){
@@ -39,28 +47,31 @@ void Traction::setDirection(RANA r){
 
 int Traction::getTraction()
 {
-    if(!m_brake->braking()){
-        if (m_cscp->evalCircuit()){
-            if(m_atp->tractionReady()){
-                if(m_rana != RANA::CERO){
-                    if(m_hombreVivo){
-                        return m_traction;
-                    }else{
-                        qDebug() << "==== m_hombreVivo released ==> traction blocked";
-                    }
-                }else{
-                    qDebug() << "==== m_rana = CERO ==> traction blocked";
-                }
-            }else{
-                qDebug() << "==== atp:  ==> traction blocked";
-            }
-        }else{
-            qDebug() << "==== cscp no cerrado ==> traction blocked";
-        }
-    }else{
-        qDebug() << "==== braking!  ==> traction blocked";
+    if(debuguear){
+        if(m_averia)
+            qDebug() << "averia en traccion";
+        if(m_brake->braking())
+            qDebug() << "coche frenando";
+        if (!m_cscp->evalCircuit())
+            qDebug() << "CSCP abierto";
+        if(!m_atp->tractionReady())
+            qDebug() <<  "atp bloquea traccion";
+        if(m_rana == RANA::CERO)
+            qDebug() << "rana en CERO";
+        if(!m_hombreVivo)
+            qDebug() << "Hombre Vivo NO cumplido";
     }
-    return 0;
+
+    if(!m_averia
+       && !m_brake->braking()
+       && m_cscp->evalCircuit()
+       && m_atp->tractionReady()
+       && m_rana != RANA::CERO
+       && m_hombreVivo){
+        return m_traction;
+    }else{
+        return 0;
+    }
 }
 
 double Traction::updateTraction(int traction)
@@ -113,4 +124,14 @@ bool Traction::hombreVivo() const
 void Traction::setHombreVivo(bool hombreVivo)
 {
     m_hombreVivo = hombreVivo;
+}
+
+bool Traction::averia() const
+{
+    return m_averia;
+}
+
+void Traction::setAveria(bool averia)
+{
+    m_averia = averia;
 }

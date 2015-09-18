@@ -89,13 +89,19 @@ void EventHandler::setModel(SubteStatus *subte)
     m_subte = subte;
 }
 
+void EventHandler::setFailures(Failures_Controller *failures)
+{
+    m_failures = failures;
+}
+
 void EventHandler::notifyValueChanged(std::string key, std::string value)
 {
     m_eNetClient->CambiarValorClave(key,value);
 }
 
 void EventHandler::processValueChanged(std::string host, std::string key, std::string value){
-   //qDebug() << "processValueChanged:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() ;
+
+    qDebug() << "processValueChanged:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() ;
 
     if(key.compare("i_iniciar_simulador") == 0){
         //Cargar Splash
@@ -119,6 +125,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
 
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estado_simulador");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cargar_estado");
+            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_averia");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_velocidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_tramo_vel");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
@@ -196,74 +203,56 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     }
 
     else if(key.compare("v_llego_senial") == 0){
-        qDebug() << "cambio de llego senial." ;
-
         if(value.compare("none") != 0){
 
             QString message = value.c_str();
             QStringList parameters = message.split(";");
 
-            std::string direction = parameters.at(2).toStdString();
             std::string state = parameters.at(1).toStdString();
 
-            if(direction.compare("0")==0){
-                qDebug() << "entro por sentido" <<direction.c_str();
-                if (state.compare("0")==0){
-                    m_subte->emergencyBrakeActived();
-                    qDebug() << "c_freno_emergencia: con";
-                    m_eNetClient->CambiarValorClave("c_freno_emergencia","con");
-                    m_subte->tractionReceived(0);
-                    qDebug() << "c_traccion: " << m_subte->traction();
-                    m_eNetClient->CambiarValorClave("c_traccion",std::to_string(m_subte->traction()));
-                }
+            if (state.compare("0")==0){
+                m_subte->emergencyBrakeActived();
             }
         }
     }
 
     else if(key.compare("v_velocidad") == 0){
-        //qDebug() << "cambio de velocidad recibido." ;
         m_subte->updateSpeed(std::stod(value));
     }
 
     else if(key.compare("v_tramo_vel") == 0){
-        qDebug() << "cambio de velocidad objetivo recibido." ;
         m_subte->updateTargetSpeed(std::stod(value));
     }
 
     else if(key.compare("i_cambio_senial") == 0){
         if (value.compare("1") == 0){
             emit iCambioSenial1();
-            qDebug() << "senial salida anden recibida, 1";
-        }
-    }
-
-    else if(key.compare("c_freno_estacionamiento") == 0){
-        if (value.compare("con") == 0){
         }
     }
 
     else if(key.compare("i_cargar_estado") == 0){
-        qDebug() << "carga de ejercicio recibida." ;
-        emit cargarEstado(std::stoi(value));
+        int intState;
+        if (value.compare("apagado") == 0){
+            intState = 0;
+        } else if(value.compare("puesta_servicio") == 0){
+            intState = 1;
+        }
+        emit cargarEstado(intState);
     }
 
-
     else if(key.compare("v_voltaje") == 0){
-        qDebug() << "cambio de voltaje recibido." ;
         m_subte->updateVolt(std::stod(value));
     }
 
     else if(key.compare("v_intensidad") == 0){
-        //qDebug() << "cambio de intensidad recibido." ;
         m_subte->updateAmm(std::stod(value));
     }
 
     else if(key.compare("v_esfuerzo") == 0){
-        //qDebug() << "cambio de esfuerzo recibido." ;
         m_subte->updateEffort(std::stod(value));
     }
+
     else if(key.compare("v_presion_cilindro") == 0){
-        qDebug() << "cambio de Presion de cilindro recibido." ;
         try{
             m_subte->updatePreassureRed(std::stod(value));
         }
@@ -271,8 +260,8 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             qDebug() << "Presion de cilindro incorrecta." ;
         }
     }
+
     else if(key.compare("v_presion_alimentacion") == 0){
-        qDebug() << "cambio de presion de frenado recibido." ;
         try{
             m_subte->updatePreassureWhite(std::stod(value));
         }
@@ -282,7 +271,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     }
 
     else if (key.compare("a_ACE") == 0){
-        qDebug() << " ACE, aceleracion instantanea";
         emit accelerationInstant(std::stod(value));
     }
 
@@ -324,6 +312,11 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             }
         }
     }
+
+    else if(key.compare("i_averia") == 0){
+        qDebug() << "averia recibida." ;
+        m_failures->setFailure(value);
+    }
 }
 
 void EventHandler::processKeyPressed(DWORD k)
@@ -350,7 +343,6 @@ void EventHandler::processKeyPressed(DWORD k)
         qDebug() << "F5 key pressed";
     }  else if ( k == _K && !K_down ){
         this->notifyValueChanged("c_llave_atp","con");
-        this->notifyValueChanged("c_modo_conduccion","atp");
         K_down = true;
         qDebug() << "K key pressed";
         emit kPressed();

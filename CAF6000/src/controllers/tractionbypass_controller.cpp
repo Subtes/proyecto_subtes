@@ -35,9 +35,11 @@ void TractionBypass_Controller::updateStatus(bool status)
 void TractionBypass_Controller::releaseBypass()
 {
     m_subte->bypassCSCP(false);
+    updateStatus(m_subte->cscp());
 }
 
 void TractionBypass_Controller::pressBypass()
 {
     m_subte->bypassCSCP(true);
+    updateStatus(m_subte->cscp());
 }
