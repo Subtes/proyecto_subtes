@@ -34,9 +34,7 @@ public slots:
     void loadState(int state);
 
 private:
-    Ui::BoardRight *ui;
 
-    Manometer_Controller * m_manometer;
     CircuitBreakerCON_Controller * m_CON_Disyuntor;
     CircuitBreakerDES_Controller * m_DES_Disyuntor;
 

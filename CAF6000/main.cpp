@@ -89,6 +89,8 @@ int main(int argc, char *argv[])
           tabRight->addTab(m_r,QObject::tr("RightPanel"));
           tabRight->addTab(m_tree,QObject::tr("TreePanel"));
 
+          tabRight->setMinimumWidth(1024);
+          tabRight->setMinimumHeight(768);
           tabRight->showNormal();
 
     }
