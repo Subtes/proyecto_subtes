@@ -13,7 +13,7 @@ private:
     bool lightingConnector;
     bool airConnector;
     bool megaphoneConnector;
-    bool retentionBrakeConnector;
+    bool parkingBrakeConnector;
 
 public:
     Connectors();
@@ -34,8 +34,8 @@ public:
     void setAirConnector(bool value);
     bool getMegaphoneConnector() const;
     void setMegaphoneConnector(bool value);
-    bool getRetentionBrakeConnector() const;
-    void setRetentionBrakeConnector(bool value);
+    bool getParkingBrakeConnector() const;
+    void setParkingBrakeConnector(bool value);
 };
 
 #endif // CONNECTORS_H

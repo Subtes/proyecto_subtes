@@ -81,14 +81,14 @@ void Connectors::setMegaphoneConnector(bool value)
     megaphoneConnector = value;
 }
 
-bool Connectors::getRetentionBrakeConnector() const
+bool Connectors::getParkingBrakeConnector() const
 {
-    return retentionBrakeConnector;
+    return parkingBrakeConnector;
 }
 
-void Connectors::setRetentionBrakeConnector(bool value)
+void Connectors::setParkingBrakeConnector(bool value)
 {
-    retentionBrakeConnector = value;
+    parkingBrakeConnector = value;
 }
 Connectors::Connectors()
 {

@@ -64,6 +64,7 @@ signals:
     manometerRedChange(double s_effort);
     atpOn();
     atpOff();
+    retentionBrakeChanged(bool status);
 
 public:
 
@@ -143,7 +144,7 @@ public slots:
     void setLightingConnector(bool status);
     void setAirConnector(bool status);
     void setMegaphoneConnector(bool status);
-    void setRetentionBrakeConnector(bool status);
+    void setParkingBrakeConnector(bool status);
     void updateEffort(double value);
     void updateVolt(double value);
     void updateAmm(double value);
@@ -162,6 +163,7 @@ public slots:
     void setManiobraMode();
     void setAtpMode();
     void setAcopleMode();
+    void setRetentionBrakeBypass(bool state);
 };
 
 #endif // SUBTESTATUS_H

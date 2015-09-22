@@ -418,7 +418,7 @@ void SubteStatus::setMainCompressorConnector(bool status){}
 void SubteStatus::setLightingConnector(bool status){}
 void SubteStatus::setAirConnector(bool status){}
 void SubteStatus::setMegaphoneConnector(bool status){}
-void SubteStatus::setRetentionBrakeConnector(bool status){
+void SubteStatus::setParkingBrakeConnector(bool status){
     if (status){
         m_eventHandler->notifyValueChanged("c_freno_estacionamiento","con");
         qDebug() << "c_freno_estacionamiento: con";
@@ -605,4 +605,16 @@ void SubteStatus::setAcopleMode()
     m_eventHandler->notifyValueChanged("c_modo_conduccion","acople");
     //TODO: emitir y corregir redimensionado en la traccion
     //m_traction->resizeTraction()
+}
+
+void SubteStatus::setRetentionBrakeBypass(bool state)
+{
+    m_brake->setAnulacionFrenoRetencion(state);
+
+    if(state){
+        m_eventHandler->notifyValueChanged("c_anulacion_freno_retencion","con");
+    }else{
+        m_eventHandler->notifyValueChanged("c_anulacion_freno_retencion","des");
+    }
+    emit retentionBrakeChanged(m_brake->retentioBrake());
 }

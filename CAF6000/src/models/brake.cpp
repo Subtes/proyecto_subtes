@@ -9,6 +9,7 @@ Brake::Brake()
     m_lastBrake = 0;
     m_bypass = false;
     m_retentioBrake = false;
+    m_anulacionFrenoRetencion = false;
     m_averia = false;
 }
 
@@ -37,6 +38,7 @@ void Brake::reset()
     m_bypass = false;
     m_averia = false;
     m_retentioBrake = false;
+    m_anulacionFrenoRetencion = false;
 }
 
 bool Brake::getEmergencyBrake() const
@@ -94,6 +96,9 @@ void Brake::setBypass(bool status)
 
 bool Brake::retentioBrake() const
 {
+    if(m_anulacionFrenoRetencion)
+        return false;
+
     return m_retentioBrake;
 }
 
@@ -110,4 +115,14 @@ bool Brake::averia() const
 void Brake::setAveria(bool averia)
 {
     m_averia = averia;
+}
+
+bool Brake::anulacionFrenoRetencion() const
+{
+    return m_anulacionFrenoRetencion;
+}
+
+void Brake::setAnulacionFrenoRetencion(bool anulacionFrenoRetencion)
+{
+    m_anulacionFrenoRetencion = anulacionFrenoRetencion;
 }

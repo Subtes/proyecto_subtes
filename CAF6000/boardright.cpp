@@ -18,6 +18,7 @@ BoardRight::BoardRight(QWidget *parent, SubteStatus * subte, EventHandler *event
     m_DES_Disyuntor = NULL;
     m_sicasmac = NULL;
     m_modoConduccion = NULL;
+    m_frenoRetencion = NULL;
 }
 
 BoardRight::~BoardRight()
@@ -37,6 +38,7 @@ void BoardRight::startBoard()
     m_manometer = new Manometer_Controller(m_subte,ui->manometer);
     m_sicasmac = new SicasMac_Controller(m_subte,ui->sicasmac);
     m_modoConduccion = new LlaveModoConduccion_Controller(m_subte,ui->modoConduccion);
+    m_frenoRetencion = new FrenoRetencion_Controller(m_subte,ui->frenoRetencion);
 
     connect(m_eventHandler,SIGNAL(cargarMensaje(QString)),m_sicasmac,SLOT(separoMensajes(QString)));
     this->setEnabled(false);

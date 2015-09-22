@@ -151,17 +151,17 @@ void TopBoardConnectors_Controller::setMegaphone(SingleButton *megaphoneCon,Sing
     connect(m_megaphoneDes,SIGNAL(buttonPressed()),this,SLOT(megaphoneDesPressed()));
 }
 
-void TopBoardConnectors_Controller::setRetentionBrake(SingleButton *retentionBrakeCon,SingleButton *retentionBrakeDes)
+void TopBoardConnectors_Controller::setParkingBrake(SingleButton *parkingBrakeCon,SingleButton *parkingBrakeDes)
 {
-    m_retentionBrakeCon = retentionBrakeCon;
-    m_retentionBrakeDes = retentionBrakeDes;
+    m_parkingBrakeCon = parkingBrakeCon;
+    m_parkingBrakeDes = parkingBrakeDes;
 
-    m_retentionBrakeCon->setButtonImage(QUrl("qrc:/resources/redON_CON_techo.png"),QUrl("qrc:/resources/red_CON_techo.png"));
-    m_retentionBrakeDes->setButtonImage(QUrl("qrc:/resources/greenON_DES_techo.png"),QUrl("qrc:/resources/green_DES_techo.png"));
+    m_parkingBrakeCon->setButtonImage(QUrl("qrc:/resources/redON_CON_techo.png"),QUrl("qrc:/resources/red_CON_techo.png"));
+    m_parkingBrakeDes->setButtonImage(QUrl("qrc:/resources/greenON_DES_techo.png"),QUrl("qrc:/resources/green_DES_techo.png"));
 
-    m_subte->setRetentionBrakeConnector(true);
-    connect(m_retentionBrakeCon,SIGNAL(buttonPressed()),this,SLOT(retentionBrakeConPressed()));
-    connect(m_retentionBrakeDes,SIGNAL(buttonPressed()),this,SLOT(retentionBrakeDesPressed()));
+    m_subte->setParkingBrakeConnector(true);
+    connect(m_parkingBrakeCon,SIGNAL(buttonPressed()),this,SLOT(parkingBrakeConPressed()));
+    connect(m_parkingBrakeDes,SIGNAL(buttonPressed()),this,SLOT(parkingBrakeDesPressed()));
 }
 
 void TopBoardConnectors_Controller::batteryConPressed(){
@@ -356,20 +356,20 @@ void TopBoardConnectors_Controller::megaphoneDesPressed(){
     m_subte->setMegaphoneConnector(false);
 }
 
-void TopBoardConnectors_Controller::retentionBrakeConPressed(){
-    m_retentionBrakeCon->setClickeable(false);
-    m_retentionBrakeDes->setClickeable(true);
-    m_retentionBrakeDes->turnOff();
-    m_retentionBrakeCon->turnOn();
-    m_subte->setRetentionBrakeConnector(true);
+void TopBoardConnectors_Controller::parkingBrakeConPressed(){
+    m_parkingBrakeCon->setClickeable(false);
+    m_parkingBrakeDes->setClickeable(true);
+    m_parkingBrakeDes->turnOff();
+    m_parkingBrakeCon->turnOn();
+    m_subte->setParkingBrakeConnector(true);
 }
 
-void TopBoardConnectors_Controller::retentionBrakeDesPressed(){
-    m_retentionBrakeCon->setClickeable(true);
-    m_retentionBrakeDes->setClickeable(false);
-    m_retentionBrakeDes->turnOn();
-    m_retentionBrakeCon->turnOff();
-    m_subte->setRetentionBrakeConnector(false);
+void TopBoardConnectors_Controller::parkingBrakeDesPressed(){
+    m_parkingBrakeCon->setClickeable(true);
+    m_parkingBrakeDes->setClickeable(false);
+    m_parkingBrakeDes->turnOn();
+    m_parkingBrakeCon->turnOff();
+    m_subte->setParkingBrakeConnector(false);
 }
 
 void TopBoardConnectors_Controller::setEstado(int state)
@@ -448,11 +448,11 @@ void TopBoardConnectors_Controller::resetToApagado(){
     m_megaphoneCon->turnOff();
     m_megaphoneDes->turnOn();
 
-    m_subte->setRetentionBrakeConnector(true);
-    m_retentionBrakeCon->setClickeable(false);
-    m_retentionBrakeDes->setClickeable(true);
-    m_retentionBrakeCon->turnOn();
-    m_retentionBrakeDes->turnOff();
+    m_subte->setParkingBrakeConnector(true);
+    m_parkingBrakeCon->setClickeable(false);
+    m_parkingBrakeDes->setClickeable(true);
+    m_parkingBrakeCon->turnOn();
+    m_parkingBrakeDes->turnOff();
 
     m_lastState = APAGADO;
 }
@@ -467,11 +467,11 @@ void TopBoardConnectors_Controller::resetToMarcha(){
     m_batteryDes->turnOff();
     m_subte->setBatteryConnector(true);
 
-    m_subte->setRetentionBrakeConnector(false);
-    m_retentionBrakeCon->setClickeable(true);
-    m_retentionBrakeDes->setClickeable(false);
-    m_retentionBrakeCon->turnOff();
-    m_retentionBrakeDes->turnOn();
+    m_subte->setParkingBrakeConnector(false);
+    m_parkingBrakeCon->setClickeable(true);
+    m_parkingBrakeDes->setClickeable(false);
+    m_parkingBrakeCon->turnOff();
+    m_parkingBrakeDes->turnOn();
 
     m_conmutadorPuestaServicioStatus = false;
     m_enMarcha = true;
