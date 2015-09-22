@@ -41,6 +41,7 @@ void BoardRight::startBoard()
     m_frenoRetencion = new FrenoRetencion_Controller(m_subte,ui->frenoRetencion);
 
     connect(m_eventHandler,SIGNAL(cargarMensaje(QString)),m_sicasmac,SLOT(separoMensajes(QString)));
+    connect(m_eventHandler,SIGNAL(cargarMensajeCocheSicas(QString)),m_sicasmac,SLOT(cargoCoches(QString)));
     this->setEnabled(false);
 }
 

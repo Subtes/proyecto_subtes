@@ -120,5 +120,6 @@
         <file>resources/sicas_bkg.jpg</file>
         <file>resources/sicas_imgError.png</file>
         <file>resources/sicas_doors.png</file>
+        <file>resources/sicas_renglon.png</file>
     </qresource>
 </RCC>

@@ -101,3 +101,64 @@ void SicasMac::textEditSicas(QString error,QString trenes,QString letra, int ind
                               Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, error),
                                     Q_ARG(QVariant, trenes),Q_ARG(QVariant, letra),Q_ARG(QVariant, index));
 }
+
+void SicasMac::insertTrainSicas(QString coche, QString estFreno)
+{
+    qDebug() << "llega: estdado tren ";
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "changeStateTrain",
+                              Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, coche),
+                                    Q_ARG(QVariant, estFreno));
+}
+void SicasMac::insertDoorsSicas(QString doors,int tren){
+   /* qDebug() << "llega: puertas ";
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "changeStateDoors",
+                              Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, doors), Q_ARG(QVariant, tren));
+*/
+}
+void SicasMac::turnOffFailure(int coche)
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "turnOffFailure",
+            Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, coche));
+}
+
+void SicasMac::turnOnFailure(int coche)
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "turnOnFailure",
+            Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, coche));
+}
+void SicasMac::turnBlinkFailure(int coche)
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "turnBlinkFailure",
+            Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, coche));
+}
+void SicasMac::turnInhabFailure(int coche)
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "turnInhabFailure",
+            Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, coche));
+}
+void SicasMac::turnOffDoors(int coche)
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "turnOffDoors",
+            Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, coche));
+}
+
+void SicasMac::turnOnDoors(int coche)
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "turnOnDoors",
+            Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, coche));
+}
+
+void SicasMac::actualizarTamArreRenglon(int finRenglon, int indiceArre)
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "actualizarTamArreRenglon",
+            Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, finRenglon), Q_ARG(QVariant, indiceArre));
+}

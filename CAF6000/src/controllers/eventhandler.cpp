@@ -80,11 +80,9 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
         }else{
                 m_splash1 = new QSplashScreen(m_imageSplash);
                 m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
-                m_splash1->showFullScreen();
+                m_splash1->showMaximized();
                 m_splash1->setDisabled(true);
             }
-
-
 }
 
 EventHandler::~EventHandler(){
@@ -129,15 +127,16 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
                     m_splash3->hide();
                     m_splash4->hide();
                 }else{
-                    m_splash1->hide();
+                    //m_splash1->hide();
                 }
             }
 
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estado_simulador");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cargar_estado");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_averia");
-            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_renglon_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cambio_senial");
+            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_coche_sicas");
+            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_renglon_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_velocidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_tramo_vel");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
@@ -425,6 +424,12 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         qDebug() << "renglon sicas recibido." ;
         QString mensaje = value.c_str();
         emit cargarMensaje(mensaje);
+    }
+
+    else if(key.compare("i_coche_sicas") == 0){
+        qDebug() << "fallas y puertas recibidas." ;
+        QString mensaje = value.c_str();
+        emit cargarMensajeCocheSicas(mensaje);
     }
 
 }
