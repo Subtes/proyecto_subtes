@@ -55,14 +55,17 @@ void BoardLeft::resetControls(){
  * @param state
  */
 void BoardLeft::loadState(int state){
-    if (m_atp){
-        m_atp->resetATP();
-    }
 
     if(state == APAGADO){
         lastState = APAGADO;
+        if (m_atp){
+            m_atp->resetATP();
+        }
     }
     else if(state == EN_MARCHA){
         lastState = EN_MARCHA;
+        if (m_atp){
+            m_atp->initATP();
+        }
     }
 }

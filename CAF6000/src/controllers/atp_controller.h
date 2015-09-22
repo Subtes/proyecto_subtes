@@ -65,7 +65,6 @@ public slots:
 
     void departureEstation();
 
-    void evalCalculateDistance();
     void calculateDistance();
 
 private slots:

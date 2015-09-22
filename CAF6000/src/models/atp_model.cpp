@@ -1,4 +1,5 @@
 #include "atp_model.h"
+#include <QDebug>
 
 ATP_model::ATP_model()
 {
@@ -47,11 +48,13 @@ void ATP_model::setTargetSpeed(double targetSpeed)
 
 std::string ATP_model::code() const
 {
+    qDebug()<< "ERROR std";
     return m_code;
 }
 
 void ATP_model::setCode(const std::string &code)
 {
+    qDebug()<< "ERROR std";
     m_code = code;
 }
 

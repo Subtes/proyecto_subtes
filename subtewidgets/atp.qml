@@ -779,6 +779,33 @@ Rectangle {
 
     function setReset(value){
 
+        iml0.opacity=0;
+        iml1.opacity=0;
+        iml2.opacity=0;
+        ims0.opacity=0;
+        ims1.opacity=0;
+        ims2.opacity=0;
+        image10.opacity=0;
+        image05.opacity=0;
+        image10.opacity=0;
+        image20.opacity=0;
+        image30.opacity=0;
+        image40.opacity=0;
+        image50.opacity=0;
+        image60.opacity=0;
+
+        for (indexLed=0; indexLed<=(x-1); indexLed++){
+            ledsSpeed[indexLed].opacity=0;
+        };
+        for (indexLed=x; indexLed < ledsSpeed.length; indexLed++){
+            ledsSpeed[indexLed].opacity=0;
+        };
+        for (indexLedAllow=0; indexLedAllow<=(x-1); indexLedAllow++){
+            ledsSpeedAllowed[indexLedAllow].opacity=0;
+        };
+        for (indexLedAllow=x; indexLedAllow < ledsSpeedAllowed.length; indexLedAllow++){
+            ledsSpeedAllowed[indexLedAllow].opacity=0;
+        };
     }
 
 }

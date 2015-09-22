@@ -17,7 +17,7 @@
 int main(int argc, char *argv[])
 {
     //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-    //QApplication::setAttribute(Qt::AA_UseOpenGLES,true);
+    QApplication::setAttribute(Qt::AA_UseOpenGLES,true);
     //QApplication::setAttribute(Qt::AA_UseDesktopOpenGL,true);
     //QApplication::setAttribute(Qt::AA_UseSoftwareOpenGL,true);
 
