@@ -108,8 +108,8 @@ public slots:
     void brakeReceived(int value);
     void emergencyBrakeActived();
     void emergencyBrakeReleased();
-    void hombreVivoPressed();
-    void hombreVivoReleased();
+    void hombreMuertoPressed();
+    void hombreMuertoReleased();
     void openRightDoors();
     void openLeftDoors();
     void closeLeftDoors();
@@ -153,6 +153,9 @@ public slots:
     void resolveTractionFailure();
     void resolveBrakeFailure();
     void resolveCSCPFailure();
+    void setManiobraMode();
+    void setAtpMode();
+    void setAcopleMode();
 };
 
 #endif // SUBTESTATUS_H

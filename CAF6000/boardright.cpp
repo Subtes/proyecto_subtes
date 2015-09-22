@@ -16,6 +16,8 @@ BoardRight::BoardRight(QWidget *parent, SubteStatus * subte, EventHandler *event
     m_manometer = NULL;
     m_CON_Disyuntor = NULL;
     m_DES_Disyuntor = NULL;
+    m_sicasmac = NULL;
+    m_modoConduccion = NULL;
 }
 
 BoardRight::~BoardRight()
@@ -27,16 +29,16 @@ void BoardRight::startBoard()
 {
     qDebug() << "board right startBoard";
 
+    ui->calientapies->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blue.png"));
+    ui->desacople->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
+
     m_CON_Disyuntor = new CircuitBreakerCON_Controller(m_subte,ui->CONDisy_widget );
     m_DES_Disyuntor = new CircuitBreakerDES_Controller(m_subte,ui->DESDisy_widget );
     m_manometer = new Manometer_Controller(m_subte,ui->manometer);
-    ui->calientapies->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blue.png"));
-    ui->desacople->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
-    m_manometer = new Manometer_Controller(m_subte,ui->manometer);
     m_sicasmac = new SicasMac_Controller(m_subte,ui->sicasmac);
+    m_modoConduccion = new LlaveModoConduccion_Controller(m_subte,ui->modoConduccion);
 
     connect(m_eventHandler,SIGNAL(cargarMensaje(QString)),m_sicasmac,SLOT(separoMensajes(QString)));
-
     this->setEnabled(false);
 }
 
@@ -61,11 +63,13 @@ void BoardRight::loadState(int state){
     ui->CONDisy_widget->turnOff();
 
     if(state == APAGADO){
-        ui->manometer->updateNeedleRed(0);
-        ui->manometer->updateNeedleWhite(0);
+        m_manometer->updatePressureRed(0);
+        m_manometer->updatePressureWhite(0);
+        m_modoConduccion->setManiobraMode();
     }
     else if(state == EN_MARCHA){
-        ui->manometer->updateNeedleRed(m_subte->getPressureRed());
-        ui->manometer->updateNeedleWhite(m_subte->getPressureWhite());
+        m_manometer->updatePressureRed(m_subte->getPressureRed());
+        m_manometer->updatePressureWhite(m_subte->getPressureWhite());
+        m_modoConduccion->setAtpMode();
     }
 }

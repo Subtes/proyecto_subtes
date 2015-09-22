@@ -20,7 +20,7 @@ private:
     CSCP *m_cscp;
     ATP_model *m_atp;
 
-    bool m_hombreVivo;
+    bool m_hombreMuerto;
 
     int m_traction;
     int m_position;
@@ -54,8 +54,8 @@ public:
     void setLastPosition(int lastPosition);
     int lastPosition() const;
 
-    bool hombreVivo() const;
-    void setHombreVivo(bool hombreVivo);
+    bool hombreMuerto() const;
+    void setHombreMuerto(bool hombreMuerto);
 
     bool averia() const;
     void setAveria(bool averia);

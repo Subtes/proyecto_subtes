@@ -42,9 +42,9 @@ public slots:
     void release();
 
 signals:
-    void buttonClicked();
-    void buttonPressed();
-    void buttonReleased();
+    buttonClicked();
+    buttonPressed();
+    buttonReleased();
 
 };
 

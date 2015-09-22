@@ -24,7 +24,6 @@ SOURCES += main.cpp \
     src/controllers/horn_controller.cpp \
     src/controllers/wiper_controller.cpp \
     src/controllers/tractionlever_controller.cpp \
-    src/controllers/hombrevivo_controller.cpp \
     src/controllers/rana_controller.cpp \
     src/controllers/emergencyoverride_controller.cpp \
     src/controllers/tractionbypass_controller.cpp \
@@ -52,7 +51,9 @@ SOURCES += main.cpp \
     src/instructionsolutionpanel/treemodel.cpp \
     src/instructionsolutionpanel/mainwindow.cpp \
     src/controllers/failures_controller.cpp \
-    src/controllers/sicasmac_controller.cpp
+    src/controllers/sicasmac_controller.cpp \
+    src/controllers/hombremuerto_controller.cpp \
+    src/controllers/llavemodoconduccion_controller.cpp
 
 
 HEADERS  += baseboard.h \
@@ -65,7 +66,6 @@ HEADERS  += baseboard.h \
     src/controllers/horn_controller.h \
     src/controllers/wiper_controller.h \
     src/controllers/tractionlever_controller.h \
-    src/controllers/hombrevivo_controller.h \
     src/controllers/rana_controller.h \
     src/controllers/emergencyoverride_controller.h \
     src/controllers/tractionbypass_controller.h \
@@ -93,7 +93,9 @@ HEADERS  += baseboard.h \
     src/instructionsolutionpanel/treemodel.h \
     src/instructionsolutionpanel/mainwindow.h \
     src/controllers/failures_controller.h \
-    src/controllers/sicasmac_controller.h
+    src/controllers/sicasmac_controller.h \
+    src/controllers/hombremuerto_controller.h \
+    src/controllers/llavemodoconduccion_controller.h
 
 FORMS    += boardcenter.ui \
     boardright.ui \

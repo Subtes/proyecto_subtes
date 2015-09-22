@@ -64,18 +64,14 @@ Rectangle {
         }
 
         onPositionChanged: {
-            newRot = -Math.atan2(mouse.x - selector.width/2 , mouse.y - selector.height/2) * 180/Math.PI;
-            console.log("X: " + mouse.x)
-            console.log("X': " + parseInt(mouse.x - selector.width/2))
-
+            newRot = (-Math.atan2(mouse.x - selector.width/2 , mouse.y - selector.height/2) * 180/Math.PI) - 45;
             if(newRot < rotLimitDown){
                 newRot = rotLimitDown;
             }else if(newRot > rotLimitUp){
                 newRot = rotLimitUp;
                 selector.washer();
-            }else{
-                sel.rotation = newRot;
             }
+            sel.rotation = newRot;
         }
     }
 }

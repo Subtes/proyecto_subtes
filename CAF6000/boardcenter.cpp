@@ -89,10 +89,6 @@ void BoardCenter::loadState(int state){
         ui->velocimetro->turnOff();
         ui->bypassFreno->turnOff();
         ui->bypassTraccion->turnOff();
-
-        //TODO: remove this! setear perilla de modo de conduccion a ATP (maniobra)
-        m_eventHandler->notifyValueChanged("c_modo_conduccion","atp");
-
     }
     else if(state == EN_MARCHA){
         lastState = EN_MARCHA;
@@ -100,8 +96,5 @@ void BoardCenter::loadState(int state){
         ui->velocimetro->turnOn();
         ui->bypassFreno->turnOn();
         ui->bypassTraccion->turnOn();
-
-        //TODO: remove this! setear perilla de modo de conduccion a ATP (maniobra)
-        m_eventHandler->notifyValueChanged("c_modo_conduccion","atp");
     }
 }

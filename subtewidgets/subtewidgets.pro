@@ -20,7 +20,8 @@ HEADERS += \
     atp.h \
     analoggauge.h \
     manometer.h \
-    sicasmac.h
+    sicasmac.h \
+    llavemodoconduccion.h
 
 SOURCES += \
     tractionlever.cpp \
@@ -34,7 +35,8 @@ SOURCES += \
     atp.cpp \
     analoggauge.cpp \
     manometer.cpp \
-    sicasmac.cpp
+    sicasmac.cpp \
+    llavemodoconduccion.cpp
 
 FORMS += \
     tractionlever.ui \
@@ -48,7 +50,8 @@ FORMS += \
     atp.ui \
     analoggauge.ui \
     manometer.ui \
-    sicasmac.ui
+    sicasmac.ui \
+    llavemodoconduccion.ui
 
 RESOURCES += \
             qmlrsc.qrc \
