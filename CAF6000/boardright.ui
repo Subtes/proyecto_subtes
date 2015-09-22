@@ -73,7 +73,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="Wiper" name="maniobra" native="true">
+   <widget class="LlaveModoConduccion" name="modoConduccion" native="true">
     <property name="geometry">
      <rect>
       <x>803</x>
@@ -119,12 +119,6 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>Wiper</class>
-   <extends>QWidget</extends>
-   <header>wiper.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>Manometer</class>
    <extends>QWidget</extends>
    <header>manometer.h</header>
@@ -134,6 +128,12 @@
    <class>SicasMac</class>
    <extends>QWidget</extends>
    <header>sicasmac.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LlaveModoConduccion</class>
+   <extends>QWidget</extends>
+   <header>llavemodoconduccion.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

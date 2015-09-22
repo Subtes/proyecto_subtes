@@ -14,5 +14,6 @@
         <file>atp.qml</file>
         <file>analog_gauge.qml</file>
         <file>sicasmac.qml</file>
+        <file>llavetrespuntos.qml</file>
     </qresource>
 </RCC>

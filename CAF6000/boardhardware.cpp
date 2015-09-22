@@ -23,7 +23,7 @@ BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte, EventHandler 
     m_horn = NULL;
     m_tractionLever = NULL;
     m_rana = NULL;
-    m_hombreVivo = NULL;
+    m_hombreMuerto = NULL;
     m_setaButton = NULL;
 
 }
@@ -40,7 +40,7 @@ void BoardHardware::startBoard()
     m_horn = new Horn_Controller(m_subte,ui->horn);
     m_tractionLever = new TractionLever_Controller(m_subte,ui->traction);
     m_rana = new Rana_Controller(m_subte,ui->ranaDevice);
-    m_hombreVivo = new HombreVivo_Controller(m_subte,ui->traction);
+    m_hombreMuerto = new HombreMuerto_Controller(m_subte,ui->traction);
     m_setaButton = new Seta_Controller(m_subte, ui->setaButton);
 
     this->setEnabled(false);

@@ -228,10 +228,10 @@ void SubteStatus::emergencyBrakeReleased(){
     emit hiloLazoChanged(getHiloLazo());
 }
 
-void SubteStatus::hombreVivoPressed(){
-    m_traction->setHombreVivo(true);
+void SubteStatus::hombreMuertoPressed(){
+    m_traction->setHombreMuerto(true);
     m_eventHandler->notifyValueChanged("c_dispositivo_hombre_muerto","con");
-    qDebug() << "c_hombreVivo: pressed";
+    qDebug() << "c_hombreMuerto: pressed";
     emit hiloLazoChanged(getHiloLazo());
 
     m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
@@ -244,10 +244,10 @@ void SubteStatus::hombreVivoPressed(){
     }
 }
 
-void SubteStatus::hombreVivoReleased(){
-    m_traction->setHombreVivo(false);
+void SubteStatus::hombreMuertoReleased(){
+    m_traction->setHombreMuerto(false);
     m_eventHandler->notifyValueChanged("c_dispositivo_hombre_muerto","des");
-    qDebug() << "c_hombreVivo: released";
+    qDebug() << "c_hombreMuerto: released";
     emit hiloLazoChanged(getHiloLazo());
 
     m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
@@ -563,4 +563,25 @@ void SubteStatus::resolveCSCPFailure()
 {
     m_cscp->setAveria(false);
     emit CSCPChanged(m_cscp->evalCircuit());
+}
+
+void SubteStatus::setManiobraMode()
+{
+    m_eventHandler->notifyValueChanged("c_modo_conduccion","maniobra");
+    //TODO: emitir y corregir redimensionado en la traccion
+    //m_traction->resizeTraction()
+}
+
+void SubteStatus::setAtpMode()
+{
+    m_eventHandler->notifyValueChanged("c_modo_conduccion","atp");
+    //TODO: emitir y corregir redimensionado en la traccion
+    //m_traction->resizeTraction()
+}
+
+void SubteStatus::setAcopleMode()
+{
+    m_eventHandler->notifyValueChanged("c_modo_conduccion","acople");
+    //TODO: emitir y corregir redimensionado en la traccion
+    //m_traction->resizeTraction()
 }

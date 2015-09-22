@@ -41,7 +41,7 @@ void Brake::reset()
 
 bool Brake::getEmergencyBrake() const
 {
-    if (!m_traction->hombreVivo())
+    if (!m_traction->hombreMuerto())
         return true;
 
     return m_emergencyBrake;

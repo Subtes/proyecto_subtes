@@ -5,7 +5,7 @@ Traction::Traction()
 {
     m_traction = 0;
     m_rana = RANA::CERO;
-    m_hombreVivo = false;
+    m_hombreMuerto = false;
 
     m_lastTraction = 0;
     m_position = 0;
@@ -32,7 +32,7 @@ void Traction::reset()
 {
     m_traction = 0;
     m_rana = RANA::CERO;
-    m_hombreVivo = false;
+    m_hombreMuerto = false;
 
     m_lastTraction = 0;
     m_position = 0;
@@ -58,8 +58,8 @@ int Traction::getTraction()
             qDebug() <<  "atp bloquea traccion";
         if(m_rana == RANA::CERO)
             qDebug() << "rana en CERO";
-        if(!m_hombreVivo)
-            qDebug() << "Hombre Vivo NO cumplido";
+        if(!m_hombreMuerto)
+            qDebug() << "Hombre Muerto NO cumplido";
     }
 
     if(!m_averia
@@ -67,7 +67,7 @@ int Traction::getTraction()
        && m_cscp->evalCircuit()
        && m_atp->tractionReady()
        && m_rana != RANA::CERO
-       && m_hombreVivo){
+       && m_hombreMuerto){
         return m_traction;
     }else{
         return 0;
@@ -116,14 +116,14 @@ int Traction::lastPosition() const
     return m_lastPosition;
 }
 
-bool Traction::hombreVivo() const
+bool Traction::hombreMuerto() const
 {
-    return m_hombreVivo;
+    return m_hombreMuerto;
 }
 
-void Traction::setHombreVivo(bool hombreVivo)
+void Traction::setHombreMuerto(bool hombreMuerto)
 {
-    m_hombreVivo = hombreVivo;
+    m_hombreMuerto = hombreMuerto;
 }
 
 bool Traction::averia() const
