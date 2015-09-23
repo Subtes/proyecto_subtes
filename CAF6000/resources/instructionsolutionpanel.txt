@@ -19,11 +19,6 @@ Coche 1
         57F1
                 CON
                 DES
-    Pupitre
-        SETA
-                CON
-                DES
-                INHABILITADO
 Coche 2
     Grifos
         B-138
@@ -53,7 +48,6 @@ Coche 2
         SETA
                 CON
                 DES
-                INHABILITADO
 Coche 3
     Grifos
         B-138
@@ -83,7 +77,6 @@ Coche 3
         SETA
                 CON
                 DES
-                INHABILITADO
 Coche 4
     Grifos
         B-138
@@ -113,7 +106,6 @@ Coche 4
         SETA
                 CON
                 DES
-                INHABILITADO
 Coche 5
     Grifos
         B-138
@@ -143,7 +135,6 @@ Coche 5
         SETA
                 CON
                 DES
-                INHABILITADO
 Coche 6
     Grifos
         B-138
@@ -173,4 +164,3 @@ Coche 6
         SETA
                 CON
                 DES
-                INHABILITADO

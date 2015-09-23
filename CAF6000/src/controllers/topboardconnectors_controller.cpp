@@ -385,6 +385,10 @@ void TopBoardConnectors_Controller::reset(){
     }
 }
 
+void TopBoardConnectors_Controller::setNivel(int n){
+    m_nivel = n;
+}
+
 void TopBoardConnectors_Controller::resetToApagado(){
     m_batteryCon->setClickeable(true);
     m_batteryDes->setClickeable(false);

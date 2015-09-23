@@ -108,8 +108,7 @@ signals:
     controlReady();
     controlDisable();
     controlEnable();
-    controlReset();
-    cargarEstado(int);
+    controlReset();    
     closeApp();
     iCambioSenial1();
     bPressed();
@@ -130,8 +129,10 @@ signals:
     accelerationInstant(double);
     nextToEstation();
     departureEstation();
-    cargarMensaje(QString);
-
+    cargarMensaje(QString);    
+    cargarEstado(int);
+    kHardPressed();
+    lHardPressed();
 public slots:
     void processKeyPressed(DWORD k);
     void processKeyReleased(DWORD k);

@@ -5,7 +5,7 @@ TEMPLATE = lib
 
 #order
 #release
-CONFIG +=
+CONFIG += release
 
 
 HEADERS += \
@@ -21,7 +21,8 @@ HEADERS += \
     analoggauge.h \
     manometer.h \
     sicasmac.h \
-    llavemodoconduccion.h
+    llavemodoconduccion.h \
+    llavetecho.h
 
 SOURCES += \
     tractionlever.cpp \
@@ -36,7 +37,8 @@ SOURCES += \
     analoggauge.cpp \
     manometer.cpp \
     sicasmac.cpp \
-    llavemodoconduccion.cpp
+    llavemodoconduccion.cpp \
+    llavetecho.cpp
 
 FORMS += \
     tractionlever.ui \
@@ -51,7 +53,8 @@ FORMS += \
     analoggauge.ui \
     manometer.ui \
     sicasmac.ui \
-    llavemodoconduccion.ui
+    llavemodoconduccion.ui \
+    llavetecho.ui
 
 RESOURCES += \
             qmlrsc.qrc \

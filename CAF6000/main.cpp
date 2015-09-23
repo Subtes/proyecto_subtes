@@ -17,7 +17,7 @@
 int main(int argc, char *argv[])
 {
     //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-    QApplication::setAttribute(Qt::AA_UseOpenGLES,true);
+    //QApplication::setAttribute(Qt::AA_UseOpenGLES,true);
     //QApplication::setAttribute(Qt::AA_UseDesktopOpenGL,true);
     //QApplication::setAttribute(Qt::AA_UseSoftwareOpenGL,true);
 
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     QDesktopWidget *desktop = a.desktop();
 
     if(desktop->screenCount() == 4){
-        qDebug() << "Entre en For de pantallas igual 4: ";
+        qDebug() << "Entre en For de pantallas igual 4 main: ";
         for(int i = 0; i < desktop->screenCount(); i++){
             qDebug() << "Dimensiones --> "<< desktop->screenGeometry(i);
         }

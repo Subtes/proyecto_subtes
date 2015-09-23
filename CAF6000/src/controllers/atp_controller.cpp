@@ -21,6 +21,8 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
         //Conexiones Externas-IN:
     connect(subte,SIGNAL(speedChanged(double)),this,SLOT(updateSpeed(double)));
     connect(subte,SIGNAL(targetSpeedChanged(double)),this,SLOT(updateTargetSpeed(double)));
+    connect(subte,SIGNAL(atpOn()),this,SLOT(initATP()));
+    connect(subte,SIGNAL(atpOff()),this,SLOT(resetATP()));
     connect(eventHandler,SIGNAL(kPressed()),this,SLOT(initATP()));
     connect(eventHandler,SIGNAL(lPressed()),this,SLOT(resetATP()));
     connect(eventHandler,SIGNAL(accelerationInstant(double)),this,SLOT(setACE(double)));

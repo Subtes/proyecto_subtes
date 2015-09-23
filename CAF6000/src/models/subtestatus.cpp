@@ -24,6 +24,7 @@ SubteStatus::SubteStatus()
     m_horn = false;
     m_emergencyOverride = false;
     m_seta = false;
+    m_keyATP = false;
     m_rana = "0";
     m_CMC = true;
 }
@@ -53,6 +54,7 @@ void SubteStatus::reset()
     //CONTROLS
     m_rana = "0";
     m_seta = false;
+    m_keyATP = false;
 }
 
 bool SubteStatus::cscp() const
@@ -122,6 +124,11 @@ bool SubteStatus::emergencyOverride() const
 bool SubteStatus::seta() const
 {
     return m_seta;
+}
+
+bool SubteStatus::keyTopBoard() const
+{
+    return m_keyATP;
 }
 
 std::string SubteStatus::rana() const
@@ -314,6 +321,20 @@ void SubteStatus::setaDeactivated(){
     m_seta = false;
     m_eventHandler->notifyValueChanged("c_seta_emergencia","des");
     qDebug() << "c_seta_emergencia: des";
+}
+
+void SubteStatus::keyActivated(){
+    m_keyATP = true;
+    emit atpOn();
+
+    qDebug() << "keyATP: " << m_keyATP;
+}
+
+void SubteStatus::keyDeactivated(){
+    m_keyATP = false;
+    emit atpOff();
+
+     qDebug() << "keyATP: " << m_keyATP;
 }
 
 void SubteStatus::ranaAD(){

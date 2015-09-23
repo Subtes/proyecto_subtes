@@ -2,26 +2,24 @@
 
 Seta_Controller::Seta_Controller(SubteStatus * modelo, Seta_Button * view)
 {
-    this->m_setaButton = view;
-    this->m_modelo = modelo;
+    m_setaButton = view;
+    m_modelo = modelo;
 
-    connect(this->m_setaButton,SIGNAL(m_pressed()),this, SLOT(pushSeta()));
-    connect(this->m_setaButton, SIGNAL(m_released()),this, SLOT(pullSeta()));
-
+    connect(m_setaButton,SIGNAL(m_pressed()),this, SLOT(pushSeta()));
+    connect(m_setaButton, SIGNAL(m_released()),this, SLOT(pullSeta()));
 
 }
 
 void Seta_Controller::pushSeta(){
     //qDebug() << "Entro en controller.pushSeta";
     m_modelo->setaActivated();
-    emit this->setaActivate();
-
+    //emit this->setaActivate();
 }
 
 void Seta_Controller::pullSeta(){
     //qDebug() << "Entro en controller.pullSeta";
     m_modelo->setaDeactivated();
-    emit this->setaDeactivated();
+    //emit this->setaDeactivated(); OJOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 }
 
 QVariant Seta_Controller::isPressed(){

@@ -41,6 +41,7 @@ private:
     bool m_horn;
     bool m_emergencyOverride;
     bool m_seta;
+    bool m_keyATP;
     std::string m_rana;
     bool m_CMC;
     bool m_CL;
@@ -61,6 +62,8 @@ signals:
     leftDoorsClosed();
     manometerWhiteChange(double s_effort);
     manometerRedChange(double s_effort);
+    atpOn();
+    atpOff();
 
 public:
 
@@ -91,6 +94,7 @@ public:
     bool horn() const;
     bool emergencyOverride() const;
     bool seta() const;
+    bool keyTopBoard() const;
     std::string rana() const;
     int tractionLeverPosition() const;
     bool getDrivingModeATP();
@@ -121,6 +125,8 @@ public slots:
     void emergencyOverridePressed();
     void setaActivated();
     void setaDeactivated();
+    void keyActivated();
+    void keyDeactivated();
     void ranaAD();
     void ranaCERO();
     void ranaAT();

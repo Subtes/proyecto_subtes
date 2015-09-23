@@ -43,7 +43,7 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
     m_imageSplash = QPixmap(":/resources/splash.jpg");
 
     if(desktop->screenCount() == 4){
-        qDebug() << "Entre en For de pantallas igual 4: ";
+        qDebug() << "Entre en For de pantallas igual 4 eventhandler: ";
 
         m_splash1 = new QSplashScreen(m_imageSplash);
         m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
@@ -64,16 +64,27 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
         m_splash3->move(s2.topLeft());
         m_splash4->move(s3.topLeft());
 
-        m_splash1->showMaximized();
-        m_splash2->showMaximized();
-        m_splash3->showMaximized();
-        m_splash4->showMaximized();
 
-    }else{
-        m_splash1 = new QSplashScreen(m_imageSplash);
-        m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
-        m_splash1->showMaximized();
-    }
+        m_splash1->showFullScreen();
+        m_splash2->showFullScreen();
+        m_splash3->showFullScreen();
+        m_splash4->showFullScreen();
+
+        //para evitar el cierre con un CLICK
+        m_splash1->setDisabled(true);
+        m_splash2->setDisabled(true);
+        m_splash3->setDisabled(true);
+        m_splash4->setDisabled(true);
+
+
+        }else{
+                m_splash1 = new QSplashScreen(m_imageSplash);
+                m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
+                m_splash1->showFullScreen();
+                m_splash1->setDisabled(true);
+            }
+
+
 }
 
 EventHandler::~EventHandler(){
@@ -145,13 +156,12 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_traccion",std::to_string((int)m_subte->traction()));
             m_eNetClient->CambiarValorClave("c_freno_emergencia","des");
 
-            m_eNetClient->CambiarValorClave("c_grifob138_1","con");
-            m_eNetClient->CambiarValorClave("c_grifol2_1","con");
-            m_eNetClient->CambiarValorClave("c_grifob73_1","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1_1","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1_1","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1_1","con");
-            m_eNetClient->CambiarValorClave("c_seta_1","con");
+            m_eNetClient->CambiarValorClave("c_grifob138","con");
+            m_eNetClient->CambiarValorClave("c_grifol2","con");
+            m_eNetClient->CambiarValorClave("c_grifob73","con");
+            m_eNetClient->CambiarValorClave("c_termico_57f1","con");
+            m_eNetClient->CambiarValorClave("c_termico_53f1","con");
+            m_eNetClient->CambiarValorClave("c_termico_33f1","con");
             m_eNetClient->CambiarValorClave("c_grifob138_2","con");
             m_eNetClient->CambiarValorClave("c_grifol2_2","con");
             m_eNetClient->CambiarValorClave("c_grifob73_2","con");
@@ -159,7 +169,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_2","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_2","con");
             m_eNetClient->CambiarValorClave("c_rana_2","0");
-            m_eNetClient->CambiarValorClave("c_seta_2","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_2","con");
             m_eNetClient->CambiarValorClave("c_grifob138_3","con");
             m_eNetClient->CambiarValorClave("c_grifol2_3","con");
             m_eNetClient->CambiarValorClave("c_grifob73_3","con");
@@ -167,7 +177,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_3","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_3","con");
             m_eNetClient->CambiarValorClave("c_rana_3","0");
-            m_eNetClient->CambiarValorClave("c_seta_3","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_3","con");
             m_eNetClient->CambiarValorClave("c_grifob138_4","con");
             m_eNetClient->CambiarValorClave("c_grifol2_4","con");
             m_eNetClient->CambiarValorClave("c_grifob73_4","con");
@@ -175,7 +185,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_4","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_4","con");
             m_eNetClient->CambiarValorClave("c_rana_4","0");
-            m_eNetClient->CambiarValorClave("c_seta_4","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_4","con");
             m_eNetClient->CambiarValorClave("c_grifob138_5","con");
             m_eNetClient->CambiarValorClave("c_grifol2_5","con");
             m_eNetClient->CambiarValorClave("c_grifob73_5","con");
@@ -183,7 +193,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_5","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_5","con");
             m_eNetClient->CambiarValorClave("c_rana_5","0");
-            m_eNetClient->CambiarValorClave("c_seta_5","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_5","con");
             m_eNetClient->CambiarValorClave("c_grifob138_6","con");
             m_eNetClient->CambiarValorClave("c_grifol2_6","con");
             m_eNetClient->CambiarValorClave("c_grifob73_6","con");
@@ -191,7 +201,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_6","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_6","con");
             m_eNetClient->CambiarValorClave("c_rana_6","0");
-            m_eNetClient->CambiarValorClave("c_seta_6","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_6","con");
 
 
             emit controlDisable();
@@ -203,13 +213,12 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_llave_atp","");
             m_eNetClient->CambiarValorClave("c_modo_conduccion","");
 
-            m_eNetClient->CambiarValorClave("c_grifob138_1","con");
-            m_eNetClient->CambiarValorClave("c_grifol2_1","con");
-            m_eNetClient->CambiarValorClave("c_grifob73_1","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1_1","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1_1","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1_1","con");
-            m_eNetClient->CambiarValorClave("c_seta_1","con");
+            m_eNetClient->CambiarValorClave("c_grifob138","con");
+            m_eNetClient->CambiarValorClave("c_grifol2","con");
+            m_eNetClient->CambiarValorClave("c_grifob73","con");
+            m_eNetClient->CambiarValorClave("c_termico_57f1","con");
+            m_eNetClient->CambiarValorClave("c_termico_53f1","con");
+            m_eNetClient->CambiarValorClave("c_termico_33f1","con");
             m_eNetClient->CambiarValorClave("c_grifob138_2","con");
             m_eNetClient->CambiarValorClave("c_grifol2_2","con");
             m_eNetClient->CambiarValorClave("c_grifob73_2","con");
@@ -217,7 +226,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_2","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_2","con");
             m_eNetClient->CambiarValorClave("c_rana_2","0");
-            m_eNetClient->CambiarValorClave("c_seta_2","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_2","con");
             m_eNetClient->CambiarValorClave("c_grifob138_3","con");
             m_eNetClient->CambiarValorClave("c_grifol2_3","con");
             m_eNetClient->CambiarValorClave("c_grifob73_3","con");
@@ -225,7 +234,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_3","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_3","con");
             m_eNetClient->CambiarValorClave("c_rana_3","0");
-            m_eNetClient->CambiarValorClave("c_seta_3","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_3","con");
             m_eNetClient->CambiarValorClave("c_grifob138_4","con");
             m_eNetClient->CambiarValorClave("c_grifol2_4","con");
             m_eNetClient->CambiarValorClave("c_grifob73_4","con");
@@ -233,7 +242,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_4","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_4","con");
             m_eNetClient->CambiarValorClave("c_rana_4","0");
-            m_eNetClient->CambiarValorClave("c_seta_4","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_4","con");
             m_eNetClient->CambiarValorClave("c_grifob138_5","con");
             m_eNetClient->CambiarValorClave("c_grifol2_5","con");
             m_eNetClient->CambiarValorClave("c_grifob73_5","con");
@@ -241,7 +250,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_5","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_5","con");
             m_eNetClient->CambiarValorClave("c_rana_5","0");
-            m_eNetClient->CambiarValorClave("c_seta_5","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_5","con");
             m_eNetClient->CambiarValorClave("c_grifob138_6","con");
             m_eNetClient->CambiarValorClave("c_grifol2_6","con");
             m_eNetClient->CambiarValorClave("c_grifob73_6","con");
@@ -249,7 +258,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_6","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_6","con");
             m_eNetClient->CambiarValorClave("c_rana_6","0");
-            m_eNetClient->CambiarValorClave("c_seta_6","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_6","con");
 
             Sleep(1000);
             emit closeApp();
