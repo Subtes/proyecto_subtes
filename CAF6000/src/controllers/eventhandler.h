@@ -60,6 +60,8 @@ public:
 
     void setModel(SubteStatus *subte);
     void setFailures(Failures_Controller *failures);
+    void atpOn();
+    void atpOff();
 
 private:
     ENetClient * m_eNetClient;
@@ -138,6 +140,7 @@ signals:
 public slots:
     void processKeyPressed(DWORD k);
     void processKeyReleased(DWORD k);
+
 };
 
 #endif // EVENTHANDLER_H

@@ -201,6 +201,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_33f1_6","con");
             m_eNetClient->CambiarValorClave("c_rana_6","0");
             m_eNetClient->CambiarValorClave("c_seta_emergencia_6","con");
+            m_eNetClient->CambiarValorClave("c_llave_atp","des");
 
 
             emit controlDisable();
@@ -258,6 +259,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_33f1_6","con");
             m_eNetClient->CambiarValorClave("c_rana_6","0");
             m_eNetClient->CambiarValorClave("c_seta_emergencia_6","con");
+            m_eNetClient->CambiarValorClave("c_llave_atp","des");
 
             Sleep(1000);
             emit closeApp();
@@ -278,6 +280,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_regulador_de_mando",std::to_string((int)m_subte->tractionLeverPosition()));
             m_eNetClient->CambiarValorClave("c_traccion",std::to_string((int)m_subte->traction()));
             m_eNetClient->CambiarValorClave("c_freno_emergencia","des");
+            m_eNetClient->CambiarValorClave("c_llave_atp","des");
 
             emit controlDisable();
 
@@ -621,3 +624,13 @@ void EventHandler::processKeyReleased(DWORD k){
     }
 }
 
+void EventHandler::atpOn(){
+    this->processValueChanged(m_eNetHelper->instructionsHostName, "c_llave_atp", "con");
+    qDebug()<<"ATP CON ";
+}
+
+void EventHandler::atpOff(){
+    this->processValueChanged(m_eNetHelper->instructionsHostName, "c_llave_atp", "des");
+    qDebug()<< "ATP DES";
+
+}
