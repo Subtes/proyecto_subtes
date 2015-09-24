@@ -105,6 +105,8 @@ void Atp_Controller::initATP(){
     this->m_machineATP->start();
     m_t_evalChangeSpeed->setInterval(500);
     m_t_evalChangeSpeed->start();
+
+    m_eventHandler->atpOn();
 }
 
 void Atp_Controller::resetATP(){
@@ -112,6 +114,7 @@ void Atp_Controller::resetATP(){
     this->m_onATP = false;
     this->off_ATP();
     this->m_view->setReset(true);
+    m_eventHandler->atpOff();
 }
 
 void Atp_Controller::setDrivingMode(int d){
