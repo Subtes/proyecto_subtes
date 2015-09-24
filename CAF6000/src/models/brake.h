@@ -17,6 +17,7 @@ private:
     double m_lastBrake;
     bool m_bypass;
     bool m_retentioBrake;
+    bool m_anulacionFrenoRetencion;
     bool m_averia;
 
 public:
@@ -41,6 +42,8 @@ public:
     void setRetentioBrake(bool retentioBrake);
     bool averia() const;
     void setAveria(bool averia);
+    bool anulacionFrenoRetencion() const;
+    void setAnulacionFrenoRetencion(bool anulacionFrenoRetencion);
 };
 
 #endif // BRAKE_H

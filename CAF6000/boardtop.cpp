@@ -12,7 +12,6 @@ BoardTop::BoardTop(QWidget *parent, SubteStatus * subte, EventHandler *eventHand
     connect(m_eventHandler,SIGNAL(controlEnable()),this,SLOT(enableScreen()));
     connect(m_eventHandler,SIGNAL(controlReset()),this,SLOT(resetControls()));
     connect(m_eventHandler,SIGNAL(cargarEstado(int)),this,SLOT(loadState(int)));
-    connect(m_eventHandler,SIGNAL(cargarEstado(int)),this,SLOT(cargarEstado(int)));
     connect(m_eventHandler,SIGNAL(kPressed()),this,SLOT(keyON()));
     connect(m_eventHandler,SIGNAL(lPressed()),this,SLOT(keyOFF()));
 
@@ -45,7 +44,7 @@ void BoardTop::startBoard()
     m_connectors->setAir(ui->aireCON,ui->aireDES);
     m_connectors->setMegaphone(ui->megaforniaCON,ui->megaforniaDES);
     m_connectors->setConmutadorPuestaServicio(ui->llaveManual,ui->puestaEnMarchaDES,ui->puetaEnMarchaCON,ui->automaticoManualDES,ui->automaticoManualCON);
-    m_connectors->setRetentionBrake(ui->frenoCON,ui->frenoDES);
+    m_connectors->setParkingBrake(ui->frenoCON,ui->frenoDES);
 
     m_topGauges = new TopGauges_Controller(m_subte,ui->voltmeter,ui->ammeter,ui->effortmeter);
 
@@ -82,18 +81,6 @@ void BoardTop::loadState(int state)
     } else if(state== EN_MARCHA){
         lastState = EN_MARCHA;
         m_connectors->setEstado(EN_MARCHA);
-    }
-    m_connectors->reset();
-}
-
-void BoardTop::cargarEstado(int nivel)
-{
-    if(nivel==0){
-        m_connectors->setNivel(0);
-    }else if(nivel==1){
-        m_connectors->setNivel(1);
-    }else if(nivel==2){
-        m_connectors->setNivel(2);
     }
     m_connectors->reset();
 }

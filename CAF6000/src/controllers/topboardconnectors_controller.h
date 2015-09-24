@@ -25,7 +25,7 @@ public:
     void setLighting(SingleButton *lightingCon, SingleButton *lightingDes);
     void setAir(SingleButton *airCon, SingleButton *airDes);
     void setMegaphone(SingleButton *megaphoneCon, SingleButton *megaphoneDes);
-    void setRetentionBrake(SingleButton *retentionBrakeCon, SingleButton *retentionBrakeDes);
+    void setParkingBrake(SingleButton *parkingBrakeCon, SingleButton *parkingBrakeDes);
 
     void setNivel(int n);
     void setEstado(int state);
@@ -59,8 +59,8 @@ private:
     SingleButton *m_airDes;
     SingleButton *m_megaphoneCon;
     SingleButton *m_megaphoneDes;
-    SingleButton *m_retentionBrakeCon;
-    SingleButton *m_retentionBrakeDes;
+    SingleButton *m_parkingBrakeCon;
+    SingleButton *m_parkingBrakeDes;
 
     bool m_conmutadorPuestaServicioStatus;
     bool m_enMarcha;
@@ -86,8 +86,8 @@ private slots:
     void airDesPressed();
     void megaphoneConPressed();
     void megaphoneDesPressed();
-    void retentionBrakeConPressed();
-    void retentionBrakeDesPressed();
+    void parkingBrakeConPressed();
+    void parkingBrakeDesPressed();
 };
 
 #endif // TOPBOARDCONNECTORS_CONTROLLER_H

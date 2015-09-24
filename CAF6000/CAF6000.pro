@@ -54,7 +54,8 @@ SOURCES += main.cpp \
     src/controllers/sicasmac_controller.cpp \
     src/controllers/hombremuerto_controller.cpp \
     src/controllers/llavemodoconduccion_controller.cpp \
-    src/controllers/key_topboard_controller.cpp
+    src/controllers/key_topboard_controller.cpp \
+    src/controllers/frenoretencion_controller.cpp
 
 HEADERS  += baseboard.h \
     boardcenter.h \
@@ -96,7 +97,8 @@ HEADERS  += baseboard.h \
     src/controllers/sicasmac_controller.h \
     src/controllers/hombremuerto_controller.h \
     src/controllers/llavemodoconduccion_controller.h \
-    src/controllers/key_topboard_controller.h
+    src/controllers/key_topboard_controller.h \
+    src/controllers/frenoretencion_controller.h
 
 FORMS    += boardcenter.ui \
     boardright.ui \

@@ -24,7 +24,6 @@ public slots:
     void disableScreen();
     void resetControls();
     void loadState(int state);
-    void cargarEstado(int);
     void keyON();
     void keyOFF();
 
