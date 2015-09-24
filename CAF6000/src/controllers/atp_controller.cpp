@@ -39,6 +39,7 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     connect(this, SIGNAL(desableBreakEmergency()),subte,SLOT(emergencyBrakeReleased()));
     connect(this, SIGNAL(enableBreakService(int)),subte,SLOT(brakeReceived(int)));
     connect(this, SIGNAL(desableBreakService(int)),subte,SLOT(brakeReceived(int)));
+    connect(this,SIGNAL(allowedSpeedChange(double)),subte,SLOT(updateAllowedSpeed(double)));
 
 }
 
@@ -295,7 +296,7 @@ void Atp_Controller::updateAllowedSpeed(double speedTargetNew){
              (m_AF == "0" && m_AF_previous == "1")||(m_AF == "0" && m_AF_previous == "2")){
             //Transicion Peldano
             setAllowedSpeed(speedTargetNew);
-        }else if ((m_speedTarget < m_speedTargetPrevious)&&(/*m_speedTarget != m_AF_1*/m_AF != "1")){
+        }else if ((m_speedTarget < m_speedTargetPrevious)&&(m_AF != "1")){
             //Transicion Gradual por Tiempo (3 seg; 0,7 m/s2)
             //Conectar con transitionGT() agregar setter para variable con los 3000
             QTimer::singleShot(m_t_TGT,this,SLOT(transitionGT()));
