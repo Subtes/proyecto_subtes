@@ -24,8 +24,16 @@ void Brake::linkTraction(Traction *traction)
 
 bool Brake::braking()
 {
+    if (m_brake>0){
+        qDebug() << "frenos > 0";
+    }
+
+    if (m_emergencyBrake){
+        qDebug() << "freno de emergencia activado";
+    }
+
     if (m_bypass) return false;
-    if(m_averia) return true;
+    if(m_averia) { qDebug() << "averia en frenos! frena el coche"; return true; }
     return m_brake>0 || m_emergencyBrake;
 }
 

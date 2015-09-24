@@ -19,6 +19,11 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eve
     connect(m_eventHandler,SIGNAL(controlEnable()),this,SLOT(enableScreen()));
     connect(m_eventHandler,SIGNAL(controlReset()),this,SLOT(resetControls()));
     connect(m_eventHandler,SIGNAL(cargarEstado(int)),this,SLOT(loadState(int)));
+
+    connect(m_eventHandler,SIGNAL(masPressed()),this,SLOT(bypassTraccionON()));
+    connect(m_eventHandler,SIGNAL(masReleased()),this,SLOT(bypassTraccionOFF()));
+    connect(m_eventHandler,SIGNAL(menosPressed()),this,SLOT(bypassFrenoON()));
+    connect(m_eventHandler,SIGNAL(menosReleased()),this,SLOT(bypassFrenoOFF()));
 }
 
 BoardCenter::~BoardCenter()
@@ -97,4 +102,20 @@ void BoardCenter::loadState(int state){
         ui->bypassFreno->turnOn();
         ui->bypassTraccion->turnOn();
     }
+}
+
+void BoardCenter::bypassFrenoON(){
+    m_brakesBypass->bypassBrakePressed();
+}
+
+void BoardCenter::bypassFrenoOFF(){
+    m_brakesBypass->bypassBrakeReleased();
+}
+
+void BoardCenter::bypassTraccionON(){
+    m_tractionBypass->pressBypass();
+}
+
+void BoardCenter::bypassTraccionOFF(){
+    m_tractionBypass->releaseBypass();
 }

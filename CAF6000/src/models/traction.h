@@ -15,6 +15,7 @@ public:
     enum class RANA { AD=1, CERO=0, AT=-1 };
 
 private:
+
     RANA m_rana;
     Brake *m_brake;
     CSCP *m_cscp;

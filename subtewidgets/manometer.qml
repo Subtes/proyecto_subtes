@@ -38,8 +38,8 @@ Rectangle {
             angle: 0
             Behavior on angle {
                 PropertyAnimation{
-                  duration : 750
-                  easing {type: Easing.OutBack}
+                  duration : 400
+                  easing {type: Easing.OutQuad}
                 }
             }
         }
@@ -58,8 +58,8 @@ Rectangle {
             angle: 0
             Behavior on angle {
                 PropertyAnimation{
-                    duration : 750
-                    easing {type: Easing.OutBack}
+                    duration : 400
+                    easing {type: Easing.OutQuad}
                 }
             }
         }

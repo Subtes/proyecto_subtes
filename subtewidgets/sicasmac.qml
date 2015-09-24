@@ -441,9 +441,9 @@ Rectangle {
      }
 
      if(letra3=="B"){
-         textoError[val].color="yellow";
-         trenConFalla[val].color="yellow";
-          prioridadLetra[val].color="yellow";
+         textoError[val].color="blue";
+         trenConFalla[val].color="blue";
+          prioridadLetra[val].color="blue";
      }
      if(letra3=="C"){
          textoError[val].color="green";
@@ -482,7 +482,7 @@ Rectangle {
                  PropertyChanges { target: f; opacity: 0.5;}
              },
              State {
-                 name: "blink"
+                 name: "int"
                  PropertyChanges { target: blinkAnimation; running:true;}
              }
          ]
@@ -538,7 +538,7 @@ Rectangle {
 
  }
  function turnBlinkFailure(valF){
-     failure[valF].state = "blink";
+     failure[valF].state = "int";
 
  }
  function turnInhabFailure(valF){

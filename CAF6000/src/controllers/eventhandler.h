@@ -25,6 +25,9 @@
 #define _OCHO 0x38
 #define _NUEVE 0x39
 
+#define _MAS 0xBB
+#define _MENOS 0xBD
+
 #ifndef EVENTHANDLER_H
 #define EVENTHANDLER_H
 
@@ -103,6 +106,8 @@ private:
     bool SIETE_down;
     bool OCHO_down;
     bool NUEVE_down;
+    bool MAS_down;
+    bool MENOS_down;
 
     std::vector<std::string> split(std::string,char);
 
@@ -134,6 +139,11 @@ signals:
     cargarEstado(int);
     kHardPressed();
     lHardPressed();
+    masPressed();
+    masReleased();
+    menosPressed();
+    menosReleased();
+
     cargarMensaje(QString);
     cargarMensajeCocheSicas(QString);
 
