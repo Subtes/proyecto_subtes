@@ -14,7 +14,7 @@
 #include "src/controllers/keypresseater.h"
 #include "src/controllers/failures_controller.h"
 
-int main(int argc, char *argv[])
+int qMain(int argc, char *argv[])
 {
     //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
     QApplication::setAttribute(Qt::AA_UseOpenGLES,true);

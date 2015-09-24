@@ -5,7 +5,7 @@ TEMPLATE = lib
 
 #order
 #release
-CONFIG +=
+CONFIG += release c++11
 
 
 HEADERS += \
@@ -21,7 +21,8 @@ HEADERS += \
     analoggauge.h \
     manometer.h \
     sicasmac.h \
-    llavemodoconduccion.h
+    llavemodoconduccion.h \
+    tractionhardware.h
 
 SOURCES += \
     tractionlever.cpp \
@@ -36,7 +37,8 @@ SOURCES += \
     analoggauge.cpp \
     manometer.cpp \
     sicasmac.cpp \
-    llavemodoconduccion.cpp
+    llavemodoconduccion.cpp \
+    tractionhardware.cpp
 
 FORMS += \
     tractionlever.ui \
@@ -56,5 +58,11 @@ FORMS += \
 RESOURCES += \
             qmlrsc.qrc \
             widgetsrsc.qrc
+
+INCLUDEPATH +=  $$PWD/../Source/include
+
+DEPENDPATH += $$PWD/../Source
+
+LIBS += -L$$PWD/../Source/lib/x86/ -lSDL2
 
 DISTFILES +=

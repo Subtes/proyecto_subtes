@@ -3,6 +3,7 @@
 
 #include "baseboard.h"
 #include "src/controllers/atp_controller.h"
+#include "tractionhardware.h"
 
 namespace Ui {
 class BoardLeft;
@@ -25,6 +26,8 @@ public slots:
 
 private:
     Ui::BoardLeft *ui;
+
+    TractionHardware *th;
 
     Atp_Controller *m_atp;
 };

@@ -10,8 +10,7 @@ TARGET = CAF6000
 TEMPLATE = app
 
 #release
-CONFIG +=  c++11
-
+CONFIG +=  c++11 release
 
 SOURCES += main.cpp \
     baseboard.cpp \
@@ -54,7 +53,7 @@ SOURCES += main.cpp \
     src/controllers/sicasmac_controller.cpp \
     src/controllers/hombremuerto_controller.cpp \
     src/controllers/llavemodoconduccion_controller.cpp
-
+#    ../JoystickB/Joystick_Driver.cpp
 
 HEADERS  += baseboard.h \
     boardcenter.h \
@@ -96,6 +95,9 @@ HEADERS  += baseboard.h \
     src/controllers/sicasmac_controller.h \
     src/controllers/hombremuerto_controller.h \
     src/controllers/llavemodoconduccion_controller.h
+#    ../JoystickB/Joystick_Driver.h \
+#    ../JoystickB/dinputd.h \
+#    ../JoystickB/resource.h
 
 FORMS    += boardcenter.ui \
     boardright.ui \
@@ -105,7 +107,9 @@ FORMS    += boardcenter.ui \
     src/instructionsolutionpanel/mainwindow.ui
 
 INCLUDEPATH +=  ../subtewidgets \
-                $$PWD/../ENet
+                $$PWD/../ENet \
+                $$PWD/../subtewidgets \
+                $$PWD/./include
 
 DEPENDPATH += $$PWD/../ENet
 
@@ -115,7 +119,17 @@ LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L$$PWD/../ENet/ -lWS2_32 \
         -L$$PWD/../ENet/ -lBufferOverflowU \
         -L$$PWD/../ENet/ -lWinMM \
-        -L$$PWD/../ENet/ -lENetClient-Cpp
+        -L$$PWD/../ENet/ -lENetClient-Cpp \
+#        -L$$PWD/./lib/x86/ -lSDL2
+
+#        -L$$PWD/../JoystickB/Libs/ -lComCtl32 \
+#        -L$$PWD/../JoystickB/Libs/ -lOle32 \
+#        -L$$PWD/../JoystickB/Libs/ -ldinput8 \
+#        -L$$PWD/../JoystickB/Libs/ -ldxguid \
+#        -L$$PWD/../JoystickB/Libs/ -lUuid \
+#        -L$$PWD/../JoystickB/Libs/ -lwbemuuid \
+#        -L$$PWD/../JoystickB/Libs/ -lRpcRT4
+
 
 RESOURCES += ../subtewidgets/widgetsrsc.qrc \
             ../subtewidgets/qmlrsc.qrc \
