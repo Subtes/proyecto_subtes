@@ -11,8 +11,13 @@ Rectangle {
     property variant trenConFalla: []
     property variant textoError: []
     property variant failure: []
-    property variant puertasCocheIzq: []
-    property variant puertasCocheDer: []
+    property variant puertasCoche: []
+    property int variablePuertas: 0
+    property int valorRenglonActual: 0
+    property int valorRenglonFin: 0
+    property int tamArreRenglon: 0
+
+
 
     Image {
         id: background
@@ -33,8 +38,6 @@ Rectangle {
             y: 438
             width: 35
             height: 34
-            // onClicked: blinkAnimationf1.complete();
-            onClicked: blinkAnimationf1.stop()
         }
 
         MouseArea {
@@ -43,7 +46,6 @@ Rectangle {
             y: 438
             width: 35
             height: 34
-             onClicked: blinkAnimationf1.start()
         }
 
         MouseArea {
@@ -68,6 +70,7 @@ Rectangle {
             y: 438
             width: 35
             height: 34
+            onClicked: moverSelectorSig();
         }
 
         MouseArea {
@@ -76,6 +79,8 @@ Rectangle {
             y: 438
             width: 35
             height: 34
+            onClicked: moverSelectorSig();
+
         }
 
         MouseArea {
@@ -84,6 +89,8 @@ Rectangle {
             y: 438
             width: 35
             height: 34
+            onClicked: moverSelectorAnt();
+
         }
 
         MouseArea {
@@ -92,6 +99,8 @@ Rectangle {
             y: 439
             width: 35
             height: 34
+            onClicked: moverSelectorAnt();
+
         }
 
         MouseArea {
@@ -150,8 +159,9 @@ Rectangle {
             y: 378
             width: 70
             height: 20
+            opacity: 0
             text: qsTr("Siguiente")
-            visible: false
+            visible: true
             font.family: "Arial"
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 12
@@ -161,10 +171,11 @@ Rectangle {
             id: anterior
             x: 300
             y: 378
+            opacity: 0
             width: 70
             height: 20
             text: qsTr("Anterior")
-            visible: false
+            visible: true
             font.family: "Arial"
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 12
@@ -279,7 +290,7 @@ Rectangle {
 
 
         Image {
-            id: image2
+            id: maquinatrenstart
             x: 57
             y: 98
             width: 16
@@ -291,7 +302,7 @@ Rectangle {
 
 
         Image {
-            id: image4
+            id: maquinatrenend
             x: 520
             y: 98
             width: 16
@@ -302,98 +313,6 @@ Rectangle {
             source: "resources/sicas_azul.png"
         }
 
-
-        // GENERAR UN REPEATER MODIFICANDO LA X CADA 80 COMENZANDO DE 60
-
-
-
-
-
-
-
-   /*  Image {
-            id: f1
-            x: 54
-            y: 126
-            width: 19
-            height: 23
-            opacity: 1
-            sourceSize.height: 38
-            sourceSize.width: 28
-            objectName:"failure1"
-            fillMode: Image.PreserveAspectFit
-            source: "resources/sicas_f.png"
-        }
-
-    Image {
-        id: f2
-        x: 199
-        y: 104
-        width: 19
-        height: 23
-        sourceSize.width: 28
-        sourceSize.height: 38
-        objectName:"failure2"
-        source: "resources/sicas_f.png"
-        opacity: 1
-        fillMode: Image.PreserveAspectFit
-    }
-
-    Image {
-        id: f3
-        x: 215
-        y: 126
-        width: 19
-        height: 23
-        sourceSize.width: 28
-        sourceSize.height: 38
-        objectName:"failure3"
-        source: "resources/sicas_f.png"
-        opacity: 1
-        fillMode: Image.PreserveAspectFit
-    }
-
-    Image {
-        id: f4
-        x: 358
-        y: 104
-        width: 19
-        height: 23
-        sourceSize.width: 28
-        sourceSize.height: 38
-        objectName:"failure4"
-        source: "resources/sicas_f.png"
-        opacity: 1
-        fillMode: Image.PreserveAspectFit
-    }
-
-    Image {
-        id: f5
-        x: 375
-        y: 126
-        width: 19
-        height: 23
-        sourceSize.width: 28
-        sourceSize.height: 38
-        objectName:"failure5"
-        source: "resources/sicas_f.png"
-        opacity: 1
-        fillMode: Image.PreserveAspectFit
-    }
-
-    Image {
-        id: f6
-        x: 518
-        y: 101
-        width: 19
-        height: 23
-        sourceSize.width: 28
-        sourceSize.height: 38
-        objectName:"failure6"
-        source: "resources/sicas_f.png"
-        opacity: 1
-        fillMode: Image.PreserveAspectFit
-    }*/
 
     Text {
         id: tren
@@ -460,76 +379,6 @@ Rectangle {
         font.bold: true
     }
 
- //TEXTO CAMBIA LA Y PARA EL ERROR
-
-
-
-
- /*   Text {
-        id: p1error
-        x: 84
-        y: 173
-        width: 114
-        height: 14
-        text: qsTr(" ")
-        horizontalAlignment: Text.AlignHCenter
-        font.family: "Arial"
-        font.pixelSize: 12
-    }
-
-
-
-
-    Text {
-        id: p2error
-        x: 84
-        y: 193
-        width: 114
-        height: 14
-        text: qsTr(" ")
-        horizontalAlignment: Text.AlignHCenter
-        font.family: "Arial"
-        font.pixelSize: 12
-    }
-
-    Text {
-        id: p3error
-        x: 84
-        y: 215
-        width: 114
-        height: 14
-        text: qsTr(" ")
-        horizontalAlignment: Text.AlignHCenter
-        font.family: "Arial"
-        font.pixelSize: 12
-    }
-
-    Text {
-        id: p4error
-        x: 84
-        y: 236
-        width: 114
-        height: 14
-        text: qsTr(" ")
-        horizontalAlignment: Text.AlignHCenter
-        font.family: "Arial"
-        font.pixelSize: 12
-    }
-
-    Text {
-        id: p5error
-        x: 84
-        y: 258
-        width: 114
-        height: 14
-        text: qsTr(" ")
-        horizontalAlignment: Text.AlignHCenter
-        font.family: "Arial"
-        font.pixelSize: 12
-    }
-*/
-
-
     Text {
         id: sicassinerror
         x: 86
@@ -544,577 +393,8 @@ Rectangle {
         font.pixelSize: 20
     }
 
- //TEXTO CAMBIA LA Y PARA LOS TRENES CON ERROR
+     //GUION DE LAS PUERTAS HACER REPEATER
 
-
-
-
-
-   /* Text {
-        id: p1trenes
-        x: 245
-        y: 173
-        width: 114
-        height: 14
-        text: qsTr(" ")
-        font.family: "Arial"
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 12
-    }
-
-    Text {
-        id: p2trenes
-        x: 245
-        y: 193
-        width: 114
-        height: 14
-        text: qsTr(" ")
-        font.family: "Arial"
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 12
-    }
-
-
-    Text {
-        id: p3trenes
-        x: 245
-        y: 215
-        width: 114
-        height: 14
-        text: qsTr(" ")
-        font.family: "Arial"
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 12
-    }
-
-    Text {
-        id: p4trenes
-        x: 245
-        y: 236
-        width: 114
-        height: 14
-        text: qsTr(" ")
-        font.family: "Arial"
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 12
-    }
-    Text {
-        id: p5trenes
-        x: 245
-        y: 258
-        width: 114
-        height: 14
-        text: qsTr(" ")
-        font.family: "Arial"
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 12
-    }
-*/
- //LETRA QUE DETERINA LA IMPORTANCIA HACER REPEATER
-
-
-
-
-
-  /*
-    Text {
-        id: p1letra
-        x: 410
-        y: 173
-        width: 114
-        height: 14
-        text: qsTr(" ")
-        font.family: "Arial"
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 12
-    }
-    Text {
-        id: p2letra
-        x: 410
-        y: 193
-        width: 114
-        height: 14
-        text: qsTr(" ")
-        font.family: "Arial"
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 12
-    }
-
-
-
-    Text {
-        id: p3letra
-        x: 410
-        y: 215
-        width: 114
-        height: 14
-        text: qsTr(" ")
-        font.family: "Arial"
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 12
-    }
-
-
-    Text {
-        id: p4letra
-        x: 410
-        y: 236
-        width: 114
-        height: 14
-        text: qsTr(" ")
-        font.family: "Arial"
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 12
-    }
-
-
-
-    Text {
-        id: p5letra
-        x: 410
-        y: 258
-        width: 114
-        height: 14
-        text: qsTr(" ")
-        font.family: "Arial"
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 12
-    }*/
-
-    //GUION DE LAS PUERTAS HACER REPEATER
-
-    Image {
-        id: puerta1c1
-        x: 76
-        y: 105
-        width: 10
-        height: 2
-        visible: true
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta2c1
-        x: 91
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta3c1
-        x: 106
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta4c1
-        x: 120
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta5c1
-        x: 76
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta6c1
-        x: 91
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta7c1
-        x: 106
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta8c1
-        x: 120
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta1c2
-        x: 140
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta2c2
-        x: 155
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta3c2
-        x: 170
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta4c2
-        x: 184
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta5c2
-        x: 140
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta6c2
-        x: 155
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta7c2
-        x: 170
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta8c2
-        x: 184
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta1c3
-        x: 237
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta2c3
-        x: 252
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta3c3
-        x: 267
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta4c3
-        x: 281
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta5c3
-        x: 237
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta6c3
-        x: 252
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta7c3
-        x: 267
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta8c3
-        x: 281
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta1c4
-        x: 301
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta2c4
-        x: 316
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta3c4
-        x: 331
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta4c4
-        x: 345
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta5c4
-        x: 301
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta6c4
-        x: 316
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta7c4
-        x: 331
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta8c4
-        x: 345
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta1c5
-        x: 396
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta2c5
-        x: 411
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta3c5
-        x: 426
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta4c5
-        x: 440
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta5c5
-        x: 396
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta6c5
-        x: 411
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta7c5
-        x: 426
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta8c5
-        x: 440
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta1c6
-        x: 458
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta2c6
-        x: 475
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta3c6
-        x: 490
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta4c6
-        x: 504
-        y: 105
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta5c6
-        x: 460
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta6c6
-        x: 475
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta7c6
-        x: 490
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
-
-    Image {
-        id: puerta8c6
-        x: 504
-        y: 146
-        width: 10
-        height: 1
-        source: "resources/sicas_doors.png"
-    }
 
     Image {
         id: imgerror
@@ -1122,179 +402,21 @@ Rectangle {
         y: 171
         width: 465
         height: 115
-        opacity: 0.6
+        opacity: 0.5
         source: "resources/sicas_imgError.png"
     }
-    }
-    Image {
-        id: image10
-        x: 101
-        y: -334
-        width: 510
-        height: 392
-        fillMode: Image.PreserveAspectFit
-        objectName:"glassmac"
 
+    Image {
+        id: glass
+        x: 38
+        y: 37
+        opacity: 0.7
+        width: 518
+        height: 387
         source: "resources/sicas_glass.png"
     }
 
-  /*  SequentialAnimation {
-        id: blinkAnimationf1
-        loops: Animation.Infinite
-
-        PropertyAnimation {
-            properties: "opacity"
-            to: 0
-            duration: 200
-            target: f1
-        }
-        PauseAnimation { duration: 400 }
-        PropertyAnimation {
-            properties: "opacity"
-            to: 1
-            duration: 200
-            target: f1
-        }
-        PauseAnimation { duration: 400 }
-    }
-
-    SequentialAnimation {
-        id: blinkAnimationf2
-        loops: Animation.Infinite
-
-        PropertyAnimation {
-            properties: "opacity"
-            to: 0
-            duration: 200
-            target: f2
-        }
-        PauseAnimation { duration: 400 }
-        PropertyAnimation {
-            properties: "opacity"
-            to: 1
-            duration: 200
-            target: f2
-        }
-        PauseAnimation { duration: 400 }
-    }
-
-    SequentialAnimation {
-        id: blinkAnimationf3
-        loops: Animation.Infinite
-
-        PropertyAnimation {
-            properties: "opacity"
-            to: 0
-            duration: 200
-            target: f3
-        }
-        PauseAnimation { duration: 400 }
-        PropertyAnimation {
-            properties: "opacity"
-            to: 1
-            duration: 200
-            target: f3
-        }
-        PauseAnimation { duration: 400 }
-    }
-
-    SequentialAnimation {
-        id: blinkAnimationf4
-        loops: Animation.Infinite
-
-        PropertyAnimation {
-            properties: "opacity"
-            to: 0
-            duration: 200
-            target: f4
-        }
-        PauseAnimation { duration: 400 }
-        PropertyAnimation {
-            properties: "opacity"
-            to: 1
-            duration: 200
-            target: f4
-        }
-        PauseAnimation { duration: 400 }
-    }
-
-    SequentialAnimation {
-        id: blinkAnimationf5
-        loops: Animation.Infinite
-
-        PropertyAnimation {
-            properties: "opacity"
-            to: 0
-            duration: 200
-            target: f5
-        }
-        PauseAnimation { duration: 400 }
-        PropertyAnimation {
-            properties: "opacity"
-            to: 1
-            duration: 200
-            target: f5
-        }
-        PauseAnimation { duration: 400 }
-    }
-
-    SequentialAnimation {
-        id: blinkAnimationf6
-        loops: Animation.Infinite
-
-        PropertyAnimation {
-            properties: "opacity"
-            to: 0
-            duration: 200
-            target: f1
-        }
-        PauseAnimation { duration: 400 }
-        PropertyAnimation {
-            properties: "opacity"
-            to: 1
-            duration: 200
-            target: f1
-        }
-        PauseAnimation { duration: 400 }
-    }*/
-
-
-
-function startBlinkFailure(val) {
-
-    //failure[val].blinkAnimation.start();
-   /* if (val===1)
-        blinkAnimationf1.start();
-    if (val===2)
-        blinkAnimationf2.start();
-    if (val===3)
-        blinkAnimationf3.start();
-    if (val===4)
-        blinkAnimationf4.start();
-    if (val===5)
-        blinkAnimationf5.start();
-    if (val===6)
-        blinkAnimationf6.start();*/
-}
-
-
-    function stopBlinkFailure(val) {
-      /*  if (val===1)
-            blinkAnimationf1.stop();
-        if (val===2)
-            blinkAnimationf2.stop();
-        if (val===3)
-            blinkAnimationf3.stop();
-        if (val===4)
-            blinkAnimationf4.stop();
-        if (val===5)
-            blinkAnimationf5.stop();
-        if (val===6)
-            blinkAnimationf6.stop();
-*/
-
-    }
-
+  }// FIN BACKGROUND
 
 
  function changeText(error1,trenes2,letra3,val){
@@ -1308,8 +430,27 @@ function startBlinkFailure(val) {
          trenConFalla[val].text = trenes2;
          prioridadLetra[val].opacity =1;
          prioridadLetra[val].text=letra3;
-
+         getColorText(error1,trenes2,letra3,val);
   }
+
+ function getColorText(error1,trenes2,letra3,val){
+     if(letra3=="A"){
+         textoError[val].color="red";
+         trenConFalla[val].color="red";
+          prioridadLetra[val].color="red";
+     }
+
+     if(letra3=="B"){
+         textoError[val].color="yellow";
+         trenConFalla[val].color="yellow";
+          prioridadLetra[val].color="yellow";
+     }
+     if(letra3=="C"){
+         textoError[val].color="green";
+         trenConFalla[val].color="green";
+          prioridadLetra[val].color="green";
+ }
+ }
 
 
 
@@ -1320,22 +461,29 @@ function startBlinkFailure(val) {
          id: f
          width: 15
          height: 23
-         opacity: 1
+         opacity: 0
          x:getXFailure(Math.floor(index/2),index)
          y:getYFailure(Math.floor(index/2),index)
-
          source: "resources/sicas_f.png"
          antialiasing: true
          smooth: true
 
          states: [
              State {
-                 name: "on"
+                 name: "con"
                  PropertyChanges { target: f; opacity: 1;}
              },
              State {
-                 name: "off"
+                 name: "des"
                  PropertyChanges { target: f; opacity: 0;}
+             },
+             State {
+                 name: "inhab"
+                 PropertyChanges { target: f; opacity: 0.5;}
+             },
+             State {
+                 name: "blink"
+                 PropertyChanges { target: blinkAnimation; running:true;}
              }
          ]
 
@@ -1343,25 +491,25 @@ function startBlinkFailure(val) {
              PropertyAnimation { properties: "opacity"; duration: 100 }
          }
 
-       /*  SequentialAnimation {
-             id: blinkAnimation
-             loops: Animation.Infinite
+        SequentialAnimation {
+            id: blinkAnimation
+            loops: Animation.Infinite
 
-             PropertyAnimation {
-                 properties: "opacity"
-                 to: 0
-                 duration: 200
-                 target: f
-             }
-             PauseAnimation { duration: 200 }
-             PropertyAnimation {
-                 properties: "opacity"
-                 to: 1
-                 duration: 200
-                 target: f
-             }
-             PauseAnimation { duration: 200 }
-         }*/
+            PropertyAnimation {
+                properties: "opacity"
+                to: 0
+                duration: 200
+                target: f
+            }
+            PauseAnimation { duration: 200 }
+            PropertyAnimation {
+                properties: "opacity"
+                to: 1
+                duration: 200
+                target: f
+            }
+            PauseAnimation { duration: 200 }
+        }
 
      }
      onItemAdded: failure[index] = item
@@ -1370,10 +518,8 @@ function startBlinkFailure(val) {
 
  function getXFailure(index,cantf){
      if (cantf % 2 ==0){
-      //   console.log("valor de X IMPAR v para F ---->", (54+(160*index)),"  valor index  ",index);
          return (57+(160*index));
       }// par
-   //  console.log("valor de x PAR v para F---->", (199+(160*index)), "  valor index  ",index) ;
      return(199+(160*index)); // impar
  }
 
@@ -1383,8 +529,24 @@ function startBlinkFailure(val) {
      return (104);
  }
 
+ function turnOffFailure(valF){
+    failure[valF].state = "des";
+ }
 
+ function turnOnFailure(valF){
+     failure[valF].state = "con";
 
+ }
+ function turnBlinkFailure(valF){
+     failure[valF].state = "blink";
+
+ }
+ function turnInhabFailure(valF){
+     failure[valF].state = "inhab";
+
+ }
+
+// REPEATER DE PANTALLA SICAS
  Repeater {
      model: 5
      Text {
@@ -1395,7 +557,7 @@ function startBlinkFailure(val) {
          x: getXTextError(index)
          y: getYTextError(index)
          text: qsTr(" ")
-         horizontalAlignment: Text.AlignHCenter
+         horizontalAlignment: Text.AlignLeft
          font.family: "Arial"
          font.pixelSize: 12
          states: [
@@ -1416,15 +578,11 @@ function startBlinkFailure(val) {
      onItemAdded: textoError[index] = item
  }
  function getXTextError(p){
-     //    console.log("valor de x PAR v texto ---->", 84, "  valor index  ",p);
          return(84)
    }
  function getYTextError(p){
-    // console.log("valor de Y IMPAR v texto ---->", (173+(20*p)), "  valor index  ",p);
-
          return (173+(20*p))
  }
-
 
  Repeater {
      model: 5
@@ -1436,7 +594,7 @@ function startBlinkFailure(val) {
          x: getXTrenesError(index)
          y: getYTrenesError(index)
          text: qsTr(" ")
-         horizontalAlignment: Text.AlignHCenter
+         horizontalAlignment: Text.AlignLeft
          font.family: "Arial"
          font.pixelSize: 12
          states: [
@@ -1456,17 +614,14 @@ function startBlinkFailure(val) {
      }
      onItemAdded: trenConFalla[index] = item
  }
+
  function getXTrenesError(p){
-   //  console.log("valor de x PAR v trenes ---->", 245);
-
          return(245)
-   }
- function getYTrenesError(p){
-    // console.log("valor de Y IMPAR v trenes ---->", (173+(20*p)), "  valor index  ",p);
-
-         return (173+(20*p))
  }
 
+ function getYTrenesError(p){
+         return (173+(20*p))
+ }
 
 
  //REPEAT QUE GENERA CADA UNA DE LAS LETRAS
@@ -1482,7 +637,7 @@ function startBlinkFailure(val) {
          x: getXPrioLetra(index)
          y: getYPrioLetra(index)
          text: qsTr(" ")
-         horizontalAlignment: Text.AlignHCenter
+         horizontalAlignment: Text.AlignLeft
          font.family: "Arial"
          font.pixelSize: 12
          states: [
@@ -1502,17 +657,110 @@ function startBlinkFailure(val) {
      }
      onItemAdded: prioridadLetra[index] = item
  }
+
  function getXPrioLetra(p){
-    // console.log("valor de x PAR v para Letra ---->", 410, "  valor index  ",p);
-
          return(410)
-   }
- function getYPrioLetra(p){
-   //  console.log("valor de Y IMPAR v letra ---->", (173+(20*p)), "  valor index  ",p);
+ }
 
+ function getYPrioLetra(p){
          return (173+(20*p))
  }
 
 
+ Repeater {
+     model: 48
+     Image {
+         id: puertastren
+         width: 12
+         height: 2
+         opacity: 0
+         x: getXpuertastren(index)
+         y: getYpuertastren(index)
+         source: "resources/sicas_doors.png"
+         antialiasing: true
+         smooth: true
+         states: [
+             State {
+                 name: "con"
+                 PropertyChanges { target: puertastren; opacity: 1;}
+             },
+             State {
+                 name: "des"
+                 PropertyChanges { target: puertastren; opacity: 0;}
+             }
+         ]
+
+         transitions: Transition {
+             PropertyAnimation { properties: "opacity"; duration: 500 }
+         }
+     }
+     onItemAdded: puertasCoche[index] = item
+ }
+
+ Image {
+     id: sicas_renglon
+     x: 75
+     y: 176
+     width: 426
+     height: 13
+     opacity: 0.5
+     source: "resources/sicas_renglon.png"
+ }
+
+ function getXpuertastren(p){
+   var nroCoche = Math.floor(p/8);
+   return((75)+(nroCoche*63)+(34*Math.floor(nroCoche/2))+((p%4)*15));
+ }
+
+ function getYpuertastren(p){
+    var acum=(Math.floor(p/4)%2);
+     if (acum==0)
+         return (105);
+     return(145);
+ }
+ function turnOffDoors(valF){
+    puertasCoche[valF].state = "des";
+    }
+
+ function turnOnDoors(valF){
+     puertasCoche[valF].state = "con";
+    }
+ function actualizarTamArreRenglon(valorFin,tamIndiceArre){
+     valorRenglonFin=valorFin;
+     tamArreRenglon=tamIndiceArre;
+     movimientoCursor();
+ }
+
+function movimientoCursor(){
+      if((valorRenglonFin > 0)&&(valorRenglonActual<tamArreRenglon)){
+           siguiente.opacity=1;
+            }
+       else{
+            siguiente.opacity=0;}
+       if((valorRenglonActual > 0) && (valorRenglonActual<=tamArreRenglon)){
+            anterior.opacity=1;}
+       else{
+            anterior.opacity=0;}
+
 }
+
+function moverSelectorSig(){
+    if((sicas_renglon.y <256)&&(valorRenglonActual<=valorRenglonFin)){
+        sicas_renglon.y= sicas_renglon.y +20;
+        valorRenglonActual++;
+        movimientoCursor();
+
+    }
+}
+function moverSelectorAnt(){
+    if(sicas_renglon.y >176){
+        sicas_renglon.y= sicas_renglon.y -20;
+        valorRenglonActual--;
+        movimientoCursor();
+    }
+}
+
+
+
+}//FIN RECTANGLO
 

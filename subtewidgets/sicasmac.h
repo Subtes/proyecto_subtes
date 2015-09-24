@@ -27,6 +27,8 @@ public:
     void setFailure6(QUrl f6);
     void setStartTrain(QUrl at1);
     void setEndTrain(QUrl atend);
+    void actualizarTamArreRenglon(int finRenglon, int indiceArre);
+
 
 
 protected:
@@ -37,6 +39,14 @@ public slots:
        void startBlinkFailure(int failure);
        void stopBlink(int failure);
        void textEditSicas(QString pos1,QString pos2,QString pos3, int index);
+       void insertTrainSicas(QString coche, QString estFreno);
+       void insertDoorsSicas(QString doors, int tren);
+       void turnOffFailure(int coche);
+       void turnOnFailure(int coche);
+       void turnBlinkFailure(int coche);
+       void turnInhabFailure(int coche);
+       void turnOffDoors(int coche);
+       void turnOnDoors(int coche);
 };
 
 #endif // SICASMAC_H

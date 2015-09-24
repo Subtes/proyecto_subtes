@@ -129,10 +129,12 @@ signals:
     accelerationInstant(double);
     nextToEstation();
     departureEstation();
-    cargarMensaje(QString);    
     cargarEstado(int);
     kHardPressed();
     lHardPressed();
+    cargarMensaje(QString);
+    cargarMensajeCocheSicas(QString);
+
 public slots:
     void processKeyPressed(DWORD k);
     void processKeyReleased(DWORD k);
