@@ -21,6 +21,7 @@ private:
     QQuickItem *m_qmlView;
 
 public slots:
+    void updateAllowedSpeed(double speed);
     void updateTargetSpeed(double speed);
     void updateSpeed(double speed);
     void turnOff();

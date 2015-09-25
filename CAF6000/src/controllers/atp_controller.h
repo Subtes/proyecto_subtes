@@ -182,6 +182,7 @@ private:
     void critiqueSpeed(int);
     void onATP();
     void off_ATP();
+    void setSignalTarget(QString s);
 
 };
 

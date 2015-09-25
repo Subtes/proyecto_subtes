@@ -107,7 +107,7 @@ void Atp_Controller::initATP(){
     m_t_evalChangeSpeed->setInterval(500);
     m_t_evalChangeSpeed->start();
 
-    m_eventHandler->atpOn();
+    m_eventHandler->notifyValueChanged("c_llave_atp","con");
 }
 
 void Atp_Controller::resetATP(){
@@ -115,7 +115,7 @@ void Atp_Controller::resetATP(){
     this->m_onATP = false;
     this->off_ATP();
     this->m_view->setReset(true);
-    m_eventHandler->atpOff();
+    m_eventHandler->notifyValueChanged("c_llave_atp","des");
 }
 
 void Atp_Controller::setDrivingMode(int d){
@@ -565,6 +565,31 @@ void Atp_Controller::routingD(){
 }
 
 Atp_Controller::~Atp_Controller(){
+
+}
+
+void Atp_Controller::setSignalTarget(QString s){
+
+//    switch(s){
+//        case "20":
+//            m_speedTarget = 20;
+//        break;
+//        case "30":
+//            m_speedTarget = 30;
+//        break;
+//        case "40":
+//            m_speedTarget = 40;
+//        break;
+//        case "50":
+//            m_speedTarget = 50;
+//        break;
+//        case "60":
+//            m_speedTarget = 60;
+//        break;
+//        default:
+//            m_speedTarget = 60;
+//        break;
+//    }
 
 }
 /**

@@ -41,7 +41,16 @@ void SpeedGaugeLeds::turnOn()
 }
 
 void SpeedGaugeLeds::updateTargetSpeed(double speed){
-    qDebug() << "updateTargetSpeed con " << speed;
+    //qDebug() << "updateTargetSpeed con " << speed;
+    QVariant returnedValue;
+
+    QMetaObject::invokeMethod(m_qmlView, "updateMaxSpeed",
+            Q_RETURN_ARG(QVariant, returnedValue),
+            Q_ARG(QVariant, speed));
+}
+
+void SpeedGaugeLeds::updateAllowedSpeed(double speed){
+    //qDebug() << "updateAllowedSpeed con " << speed;
     QVariant returnedValue;
 
     QMetaObject::invokeMethod(m_qmlView, "updateMaxSpeed",

@@ -461,7 +461,6 @@ void EventHandler::processKeyPressed(DWORD k)
         this->processValueChanged(m_eNetHelper->instructionsHostName, "i_estado_simulador", "1");
     } else if ( k == _F5 && !F5_down  ){
         F5_down = true;
-        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_cambio_senial", "1");
         qDebug() << "F5 key pressed";
     }  else if ( k == _K && !K_down ){
         this->notifyValueChanged("c_llave_atp","con");
@@ -546,7 +545,7 @@ void EventHandler::processKeyPressed(DWORD k)
     } else if ( k == _J && !J_down  ){
         J_down = true;
         qDebug() << "J key pressed, departureFromEstation";
-        this->processValueChanged(m_eNetHelper->instructionsHostName, "v_proximo_a_estacion", "0");;
+        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_cambio_senial", "id;1");
     } else if ( k == _MAS && !MAS_down ){
         MAS_down = true;
         qDebug() << "MAS key pressed, departureFromEstation";
@@ -643,11 +642,3 @@ void EventHandler::processKeyReleased(DWORD k){
     }
 }
 
-void EventHandler::atpOn(){
-    this->processValueChanged(m_eNetHelper->instructionsHostName, "c_llave_atp", "con");
-}
-
-void EventHandler::atpOff(){
-    this->processValueChanged(m_eNetHelper->instructionsHostName, "c_llave_atp", "des");
-
-}
