@@ -18,8 +18,8 @@ HEADERS +=  joypick.h \
 
 LIBS += -L$$PWD/./lib/x86/ -lSDL2
 
-#win32 {
-#DEFINES += SDL_WIN
-#}
+win32 {
+DEFINES += SDL_WIN
+}
 
 DESTDIR = $$PWD

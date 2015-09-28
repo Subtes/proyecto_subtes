@@ -5,7 +5,7 @@
 //#undef main
 //#endif
 
-int qMain(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     Joypick w;

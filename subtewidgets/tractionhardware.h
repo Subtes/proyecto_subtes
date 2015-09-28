@@ -3,13 +3,17 @@
 
 #include <QObject>
 #include <QTimer>
-#include "../Source/include/SDL.h"
+
+#include "../SDL/include/SDL.h"
+#undef main
 
 class TractionHardware : public QObject
 {
     Q_OBJECT
 public:
-    explicit TractionHardware(QObject *parent = 0);
+     TractionHardware();
+    ~TractionHardware();
+    void getdata();
 
 signals:
     traction(int);
@@ -19,11 +23,16 @@ signals:
     manDiedReleased();
 
 public slots:
-    void processValueChanged(int wich, int axis, int value);
+    void processValueChanged(/*int wich, int axis, int value*/);
+    void onJoystick();
 
 private:
-    SDL_Joystick *m_joy;
+    SDL_Joystick *m_joystick;
     QTimer *m_tDataReciver;
+    QList<int> axis;
+    QList<bool> buttons;
+    QString joystickName(int id);
+
     int m_speedMax;
     int m_neutral;
     int m_neutralLower;

@@ -39,6 +39,7 @@ public slots:
 
 private:
     Ui::BoardHardware *ui;
+    TractionHardware *m_tractionHardware;
 
     Horn_Controller *m_horn;
     TractionLever_Controller *m_tractionLever;

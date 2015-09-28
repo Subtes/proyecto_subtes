@@ -6,7 +6,7 @@
 #include <QList>
 
 #include "include/SDL.h"
-
+#undef main
 
 class QJoystick : public QObject
 {

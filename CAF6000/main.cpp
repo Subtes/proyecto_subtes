@@ -4,17 +4,21 @@
 #include <QSplashScreen>
 
 #include "boardhardware.h"
-#include "boardcenter.h"
-#include "boardleft.h"
-#include "boardright.h"
-#include "boardtop.h"
-#include "src/instructionsolutionpanel/mainwindow.h"
+//#include "boardcenter.h"
+//#include "boardleft.h"
+//#include "boardright.h"
+//#include "boardtop.h"
+//#include "src/instructionsolutionpanel/mainwindow.h"
 
 #include "src/controllers/eventhandler.h"
 #include "src/controllers/keypresseater.h"
 #include "src/controllers/failures_controller.h"
+//#include "./hardwareevent.h"
+//#include "joypick.h"
 
-int qMain(int argc, char *argv[])
+
+
+int main(int argc, char *argv[])
 {
     //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
     QApplication::setAttribute(Qt::AA_UseOpenGLES,true);
@@ -22,6 +26,11 @@ int qMain(int argc, char *argv[])
     //QApplication::setAttribute(Qt::AA_UseSoftwareOpenGL,true);
 
     QApplication a(argc, argv);
+
+    //SDL_INIT_EVERYTHING
+//    if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+//        return false;
+//    }
 
     // MODEL
     SubteStatus * m_subte = new SubteStatus();
@@ -32,24 +41,24 @@ int qMain(int argc, char *argv[])
 
     // VIEWS
     BoardHardware *m_h = new BoardHardware(0,m_subte,m_eventHandler);
-    BoardCenter * m_c = new BoardCenter(0,m_subte,m_eventHandler);
-    BoardLeft *m_l = new BoardLeft(0,m_subte,m_eventHandler);
-    BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
-    BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
-    MainWindow *m_tree = new MainWindow(0,m_eventHandler);
+//    BoardCenter * m_c = new BoardCenter(0,m_subte,m_eventHandler);
+//    BoardLeft *m_l = new BoardLeft(0,m_subte,m_eventHandler);
+//    BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
+//    BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
+//    MainWindow *m_tree = new MainWindow(0,m_eventHandler);
 
     QDesktopWidget *desktop = a.desktop();
 
     if(desktop->screenCount() == 4){
-        qDebug() << "Entre en For de pantallas igual 4: ";
-        for(int i = 0; i < desktop->screenCount(); i++){
-            qDebug() << "Dimensiones --> "<< desktop->screenGeometry(i);
-        }
+//        qDebug() << "Entre en For de pantallas igual 4: ";
+//        for(int i = 0; i < desktop->screenCount(); i++){
+//            qDebug() << "Dimensiones --> "<< desktop->screenGeometry(i);
+//        }
 
-        QRect s0 = desktop->screenGeometry(0);//Dimensiones -->  QRect(0,0 1024x768)
-        QRect s1 = desktop->screenGeometry(1);//Dimensiones -->  QRect(-2048,0 1024x768)
-        QRect s2 = desktop->screenGeometry(2);//Dimensiones -->  QRect(1024,0 1024x768)
-        QRect s3 = desktop->screenGeometry(3);//Dimensiones -->  QRect(-1024,0 1024x768)
+//        QRect s0 = desktop->screenGeometry(0);//Dimensiones -->  QRect(0,0 1024x768)
+//        QRect s1 = desktop->screenGeometry(1);//Dimensiones -->  QRect(-2048,0 1024x768)
+//        QRect s2 = desktop->screenGeometry(2);//Dimensiones -->  QRect(1024,0 1024x768)
+//        QRect s3 = desktop->screenGeometry(3);//Dimensiones -->  QRect(-1024,0 1024x768)
 
 
     /**
@@ -59,39 +68,37 @@ int qMain(int argc, char *argv[])
      * Dimensiones -->  QRect(0,-768 1024x768)
      */
 
-        m_t->showFullScreen();
-        m_h->showFullScreen();
-        m_l->showFullScreen();
+//        m_t->showFullScreen();
+//        m_h->showFullScreen();
+//        m_l->showFullScreen();
 
-        QTabWidget *tabRight = new QTabWidget(0);
-        tabRight->addTab(m_c,QObject::tr("Center"));
-        tabRight->addTab(m_r,QObject::tr("RightPanel"));
-        tabRight->addTab(m_tree,QObject::tr("TreePanel"));
+//        QTabWidget *tabRight = new QTabWidget(0);
+//        tabRight->addTab(m_c,QObject::tr("Center"));
+//        tabRight->addTab(m_r,QObject::tr("RightPanel"));
+//        tabRight->addTab(m_tree,QObject::tr("TreePanel"));
 
-        tabRight->showFullScreen();
+//        tabRight->showFullScreen();
 
-        m_h->move(s0.topLeft());
-        m_l->move(s2.topLeft());
-        m_t->move(s3.topLeft());
+//        m_h->move(s0.topLeft());
+//        m_l->move(s2.topLeft());
+//        m_t->move(s3.topLeft());
 
-        tabRight->move(s1.topLeft());
+//        tabRight->move(s1.topLeft());
 
     }else{
 
           m_h->showNormal();
-          m_l->showNormal();
-          //m_c->showNormal();
-          m_t->showNormal();
-          //m_r->showNormal();
+//          m_l->showNormal();
+//          m_t->showNormal();
 
-          QTabWidget *tabRight = new QTabWidget(0);
-          tabRight->addTab(m_c,QObject::tr("Center"));
-          tabRight->addTab(m_r,QObject::tr("RightPanel"));
-          tabRight->addTab(m_tree,QObject::tr("TreePanel"));
+//          QTabWidget *tabRight = new QTabWidget(0);
+//          tabRight->addTab(m_c,QObject::tr("Center"));
+//          tabRight->addTab(m_r,QObject::tr("RightPanel"));
+//          tabRight->addTab(m_tree,QObject::tr("TreePanel"));
 
-          tabRight->setMinimumWidth(1024);
-          tabRight->setMinimumHeight(768);
-          tabRight->showNormal();
+//          tabRight->setMinimumWidth(1024);
+//          tabRight->setMinimumHeight(768);
+//          tabRight->showNormal();
 
     }
 
@@ -100,6 +107,19 @@ int qMain(int argc, char *argv[])
     m_eventHandler->setFailures(m_failures);
     m_subte->setHandler(m_eventHandler);
     m_eventHandler->initConnection();
+
+//    SDL_Event Event;
+//    HardwareEvent * m_he = new HardwareEvent(Event);
+
+//    m_he->moveToThread(QApplication::instance()->thread());
+
+//    QTimer *m_doSomething = new QTimer;
+//    m_doSomething->setInterval(50);
+//    QObject::connect(m_doSomething,SIGNAL(timeout()),m_he,SLOT(OnExecute()));
+//    m_doSomething->start();
+
+//    Joypick w;
+//    w.show();
 
     QObject::connect(m_eventHandler,SIGNAL(closeApp()),qApp,SLOT(quit()));
     return a.exec();

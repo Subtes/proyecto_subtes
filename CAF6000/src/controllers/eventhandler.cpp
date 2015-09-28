@@ -70,9 +70,9 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
         m_splash4->showMaximized();
 
     }else{
-        m_splash1 = new QSplashScreen(m_imageSplash);
-        m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
-        m_splash1->showMaximized();
+//        m_splash1 = new QSplashScreen(m_imageSplash);
+//        m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
+//        m_splash1->showMaximized();
     }
 }
 
@@ -118,7 +118,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
                     m_splash3->hide();
                     m_splash4->hide();
                 }else{
-                    m_splash1->hide();
+//                    m_splash1->hide();
                 }
             }
 

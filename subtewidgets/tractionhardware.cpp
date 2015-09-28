@@ -1,26 +1,44 @@
+#include <QDebug>
 #include "tractionhardware.h"
+#define POLL_INTERVAL 40
 
-TractionHardware::TractionHardware(QObject *parent/*, HardwareEvent *hw */) : QObject(parent)
+TractionHardware::TractionHardware()
 {
+    qDebug()<<"Entro en TractionHardware:   --->";
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);
+    SDL_JoystickClose(0);
+    m_joystick = SDL_JoystickOpen(0);
+    if (m_joystick) {
+        qDebug("Opened Joystick 0\n");
+        qDebug("Name: %s\n", SDL_JoystickNameForIndex(0));
+        qDebug("Number of Axes: %d\n", SDL_JoystickNumAxes(m_joystick));
+        qDebug("Number of Buttons: %d\n", SDL_JoystickNumButtons(m_joystick));
+        qDebug("Number of Balls: %d\n", SDL_JoystickNumBalls(m_joystick));
+    } else {
+        qDebug("Couldn't open Joystick 0\n");
+    }
 
     m_minInterval = -20000;
-    m_speedMax = 104;
+    //m_speedMax = 104;
     m_neutral = 2642; //m_neutral = 522;
     m_neutralLower = 5000;
     m_neutralTop = -1000;
-    m_break = 909;
+    //m_break = 909;
     m_breakEmergency = 15000; //m_breakEmergency = 973;
     m_maxInterval = 23000; //m_maxInterval = 1023;
 
-//    connect (he,SIGNAL(updateJoyAxis(int wich, int axis, int value)),this,SLOT(processValueChanged(int wich, int axis, int value)));
-//    connect (,SIGNAL(valueChanged(int)),this,SIGNAL(positionChanged(int)));
-//    connect (he,SIGNAL(updateJoyButton()),this,SIGNAL(hvPressed()));
-//    connect (he,SIGNAL(updateJoyButton()),this,SIGNAL(hvReleased()));
-}
-void TractionHardware::processValueChanged(int wich, int axis, int value){
+    m_tDataReciver = new QTimer(this);
+//    connect(m_tDataReciver,SIGNAL(timeout()),this,SLOT(processValueChanged(int,int,int)));
 
-    if (axis == 1){
+}
+void TractionHardware::processValueChanged(/*int wich, int axis, int value*/){
+
+    getdata();
+    qDebug()<<"Valor: --->  "<< (this->axis.at(1));
+    //emit traction(this->axis.at(1));
+    int value = this->axis.at(1);
+
+    //if (axis == 1){
         if(value < m_neutralTop){
             int tr = static_cast<int>((value*85)/-20000);
             emit traction(tr);
@@ -33,5 +51,37 @@ void TractionHardware::processValueChanged(int wich, int axis, int value){
         }else if (value >= m_breakEmergency){
             emit emergencyBrake();
         }
+    //}
+
+}
+
+void TractionHardware::getdata(){
+
+    axis.clear();
+    buttons.clear();
+
+    SDL_Event event;
+    SDL_PollEvent(&event);
+
+    for(int i=0;i<SDL_JoystickNumAxes(m_joystick);i++)
+    {
+        axis.append(SDL_JoystickGetAxis(m_joystick,i));
     }
+
+    for(int i=0;i<SDL_JoystickNumButtons(m_joystick);i++)
+    {
+        buttons.append(SDL_JoystickGetButton(m_joystick,i));
+    }
+
+}
+TractionHardware::~TractionHardware(){
+    axis.clear();
+    buttons.clear();
+    SDL_JoystickClose(m_joystick);
+    SDL_QuitSubSystem(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);
+    this->deleteLater();
+}
+
+void TractionHardware::onJoystick(){
+    m_tDataReciver->start(500);
 }
