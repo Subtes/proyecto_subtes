@@ -156,6 +156,6 @@ void SicasMac_Controller::verificoEstFalla(QString falla, int coche){
         m_sicasmac->turnOffFailure(coche);
     if(falla=="inhab")
        m_sicasmac->turnInhabFailure(coche);
-    if(falla=="blink")
+    if(falla=="int")
        m_sicasmac->turnBlinkFailure(coche);
 }

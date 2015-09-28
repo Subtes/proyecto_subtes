@@ -158,6 +158,7 @@ void SubteStatus::updateSpeed(double value){
         }
         if( m_speed <= 0 && m_brake->getEmergencyBrake()){
             m_brake->setEmergencyBrake(false);
+            m_eventHandler->notifyValueChanged("c_freno_emergencia","des");
         }
     }
 }
@@ -202,6 +203,10 @@ void SubteStatus::tractionReceived(int value){
     if((value<10) || (abs(tractionToEmit - m_traction->lastTraction()) >= 5)){
         m_eventHandler->notifyValueChanged("c_traccion",std::to_string(tractionToEmit));
         m_traction->setLastTraction(tractionToEmit);
+        if(m_cscp->leftDoors() && m_cscp->rightDoors() && tractionToEmit>0){
+            closeLeftDoors();
+            closeRightDoors();
+        }
     }
 }
 
@@ -274,6 +279,7 @@ void SubteStatus::hombreMuertoReleased(){
     Pulsar “CON”
  */
 void SubteStatus::pressedCON(){
+    m_eventHandler->notifyValueChanged("c_disyuntor","con");
     qDebug() << "Pressed CON Disyuntor";
 }
 
@@ -281,6 +287,7 @@ void SubteStatus::pressedCON(){
  * @brief SubteStatus::pressedDES:  Para desconectar los disyuntores, solo se pulsa “DES”, en cualquiera de las cabinas de conducción.
  */
 void SubteStatus::pressedDES(){
+    m_eventHandler->notifyValueChanged("c_disyuntor","des");
     qDebug() << "Pressed DES Disyuntor";
     }
 
@@ -403,8 +410,8 @@ void SubteStatus::setConmutadorPuestaServicioAutomatica(bool status){
         qDebug() << "c_estado_sicas: ok";
         m_eventHandler->notifyValueChanged("c_conmutador_puesta_en_servicio_automatica","con");
         qDebug() << "c_conmutador_puesta_en_servicio_automatica :con";
-        m_eventHandler->notifyValueChanged("c_disyuntor","con");
-        qDebug() << "c_disyuntor: con";
+        //m_eventHandler->notifyValueChanged("c_disyuntor","con");
+        //qDebug() << "c_disyuntor: con";
     }else{
         m_eventHandler->notifyValueChanged("c_conmutador_puesta_en_servicio_automatica","des");
         qDebug() << "c_conmutador_puesta_en_servicio_automatica: des";
@@ -589,22 +596,16 @@ void SubteStatus::resolveCSCPFailure()
 void SubteStatus::setManiobraMode()
 {
     m_eventHandler->notifyValueChanged("c_modo_conduccion","maniobra");
-    //TODO: emitir y corregir redimensionado en la traccion
-    //m_traction->resizeTraction()
 }
 
 void SubteStatus::setAtpMode()
 {
     m_eventHandler->notifyValueChanged("c_modo_conduccion","atp");
-    //TODO: emitir y corregir redimensionado en la traccion
-    //m_traction->resizeTraction()
 }
 
 void SubteStatus::setAcopleMode()
 {
     m_eventHandler->notifyValueChanged("c_modo_conduccion","acople");
-    //TODO: emitir y corregir redimensionado en la traccion
-    //m_traction->resizeTraction()
 }
 
 void SubteStatus::setRetentionBrakeBypass(bool state)

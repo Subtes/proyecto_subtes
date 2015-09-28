@@ -64,6 +64,7 @@ void BoardRight::loadState(int state){
     ui->desacople->turnOff();
     ui->DESDisy_widget->turnOff();
     ui->CONDisy_widget->turnOff();
+    m_frenoRetencion->turnOff();
 
     if(state == APAGADO){
         m_manometer->updatePressureRed(0);
@@ -73,6 +74,5 @@ void BoardRight::loadState(int state){
     else if(state == EN_MARCHA){
         m_manometer->updatePressureRed(m_subte->getPressureRed());
         m_manometer->updatePressureWhite(m_subte->getPressureWhite());
-        m_modoConduccion->setAtpMode();
     }
 }

@@ -29,19 +29,19 @@ void Failures_Controller::setFailure(std::string f)
         m_subte->setTractionFailure();
     }
 
-    else if(parametros.at(1).compare("coche_frenado_2")==0){
+    else if(parametros.at(1).compare("CursoNormalMasCF2")==0){
         m_lastFailure = "coche_frenado_2";
         m_subte->setTractionFailure();
         m_subte->setBrakeFailure();
         m_subte->setCSCPFailure();
     }
 
-    else if(parametros.at(1).compare("hilo_lazo_1")==0){
+    else if((parametros.at(1).compare("CursoNormalMasHL1")==0) || (parametros.at(1).compare("CursoNormalMasHL1P2")==0)){
         m_lastFailure = "hilo_lazo_1";
         m_subte->setBrakeFailure();
     }
 
-    else if(parametros.at(1).compare("hilo_lazo_2")==0){
+    else if((parametros.at(1).compare("CursoNormalMasHL2")==0) || (parametros.at(1).compare("CursoNormalMasHL2P2")==0)){
         m_lastFailure = "hilo_lazo_2";
         m_subte->setBrakeFailure();
         m_subte->setCSCPFailure();

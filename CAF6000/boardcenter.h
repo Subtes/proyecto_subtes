@@ -28,6 +28,11 @@ public slots:
     void resetControls();
     void loadState(int state);
 
+    void bypassTraccionON();
+    void bypassTraccionOFF();
+    void bypassFrenoON();
+    void bypassFrenoOFF();
+
 private:
     Ui::BoardCenter *ui;
 

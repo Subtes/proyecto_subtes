@@ -30,6 +30,9 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
     OCHO_down = false;
     NUEVE_down = false;
 
+    MAS_down = false;
+    MENOS_down = false;
+
     m_eNetClient = new ENetClient();
     m_eNetHelper = new ENetHelper(m_eNetClient);
 
@@ -109,7 +112,7 @@ void EventHandler::notifyValueChanged(std::string key, std::string value)
 }
 
 void EventHandler::processValueChanged(std::string host, std::string key, std::string value){
-   //qDebug() << "processValueChanged:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() ;
+   qDebug() << "processValueChanged:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() ;
 
     if(key.compare("i_iniciar_simulador") == 0){
         //Cargar Splash
@@ -127,7 +130,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
                     m_splash3->hide();
                     m_splash4->hide();
                 }else{
-                    //m_splash1->hide();
+                    m_splash1->hide();
                 }
             }
 
@@ -135,7 +138,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cargar_estado");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_averia");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cambio_senial");
-            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_coche_sicas");
+            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_coches_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_renglon_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_velocidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_tramo_vel");
@@ -168,7 +171,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_2","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_2","con");
             m_eNetClient->CambiarValorClave("c_rana_2","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_2","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_2","des");
             m_eNetClient->CambiarValorClave("c_grifob138_3","con");
             m_eNetClient->CambiarValorClave("c_grifol2_3","con");
             m_eNetClient->CambiarValorClave("c_grifob73_3","con");
@@ -176,7 +179,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_3","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_3","con");
             m_eNetClient->CambiarValorClave("c_rana_3","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_3","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_3","des");
             m_eNetClient->CambiarValorClave("c_grifob138_4","con");
             m_eNetClient->CambiarValorClave("c_grifol2_4","con");
             m_eNetClient->CambiarValorClave("c_grifob73_4","con");
@@ -184,7 +187,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_4","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_4","con");
             m_eNetClient->CambiarValorClave("c_rana_4","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_4","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_4","des");
             m_eNetClient->CambiarValorClave("c_grifob138_5","con");
             m_eNetClient->CambiarValorClave("c_grifol2_5","con");
             m_eNetClient->CambiarValorClave("c_grifob73_5","con");
@@ -192,7 +195,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_5","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_5","con");
             m_eNetClient->CambiarValorClave("c_rana_5","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_5","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_5","des");
             m_eNetClient->CambiarValorClave("c_grifob138_6","con");
             m_eNetClient->CambiarValorClave("c_grifol2_6","con");
             m_eNetClient->CambiarValorClave("c_grifob73_6","con");
@@ -200,7 +203,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_6","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_6","con");
             m_eNetClient->CambiarValorClave("c_rana_6","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_6","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_6","des");
             m_eNetClient->CambiarValorClave("c_llave_atp","des");
 
 
@@ -226,7 +229,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_2","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_2","con");
             m_eNetClient->CambiarValorClave("c_rana_2","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_2","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_2","des");
             m_eNetClient->CambiarValorClave("c_grifob138_3","con");
             m_eNetClient->CambiarValorClave("c_grifol2_3","con");
             m_eNetClient->CambiarValorClave("c_grifob73_3","con");
@@ -234,7 +237,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_3","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_3","con");
             m_eNetClient->CambiarValorClave("c_rana_3","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_3","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_3","des");
             m_eNetClient->CambiarValorClave("c_grifob138_4","con");
             m_eNetClient->CambiarValorClave("c_grifol2_4","con");
             m_eNetClient->CambiarValorClave("c_grifob73_4","con");
@@ -242,7 +245,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_4","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_4","con");
             m_eNetClient->CambiarValorClave("c_rana_4","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_4","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_4","des");
             m_eNetClient->CambiarValorClave("c_grifob138_5","con");
             m_eNetClient->CambiarValorClave("c_grifol2_5","con");
             m_eNetClient->CambiarValorClave("c_grifob73_5","con");
@@ -250,7 +253,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_5","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_5","con");
             m_eNetClient->CambiarValorClave("c_rana_5","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_5","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_5","des");
             m_eNetClient->CambiarValorClave("c_grifob138_6","con");
             m_eNetClient->CambiarValorClave("c_grifol2_6","con");
             m_eNetClient->CambiarValorClave("c_grifob73_6","con");
@@ -258,8 +261,9 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_53f1_6","con");
             m_eNetClient->CambiarValorClave("c_termico_33f1_6","con");
             m_eNetClient->CambiarValorClave("c_rana_6","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_6","con");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia_6","des");
             m_eNetClient->CambiarValorClave("c_llave_atp","des");
+
 
             Sleep(1000);
             emit closeApp();
@@ -413,7 +417,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             }
             else if(state.compare("cerrado") == 0){
                 m_subte->closeLeftDoors();
-                qDebug() << "puertas izquierdas abiertas";
+                qDebug() << "puertas izquierdas cerrado";
             }
         }
     }
@@ -429,7 +433,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         emit cargarMensaje(mensaje);
     }
 
-    else if(key.compare("i_coche_sicas") == 0){
+    else if(key.compare("i_coches_sicas") == 0){
         qDebug() << "fallas y puertas recibidas." ;
         QString mensaje = value.c_str();
         emit cargarMensajeCocheSicas(mensaje);
@@ -461,7 +465,6 @@ void EventHandler::processKeyPressed(DWORD k)
         qDebug() << "F5 key pressed";
     }  else if ( k == _K && !K_down ){
         this->notifyValueChanged("c_llave_atp","con");
-        this->notifyValueChanged("c_modo_conduccion","atp");
         K_down = true;
         qDebug() << "K key pressed";
         emit kPressed();
@@ -544,6 +547,14 @@ void EventHandler::processKeyPressed(DWORD k)
         J_down = true;
         qDebug() << "J key pressed, departureFromEstation";
         this->processValueChanged(m_eNetHelper->instructionsHostName, "v_proximo_a_estacion", "0");;
+    } else if ( k == _MAS && !MAS_down ){
+        MAS_down = true;
+        qDebug() << "MAS key pressed, departureFromEstation";
+        emit masPressed();
+    } else if ( k == _MENOS && !MENOS_down ){
+        MENOS_down = true;
+        qDebug() << "MENOS key pressed, departureFromEstation";
+        emit menosPressed();
     }
 }
 
@@ -621,16 +632,22 @@ void EventHandler::processKeyReleased(DWORD k){
     } else if ( k == _J ){
         J_down = false;
         qDebug() << "J key released";
+    } else if ( k == _MAS ){
+        MAS_down = false;
+        qDebug() << "MAS key released";
+        emit masReleased();
+    } else if ( k == _MENOS ){
+        MENOS_down = false;
+        qDebug() << "MENOS key released";
+        emit menosReleased();
     }
 }
 
 void EventHandler::atpOn(){
     this->processValueChanged(m_eNetHelper->instructionsHostName, "c_llave_atp", "con");
-    qDebug()<<"ATP CON ";
 }
 
 void EventHandler::atpOff(){
     this->processValueChanged(m_eNetHelper->instructionsHostName, "c_llave_atp", "des");
-    qDebug()<< "ATP DES";
 
 }
