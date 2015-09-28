@@ -13,8 +13,9 @@ public:
     void setValue(int v);
 
 public slots:
-    void processValue(int);
-    void processBrake();
+    void processTraction(int);
+    void processEmergencyBrake();
+    void processBrake(int);
 
 private:
     TractionLever * m_tractionLever;

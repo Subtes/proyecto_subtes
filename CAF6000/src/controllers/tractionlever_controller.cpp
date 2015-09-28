@@ -10,9 +10,9 @@ TractionLever_Controller::TractionLever_Controller(SubteStatus * subte, Traction
     m_checkJ = new QTimer();
     m_checkJ->setInterval(50);
 
-    connect(m_tractionHardware,SIGNAL(brake(int)),this,SLOT(processValue(int)));
-    connect(m_tractionHardware,SIGNAL(emergencyBrake()),this,SLOT(processBrake()));
-    connect(m_tractionHardware,SIGNAL(traction(int)),this,SLOT(processValue(int)));
+    connect(m_tractionHardware,SIGNAL(traction(int)),this,SLOT(processTraction(int)));
+    connect(m_tractionHardware,SIGNAL(emergencyBrake()),this,SLOT(processEmergencyBrake()));
+    connect(m_tractionHardware,SIGNAL(brake(int)),this,SLOT(processBrake(int)));
     connect(m_checkJ,SIGNAL(timeout()),m_tractionHardware,SLOT(processValueChanged()));
 
     connect(m_tractionLever,SIGNAL(traction(int)),m_subte,SLOT(tractionReceived(int)));
@@ -34,14 +34,20 @@ void TractionLever_Controller::setValue(int v)
     m_tractionLever->setValue(v);
 }
 
-void TractionLever_Controller::processValue(int v)
+void TractionLever_Controller::processTraction(int v)
 {
-    //m_tractionLever->setValue(v);
-    qDebug()<<"Valor de Joystick:  --------->"<< v;
+    m_tractionLever->setValue(v);
+    qDebug()<<"Valor de Joystick:  ---TRACTION------>"<< v;
 }
 
-void TractionLever_Controller::processBrake()
+void TractionLever_Controller::processBrake(int v)
 {
-    //m_tractionLever->setValue(v);
+    m_tractionLever->setValue(-v);
+    qDebug()<<"Valor de Joystick:  ---BRAKE------>"<< v;
+}
+
+void TractionLever_Controller::processEmergencyBrake()
+{
+    m_tractionLever->setValue(-100);
     qDebug()<<"Valor de Joystick:  ---BRAKE EMERGENCY------>";
 }
