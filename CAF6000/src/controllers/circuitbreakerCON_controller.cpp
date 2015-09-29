@@ -16,8 +16,7 @@ CircuitBreakerCON_Controller::CircuitBreakerCON_Controller(SubteStatus *subte, S
 }
 
 void CircuitBreakerCON_Controller::pressCircuitBreakerCON(){
-    m_model->pressedCON();
-    //emit this->pressCircuitBreakerCON();
+    m_model->disyuntoresCon();
 }
 
 CircuitBreakerCON_Controller::~CircuitBreakerCON_Controller(){

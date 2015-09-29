@@ -108,7 +108,9 @@ bool SubteStatus::emergencyBrake() const
  */
 bool SubteStatus::getHiloLazo()
 {
-    return !m_brake->getEmergencyBrake() || m_brake->averia();
+    if(m_brake->averia()) return false;
+    if(m_brake->getEmergencyBrake()) return false;
+    return true;
 }
 
 bool SubteStatus::horn() const
@@ -271,22 +273,22 @@ void SubteStatus::hombreMuertoReleased(){
     }}
 
 /**
- * @brief SubteStatus::pressedCON: Para poder conectar los disyuntores, es necesario:
+ * @brief SubteStatus::disyuntoresCON: Para poder conectar los disyuntores, es necesario:
     Tensión normal de Batería
     Tensión suficiente en el Hilo de Trabajo
     Rana en AD o AT, con mando en su cabina
     Regulador de Mando en posición “0”
     Pulsar “CON”
  */
-void SubteStatus::pressedCON(){
+void SubteStatus::disyuntoresCon(){
     m_eventHandler->notifyValueChanged("c_disyuntor","con");
     qDebug() << "Pressed CON Disyuntor";
 }
 
 /**
- * @brief SubteStatus::pressedDES:  Para desconectar los disyuntores, solo se pulsa “DES”, en cualquiera de las cabinas de conducción.
+ * @brief SubteStatus::disyuntoresDes:  Para desconectar los disyuntores, solo se pulsa “DES”, en cualquiera de las cabinas de conducción.
  */
-void SubteStatus::pressedDES(){
+void SubteStatus::disyuntoresDes(){
     m_eventHandler->notifyValueChanged("c_disyuntor","des");
     qDebug() << "Pressed DES Disyuntor";
     }
@@ -334,7 +336,6 @@ void SubteStatus::keyActivated(){
     m_keyATP = true;
     m_eventHandler->notifyValueChanged("c_llave_atp","con");
     emit atpOn();
-
     qDebug() << "keyATP: " << m_keyATP;
 }
 
@@ -342,8 +343,7 @@ void SubteStatus::keyDeactivated(){
     m_keyATP = false;
     m_eventHandler->notifyValueChanged("c_llave_atp","des");
     emit atpOff();
-
-     qDebug() << "keyATP: " << m_keyATP;
+    qDebug() << "keyATP: " << m_keyATP;
 }
 
 void SubteStatus::ranaAD(){
@@ -390,9 +390,11 @@ void SubteStatus::enableTraction(){
 void SubteStatus::setBatteryConnector(bool status){
     if (status){
         m_eventHandler->notifyValueChanged("c_pulsador_bateria","con");
+        emit bateriaCon();
         qDebug() << "c_pulsador_bateria: con";
     }else{
         m_eventHandler->notifyValueChanged("c_pulsador_bateria","des");
+        emit bateriaDes();
         qDebug() << "c_pulsador_bateria: des";
     }
 }
@@ -408,12 +410,8 @@ void SubteStatus::setConmutadorPuestaServicio(bool status){
 
 void SubteStatus::setConmutadorPuestaServicioAutomatica(bool status){
     if (status){
-        m_eventHandler->notifyValueChanged("c_estado_sicas","ok");
-        qDebug() << "c_estado_sicas: ok";
         m_eventHandler->notifyValueChanged("c_conmutador_puesta_en_servicio_automatica","con");
         qDebug() << "c_conmutador_puesta_en_servicio_automatica :con";
-        //m_eventHandler->notifyValueChanged("c_disyuntor","con");
-        //qDebug() << "c_disyuntor: con";
     }else{
         m_eventHandler->notifyValueChanged("c_conmutador_puesta_en_servicio_automatica","des");
         qDebug() << "c_conmutador_puesta_en_servicio_automatica: des";
@@ -431,9 +429,13 @@ void SubteStatus::setParkingBrakeConnector(bool status){
     if (status){
         m_eventHandler->notifyValueChanged("c_freno_estacionamiento","con");
         qDebug() << "c_freno_estacionamiento: con";
+        m_cscp->setParkingBrake(true);
+        emit CSCPChanged(m_cscp->evalCircuit());
     }else{
         m_eventHandler->notifyValueChanged("c_freno_estacionamiento","des");
         qDebug() << "c_freno_estacionamiento: des";
+        m_cscp->setParkingBrake(false);
+        emit CSCPChanged(m_cscp->evalCircuit());
     }
 }
 
@@ -620,4 +622,9 @@ void SubteStatus::setRetentionBrakeBypass(bool state)
         m_eventHandler->notifyValueChanged("c_anulacion_freno_retencion","des");
     }
     emit retentionBrakeChanged(m_brake->retentioBrake());
+}
+
+void SubteStatus::setSicasOk(){
+    m_eventHandler->notifyValueChanged("c_estado_sicas","ok");
+    qDebug() << "c_estado_sicas: ok";
 }

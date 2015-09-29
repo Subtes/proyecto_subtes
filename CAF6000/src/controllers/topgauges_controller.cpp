@@ -47,3 +47,17 @@ void TopGauges_Controller::updateVolts(double volts){
 void TopGauges_Controller::updateAms(double ams){
     m_ammeter->updateNeedle(ams);
 }
+
+void TopGauges_Controller::turnOffGauges()
+{
+    m_ammeter->updateNeedle(-4000.0);
+    m_effortmeter->updateNeedle(-100.0);
+    m_voltmeter->updateNeedle(0.0);
+}
+
+void TopGauges_Controller::turnOnGauges()
+{
+    m_ammeter->updateNeedle(0.0);
+    m_effortmeter->updateNeedle(0.0);
+    m_voltmeter->updateNeedle(1.0);
+}

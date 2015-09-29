@@ -12,9 +12,6 @@ public:
     explicit CircuitBreakerDES_Controller(SubteStatus *subte,SingleButton *button=0);
     ~CircuitBreakerDES_Controller();
 
-signals:
-    void pressedDES();
-
 public slots:
     void pressCircuitBreakerDES();
 

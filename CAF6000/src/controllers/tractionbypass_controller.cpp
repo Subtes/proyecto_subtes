@@ -29,10 +29,13 @@ TractionBypass_Controller::~TractionBypass_Controller()
 
 void TractionBypass_Controller::updateStatus(bool status)
 {
-    if(status)
-        m_button->turnOn();
-    else
-        m_button->turnOff();
+    if(m_button->isLighted()){
+        if(status){
+            m_button->turnOn();
+        }else{
+            m_button->turnOff();
+        }
+    }
 }
 
 void TractionBypass_Controller::releaseBypass()

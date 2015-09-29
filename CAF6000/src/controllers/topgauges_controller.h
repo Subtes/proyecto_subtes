@@ -17,6 +17,9 @@ public:
     TopGauges_Controller(SubteStatus * subte, AnalogGauge * voltmeter, AnalogGauge * ammeter, AnalogGauge * effortmeter);
     ~TopGauges_Controller();
 
+    void turnOffGauges();
+    void turnOnGauges();
+
 public slots:
     void updateEffort(double effort);
     void updateVolts(double effort);

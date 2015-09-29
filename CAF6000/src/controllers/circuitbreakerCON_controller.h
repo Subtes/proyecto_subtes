@@ -11,9 +11,6 @@ class CircuitBreakerCON_Controller : public QObject
 public:
     explicit CircuitBreakerCON_Controller(SubteStatus *subte,SingleButton *button=0);
     ~CircuitBreakerCON_Controller();
-    
-signals:
-    void pressedCON();
 
 public slots:
     void pressCircuitBreakerCON();

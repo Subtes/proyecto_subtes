@@ -24,12 +24,11 @@ public slots:
     void disableScreen();
     void resetControls();
     void loadState(int state);
-    void keyON();
-    void keyOFF();
+    void atpKeyON();
+    void atpKeyOFF();
 
 private:
     Ui::BoardTop *ui;
-
     TopBoardConnectors_Controller *m_connectors;
     TopGauges_Controller *m_topGauges;
     Key_TopBoard_Controller *m_keyTopBoard;

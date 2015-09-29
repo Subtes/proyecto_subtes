@@ -35,6 +35,9 @@ public slots:
     void bypassFrenoON();
     void bypassFrenoOFF();
 
+    void turnOnWidgets();
+    void turnOffWidgets();
+
 private:
     Ui::BoardCenter *ui;
 

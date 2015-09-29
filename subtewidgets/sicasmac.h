@@ -49,7 +49,6 @@ public slots:
        void turnInhabFailure(int coche);
        void turnOffDoors(int coche);
        void turnOnDoors(int coche);
-       //NUEVO
        void sigPosicionSicas();
        void antPositionSicas();
        void endRenglonSicas();

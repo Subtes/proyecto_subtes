@@ -45,7 +45,6 @@ void TopBoardConnectors_Controller::setConmutadorPuestaServicio(SingleButton *co
     m_arranqueCon->setClickeable(false);
 
     m_conmutadorPuestaServicioStatus = false;
-    m_conmutadorPuestaServicioStatus = false;
     m_subte->setConmutadorPuestaServicio(m_conmutadorPuestaServicioStatus);
 
     connect(m_conmutador,SIGNAL(buttonPressed()),this,SLOT(conmutadorPuestaServicioPressed()));
@@ -385,105 +384,36 @@ void TopBoardConnectors_Controller::reset(){
     }
 }
 
-void TopBoardConnectors_Controller::setNivel(int n){
-    m_nivel = n;
-}
-
 void TopBoardConnectors_Controller::resetToApagado(){
-    m_batteryCon->setClickeable(true);
-    m_batteryDes->setClickeable(false);
-    m_batteryCon->turnOff();
-    m_batteryDes->turnOn();
-    m_subte->setBatteryConnector(false);
-
-    m_conmutadorPuestaServicioStatus = false;
+    batteryDesPressed();
+    m_conmutadorPuestaServicioStatus = true;
+    m_enMarcha = false;
     m_conmutador->turnOff();
-    m_subte->setConmutadorPuestaServicio(m_conmutadorPuestaServicioStatus);
-    m_arranqueCon->setClickeable(false);
-    m_arranqueDes->setClickeable(false);
-    m_luzLlaveCon->turnOn();
-    m_luzLlaveDes->turnOff();
-    m_arranqueCon->turnOff();
-    m_arranqueDes->turnOff();
-
-    m_subte->setPantographConnector(false);
-    m_pantographCon->setClickeable(true);
-    m_pantographDes->setClickeable(false);
-    m_pantographCon->turnOff();
-    m_pantographDes->turnOn();
-
-    m_subte->setCompressorAuxConnector(false);
-    m_compressorAuxCon->setClickeable(true);
-    m_compressorAuxDes->setClickeable(false);
-    m_compressorAuxCon->turnOff();
-    m_compressorAuxDes->turnOn();
-
-    m_subte->setConverterConnector(false);
-    m_converterCon->setClickeable(true);
-    m_converterDes->setClickeable(false);
-    m_converterCon->turnOff();
-    m_converterDes->turnOn();
-
-    m_subte->setMainCompressorConnector(false);
-    m_mainCompressorCon->setClickeable(true);
-    m_mainCompressorDes->setClickeable(false);
-    m_mainCompressorCon->turnOff();
-    m_mainCompressorDes->turnOn();
-
-    m_subte->setLightingConnector(false);
-    m_lightingCon->setClickeable(true);
-    m_lightingDes->setClickeable(false);
-    m_lightingCon->turnOff();
-    m_lightingDes->turnOn();
-
-    m_subte->setAirConnector(false);
-    m_airCon->setClickeable(true);
-    m_airDes->setClickeable(false);
-    m_airCon->turnOff();
-    m_airDes->turnOn();
-
-    m_subte->setMegaphoneConnector(false);
-    m_megaphoneCon->setClickeable(true);
-    m_megaphoneDes->setClickeable(false);
-    m_megaphoneCon->turnOff();
-    m_megaphoneDes->turnOn();
-
-    m_subte->setParkingBrakeConnector(true);
-    m_parkingBrakeCon->setClickeable(false);
-    m_parkingBrakeDes->setClickeable(true);
-    m_parkingBrakeCon->turnOn();
-    m_parkingBrakeDes->turnOff();
-
+    conmutadorPuestaServicioPressed();
+    pantographDesPressed();
+    compressorAuxDesPressed();
+    converterDesPressed();
+    mainCompressorDesPressed();
+    lightingDesPressed();
+    airDesPressed();
+    megaphoneDesPressed();
+    parkingBrakeConPressed();
     m_lastState = APAGADO;
 }
 
 void TopBoardConnectors_Controller::resetToMarcha(){
-
-    resetToApagado();
-
-    m_batteryCon->setClickeable(false);
-    m_batteryDes->setClickeable(true);
-    m_batteryCon->turnOn();
-    m_batteryDes->turnOff();
-    m_subte->setBatteryConnector(true);
-
-    m_subte->setParkingBrakeConnector(false);
-    m_parkingBrakeCon->setClickeable(true);
-    m_parkingBrakeDes->setClickeable(false);
-    m_parkingBrakeCon->turnOff();
-    m_parkingBrakeDes->turnOn();
-
+    batteryConPressed();
     m_conmutadorPuestaServicioStatus = false;
     m_enMarcha = true;
-    m_conmutador->turnOff();
-    m_subte->setConmutadorPuestaServicio(m_conmutadorPuestaServicioStatus);
-    m_arranqueCon->setClickeable(false);
-    m_arranqueDes->setClickeable(false);
-    m_luzLlaveCon->turnOn();
-    m_luzLlaveDes->turnOff();
-    m_arranqueCon->turnOff();
-    m_arranqueDes->turnOff();
-
+    m_conmutador->turnOn();
+    conmutadorPuestaServicioPressed();
+    pantographConPressed();
+    compressorAuxConPressed();
+    converterConPressed();
+    mainCompressorConPressed();
+    lightingConPressed();
+    airConPressed();
+    megaphoneConPressed();
+    parkingBrakeDesPressed();
     m_lastState = EN_MARCHA;
-
 }

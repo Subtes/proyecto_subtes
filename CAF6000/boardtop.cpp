@@ -14,8 +14,8 @@ BoardTop::BoardTop(QWidget *parent, SubteStatus * subte, EventHandler *eventHand
     connect(m_eventHandler,SIGNAL(controlEnable()),this,SLOT(enableScreen()));
     connect(m_eventHandler,SIGNAL(controlReset()),this,SLOT(resetControls()));
     connect(m_eventHandler,SIGNAL(cargarEstado(int)),this,SLOT(loadState(int)));
-    connect(m_eventHandler,SIGNAL(kPressed()),this,SLOT(keyON()));
-    connect(m_eventHandler,SIGNAL(lPressed()),this,SLOT(keyOFF()));
+    connect(m_eventHandler,SIGNAL(kPressed()),this,SLOT(atpKeyON()));
+    connect(m_eventHandler,SIGNAL(lPressed()),this,SLOT(atpKeyOFF()));
 
     m_connectors = NULL;
     m_topGauges = NULL;
@@ -34,9 +34,6 @@ void BoardTop::startBoard()
     ui->seta->setClearColor(Qt::transparent);
     ui->seta->setAttribute(Qt::WA_AlwaysStackOnTop);
 
-  //  ui->llaveTecho->setClearColor(Qt::transparent);
-   // ui->llaveTecho->setAttribute(Qt::WA_AlwaysStackOnTop);
-
     m_connectors = new TopBoardConnectors_Controller(m_subte);
     m_connectors->setBattery(ui->bateriaCON,ui->bateriaDES);
     m_connectors->setPantograph(ui->pantografoCON,ui->pantografoDES);
@@ -50,7 +47,6 @@ void BoardTop::startBoard()
     m_connectors->setParkingBrake(ui->frenoCON,ui->frenoDES);
 
     m_topGauges = new TopGauges_Controller(m_subte,ui->voltmeter,ui->ammeter,ui->effortmeter);
-
     m_keyTopBoard = new Key_TopBoard_Controller(m_subte,ui->llaveTecho, m_tractionHardware);
 
     this->setEnabled(false);
@@ -69,7 +65,6 @@ void BoardTop::disableScreen()
 
 void BoardTop::resetControls(){
     loadState(lastState);
-    m_keyTopBoard->resetToOff();
 }
 
 /**
@@ -81,19 +76,23 @@ void BoardTop::loadState(int state)
     if(state == APAGADO){
         lastState = APAGADO;
         m_connectors->setEstado(APAGADO);
+        m_keyTopBoard->keyOFF();
+        m_topGauges->turnOffGauges();
 
     } else if(state== EN_MARCHA){
         lastState = EN_MARCHA;
         m_connectors->setEstado(EN_MARCHA);
+        m_keyTopBoard->keyON();
+        m_topGauges->turnOnGauges();
         m_keyTopBoard->onKeyHD();
     }
     m_connectors->reset();
 }
 
-void BoardTop::keyON(){
+void BoardTop::atpKeyON(){
     m_keyTopBoard->keyTurnON();
 }
 
-void BoardTop::keyOFF(){
+void BoardTop::atpKeyOFF(){
     m_keyTopBoard->keyTurnOFF();
 }

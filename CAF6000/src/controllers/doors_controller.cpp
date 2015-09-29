@@ -57,6 +57,15 @@ void Doors_Controller::turnOff()
     m_selectLeftDoors->setClickeable(false);
     m_selectRightDoors->setClickeable(false);
     m_silbato->setClickeable(false);
+
+    m_closeLeftDoors->setLighted(false);
+    m_closeRightDoors->setLighted(false);
+    m_openLeftDoors->setLighted(false);
+    m_openRightDoors->setLighted(false);
+    m_selectLeftDoors->setLighted(false);
+    m_selectRightDoors->setLighted(false);
+    m_silbato->setLighted(false);
+
     reset();
 }
 
@@ -65,6 +74,15 @@ void Doors_Controller::turnOn()
     m_selectLeftDoors->setClickeable(true);
     m_selectRightDoors->setClickeable(true);
     m_silbato->setClickeable(true);
+
+    m_closeLeftDoors->setLighted(true);
+    m_closeRightDoors->setLighted(true);
+    m_openLeftDoors->setLighted(true);
+    m_openRightDoors->setLighted(true);
+    m_selectLeftDoors->setLighted(true);
+    m_selectRightDoors->setLighted(true);
+    m_silbato->setLighted(true);
+
     reset();
 }
 
@@ -92,10 +110,8 @@ void Doors_Controller::enableRightPanel(){
 
 void Doors_Controller::updateLeft(){
     if(m_subte->leftDoors()){
-        //m_closeLeftDoors->turnOff();
         m_openLeftDoors->turnOn();
     }else{
-        //m_closeLeftDoors->turnOn();
         m_openLeftDoors->turnOff();
     }
     m_closeLeftDoors->setClickeable(m_subte->leftDoors());
@@ -104,10 +120,8 @@ void Doors_Controller::updateLeft(){
 
 void Doors_Controller::updateRight(){
     if(m_subte->rightDoors()){
-        //m_closeRightDoors->turnOff();
         m_openRightDoors->turnOn();
     }else{
-        //m_closeRightDoors->turnOn();
         m_openRightDoors->turnOff();
     }
     m_closeRightDoors->setClickeable(m_subte->rightDoors());
@@ -116,20 +130,16 @@ void Doors_Controller::updateRight(){
 
 void Doors_Controller::updatePanel(bool b){
     if(m_subte->leftDoors()){
-        //m_closeLeftDoors->turnOff();
         m_openLeftDoors->turnOn();
     }else{
-        //m_closeLeftDoors->turnOn();
         m_openLeftDoors->turnOff();
     }
     m_closeLeftDoors->setClickeable(m_subte->leftDoors());
     m_openLeftDoors->setClickeable(!m_subte->leftDoors());
 
     if(m_subte->rightDoors()){
-        //m_closeRightDoors->turnOff();
         m_openRightDoors->turnOn();
     }else{
-        //m_closeRightDoors->turnOn();
         m_openRightDoors->turnOff();
     }
     m_closeRightDoors->setClickeable(m_subte->rightDoors());
