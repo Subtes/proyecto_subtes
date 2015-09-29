@@ -13,10 +13,9 @@ class Failures_Controller : public QObject
 
 private:
     SubteStatus *m_subte;
-    std::string m_lastFailure;
-
-    bool inFailure();
-    void resolveFailure(std::string f);
+    bool m_cscpFailing;
+    bool m_brakeFailing;
+    bool m_tractionFailing;
 
 public:
     Failures_Controller(SubteStatus *subte);

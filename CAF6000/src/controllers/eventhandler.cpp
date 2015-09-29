@@ -80,12 +80,12 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
         m_splash4->setDisabled(true);
 
 
-        }else{
-                m_splash1 = new QSplashScreen(m_imageSplash);
-                m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
-                m_splash1->showMaximized();
-                m_splash1->setDisabled(true);
-            }
+    }else{
+        m_splash1 = new QSplashScreen(m_imageSplash);
+        m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
+        m_splash1->showMaximized();
+        m_splash1->setDisabled(true);
+    }
 }
 
 EventHandler::~EventHandler(){
@@ -112,7 +112,7 @@ void EventHandler::notifyValueChanged(std::string key, std::string value)
 }
 
 void EventHandler::processValueChanged(std::string host, std::string key, std::string value){
-   qDebug() << "processValueChanged:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() ;
+    qDebug() << "processValueChanged:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() ;
 
     if(key.compare("i_iniciar_simulador") == 0){
         //Cargar Splash
@@ -264,7 +264,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_seta_emergencia_6","des");
             m_eNetClient->CambiarValorClave("c_llave_atp","des");
 
-
             Sleep(1000);
             emit closeApp();
         }
@@ -330,17 +329,17 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             QStringList parameters = message.split(";");
             std::string state = parameters.at(1).toStdString();
 
-                if (state.compare("1")==0){
-                    emit departureEstation();
-                    qDebug() << "senial salida anden recibida, 1";
-                }
+            if (state.compare("1")==0){
+                emit departureEstation();
+                qDebug() << "senial salida anden recibida, 1";
+            }
         }catch(...){
             qDebug()<<"Error en parametros clave;valor recibidos";
         }
     }
 
     else if(key.compare("i_cargar_estado") == 0){
-        int intState;
+        int intState = -1; //default - ningun estado
         if (value.compare("apagado") == 0){
             intState = 0;
         } else if(value.compare("puesta_servicio") == 0){
@@ -375,7 +374,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_subte->updatePreassureWhite(std::stod(value));
         }
         catch(...){
-             qDebug() << "presion de frenado incorrecta." ;
+            qDebug() << "presion de frenado incorrecta." ;
         }
     }
 
@@ -423,7 +422,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     }
 
     else if(key.compare("i_averia") == 0){
-        qDebug() << "averia recibida." ;
+        qDebug() << "i_averia recibido." ;
         m_failures->setFailure(value);
     }
 
@@ -438,7 +437,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         QString mensaje = value.c_str();
         emit cargarMensajeCocheSicas(mensaje);
     }
-
 }
 
 void EventHandler::processKeyPressed(DWORD k)
