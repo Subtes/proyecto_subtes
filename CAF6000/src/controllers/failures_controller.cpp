@@ -3,7 +3,9 @@
 Failures_Controller::Failures_Controller(SubteStatus *subte)
 {
     m_subte = subte;
-    m_lastFailure = "sin_averia";
+    m_brakeFailing = false;
+    m_cscpFailing = false;
+    m_tractionFailing = false;
 }
 
 Failures_Controller::~Failures_Controller()
@@ -13,96 +15,61 @@ Failures_Controller::~Failures_Controller()
 
 void Failures_Controller::setFailure(std::string f)
 {
-    QString mensaje = QString(f.c_str());
-    QStringList parametros = mensaje.split(";");
-    if(parametros.at(1).compare("sin_averia") == 0){
-        qDebug() << "sin_averia" ;
-        if(!this->inFailure())
-        {
-            resolveFailure(m_lastFailure);
-            qDebug() << "sin_averia" ;
+    try{
+        QString mensaje = QString(f.c_str());
+        QStringList parametros = mensaje.split(";");
+        QString failureCSCP = parametros.at(1);
+        QString failureBrake = parametros.at(3);
+        QString failureTraction = parametros.at(2);
+
+        if(failureCSCP.compare("ok") == 0){
+            if(m_cscpFailing){
+                m_subte->resolveCSCPFailure();
+                m_cscpFailing = false;
+                qDebug() << "failureCSCP // ok //" ;
+            }
+        }else if(failureCSCP.compare("falla") == 0){
+            if(!m_cscpFailing){
+                m_subte->setCSCPFailure();
+                m_cscpFailing = true;
+                qDebug() << "failureCSCP XX averia XX" ;
+            }
+        }else{
+            qDebug() << "ERROR EN EL PARSEO DEL VALOR DE FALLA DEL CSCP";
         }
-    }
 
-    else if((parametros.at(1).compare("CursoNormalMasCF1")==0) || (parametros.at(1).compare("CursoNormalMasCF1P2")==0)){
-        m_lastFailure = "coche_frenado_1";
-        m_subte->setTractionFailure();
-    }
+        if(failureBrake.compare("ok") == 0){
+            if(m_brakeFailing){
+                m_subte->resolveBrakeFailure();
+                m_brakeFailing = false;
+                qDebug() << "failureBrake // ok //" ;
+            }
+        }else if(failureBrake.compare("falla") == 0){
+            if(!m_brakeFailing){
+                m_subte->setBrakeFailure();
+                m_brakeFailing = true;
+                qDebug() << "failureBrake XX averia XX" ;
+            }
+        }else{
+            qDebug() << "ERROR EN EL PARSEO DEL VALOR DE FALLA DE FRENOS";
+        }
 
-    else if(parametros.at(1).compare("CursoNormalMasCF2")==0){
-        m_lastFailure = "coche_frenado_2";
-        m_subte->setTractionFailure();
-        m_subte->setBrakeFailure();
-        m_subte->setCSCPFailure();
-    }
-
-    else if((parametros.at(1).compare("CursoNormalMasHL1")==0) || (parametros.at(1).compare("CursoNormalMasHL1P2")==0)){
-        m_lastFailure = "hilo_lazo_1";
-        m_subte->setBrakeFailure();
-    }
-
-    else if((parametros.at(1).compare("CursoNormalMasHL2")==0) || (parametros.at(1).compare("CursoNormalMasHL2P2")==0)){
-        m_lastFailure = "hilo_lazo_2";
-        m_subte->setBrakeFailure();
-        m_subte->setCSCPFailure();
-    }
-
-    else if(parametros.at(1).compare("hilo_lazo_3")==0){
-        m_lastFailure = "hilo_lazo_3";
-        m_subte->setBrakeFailure();
-        m_subte->setCSCPFailure();
-    }
-
-    else if(parametros.at(1).compare("hilo_lazo_4")==0){
-        m_lastFailure = "hilo_lazo_4";
-        m_subte->setTractionFailure();
-        m_subte->setBrakeFailure();
-        m_subte->setCSCPFailure();
-    }
-
-    else if(parametros.at(1).compare("hilo_lazo_5")==0){
-        m_lastFailure = "hilo_lazo_5";
-        m_subte->setTractionFailure();
-        m_subte->setBrakeFailure();
-        m_subte->setCSCPFailure();
+        if(failureTraction.compare("ok") == 0){
+            if(m_tractionFailing){
+                m_subte->resolveTractionFailure();
+                m_tractionFailing = false;
+                qDebug() << "failureTraction // ok //" ;
+            }
+        }else if(failureTraction.compare("falla") == 0){
+            if(!m_tractionFailing){
+                m_subte->setTractionFailure();
+                m_tractionFailing = true;
+                qDebug() << "failureTraction XX averia XX" ;
+            }
+        }else{
+            qDebug() << "ERROR EN EL PARSEO DEL VALOR DE FALLA DE TRACCION";
+        }
+    } catch (...) {
+        qDebug() << "ERROR EN EL PARSEO DE FALLAS";
     }
 }
-
-bool Failures_Controller::inFailure(){
-    return m_lastFailure.compare("sin_averia") == 0;
-}
-
-void Failures_Controller::resolveFailure(std::string f){
-    if(f.compare("coche_frenado_1")==0){
-        m_subte->resolveTractionFailure();
-    }
-
-    else if(f.compare("coche_frenado_2")==0){
-        m_subte->resolveTractionFailure();
-    }
-
-    else if(f.compare("hilo_lazo_1")==0){
-        m_subte->resolveBrakeFailure();
-    }
-
-    else if(f.compare("hilo_lazo_2")==0){
-        m_subte->resolveBrakeFailure();
-        m_subte->resolveCSCPFailure();
-    }
-
-    else if(f.compare("hilo_lazo_3")==0){
-        m_subte->resolveBrakeFailure();
-        m_subte->resolveCSCPFailure();
-    }
-
-    else if(f.compare("hilo_lazo_4")==0){
-        m_subte->resolveTractionFailure();
-    }
-
-    else if(f.compare("hilo_lazo_5")==0){
-        m_subte->resolveTractionFailure();
-    }
-
-    m_lastFailure = "sin_averia";
-}
-
