@@ -1,25 +1,25 @@
 #include "seta_controller.h"
 
-Seta_Controller::Seta_Controller(SubteStatus * modelo, Seta_Button * view)
+Seta_Controller::Seta_Controller(SubteStatus * modelo, Seta_Button * view, TractionHardware *th)
 {
     m_setaButton = view;
     m_modelo = modelo;
+    m_tractionHardware = th;
 
     connect(m_setaButton,SIGNAL(m_pressed()),this, SLOT(pushSeta()));
     connect(m_setaButton, SIGNAL(m_released()),this, SLOT(pullSeta()));
+    connect(m_tractionHardware,SIGNAL(seta(int)),this,SLOT(processValue(int)));
 
 }
 
 void Seta_Controller::pushSeta(){
     //qDebug() << "Entro en controller.pushSeta";
     m_modelo->setaActivated();
-    //emit this->setaActivate();
 }
 
 void Seta_Controller::pullSeta(){
     //qDebug() << "Entro en controller.pullSeta";
     m_modelo->setaDeactivated();
-    //emit this->setaDeactivated(); OJOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 }
 
 QVariant Seta_Controller::isPressed(){
@@ -48,3 +48,12 @@ void Seta_Controller::resetToOff()
     m_setaButton->setOff();
 }
 
+void Seta_Controller::processValue(int v){
+    if (v==1){
+        m_modelo->setaActivated();
+        setaPressed();
+    }else if (v==0){
+        m_modelo->setaDeactivated();
+        setaReleased();
+    }
+}

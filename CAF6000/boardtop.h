@@ -33,6 +33,7 @@ private:
     TopBoardConnectors_Controller *m_connectors;
     TopGauges_Controller *m_topGauges;
     Key_TopBoard_Controller *m_keyTopBoard;
+    TractionHardware *m_tractionHardware;
 };
 
 #endif // BOARDTOP_H

@@ -526,7 +526,8 @@ void EventHandler::processKeyPressed(DWORD k)
         qDebug() << "6 key pressed";
     } else if ( k == _SIETE && !SIETE_down  ){
         SIETE_down = true;
-        this->notifyValueChanged("c_modo_conduccion","atp");
+        //this->notifyValueChanged("c_modo_conduccion","atp");
+        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_cargar_estado", "puesta_servicio");
         qDebug() << "7 key pressed";
     } else if ( k == _OCHO && !OCHO_down  ){
         OCHO_down = true;

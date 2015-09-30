@@ -8,7 +8,6 @@ TractionLever::TractionLever(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect (ui->verticalSlider,SIGNAL(valueChanged(int)),this,SLOT(processValueChanged(int)));
     connect (ui->verticalSlider,SIGNAL(valueChanged(int)),this,SIGNAL(positionChanged(int)));
     connect (ui->verticalSlider,SIGNAL(sliderPressed()),this,SIGNAL(hvPressed()));
     connect (ui->verticalSlider,SIGNAL(sliderReleased()),this,SIGNAL(hvReleased()));
@@ -24,17 +23,3 @@ TractionLever::~TractionLever()
     delete ui;
 }
 
-void TractionLever::processValueChanged(int value){
-    if(value > 15){
-        int tr = static_cast<int>((((double)value-15.0)/85.0)*100.0);
-        emit traction(tr);
-    }else if((value <= 15)&&(value >= -15)){
-        emit traction(0);
-        emit brake(0);
-    }else if ((value < -15) && (value >= -95)){
-        int br = static_cast<int>((((double)((-1)*value)-15.0)/80.0)*100.0);
-        emit brake(br);
-    }else if (value < -95){
-        emit emergencyBrake();
-    }
-}
