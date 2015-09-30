@@ -27,9 +27,12 @@ public:
     void setFailure6(QUrl f6);
     void setStartTrain(QUrl at1);
     void setEndTrain(QUrl atend);
-    void actualizarTamArreRenglon(int finRenglon, int indiceArre);
+    void actualizarTamArreRenglon(int finRenglon);
 
-
+signals:
+    onPressSigRow();
+    onPressAntRow();
+    sicasOk();
 
 protected:
     Ui::SicasMac *ui;
@@ -40,13 +43,25 @@ public slots:
        void stopBlink(int failure);
        void textEditSicas(QString pos1,QString pos2,QString pos3, int index);
        void insertTrainSicas(QString coche, QString estFreno);
-       void insertDoorsSicas(QString doors, int tren);
        void turnOffFailure(int coche);
        void turnOnFailure(int coche);
        void turnBlinkFailure(int coche);
        void turnInhabFailure(int coche);
        void turnOffDoors(int coche);
        void turnOnDoors(int coche);
+       //NUEVO
+       void sigPosicionSicas();
+       void antPositionSicas();
+       void endRenglonSicas();
+       void initRenglonSicas();
+       void turnOnSiguiente();
+       void turnOffSiguiente();
+       void turnOnAnterior();
+       void turnOffAnterior();
+       int getPosActualRenglon();
+       void turnOnSicas();
+       void turnOffSicas();
+
 };
 
 #endif // SICASMAC_H

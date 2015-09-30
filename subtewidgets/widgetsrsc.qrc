@@ -121,5 +121,6 @@
         <file>resources/sicas_imgError.png</file>
         <file>resources/sicas_doors.png</file>
         <file>resources/sicas_renglon.png</file>
+        <file>resources/inicio_sicas.png</file>
     </qresource>
 </RCC>
