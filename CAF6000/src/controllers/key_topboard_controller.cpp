@@ -1,11 +1,18 @@
 #include "key_topboard_controller.h"
 
-Key_TopBoard_Controller::Key_TopBoard_Controller(SubteStatus *modelo, LlaveTecho *view)
+Key_TopBoard_Controller::Key_TopBoard_Controller(SubteStatus *modelo, LlaveTecho *view, TractionHardware * th)
 {
     m_keyButton = view;
     m_modelo = modelo;
+    m_tractionHardware = th;
+
+    m_checkJ = new QTimer();
+    m_checkJ->setInterval(50);
+
     connect(m_keyButton,SIGNAL(kHardPressed()),this, SLOT(keyON()));
     connect(m_keyButton, SIGNAL(lHardPressed()),this, SLOT(keyOFF()));
+    connect(m_tractionHardware,SIGNAL(processKeyTop(int)),this,SLOT(processKeyTop(int)));
+    connect(m_checkJ,SIGNAL(timeout()),m_tractionHardware,SLOT(processKeyTop()));
 }
 
 void Key_TopBoard_Controller::keyON(){
@@ -44,5 +51,22 @@ void Key_TopBoard_Controller::resetToOff()
 QVariant Key_TopBoard_Controller::isON(){
     // return keyATP's state from the model
     return(m_modelo->keyTopBoard());
+}
+
+void Key_TopBoard_Controller::processKeyTop(int k){
+    if (k==1){
+        m_modelo->keyActivated();
+        qDebug()<< "LLave (Joystick) Techo: ON";
+    }else{
+        m_modelo->keyDeactivated();
+    }
+}
+
+void Key_TopBoard_Controller::onKeyHD(){
+    m_checkJ->start();
+}
+
+void Key_TopBoard_Controller::offKeyHD(){
+    m_checkJ->stop();
 }
 

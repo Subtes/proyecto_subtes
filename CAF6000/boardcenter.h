@@ -19,6 +19,8 @@ class BoardCenter : public BaseBoard
 
 public:
     explicit BoardCenter(QWidget *parent = 0, SubteStatus *subte = 0, EventHandler *eventHandler = 0);
+    void onCheckBypass();
+    void offCheckBypass();
     ~BoardCenter();
 
 public slots:
@@ -42,6 +44,9 @@ private:
     BrakeBypass_Controller          *m_brakesBypass;
     SpeedGaugeLeds_Controller       *m_speedGauge;
     Doors_Controller                *m_doors;
+    TractionHardware                *m_tractionHardware;
+
+    QTimer * m_checkBypass;
 };
 
 #endif // BOARDCENTER_H

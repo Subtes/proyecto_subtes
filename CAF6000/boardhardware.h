@@ -45,6 +45,7 @@ private:
     Rana_Controller *m_rana;
     HombreMuerto_Controller *m_hombreMuerto;
     Seta_Controller *m_setaButton;
+    TractionHardware *m_tractionHardware;
 };
 
 #endif // BOARDHARDWARE_H

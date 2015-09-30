@@ -1,9 +1,10 @@
 #include "tractionbypass_controller.h"
 
-TractionBypass_Controller::TractionBypass_Controller(SubteStatus *subte, SingleButton *button)
+TractionBypass_Controller::TractionBypass_Controller(SubteStatus *subte, SingleButton *button, TractionHardware *th)
 {
     m_subte = subte;
     m_button = button;
+    m_tractionHardware = th;
 
     m_button->setNestled(false);
     m_button->setLighted(true);
@@ -12,6 +13,8 @@ TractionBypass_Controller::TractionBypass_Controller(SubteStatus *subte, SingleB
 
     m_button->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));    
 
+    connect(m_tractionHardware,SIGNAL(tractionBypassPressed()),this,SLOT(pressBypass()));
+    connect(m_tractionHardware,SIGNAL(tractionBypassReleased()),this,SLOT(releaseBypass()));
     connect(m_button,SIGNAL(buttonPressed()),this,SLOT(pressBypass()));
     connect(m_button,SIGNAL(buttonReleased()),this,SLOT(releaseBypass()));
     connect(m_subte,SIGNAL(CSCPChanged(bool)),this,SLOT(updateStatus(bool)));

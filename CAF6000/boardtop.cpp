@@ -1,3 +1,5 @@
+#include <tractionhardware.h>
+
 #include "boardtop.h"
 #include "ui_boardtop.h"
 
@@ -17,6 +19,7 @@ BoardTop::BoardTop(QWidget *parent, SubteStatus * subte, EventHandler *eventHand
 
     m_connectors = NULL;
     m_topGauges = NULL;
+    m_tractionHardware = new TractionHardware();
 }
 
 BoardTop::~BoardTop()
@@ -48,7 +51,7 @@ void BoardTop::startBoard()
 
     m_topGauges = new TopGauges_Controller(m_subte,ui->voltmeter,ui->ammeter,ui->effortmeter);
 
-    m_keyTopBoard = new Key_TopBoard_Controller(m_subte,ui->llaveTecho);
+    m_keyTopBoard = new Key_TopBoard_Controller(m_subte,ui->llaveTecho, m_tractionHardware);
 
     this->setEnabled(false);
 }
@@ -56,6 +59,7 @@ void BoardTop::startBoard()
 void BoardTop::enableScreen()
 {
     this->setEnabled(true);
+    m_keyTopBoard->onKeyHD();
 }
 
 void BoardTop::disableScreen()
@@ -81,6 +85,7 @@ void BoardTop::loadState(int state)
     } else if(state== EN_MARCHA){
         lastState = EN_MARCHA;
         m_connectors->setEstado(EN_MARCHA);
+        m_keyTopBoard->onKeyHD();
     }
     m_connectors->reset();
 }

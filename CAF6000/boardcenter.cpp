@@ -1,3 +1,5 @@
+#include <tractionhardware.h>
+
 #include "boardcenter.h"
 #include "ui_boardcenter.h"
 
@@ -13,6 +15,9 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eve
     m_brakesBypass = NULL;
     m_speedGauge = NULL;
     m_doors = NULL;
+    m_tractionHardware = new TractionHardware();
+    m_checkBypass = new QTimer();
+    m_checkBypass->setInterval(100);
 
     connect(m_eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(m_eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
@@ -24,6 +29,10 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eve
     connect(m_eventHandler,SIGNAL(masReleased()),this,SLOT(bypassTraccionOFF()));
     connect(m_eventHandler,SIGNAL(menosPressed()),this,SLOT(bypassFrenoON()));
     connect(m_eventHandler,SIGNAL(menosReleased()),this,SLOT(bypassFrenoOFF()));
+
+    connect(m_checkBypass,SIGNAL(timeout()),m_tractionHardware,SLOT(processBottonChanged()));
+
+    //m_checkBypass->start();
 }
 
 BoardCenter::~BoardCenter()
@@ -37,8 +46,8 @@ void BoardCenter::startBoard()
 
     m_wiper = new Wiper_Controller(m_subte,ui->wiper);;
     m_emergencyOverride = new EmergencyOverride_Controller(m_subte,ui->anulacionEmergencia);
-    m_tractionBypass = new TractionBypass_Controller(m_subte,ui->bypassTraccion);
-    m_brakesBypass = new BrakeBypass_Controller(m_subte,ui->bypassFreno);
+    m_tractionBypass = new TractionBypass_Controller(m_subte,ui->bypassTraccion, m_tractionHardware);
+    m_brakesBypass = new BrakeBypass_Controller(m_subte,ui->bypassFreno, m_tractionHardware);
     m_speedGauge = new SpeedGaugeLeds_Controller(m_subte,ui->velocimetro);
     m_doors = new Doors_Controller(m_subte, ui->abrirIzquierda, ui->cerrarIzquierda, ui->selectorIzquierda, ui->abrirDerecha, ui->cerrarDerecha, ui->selectorDerecha, ui->silbato);
 
@@ -58,6 +67,8 @@ void BoardCenter::startBoard()
     connect(ui->bypassFrenoTraccion,SIGNAL(pressed()),m_tractionBypass,SLOT(pressBypass()));
     connect(ui->bypassFrenoTraccion,SIGNAL(released()),m_brakesBypass,SLOT(bypassBrakeReleased()));
     connect(ui->bypassFrenoTraccion,SIGNAL(released()),m_tractionBypass,SLOT(releaseBypass()));
+
+    //m_checkBypass->stop();
 
 }
 
@@ -101,6 +112,8 @@ void BoardCenter::loadState(int state){
         ui->velocimetro->turnOn();
         ui->bypassFreno->turnOn();
         ui->bypassTraccion->turnOn();
+        m_checkBypass->start();
+
     }
 }
 
@@ -118,4 +131,12 @@ void BoardCenter::bypassTraccionON(){
 
 void BoardCenter::bypassTraccionOFF(){
     m_tractionBypass->releaseBypass();
+}
+
+void BoardCenter::onCheckBypass(){
+    m_checkBypass->start();
+}
+
+void BoardCenter::offCheckBypass(){
+    m_checkBypass->stop();
 }

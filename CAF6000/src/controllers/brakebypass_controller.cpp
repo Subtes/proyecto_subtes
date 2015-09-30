@@ -1,10 +1,11 @@
 #include "brakebypass_controller.h"
 
-BrakeBypass_Controller::BrakeBypass_Controller(SubteStatus *subte, SingleButton *button)
+BrakeBypass_Controller::BrakeBypass_Controller(SubteStatus *subte, SingleButton *button, TractionHardware *th)
     : Base_Controller(subte)
 {
     m_subte = subte;
     m_button = button;
+    m_tractionHardware = th;
 
     m_button->setNestled(false);
     m_button->setLighted(true);
@@ -18,6 +19,9 @@ BrakeBypass_Controller::BrakeBypass_Controller(SubteStatus *subte, SingleButton 
     connect(m_button,SIGNAL(buttonPressed()),this,SLOT(bypassBrakePressed()));
     connect(m_button,SIGNAL(buttonReleased()),this,SLOT(bypassBrakeReleased()));
     connect(m_subte,SIGNAL(hiloLazoChanged(bool)),this,SLOT(updateHiloLazoStatus(bool)));
+    connect(m_tractionHardware,SIGNAL(brakeBypassPressed()),this,SLOT(bypassBrakePressed()));
+    connect(m_tractionHardware,SIGNAL(brakeBypassReleased()),this,SLOT(bypassBrakeReleased()));
+
 }
 
 BrakeBypass_Controller::~BrakeBypass_Controller()
