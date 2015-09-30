@@ -32,7 +32,8 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eve
 
     connect(m_checkBypass,SIGNAL(timeout()),m_tractionHardware,SLOT(processBottonChanged()));
 
-    //m_checkBypass->start();
+    connect(m_subte,SIGNAL(bateriaCon()),this,SLOT(turnOnWidgets()));
+    connect(m_subte,SIGNAL(bateriaDes()),this,SLOT(turnOffWidgets()));
 }
 
 BoardCenter::~BoardCenter()
@@ -99,12 +100,13 @@ void BoardCenter::loadState(int state){
     ui->velocimetro->updateSpeed(0);
     ui->velocimetro->updateTargetSpeed(0);
 
+    m_brakesBypass->bypassBrakeReleased();
+    m_tractionBypass->releaseBypass();
+
     if(state == APAGADO){
         lastState = APAGADO;
         m_doors->turnOff();
         ui->velocimetro->turnOff();
-        ui->bypassFreno->turnOff();
-        ui->bypassTraccion->turnOff();
     }
     else if(state == EN_MARCHA){
         lastState = EN_MARCHA;
@@ -113,7 +115,6 @@ void BoardCenter::loadState(int state){
         ui->bypassFreno->turnOn();
         ui->bypassTraccion->turnOn();
         m_checkBypass->start();
-
     }
 }
 
@@ -139,4 +140,26 @@ void BoardCenter::onCheckBypass(){
 
 void BoardCenter::offCheckBypass(){
     m_checkBypass->stop();
+}
+
+void BoardCenter::turnOnWidgets()
+{
+    m_doors->turnOn();
+    ui->velocimetro->turnOn();
+    ui->bypassFreno->setLighted(true);
+    ui->bypassTraccion->setLighted(true);
+
+    m_brakesBypass->bypassBrakeReleased();
+    m_tractionBypass->releaseBypass();
+}
+
+void BoardCenter::turnOffWidgets()
+{
+    m_doors->turnOff();
+    ui->velocimetro->turnOff();
+    ui->bypassFreno->turnOff();
+    ui->bypassTraccion->turnOff();
+
+    ui->bypassFreno->setLighted(false);
+    ui->bypassTraccion->setLighted(false);
 }

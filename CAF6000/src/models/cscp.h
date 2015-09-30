@@ -17,6 +17,8 @@ private:
     bool m_rightDoorsPanel;
     bool m_leftDoorsPanel;
 
+    bool m_parkingBrake;
+
 public:
     CSCP();
     ~CSCP();
@@ -32,6 +34,8 @@ public:
     void closeRightDoors();
     bool averia() const;
     void setAveria(bool averia);
+    bool parkingBrake() const;
+    void setParkingBrake(bool parkingBrake);
 };
 
 #endif // CSCP_H

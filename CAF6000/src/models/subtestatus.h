@@ -65,6 +65,8 @@ signals:
     atpOn();
     atpOff();
     retentionBrakeChanged(bool status);
+    bateriaCon();
+    bateriaDes();
 
 public:
 
@@ -119,8 +121,8 @@ public slots:
     void openLeftDoors();
     void closeLeftDoors();
     void closeRightDoors();
-    void pressedCON();
-    void pressedDES();
+    void disyuntoresCon();
+    void disyuntoresDes();
     void hornOn();
     void hornOff();
     void emergencyOverridePressed();
@@ -164,6 +166,7 @@ public slots:
     void setAtpMode();
     void setAcopleMode();
     void setRetentionBrakeBypass(bool state);
+    void setSicasOk();
 };
 
 #endif // SUBTESTATUS_H

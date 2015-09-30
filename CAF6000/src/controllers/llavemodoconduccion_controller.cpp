@@ -17,13 +17,16 @@ LlaveModoConduccion_Controller::~LlaveModoConduccion_Controller()
 }
 
 void LlaveModoConduccion_Controller::setManiobraMode(){
+    m_llave->setManiobraMode();
     m_subte->setManiobraMode();
 }
 
 void LlaveModoConduccion_Controller::setAtpMode(){
+    m_llave->setAtpMode();
     m_subte->setAtpMode();
 }
 
 void LlaveModoConduccion_Controller::setAcopleMode(){
+    m_llave->setAcopleMode();
     m_subte->setAcopleMode();
 }

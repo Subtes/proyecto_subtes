@@ -11,13 +11,10 @@ CircuitBreakerDES_Controller::CircuitBreakerDES_Controller(SubteStatus *subte, S
 
     m_view->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
 
-    //connect(m_view,SIGNAL(buttonPressed()),this,SLOT(pressCircuitBreakerDES()));
-
 }
 
 void CircuitBreakerDES_Controller::pressCircuitBreakerDES(){
-    m_model->pressedDES();
-    //emit this->pressCircuitBreakerDES();
+    m_model->disyuntoresDes();
 }
 
 CircuitBreakerDES_Controller::~CircuitBreakerDES_Controller(){

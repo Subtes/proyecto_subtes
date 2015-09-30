@@ -19,12 +19,14 @@ void CSCP::reset()
     m_rightDoors = CLOSE;
     m_bypass = false;
     m_averia = false;
+    m_parkingBrake = false;
 }
 
 bool CSCP::evalCircuit()
 {
     if (m_bypass) return true;
     if(m_averia) return false;
+    if(m_parkingBrake) return false;
     return !m_leftDoors && !m_rightDoors;
 }
 
@@ -76,4 +78,14 @@ void CSCP::closeLeftDoors()
 void CSCP::closeRightDoors()
 {
     m_rightDoors = CLOSE;
+}
+
+bool CSCP::parkingBrake() const
+{
+    return m_parkingBrake;
+}
+
+void CSCP::setParkingBrake(bool parkingBrake)
+{
+    m_parkingBrake = parkingBrake;
 }

@@ -31,7 +31,8 @@ BrakeBypass_Controller::~BrakeBypass_Controller()
 void BrakeBypass_Controller::bypassBrakePressed()
 {
     m_subte->bypassBrake(true);
-    m_button->turnOn();
+    if(m_button->isLighted())
+        m_button->turnOn();
 }
 
 void BrakeBypass_Controller::bypassBrakeReleased()
@@ -42,9 +43,12 @@ void BrakeBypass_Controller::bypassBrakeReleased()
 
 void BrakeBypass_Controller::updateHiloLazoStatus(bool status)
 {
-    if(status)
-        m_button->turnOn();
-    else
-        m_button->turnOff();
+    if(m_button->isLighted()){
+        if(status){
+            m_button->turnOn();
+        }else{
+            m_button->turnOff();
+        }
+    }
 }
 

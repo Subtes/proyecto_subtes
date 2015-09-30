@@ -30,6 +30,7 @@ void FrenoRetencion_Controller::turnOn()
 
 void FrenoRetencion_Controller::turnOff()
 {
+    m_button->release();
     m_button->turnOff();
     m_subte->setRetentionBrakeBypass(m_button->buttonState());
 }

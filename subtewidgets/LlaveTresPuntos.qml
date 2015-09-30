@@ -7,22 +7,22 @@ Rectangle {
     color: "#00000000"
     border.color: "#00000000"
 
-    signal pos1();
-    signal pos2();
-    signal pos3();
+    signal pos1()
+    signal pos2()
+    signal pos3()
 
-    property int newRot: 0;
-    property int nextRot: 0;
+    property int newRot: 0
+    property int nextRot: 0
 
-    property int pos1stPosition: 0;
-    property int pos2ndPosition: -45;
-    property int pos3rdPosition: -90;
+    property int pos1stPosition: 0
+    property int pos2ndPosition: -45
+    property int pos3rdPosition: -90
 
-    property int pos1LimitBounce: -23;
-    property int pos2LimitBounce: -67;
+    property int pos1LimitBounce: -23
+    property int pos2LimitBounce: -67
 
-    property int rotLimitDown: 0;
-    property int rotLimitUp: -90;
+    property int rotLimitDown: 0
+    property int rotLimitUp: -90
 
     Image {
         id: bkg
@@ -83,20 +83,20 @@ Rectangle {
     }
 
     function setPos1(){
-        newRot = pos1stPosition;
-        selectorBack.start();
-        return ok
+        selector.newRot = selector.pos1stPosition
+        selector.nextRot = selector.pos1stPosition
+        selectorBack.start()
     }
 
     function setPos2(){
-        newRot = pos2ndPosition;
-        selectorBack.start();
-        return ok
+        selector.newRot = selector.pos2ndPosition
+        selector.nextRot = selector.pos2ndPosition
+        selectorBack.start()
     }
 
     function setPos3(){
-        newRot = pos3rdPosition;
-        selectorBack.start();
-        return ok
+        selector.newRot = selector.pos3rdPosition
+        selector.nextRot = selector.pos3rdPosition
+        selectorBack.start()
     }
 }

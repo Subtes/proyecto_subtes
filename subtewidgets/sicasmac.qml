@@ -100,9 +100,9 @@ Rectangle {
         width: 35
         height: 34
         onClicked: {
-           if ((valorRenglonActual > 0)){
-               mac_sicas.onPressAnt();
-           }
+            if ((valorRenglonActual > 0)){
+                mac_sicas.onPressAnt();
+            }
         }
     }
 
@@ -115,7 +115,7 @@ Rectangle {
         onClicked: {
             if ((valorRenglonActual > 0)){
                 mac_sicas.onPressAnt();
-           }
+            }
         }
     }
 
@@ -430,46 +430,6 @@ Rectangle {
         z: 5
         source: "resources/sicas_glass.png"
     }
-
-<<<<<<< 8170ba0729364188f086d3d27804fee4ce7126a7
-  }// FIN BACKGROUND
-
-
- function changeText(error1,trenes2,letra3,val){
-
-
-     console.log("1: " + error1 + " 2: " + trenes2 + " 3: " + letra3 + " v: " +val)
-         sicassinerror.opacity=0;
-         textoError[val].opacity =1;
-         textoError[val].text=error1;
-         trenConFalla[val].opacity =1;
-         trenConFalla[val].text = trenes2;
-         prioridadLetra[val].opacity =1;
-         prioridadLetra[val].text=letra3;
-         getColorText(error1,trenes2,letra3,val);
-  }
-
- function getColorText(error1,trenes2,letra3,val){
-     if(letra3=="A"){
-         textoError[val].color="red";
-         trenConFalla[val].color="red";
-          prioridadLetra[val].color="red";
-     }
-
-     if(letra3=="B"){
-         textoError[val].color="blue";
-         trenConFalla[val].color="blue";
-          prioridadLetra[val].color="blue";
-     }
-     if(letra3=="C"){
-         textoError[val].color="green";
-         trenConFalla[val].color="green";
-          prioridadLetra[val].color="green";
- }
- }
-
-
-=======
     Image {
         id: sicas_renglon
         x: 99
@@ -478,8 +438,6 @@ Rectangle {
         height: 13
         opacity: 0.5
         source: "resources/sicas_renglon.png"
->>>>>>> next, back, black image, conect
-
     }
 
     Image {
@@ -493,40 +451,17 @@ Rectangle {
         source: "resources/inicio_sicas.png"
     }
 
-<<<<<<< 8170ba0729364188f086d3d27804fee4ce7126a7
-         states: [
-             State {
-                 name: "con"
-                 PropertyChanges { target: f; opacity: 1;}
-             },
-             State {
-                 name: "des"
-                 PropertyChanges { target: f; opacity: 0;}
-             },
-             State {
-                 name: "inhab"
-                 PropertyChanges { target: f; opacity: 0.5;}
-             },
-             State {
-                 name: "int"
-                 PropertyChanges { target: blinkAnimation; running:true;}
-             }
-         ]
-=======
     function changeText(error1,trenes2,letra3,val){
-
-        if (val!=-1){
-            sicassinerror.opacity=0;
-            textoError[val].opacity =1;
-            textoError[val].text=error1;
-            trenConFalla[val].opacity =1;
-            trenConFalla[val].text = trenes2;
-            prioridadLetra[val].opacity =1;
-            prioridadLetra[val].text=letra3;
-            getColorText(error1,trenes2,letra3,val);
-        }
+        console.log("1: " + error1 + " 2: " + trenes2 + " 3: " + letra3 + " v: " +val)
+        sicassinerror.opacity=0;
+        textoError[val].opacity =1;
+        textoError[val].text=error1;
+        trenConFalla[val].opacity =1;
+        trenConFalla[val].text = trenes2;
+        prioridadLetra[val].opacity =1;
+        prioridadLetra[val].text=letra3;
+        getColorText(error1,trenes2,letra3,val);
     }
->>>>>>> next, back, black image, conect
 
     function getColorText(error1,trenes2,letra3,val){
         if(letra3=="A"){
@@ -547,394 +482,351 @@ Rectangle {
         }
     }
 
-    Repeater {
-        model: 6
-        delegate: Image {
-            id: f
-            width: 15
-            height: 23
-            opacity: 0
-            x:getXFailure(Math.floor(index/2),index)
-            y:getYFailure(Math.floor(index/2),index)
-            source: "resources/sicas_f.png"
-            antialiasing: true
-            smooth: true
+   Repeater {
+       model: 6
+       delegate: Image {
+           id: f
+           width: 15
+           height: 23
+           opacity: 0
+           x:getXFailure(Math.floor(index/2),index)
+           y:getYFailure(Math.floor(index/2),index)
+           source: "resources/sicas_f.png"
+           antialiasing: true
+           smooth: true
 
-            states: [
-                State {
-                    name: "con"
-                    PropertyChanges { target: f; opacity: 1;}
-                },
-                State {
-                    name: "des"
-                    PropertyChanges { target: f; opacity: 0;}
-                },
-                State {
-                    name: "inhab"
-                    PropertyChanges { target: f; opacity: 0.5;}
-                },
-                State {
-                    name: "int"
-                    PropertyChanges { target: blinkAnimation; running:true;}
-                }
-            ]
+           states: [
+               State {
+                   name: "con"
+                   PropertyChanges { target: f; opacity: 1;}
+               },
+               State {
+                   name: "des"
+                   PropertyChanges { target: f; opacity: 0;}
+               },
+               State {
+                   name: "inhab"
+                   PropertyChanges { target: f; opacity: 0.5;}
+               },
+               State {
+                   name: "int"
+                   PropertyChanges { target: blinkAnimation; running:true;}
+               }
+           ]
 
-            transitions: Transition {
-                PropertyAnimation { properties: "opacity"; duration: 100 }
-            }
+           transitions: Transition {
+               PropertyAnimation { properties: "opacity"; duration: 100 }
+           }
 
-            SequentialAnimation {
-                id: blinkAnimation
-                loops: Animation.Infinite
+           SequentialAnimation {
+               id: blinkAnimation
+               loops: Animation.Infinite
 
-                PropertyAnimation {
-                    properties: "opacity"
-                    to: 0
-                    duration: 200
-                    target: f
-                }
-                PauseAnimation { duration: 200 }
-                PropertyAnimation {
-                    properties: "opacity"
-                    to: 1
-                    duration: 200
-                    target: f
-                }
-                PauseAnimation { duration: 200 }
-            }
+               PropertyAnimation {
+                   properties: "opacity"
+                   to: 0
+                   duration: 200
+                   target: f
+               }
+               PauseAnimation { duration: 200 }
+               PropertyAnimation {
+                   properties: "opacity"
+                   to: 1
+                   duration: 200
+                   target: f
+               }
+               PauseAnimation { duration: 200 }
+           }
 
-        }
-        onItemAdded: failure[index] = item
-    }
-
-
-    function getXFailure(index,cantf){
-        if (cantf % 2 ==0){
-            return (57+(160*index));
-        }// par
-        return(199+(160*index)); // impar
-    }
-
-    function getYFailure(p,cantf){
-        if (cantf % 2 ==0)
-            return (126);
-        return (104);
-    }
-
-    function turnOffFailure(valF){
-        failure[valF].state = "des";
-    }
-
-    function turnOnFailure(valF){
-        failure[valF].state = "con";
-
-    }
-    function turnBlinkFailure(valF){
-        failure[valF].state = "int";
-
-    }
-    function turnInhabFailure(valF){
-        failure[valF].state = "inhab";
-
-    }
-
-    // REPEATER DE PANTALLA SICAS
-    Repeater {
-        model: 5
-        Text {
-            id: textoE
-            width: 114
-            height: 14
-            opacity: 1
-            x: getXTextError(index)
-            y: getYTextError(index)
-            text: qsTr("")
-            horizontalAlignment: Text.AlignLeft
-            font.family: "Arial"
-            font.pixelSize: 12
-            states: [
-                State {
-                    name: "on"
-                    PropertyChanges { target: textoE; opacity: 1;}
-                },
-                State {
-                    name: "off"
-                    PropertyChanges { target: textoE; opacity: 0;}
-                }
-            ]
-
-            transitions: Transition {
-                PropertyAnimation { properties: "opacity"; duration: 200 }
-            }
-        }
-        onItemAdded: textoError[index] = item
-    }
-    function getXTextError(p){
-        return(115)
-    }
-    function getYTextError(p){
-        return (180+(20*p))
-    }
-    // CAMBIAR 6 * 5 = 30
-
-    /*
-Repeater {
-    model:30
-    Text{
-         id: trenesE
-         width: 114
-         height: 14
-         opacity: 1
-         x: getXTrenesError(index)
-         y: getYTrenesError(index)
-         text: qsTr(" ")
-         horizontalAlignment: Text.AlignLeft
-         font.family: "Arial"
-         font.pixelSize: 12
-         states: [
-             State {
-                 name: "on"
-                 PropertyChanges { target: trenesE; opacity: 1;}
-             },
-             State {
-                 name: "off"
-                 PropertyChanges { target: trenesE; opacity: 0;}
-             }
-         ]
-
-         transitions: Transition {
-             PropertyAnimation { properties: "opacity"; duration: 200 }
-         }
-     }
-     onItemAdded: trenConFalla[index] = item
- }
-}
-*/
-
-    Repeater {
-        model: 5
-        Text {
-            id: trenesE
-            width: 114
-            height: 14
-            opacity: 1
-            x: getXTrenesError(index)
-            y: getYTrenesError(index)
-            text: qsTr("")
-            horizontalAlignment: Text.AlignLeft
-            font.family: "Arial"
-            font.pixelSize: 12
-            states: [
-                State {
-                    name: "on"
-                    PropertyChanges { target: trenesE; opacity: 1;}
-                },
-                State {
-                    name: "off"
-                    PropertyChanges { target: trenesE; opacity: 0;}
-                }
-            ]
-
-            transitions: Transition {
-                PropertyAnimation { properties: "opacity"; duration: 200 }
-            }
-        }
-        onItemAdded: trenConFalla[index] = item
-    }
-
-    function getXTrenesError(p){
-        return(280)
-    }
-
-    function getYTrenesError(p){
-        return (180+(20*p))
-    }
-
-
-    //REPEAT QUE GENERA CADA UNA DE LAS LETRAS
-
-
-    Repeater {
-        model: 5
-        Text {
-            id: prioLetra
-            width: 114
-            height: 14
-            opacity: 1
-            x: getXPrioLetra(index)
-            y: getYPrioLetra(index)
-            text: qsTr("")
-            horizontalAlignment: Text.AlignLeft
-            font.family: "Arial"
-            font.pixelSize: 12
-            states: [
-                State {
-                    name: "on"
-                    PropertyChanges { target: prioLetra; opacity: 1;}
-                },
-                State {
-                    name: "off"
-                    PropertyChanges { target: prioLetra; opacity: 0;}
-                }
-            ]
-
-            transitions: Transition {
-                PropertyAnimation { properties: "opacity"; duration: 200 }
-            }
-        }
-        onItemAdded: prioridadLetra[index] = item
-    }
-
-    function getXPrioLetra(p){
-        return(450)
-    }
-
-    function getYPrioLetra(p){
-        return (180+(20*p))
-    }
-
-
-    Repeater {
-        model: 48
-        Image {
-            id: puertastren
-            width: 12
-            height: 2
-            opacity: 0
-            x: getXpuertastren(index)
-            y: getYpuertastren(index)
-            source: "resources/sicas_doors.png"
-            antialiasing: true
-            smooth: true
-            states: [
-                State {
-                    name: "con"
-                    PropertyChanges { target: puertastren; opacity: 1;}
-                },
-                State {
-                    name: "des"
-                    PropertyChanges { target: puertastren; opacity: 0;}
-                },
-                State {
-                    name: "inhab"
-                    PropertyChanges { target: f; opacity: 0.5;}
-                },
-                State {
-                    name: "int"
-                    PropertyChanges { target: blinkAnimation2; running:true;}
-                }
-            ]
-
-            transitions: Transition {
-                PropertyAnimation { properties: "opacity"; duration: 100 }
-            }
-
-            SequentialAnimation {
-                id: blinkAnimation2
-                loops: Animation.Infinite
-
-                PropertyAnimation {
-                    properties: "opacity"
-                    to: 0
-                    duration: 200
-                    target: puertastren
-                }
-                PauseAnimation { duration: 200 }
-                PropertyAnimation {
-                    properties: "opacity"
-                    to: 1
-                    duration: 200
-                    target: puertastren
-                }
-            }
-        }
-        onItemAdded: puertasCoche[index] = item
-    }
-
-
-
-
-
-
-
-    function getXpuertastren(p){
-        var nroCoche = Math.floor(p/8);
-        return((75)+(nroCoche*63)+(34*Math.floor(nroCoche/2))+((p%4)*15));
-    }
-
-    function getYpuertastren(p){
-        var acum=(Math.floor(p/4)%2);
-        if (acum==0)
-            return (105);
-        return(145);
-    }
-    function turnOffDoors(valF){
-        puertasCoche[valF].state = "des";
-    }
-
-    function turnOnDoors(valF){
-        puertasCoche[valF].state = "con";
-    }
-    function actualizarTamArreRenglon(valorFin){
-        valorRenglonFin=valorFin;
-     }
-
-    // FUNCIONES QUE VERIFICAN LA POSICION DEL RENGLON sicas
-
-    function moverSelectorSig(){
-        if((sicas_renglon.y <256)&&(valorRenglonActual<=valorRenglonFin)){
-            sicas_renglon.y= sicas_renglon.y +20;
-            movimientoCursor();
-
-        }
-    }
-    function moverSelectorAnt(){
-        if(sicas_renglon.y >176){
-            sicas_renglon.y= sicas_renglon.y -20;
-            movimientoCursor();
-        }
-    }
-
-    function endRenglonSicas(){
-        sicas_renglon.y= 262;
-        valorRenglonActual--;
+       }
+       onItemAdded: failure[index] = item
    }
 
-    function initRenglonSicas(){
-        sicas_renglon.y= 182;
-    }
+   function getXFailure(index,cantf){
+       if (cantf % 2 ==0){
+           return (57+(160*index));
+       }// par
+       return(199+(160*index)); // impar
+   }
 
-    function nextPositionSicas(){
-        sicas_renglon.y= sicas_renglon.y +20;
-    }
+   function getYFailure(p,cantf){
+       if (cantf % 2 ==0)
+           return (126);
+       return (104);
+   }
 
-    function backPositionSicas(){
-        sicas_renglon.y= sicas_renglon.y -20;
-         valorRenglonActual--;
-    }
+   function turnOffFailure(valF){
+       failure[valF].state = "des";
+   }
 
-    function turnOnSiguiente(){
-        siguiente.opacity=1;
-    }
+   function turnOnFailure(valF){
+       failure[valF].state = "con";
 
-    function turnOffSiguiente(){
-        siguiente.opacity=0;
-    }
+   }
+   function turnBlinkFailure(valF){
+       failure[valF].state = "int";
 
-    function turnOnAnterior(){
-        anterior.opacity=1;
-    }
+   }
+   function turnInhabFailure(valF){
+       failure[valF].state = "inhab";
 
-    function turnOffAnterior(){
-        anterior.opacity=0;
-    }
-    function turnOffSicas(){
-        inicioSicas.opacity=1;
-    }
-    function turnOnSicas(){
-        inicioSicas.opacity=0;
-        mac_sicas.sicasOk();
+   }
 
-    }
+   // REPEATER DE PANTALLA SICAS
+   Repeater {
+       model: 5
+       Text {
+           id: textoE
+           width: 114
+           height: 14
+           opacity: 1
+           x: getXTextError(index)
+           y: getYTextError(index)
+           text: qsTr("")
+           horizontalAlignment: Text.AlignLeft
+           font.family: "Arial"
+           font.pixelSize: 12
+           states: [
+               State {
+                   name: "on"
+                   PropertyChanges { target: textoE; opacity: 1;}
+               },
+               State {
+                   name: "off"
+                   PropertyChanges { target: textoE; opacity: 0;}
+               }
+           ]
+
+           transitions: Transition {
+               PropertyAnimation { properties: "opacity"; duration: 200 }
+           }
+       }
+       onItemAdded: textoError[index] = item
+   }
+   function getXTextError(p){
+       return(115)
+   }
+   function getYTextError(p){
+       return (180+(20*p))
+   }
+
+   Repeater {
+       model: 5
+       Text {
+           id: trenesE
+           width: 114
+           height: 14
+           opacity: 1
+           x: getXTrenesError(index)
+           y: getYTrenesError(index)
+           text: qsTr("")
+           horizontalAlignment: Text.AlignLeft
+           font.family: "Arial"
+           font.pixelSize: 12
+           states: [
+               State {
+                   name: "on"
+                   PropertyChanges { target: trenesE; opacity: 1;}
+               },
+               State {
+                   name: "off"
+                   PropertyChanges { target: trenesE; opacity: 0;}
+               }
+           ]
+
+           transitions: Transition {
+               PropertyAnimation { properties: "opacity"; duration: 200 }
+           }
+       }
+       onItemAdded: trenConFalla[index] = item
+   }
+
+   function getXTrenesError(p){
+       return(280)
+   }
+
+   function getYTrenesError(p){
+       return (180+(20*p))
+   }
+
+
+   //REPEAT QUE GENERA CADA UNA DE LAS LETRAS
+
+
+   Repeater {
+       model: 5
+       Text {
+           id: prioLetra
+           width: 114
+           height: 14
+           opacity: 1
+           x: getXPrioLetra(index)
+           y: getYPrioLetra(index)
+           text: qsTr("")
+           horizontalAlignment: Text.AlignLeft
+           font.family: "Arial"
+           font.pixelSize: 12
+           states: [
+               State {
+                   name: "on"
+                   PropertyChanges { target: prioLetra; opacity: 1;}
+               },
+               State {
+                   name: "off"
+                   PropertyChanges { target: prioLetra; opacity: 0;}
+               }
+           ]
+
+           transitions: Transition {
+               PropertyAnimation { properties: "opacity"; duration: 200 }
+           }
+       }
+       onItemAdded: prioridadLetra[index] = item
+   }
+
+   function getXPrioLetra(p){
+       return(450)
+   }
+
+   function getYPrioLetra(p){
+       return (180+(20*p))
+   }
+
+
+   Repeater {
+       model: 48
+       Image {
+           id: puertastren
+           width: 12
+           height: 2
+           opacity: 0
+           x: getXpuertastren(index)
+           y: getYpuertastren(index)
+           source: "resources/sicas_doors.png"
+           antialiasing: true
+           smooth: true
+           states: [
+               State {
+                   name: "con"
+                   PropertyChanges { target: puertastren; opacity: 1;}
+               },
+               State {
+                   name: "des"
+                   PropertyChanges { target: puertastren; opacity: 0;}
+               },
+               State {
+                   name: "inhab"
+                   PropertyChanges { target: f; opacity: 0.5;}
+               },
+               State {
+                   name: "int"
+                   PropertyChanges { target: blinkAnimation2; running:true;}
+               }
+           ]
+
+           transitions: Transition {
+               PropertyAnimation { properties: "opacity"; duration: 100 }
+           }
+
+           SequentialAnimation {
+               id: blinkAnimation2
+               loops: Animation.Infinite
+
+               PropertyAnimation {
+                   properties: "opacity"
+                   to: 0
+                   duration: 200
+                   target: puertastren
+               }
+               PauseAnimation { duration: 200 }
+               PropertyAnimation {
+                   properties: "opacity"
+                   to: 1
+                   duration: 200
+                   target: puertastren
+               }
+           }
+       }
+       onItemAdded: puertasCoche[index] = item
+   }
+
+   function getXpuertastren(p){
+       var nroCoche = Math.floor(p/8);
+       return((75)+(nroCoche*63)+(34*Math.floor(nroCoche/2))+((p%4)*15));
+   }
+
+   function getYpuertastren(p){
+       var acum=(Math.floor(p/4)%2);
+       if (acum==0)
+           return (105);
+       return(145);
+   }
+   function turnOffDoors(valF){
+       puertasCoche[valF].state = "des";
+   }
+
+   function turnOnDoors(valF){
+       puertasCoche[valF].state = "con";
+   }
+   function actualizarTamArreRenglon(valorFin){
+       valorRenglonFin=valorFin;
+   }
+
+   // FUNCIONES QUE VERIFICAN LA POSICION DEL RENGLON sicas
+
+   function moverSelectorSig(){
+       if((sicas_renglon.y <256)&&(valorRenglonActual<=valorRenglonFin)){
+           sicas_renglon.y= sicas_renglon.y +20;
+           movimientoCursor();
+
+       }
+   }
+   function moverSelectorAnt(){
+       if(sicas_renglon.y >176){
+           sicas_renglon.y= sicas_renglon.y -20;
+           movimientoCursor();
+       }
+   }
+
+   function endRenglonSicas(){
+       sicas_renglon.y= 262;
+       valorRenglonActual--;
+   }
+
+   function initRenglonSicas(){
+       sicas_renglon.y= 182;
+   }
+
+   function nextPositionSicas(){
+       sicas_renglon.y= sicas_renglon.y +20;
+   }
+
+   function backPositionSicas(){
+       sicas_renglon.y= sicas_renglon.y -20;
+       valorRenglonActual--;
+   }
+
+   function turnOnSiguiente(){
+       siguiente.opacity=1;
+   }
+
+   function turnOffSiguiente(){
+       siguiente.opacity=0;
+   }
+
+   function turnOnAnterior(){
+       anterior.opacity=1;
+   }
+
+   function turnOffAnterior(){
+       anterior.opacity=0;
+   }
+   function turnOffSicas(){
+       inicioSicas.opacity=1;
+   }
+   function turnOnSicas(){
+       inicioSicas.opacity=0;
+       mac_sicas.sicasOk();
+   }
 }//FIN RECTANGLO
 

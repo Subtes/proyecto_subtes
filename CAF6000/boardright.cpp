@@ -70,9 +70,12 @@ void BoardRight::loadState(int state){
         m_manometer->updatePressureRed(0);
         m_manometer->updatePressureWhite(0);
         m_modoConduccion->setManiobraMode();
+        //ui->sicasmac->turnOffSicas();
     }
     else if(state == EN_MARCHA){
         m_manometer->updatePressureRed(m_subte->getPressureRed());
         m_manometer->updatePressureWhite(m_subte->getPressureWhite());
+        m_modoConduccion->setAcopleMode();
+        //ui->sicasmac->turnOnSicas();
     }
 }
