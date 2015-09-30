@@ -22,7 +22,8 @@ HEADERS += \
     manometer.h \
     sicasmac.h \
     llavemodoconduccion.h \
-    llavetecho.h
+    llavetecho.h \
+    tractionhardware.h
 
 SOURCES += \
     tractionlever.cpp \
@@ -38,7 +39,8 @@ SOURCES += \
     manometer.cpp \
     sicasmac.cpp \
     llavemodoconduccion.cpp \
-    llavetecho.cpp
+    llavetecho.cpp \
+    tractionhardware.cpp
 
 FORMS += \
     tractionlever.ui \
@@ -59,5 +61,11 @@ FORMS += \
 RESOURCES += \
             qmlrsc.qrc \
             widgetsrsc.qrc
+
+INCLUDEPATH +=  $$PWD/../Source/include
+
+DEPENDPATH += $$PWD/../Source
+
+LIBS += -L$$PWD/../Source/lib/ -lSDL
 
 DISTFILES +=

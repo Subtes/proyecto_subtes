@@ -19,14 +19,7 @@ public:
 private:
     Ui::TractionLever *ui;
 
-private slots:
-    void processValueChanged(int value);
-
 signals:
-    traction(int);
-    brake(int);
-    emergencyBrake();
-
     positionChanged(int);
 
     hvPressed();

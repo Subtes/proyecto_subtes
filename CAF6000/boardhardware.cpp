@@ -1,3 +1,5 @@
+#include <tractionhardware.h>
+
 #include "boardhardware.h"
 #include "ui_boardhardware.h"
 
@@ -25,6 +27,7 @@ BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte, EventHandler 
     m_rana = NULL;
     m_hombreMuerto = NULL;
     m_setaButton = NULL;
+    m_tractionHardware = new TractionHardware();
 
 }
 
@@ -38,9 +41,9 @@ void BoardHardware::startBoard()
     qDebug() << "board hardware startBoard";
 
     m_horn = new Horn_Controller(m_subte,ui->horn);
-    m_tractionLever = new TractionLever_Controller(m_subte,ui->traction);
+    m_tractionLever = new TractionLever_Controller(m_subte,ui->traction, m_tractionHardware);
     m_rana = new Rana_Controller(m_subte,ui->ranaDevice);
-    m_hombreMuerto = new HombreMuerto_Controller(m_subte,ui->traction);
+    m_hombreMuerto = new HombreMuerto_Controller(m_subte,ui->traction, m_tractionHardware);
     m_setaButton = new Seta_Controller(m_subte, ui->setaButton);
 
     this->setEnabled(false);
@@ -108,5 +111,7 @@ void BoardHardware::loadState(int state){
     else if(state == EN_MARCHA){
         lastState = EN_MARCHA;
         m_rana->setValue(1);
+        m_tractionLever->onTractionLever();
+        qDebug()<<"---- En Marcha ----";
     }
 }

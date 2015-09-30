@@ -108,9 +108,11 @@ FORMS    += boardcenter.ui \
     src/instructionsolutionpanel/mainwindow.ui
 
 INCLUDEPATH +=  ../subtewidgets \
-                $$PWD/../ENet
+                $$PWD/../ENet \
+                $$PWD/../Source/include
 
-DEPENDPATH += $$PWD/../ENet
+DEPENDPATH += $$PWD/../ENet \
+              $$PWD/../Source
 
 LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L../subtewidgets/release -lsubtewidgets \
@@ -118,7 +120,8 @@ LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L$$PWD/../ENet/ -lWS2_32 \
         -L$$PWD/../ENet/ -lBufferOverflowU \
         -L$$PWD/../ENet/ -lWinMM \
-        -L$$PWD/../ENet/ -lENetClient-Cpp
+        -L$$PWD/../ENet/ -lENetClient-Cpp \
+        -L$$PWD/../Source/lib/ -lSDL
 
 RESOURCES += ../subtewidgets/widgetsrsc.qrc \
             ../subtewidgets/qmlrsc.qrc \
