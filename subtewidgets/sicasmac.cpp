@@ -9,6 +9,9 @@ SicasMac::SicasMac(QWidget *parent) :
     ui->quickWidget->setClearColor(Qt::transparent);
     ui->quickWidget->setAttribute(Qt::WA_AlwaysStackOnTop);
     m_qmlView = ui->quickWidget->rootObject();
+    connect(m_qmlView,SIGNAL(onPressSig()),this,SIGNAL(onPressSigRow()));
+    connect(m_qmlView,SIGNAL(onPressAnt()),this,SIGNAL(onPressAntRow()));
+    connect(m_qmlView,SIGNAL(sicasOk()),this,SIGNAL(sicasOk()));
 }
 
 SicasMac::~SicasMac()
@@ -95,7 +98,6 @@ void SicasMac::stopBlink(int failure)
 
 void SicasMac::textEditSicas(QString error,QString trenes,QString letra, int index)
 {
-    qDebug() << "llega: " << error << trenes << letra << index;
     QVariant returnedValue;
     QMetaObject::invokeMethod(m_qmlView, "changeText",
                               Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, error),
@@ -104,19 +106,12 @@ void SicasMac::textEditSicas(QString error,QString trenes,QString letra, int ind
 
 void SicasMac::insertTrainSicas(QString coche, QString estFreno)
 {
-    qDebug() << "llega: estdado tren ";
     QVariant returnedValue;
     QMetaObject::invokeMethod(m_qmlView, "changeStateTrain",
                               Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, coche),
                                     Q_ARG(QVariant, estFreno));
 }
-void SicasMac::insertDoorsSicas(QString doors,int tren){
-   /* qDebug() << "llega: puertas ";
-    QVariant returnedValue;
-    QMetaObject::invokeMethod(m_qmlView, "changeStateDoors",
-                              Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, doors), Q_ARG(QVariant, tren));
-*/
-}
+
 void SicasMac::turnOffFailure(int coche)
 {
     QVariant returnedValue;
@@ -156,9 +151,86 @@ void SicasMac::turnOnDoors(int coche)
             Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, coche));
 }
 
-void SicasMac::actualizarTamArreRenglon(int finRenglon, int indiceArre)
+void SicasMac::actualizarTamArreRenglon(int finRenglon)
 {
     QVariant returnedValue;
     QMetaObject::invokeMethod(m_qmlView, "actualizarTamArreRenglon",
-            Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, finRenglon), Q_ARG(QVariant, indiceArre));
+            Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, finRenglon));
 }
+
+
+//NUEVO SICAS
+void SicasMac::sigPosicionSicas()
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "nextPositionSicas",
+            Q_RETURN_ARG(QVariant, returnedValue));
+}
+
+void SicasMac::endRenglonSicas()
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "endRenglonSicas",
+            Q_RETURN_ARG(QVariant, returnedValue));
+}
+
+void SicasMac::initRenglonSicas()
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "initRenglonSicas",
+            Q_RETURN_ARG(QVariant, returnedValue));
+}
+
+
+void SicasMac::turnOnSiguiente()
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "turnOnSiguiente",
+            Q_RETURN_ARG(QVariant, returnedValue));
+}
+
+void SicasMac::turnOffSiguiente()
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "turnOffSiguiente",
+            Q_RETURN_ARG(QVariant, returnedValue));
+}
+
+void SicasMac::turnOnAnterior()
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "turnOnAnterior",
+            Q_RETURN_ARG(QVariant, returnedValue));
+}
+
+void SicasMac::turnOffAnterior()
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "turnOffAnterior",
+            Q_RETURN_ARG(QVariant, returnedValue));
+}
+
+void SicasMac::antPositionSicas()
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "backPositionSicas",
+            Q_RETURN_ARG(QVariant, returnedValue));
+}
+int SicasMac::getPosActualRenglon()
+{
+    return m_qmlView->property("valorRenglonActual").toInt();
+}
+
+void SicasMac::turnOnSicas()
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "turnOnSicas",
+            Q_RETURN_ARG(QVariant, returnedValue));
+}
+void SicasMac::turnOffSicas()
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "turnOffSicas",
+            Q_RETURN_ARG(QVariant, returnedValue));
+}
+

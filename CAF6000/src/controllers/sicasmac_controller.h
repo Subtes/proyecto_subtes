@@ -18,15 +18,18 @@ class SicasMac_Controller : public Base_Controller
     int cantCochesTotal;
     int indiceArre;
     int DatosPorCoche;
+    int maxRenglonesSicas;
     QStringList pantallasicas ;
     QStringList saveId ;
     int buscoPosicion(QString mensaje);
-    void visualizarArreglo();
+    void borrarSicas();
     void verificoEstFalla(QString falla, int coche);
     void verificoEstPuertas(QString falla, int coche);
     QStringList separoCaracteres(QString mensaje);
     void bajaMensaje(QString texto);
     void refrescoVista();
+    void borrarPantallaSicas();
+
 
 
 
@@ -36,8 +39,11 @@ public:
     ~SicasMac_Controller();
 
 public slots:
+    void onPressSigRow();
+    void onPressAntRow();
     void separoMensajes(QString mensaje);
     void cargoCoches(QString mensajeCoches);
+    void frenoRetencionActivado();
 };
 
 #endif // SICASMAC_CONTROLLER_H
