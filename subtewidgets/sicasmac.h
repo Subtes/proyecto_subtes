@@ -60,6 +60,7 @@ public slots:
        int getPosActualRenglon();
        void turnOnSicas();
        void turnOffSicas();
+       void cargoDestinoSicas(QString destino);
 
 };
 

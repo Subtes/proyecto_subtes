@@ -20,6 +20,8 @@ SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac
     connect(m_subte,SIGNAL(atpOff()),m_sicasmac,SLOT(turnOffSicas()));
     connect(m_sicasmac,SIGNAL(sicasOk()),m_subte,SLOT(setSicasOk()));
 
+
+
     //MODELAR LAS FALLAS COMO UN VECTOR DE INT
     //cargoCoches("1;des;con;cerrado;abierto;abierto;cerrado;abierto;cerrado;cerrado;abierto;2;con;con;abierto;abierto;abierto;abierto;abierto;cerrado;cerrado;abierto;3;des;con;abierto;abierto;cerrado;cerrado;abierto;abierto;cerrado;cerrado;4;con;con;abierto;abierto;cerrado;cerrado;abierto;abierto;abierto;abierto;5;con;con;abierto;abierto;cerrado;cerrado;cerrado;abierto;abierto;abierto;6;con;con;abierto;abierto;abierto;cerrado;abierto;abierto;cerrado;abierto;");
 }
@@ -27,7 +29,11 @@ SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac
 SicasMac_Controller::~SicasMac_Controller()
 {
 }
-
+/**
+ * @brief SicasMac_Controller::onPressSigRow
+ *  Actualiza el valor de reenglon siguiente
+ * @param mensaje
+ */
 void SicasMac_Controller::onPressSigRow(){
     int posicion = m_sicasmac->getPosActualRenglon();
     cantPantallasSicas= floor(posicion/5);
@@ -50,7 +56,11 @@ void SicasMac_Controller::onPressSigRow(){
         m_sicasmac->turnOnAnterior();
     }
 }
-
+/**
+ * @brief SicasMac_Controller::onPressAntRow
+ *  Actualiza la posicion del renglon anterior
+ * @param mensaje
+ */
 void SicasMac_Controller::onPressAntRow(){
     int posicion = m_sicasmac->getPosActualRenglon();
     cantPantallasSicas= floor(posicion/5);
@@ -82,6 +92,7 @@ void SicasMac_Controller::onPressAntRow(){
  * @param mensaje
  */
 void SicasMac_Controller::separoMensajes(QString mensaje){
+    QString trenesBlink;
     if(mensaje != ""){
         QStringList strList;
         strList = separoCaracteres(mensaje);
@@ -90,7 +101,8 @@ void SicasMac_Controller::separoMensajes(QString mensaje){
                 int posicion = buscoPosicion(mensaje.split(';')[0]);
                 if (posicion >= 0){
                     pantallasicas.replace(posicion,mensaje);
-                    m_sicasmac->textEditSicas(strList[0],strList[1],strList[2],posicion);
+                    trenesBlink = generoBlinkTrenes(strList[1]);
+                    m_sicasmac->textEditSicas(strList[0],trenesBlink,strList[2],posicion);
                 }
             }
             else
@@ -99,7 +111,8 @@ void SicasMac_Controller::separoMensajes(QString mensaje){
                 pantallasicas.push_back(mensaje);
                 renglon++;
                 if (renglon<5){
-                    m_sicasmac->textEditSicas(strList[0],strList[1],strList[2],renglon);
+                    trenesBlink = generoBlinkTrenes(strList[1]);
+                    m_sicasmac->textEditSicas(strList[0],trenesBlink,strList[2],renglon);
                 }
                 m_sicasmac->actualizarTamArreRenglon(renglon);
              }
@@ -151,6 +164,7 @@ void SicasMac_Controller::borrarPantallaSicas(){
 
 void SicasMac_Controller::refrescoVista(){
     QStringList  strList;
+    QString trenesBlink;
     int actual;
     int inicio = (cantPantallasSicas*5);
     int fin = ((cantPantallasSicas+1)*5);
@@ -161,9 +175,24 @@ void SicasMac_Controller::refrescoVista(){
     for (int var = inicio; var < fin ;var++) {
         actual=(var%5);
         strList = separoCaracteres(pantallasicas[var]);
-        m_sicasmac->textEditSicas(strList[0],strList[1],strList[2],actual);
+        trenesBlink = generoBlinkTrenes(strList[1]);
+        m_sicasmac->textEditSicas(strList[0],trenesBlink,strList[2],actual);
     }
 }
+
+QString SicasMac_Controller::generoBlinkTrenes(QString trenes){
+    QStringList cocheXcoche = trenes.split(" ");
+    QString cocheLetra;
+    QString devolverTrenes;
+
+    for (int var = 0; var < cocheXcoche.size(); ++var) {
+       devolverTrenes.push_back("  ");
+       cocheLetra = cocheXcoche[var];
+       devolverTrenes.push_back(cocheLetra.split(",")[0]);
+    }
+    return devolverTrenes;
+}
+
 
 QStringList SicasMac_Controller::separoCaracteres(QString mensaje){
      return (mensaje.split(';'));
@@ -204,9 +233,9 @@ void SicasMac_Controller::verificoEstPuertas(QString falla, int cantPuertas){
     if(falla=="cerrado"){
         m_sicasmac->turnOffDoors(cantPuertas);}
     if(falla=="inhab")
-       m_sicasmac->turnInhabFailure(cantPuertas);
+        m_sicasmac->turnInhabFailure(cantPuertas);
     if(falla=="int")
-       m_sicasmac->turnBlinkFailure(cantPuertas);
+        m_sicasmac->turnBlinkFailure(cantPuertas);
 }
 
 void SicasMac_Controller::verificoEstFalla(QString falla, int coche){
@@ -218,4 +247,8 @@ void SicasMac_Controller::verificoEstFalla(QString falla, int coche){
         m_sicasmac->turnInhabFailure(coche);
     if(falla=="int")
         m_sicasmac->turnBlinkFailure(coche);
+}
+
+void SicasMac_Controller::cargarDestinoSicas(QString destino){
+    m_sicasmac->cargoDestinoSicas(destino);
 }

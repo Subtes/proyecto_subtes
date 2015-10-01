@@ -140,6 +140,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cambio_senial");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_coches_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_renglon_sicas");
+            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estacion_destino_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_velocidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_tramo_vel");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
@@ -157,7 +158,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_regulador_mando",std::to_string((int)m_subte->tractionLeverPosition()));
             m_eNetClient->CambiarValorClave("c_traccion",std::to_string((int)m_subte->traction()));
             m_eNetClient->CambiarValorClave("c_freno_emergencia","des");
-
             m_eNetClient->CambiarValorClave("c_grifob138","con");
             m_eNetClient->CambiarValorClave("c_grifol2","con");
             m_eNetClient->CambiarValorClave("c_grifob73","con");
@@ -436,6 +436,11 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         qDebug() << "fallas y puertas recibidas." ;
         QString mensaje = value.c_str();
         emit cargarMensajeCocheSicas(mensaje);
+    }
+    else if(key.compare("i_estacion_destino_sicas") == 0){
+        qDebug() << "cargo destino sicas." ;
+        QString mensaje = value.c_str();
+        emit cargarDestino(mensaje);
     }
 }
 

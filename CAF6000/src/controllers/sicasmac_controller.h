@@ -29,6 +29,8 @@ class SicasMac_Controller : public Base_Controller
     void bajaMensaje(QString texto);
     void refrescoVista();
     void borrarPantallaSicas();
+    QString generoBlinkTrenes(QString trenes);
+
 
 
 
@@ -44,6 +46,7 @@ public slots:
     void separoMensajes(QString mensaje);
     void cargoCoches(QString mensajeCoches);
     void frenoRetencionActivado();
+    void cargarDestinoSicas(QString destino);
 };
 
 #endif // SICASMAC_CONTROLLER_H
