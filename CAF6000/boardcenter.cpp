@@ -15,9 +15,9 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eve
     m_brakesBypass = NULL;
     m_speedGauge = NULL;
     m_doors = NULL;
-    m_tractionHardware = new TractionHardware();
-    m_checkBypass = new QTimer();
-    m_checkBypass->setInterval(100);
+    //m_tractionHardware = new TractionHardware();
+//    m_checkBypass = new QTimer();
+//    m_checkBypass->setInterval(100);
 
     connect(m_eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(m_eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
@@ -30,7 +30,8 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eve
     connect(m_eventHandler,SIGNAL(menosPressed()),this,SLOT(bypassFrenoON()));
     connect(m_eventHandler,SIGNAL(menosReleased()),this,SLOT(bypassFrenoOFF()));
 
-    connect(m_checkBypass,SIGNAL(timeout()),m_tractionHardware,SLOT(processBottonChanged()));
+//    connect(m_checkBypass,SIGNAL(timeout()),m_tractionHardware,SLOT(processBottonChanged()));
+
 
     connect(m_subte,SIGNAL(bateriaCon()),this,SLOT(turnOnWidgets()));
     connect(m_subte,SIGNAL(bateriaDes()),this,SLOT(turnOffWidgets()));
@@ -164,4 +165,7 @@ void BoardCenter::turnOffWidgets()
 
     ui->bypassFreno->setLighted(false);
     ui->bypassTraccion->setLighted(false);
+}
+void BoardCenter::setHardware(TractionHardware *th){
+    m_tractionHardware = th;
 }

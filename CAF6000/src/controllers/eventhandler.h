@@ -40,10 +40,12 @@
 #include <ENetClient.h>
 #include <Windows.h>
 #include <QString>
+#include <QTime>
 #include "src/controllers/enethelper.h"
 #include "src/controllers/keypresseater.h"
 #include "src/controllers/failures_controller.h"
 #include "src/models/subtestatus.h"
+
 
 class SubteStatus;
 class ENetHelper;
@@ -148,7 +150,7 @@ signals:
 
     cargarMensaje(QString);
     cargarMensajeCocheSicas(QString);
-    cargarDestino(QString);
+    cargarDestinoSicas(QString);
 
 public slots:
     void processKeyPressed(DWORD k);

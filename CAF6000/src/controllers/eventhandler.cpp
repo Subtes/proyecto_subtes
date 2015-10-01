@@ -112,7 +112,7 @@ void EventHandler::notifyValueChanged(std::string key, std::string value)
 }
 
 void EventHandler::processValueChanged(std::string host, std::string key, std::string value){
-    qDebug() << "processValueChanged:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() ;
+    qDebug() << "value - key:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() << "time: " << QTime::currentTime().toString() ;
 
     if(key.compare("i_iniciar_simulador") == 0){
         //Cargar Splash
@@ -341,6 +341,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     else if(key.compare("i_cargar_estado") == 0){
 
         m_eNetClient->CambiarEstadoDifusion(false);
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
         boardsReady = 0;
 
         int intState = -1; //default - ningun estado
@@ -441,7 +442,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     else if(key.compare("i_estacion_destino_sicas") == 0){
         qDebug() << "cargo destino sicas." ;
         QString mensaje = value.c_str();
-        emit cargarDestino(mensaje);
+        emit cargarDestinoSicas(mensaje);
     }
 }
 

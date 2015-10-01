@@ -18,13 +18,11 @@ Key_TopBoard_Controller::Key_TopBoard_Controller(SubteStatus *modelo, LlaveTecho
 void Key_TopBoard_Controller::keyON(){
     qDebug() << "Entro en controller.keyON";
     m_modelo->keyActivated();
-    emit keyActivated();
 }
 
 void Key_TopBoard_Controller::keyOFF(){
     qDebug() << "Entro en controller.keyOFF";
     m_modelo->keyDeactivated();
-    emit keyDeactivated();
 }
 
 void Key_TopBoard_Controller::keyTurnON()
@@ -55,10 +53,10 @@ QVariant Key_TopBoard_Controller::isON(){
 
 void Key_TopBoard_Controller::processKeyTop(int k){
     if (k==1){
-        m_modelo->keyActivated();
+        m_keyButton->setOn();
         qDebug()<< "LLave (Joystick) Techo: ON";
     }else{
-        m_modelo->keyDeactivated();
+        m_keyButton->setOff();
     }
 }
 

@@ -3,6 +3,8 @@
 #include <QDesktopWidget>
 #include <QSplashScreen>
 
+#include <tractionhardware.h>
+
 #include "boardhardware.h"
 #include "boardcenter.h"
 #include "boardleft.h"
@@ -23,6 +25,8 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
+    TractionHardware * m_tHardware = new TractionHardware();
+
     // MODEL
     SubteStatus * m_subte = new SubteStatus();
 
@@ -37,6 +41,9 @@ int main(int argc, char *argv[])
     BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
     BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
     MainWindow *m_tree = new MainWindow(0,m_eventHandler);
+
+    m_h->setHardware(m_tHardware);
+    m_c->setHardware(m_tHardware);
 
     QDesktopWidget *desktop = a.desktop();
 

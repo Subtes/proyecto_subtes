@@ -37,6 +37,8 @@ public slots:
     void setaON();
     void setaOFF();
 
+    void setHardware(TractionHardware *th);
+
 private:
     Ui::BoardHardware *ui;
 

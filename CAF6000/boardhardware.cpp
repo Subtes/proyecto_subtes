@@ -27,7 +27,8 @@ BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte, EventHandler 
     m_rana = NULL;
     m_hombreMuerto = NULL;
     m_setaButton = NULL;
-    m_tractionHardware = new TractionHardware();
+    //m_tractionHardware = new TractionHardware();
+    m_tractionHardware = NULL;
 
 }
 
@@ -52,11 +53,13 @@ void BoardHardware::startBoard()
 void BoardHardware::enableScreen()
 {
     this->setEnabled(true);
+    m_tractionLever->onTractionLever();
 }
 
 void BoardHardware::disableScreen()
 {
     this->setEnabled(false);
+    m_tractionLever->offTractionLever();
 }
 
 void BoardHardware::resetControls()
@@ -116,4 +119,8 @@ void BoardHardware::loadState(int state){
     }
 
     m_eventHandler->enableDiffusion();
+}
+
+void BoardHardware::setHardware(TractionHardware *th){
+    m_tractionHardware = th;
 }

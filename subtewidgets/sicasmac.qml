@@ -355,8 +355,21 @@ Rectangle {
     }
 
     Text {
+        id: textoDestino
+        x: 230
+        y: 63
+        width: 60
+        height: 20
+        text: qsTr("Destino: ")
+        font.bold: true
+        font.pixelSize: 14
+        font.family: "Arial"
+        horizontalAlignment: Text.AlignHCenter
+    }
+
+    Text {
         id: destino
-        x: 269
+        x: 280
         y: 63
         width: 60
         height: 20
@@ -829,7 +842,7 @@ Rectangle {
        mac_sicas.sicasOk();
    }
    function cargoDestinoSicas(valordes){
-      destino.text(valordes);
+      destino.text = valordes;
    }
 
 

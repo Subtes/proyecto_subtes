@@ -12,6 +12,7 @@ TractionLever_Controller::TractionLever_Controller(SubteStatus * subte, Traction
     connect(m_checkJ,SIGNAL(timeout()),m_tractionHardware,SLOT(processValueChanged()));
     connect(m_checkJ,SIGNAL(timeout()),m_tractionHardware,SLOT(processRanaChanged()));
     connect(m_checkJ,SIGNAL(timeout()),m_tractionHardware,SLOT(processSetaChanged()));
+    connect(m_checkJ,SIGNAL(timeout()),m_tractionHardware,SLOT(processBottonChanged()));
     connect(m_tractionHardware,SIGNAL(positionChanged(int)),this,SLOT(processValue(int)));
     connect(m_tractionLever,SIGNAL(positionChanged(int)),this,SLOT(processValue(int)));
     connect(m_tractionLever,SIGNAL(positionChanged(int)),m_subte,SLOT(tractionLeverChanged(int)));

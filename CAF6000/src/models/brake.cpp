@@ -54,6 +54,9 @@ bool Brake::getEmergencyBrake() const
     if (!m_traction->hombreMuerto())
         return true;
 
+    if (m_averia)
+        return true;
+
     return m_emergencyBrake;
 }
 

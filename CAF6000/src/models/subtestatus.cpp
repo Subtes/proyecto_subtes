@@ -571,6 +571,7 @@ void SubteStatus::setBrakeFailure()
 {
     m_brake->setAveria(true);
     emit hiloLazoChanged(getHiloLazo());
+    m_eventHandler->notifyValueChanged("c_freno_emergencia","con");
 }
 
 void SubteStatus::setCSCPFailure()
@@ -589,6 +590,11 @@ void SubteStatus::resolveBrakeFailure()
 {
     m_brake->setAveria(false);
     emit hiloLazoChanged(getHiloLazo());
+
+    if(m_brake->getEmergencyBrake())
+        m_eventHandler->notifyValueChanged("c_freno_emergencia","con");
+    else
+        m_eventHandler->notifyValueChanged("c_freno_emergencia","des");
 }
 
 void SubteStatus::resolveCSCPFailure()

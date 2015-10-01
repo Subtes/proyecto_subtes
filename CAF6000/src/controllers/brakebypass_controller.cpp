@@ -31,6 +31,7 @@ BrakeBypass_Controller::~BrakeBypass_Controller()
 void BrakeBypass_Controller::bypassBrakePressed()
 {
     m_subte->bypassBrake(true);
+    qDebug()<<"BYPASS ACTIVATES ---------------||||||||||||||";
     if(m_button->isLighted())
         m_button->turnOn();
 }
@@ -38,6 +39,7 @@ void BrakeBypass_Controller::bypassBrakePressed()
 void BrakeBypass_Controller::bypassBrakeReleased()
 {
     m_subte->bypassBrake(false);
+    qDebug()<<"BYPASS DEACTIVATED ---------------||||||||||||||";
     this->updateHiloLazoStatus(m_subte->getHiloLazo());
 }
 

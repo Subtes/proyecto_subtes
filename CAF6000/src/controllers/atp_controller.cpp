@@ -23,8 +23,8 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     connect(subte,SIGNAL(targetSpeedChanged(double)),this,SLOT(updateTargetSpeed(double)));
     connect(subte,SIGNAL(atpOn()),this,SLOT(initATP()));
     connect(subte,SIGNAL(atpOff()),this,SLOT(resetATP()));
-    connect(eventHandler,SIGNAL(kPressed()),this,SLOT(initATP()));
-    connect(eventHandler,SIGNAL(lPressed()),this,SLOT(resetATP()));
+    //connect(eventHandler,SIGNAL(kPressed()),this,SLOT(initATP()));
+    //connect(eventHandler,SIGNAL(lPressed()),this,SLOT(resetATP()));
     connect(eventHandler,SIGNAL(accelerationInstant(double)),this,SLOT(setACE(double)));
     connect(eventHandler,SIGNAL(nextToEstation()),this,SLOT(nextToEstation()));
     connect(eventHandler,SIGNAL(departureEstation()),this,SLOT(departureEstation()));
@@ -196,6 +196,7 @@ void Atp_Controller::departureEstation(){
     if (m_onATP){
 
         this->m_view->setBlinkSpeedTarget(false);
+        qDebug()<<"departure Estation: m_speedTargetPrevious"<< m_speedTargetPrevious;
         m_AF = "4";
         updateTargetSpeed(m_speedTargetPrevious);
         critiqueSpeed(2);
