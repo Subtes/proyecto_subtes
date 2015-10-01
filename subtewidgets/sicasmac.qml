@@ -360,7 +360,7 @@ Rectangle {
         y: 63
         width: 60
         height: 20
-        text: qsTr("Destino: X")
+        text: qsTr("")
         font.bold: true
         font.pixelSize: 14
         font.family: "Arial"
@@ -828,5 +828,10 @@ Rectangle {
        inicioSicas.opacity=0;
        mac_sicas.sicasOk();
    }
+   function cargoDestinoSicas(valordes){
+      destino.text(valordes);
+   }
+
+
 }//FIN RECTANGLO
 

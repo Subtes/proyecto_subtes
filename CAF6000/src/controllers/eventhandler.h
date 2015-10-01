@@ -144,6 +144,7 @@ signals:
 
     cargarMensaje(QString);
     cargarMensajeCocheSicas(QString);
+    cargarDestino(QString);
 
 public slots:
     void processKeyPressed(DWORD k);
