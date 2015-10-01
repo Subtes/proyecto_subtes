@@ -68,4 +68,6 @@ void BoardLeft::loadState(int state){
             m_atp->initATP();
         }
     }
+
+    m_eventHandler->enableDiffusion();
 }

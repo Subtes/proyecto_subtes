@@ -116,6 +116,8 @@ void BoardCenter::loadState(int state){
         ui->bypassTraccion->turnOn();
         m_checkBypass->start();
     }
+
+    m_eventHandler->enableDiffusion();
 }
 
 void BoardCenter::bypassFrenoON(){

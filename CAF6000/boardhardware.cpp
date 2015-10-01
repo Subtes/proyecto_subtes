@@ -114,4 +114,6 @@ void BoardHardware::loadState(int state){
         m_tractionLever->onTractionLever();
         qDebug()<<"---- En Marcha ----";
     }
+
+    m_eventHandler->enableDiffusion();
 }

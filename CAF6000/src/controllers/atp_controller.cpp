@@ -107,7 +107,6 @@ void Atp_Controller::initATP(){
     m_t_evalChangeSpeed->setInterval(500);
     m_t_evalChangeSpeed->start();
 
-    m_eventHandler->notifyValueChanged("c_llave_atp","con");
 }
 
 void Atp_Controller::resetATP(){
@@ -115,7 +114,6 @@ void Atp_Controller::resetATP(){
     this->m_onATP = false;
     this->off_ATP();
     this->m_view->setReset(true);
-    m_eventHandler->notifyValueChanged("c_llave_atp","des");
 }
 
 void Atp_Controller::setDrivingMode(int d){

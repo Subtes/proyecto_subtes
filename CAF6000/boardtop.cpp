@@ -87,6 +87,7 @@ void BoardTop::loadState(int state)
         m_keyTopBoard->onKeyHD();
     }
     m_connectors->reset();
+    m_eventHandler->enableDiffusion();
 }
 
 void BoardTop::atpKeyON(){

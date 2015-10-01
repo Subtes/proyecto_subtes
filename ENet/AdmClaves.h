@@ -8,7 +8,7 @@ class AdmClaves
 {
   protected:
     bool FUsarDiccionario;
-    std::map<std::string, std::map<std::string, std::string>> *_fValClaves;
+    std::map<std::string, std::map<std::string, std::string>> _fValClaves;
 
   public:
     AdmClaves(void);
