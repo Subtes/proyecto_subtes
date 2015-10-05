@@ -21,10 +21,6 @@ public:
     void keyTurnON();
     void keyTurnOFF();
 
-signals:
-    void keyActivated();
-    void keyDeactivated();
-
 public slots:
     //Acction launched from item ui
     void keyON();

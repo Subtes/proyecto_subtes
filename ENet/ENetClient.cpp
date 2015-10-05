@@ -4,6 +4,8 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include "AdmClaves.h"
+#include <algorithm>
 
 //#include <future>
 
@@ -13,6 +15,7 @@ ENetClient::ENetClient(void)
   _fCliente = nullptr;
   _fServidor = nullptr;
   Inicializado = false;
+  _dicClientes.clear();
   FMilisegundosEspera = 75;
 }
 
@@ -176,6 +179,20 @@ void ENetClient::ProcesarColaMensajes()
         return;
       }
 
+#pragma region Difusion
+      if (partes[0] == "difusion")
+      {
+        bool estadoDifusion = ConvertStrToBool(partes[2]);
+        std::string cliente = partes[1];
+
+        _dicClientes[cliente] = estadoDifusion;
+
+        if (OnClienteCambiaDifusion != nullptr)
+          OnClienteCambiaDifusion(cliente, estadoDifusion);
+      }
+#pragma endregion
+
+#pragma region Cambio de Clave
       if (partes[0] == "valClave" && OnCambioValClave != nullptr)
       {
         if (partes.size() == 3) partes.push_back("");
@@ -186,9 +203,14 @@ void ENetClient::ProcesarColaMensajes()
         }
         else
         {
-          OnCambioValClave(partes[1], partes[2], partes[3]);
+          Claves.AgregarClave(partes[1], partes[2], partes[3]);
+          if (!ExisteCliente(partes[1]) || _dicClientes[partes[1]])
+            OnCambioValClave(partes[1], partes[2], partes[3]);
         }
       }
+#pragma endregion 
+
+#pragma region Conexión de Cliente
       if (partes[0] == "seConectoCliente" && OnConnectHost != nullptr)
       {
         if (partes.size() != 2)
@@ -197,6 +219,9 @@ void ENetClient::ProcesarColaMensajes()
           else
             OnConnectHost(partes[1]);
       }
+#pragma endregion 
+
+#pragma region Desconexión de Cliente
       if (partes[0] == "seDesConectoCliente" && OnDisconnectHost != nullptr)
       {
         if (partes.size() != 2)
@@ -205,9 +230,9 @@ void ENetClient::ProcesarColaMensajes()
           else
             OnDisconnectHost(partes[1]);
       }
+#pragma endregion
     }
   }
-
 }
 
 void ENetClient::ProcesarEvento()
@@ -222,11 +247,11 @@ void ENetClient::ProcesarEvento()
     myString = std::vector<char>(_fEvento.packet->dataLength + 1);
     myString[_fEvento.packet->dataLength] = '\0';
     memcpy(&myString[0], _fEvento.packet->data, _fEvento.packet->dataLength);
-    
+
     s_mutex.lock();
     _fColaMsj.push(std::string(&myString[0]));
     s_mutex.unlock();
-    
+
     enet_packet_destroy (_fEvento.packet);
 #pragma endregion
     break;
@@ -255,6 +280,15 @@ void ENetClient::ProcesarEvento()
   }
 }
 
+bool ENetClient::ConvertStrToBool(std::string str)
+{
+  std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+  std::istringstream is(str);
+  bool b;
+  is >> std::boolalpha >> b;
+  return b;
+}
+
 bool ENetClient::Suscribirse(std::string unCliente, std::string unaClave)
 {
   return EnviarMensaje(1, "suscripPeer||"+unCliente+"||"+unaClave);
@@ -278,6 +312,15 @@ bool ENetClient::CambiarValorClave(std::string unCliente, std::string unaClave, 
 bool ENetClient::ColocarMiNombre(std::string unNombre)
 {
   return EnviarMensaje(2, "miNombre||"+unNombre);
+}
+
+bool ENetClient::CambiarEstadoDifusion(bool unNuevoEstado)
+{
+  //return EnviarMensaje(1, "difusion||"+ unNuevoEstado);
+    std::string texto = "false";
+     if (unNuevoEstado)
+       texto = "true";
+     return EnviarMensaje(1, "difusion||" + texto);
 }
 
 bool ENetClient::EnviarMensaje(short idCanal, std::string unTexto)
@@ -333,4 +376,9 @@ std::vector<std::string> ENetClient::StringSplit(std::string str, char delimiter
   }
 
   return internal;
+}
+
+bool ENetClient::ExisteCliente(std::string unNombreCliente)
+{
+  return _dicClientes.find(unNombreCliente) != _dicClientes.end();
 }

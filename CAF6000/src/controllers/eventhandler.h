@@ -40,10 +40,12 @@
 #include <ENetClient.h>
 #include <Windows.h>
 #include <QString>
+#include <QTime>
 #include "src/controllers/enethelper.h"
 #include "src/controllers/keypresseater.h"
 #include "src/controllers/failures_controller.h"
 #include "src/models/subtestatus.h"
+
 
 class SubteStatus;
 class ENetHelper;
@@ -64,6 +66,8 @@ public:
     void setModel(SubteStatus *subte);
     void setFailures(Failures_Controller *failures);
 
+    void enableDiffusion();
+
 private:
     ENetClient * m_eNetClient;
     ENetHelper * m_eNetHelper;
@@ -76,6 +80,8 @@ private:
     QSplashScreen *m_splash4;
     QDesktopWidget *desktop;
     QPixmap m_imageSplash;
+
+    int boardsReady = 0;
 
     bool splashPassed;
 
@@ -144,7 +150,7 @@ signals:
 
     cargarMensaje(QString);
     cargarMensajeCocheSicas(QString);
-    cargarDestino(QString);
+    cargarDestinoSicas(QString);
 
 public slots:
     void processKeyPressed(DWORD k);

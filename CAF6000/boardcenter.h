@@ -38,6 +38,8 @@ public slots:
     void turnOnWidgets();
     void turnOffWidgets();
 
+    void setHardware(TractionHardware *th);
+
 private:
     Ui::BoardCenter *ui;
 
@@ -47,7 +49,7 @@ private:
     BrakeBypass_Controller          *m_brakesBypass;
     SpeedGaugeLeds_Controller       *m_speedGauge;
     Doors_Controller                *m_doors;
-    TractionHardware                *m_tractionHardware;
+    TractionHardware                *m_tractionHardware = NULL;
 
     QTimer * m_checkBypass;
 };

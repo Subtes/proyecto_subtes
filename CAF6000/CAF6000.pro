@@ -12,8 +12,9 @@ TEMPLATE = app
 #release
 CONFIG +=  c++11 release
 
-
-SOURCES += main.cpp \
+SOURCES += ../ENet/ENetClient.cpp \
+    ../ENet/AdmClaves.cpp \
+    main.cpp \
     baseboard.cpp \
     boardcenter.cpp \
     boardright.cpp \
@@ -34,7 +35,6 @@ SOURCES += main.cpp \
     src/controllers/atp_controller.cpp \
     src/controllers/enethelper.cpp \
     src/controllers/eventhandler.cpp \
-    ../ENet/ENetClient.cpp \
     src/models/traction.cpp \
     src/models/brake.cpp \
     src/models/cscp.cpp \
@@ -57,7 +57,9 @@ SOURCES += main.cpp \
     src/controllers/key_topboard_controller.cpp \
     src/controllers/frenoretencion_controller.cpp
 
-HEADERS  += baseboard.h \
+HEADERS  += ../ENet/ENetClient.h \
+    ../ENet/AdmClaves.h \
+    baseboard.h \
     boardcenter.h \
     boardright.h \
     boardleft.h \
@@ -77,7 +79,6 @@ HEADERS  += baseboard.h \
     src/controllers/atp_controller.h \
     src/controllers/enethelper.h \
     src/controllers/eventhandler.h \
-    ../ENet/ENetClient.h \
     src/models/traction.h \
     src/models/brake.h \
     src/models/cscp.h \
@@ -116,7 +117,7 @@ DEPENDPATH += $$PWD/../ENet \
 
 LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L../subtewidgets/release -lsubtewidgets \
-        -L$$PWD/../ENet -lenet \
+        -L$$PWD/../ENet/ -lenet \
         -L$$PWD/../ENet/ -lWS2_32 \
         -L$$PWD/../ENet/ -lBufferOverflowU \
         -L$$PWD/../ENet/ -lWinMM \

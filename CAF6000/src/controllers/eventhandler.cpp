@@ -112,7 +112,7 @@ void EventHandler::notifyValueChanged(std::string key, std::string value)
 }
 
 void EventHandler::processValueChanged(std::string host, std::string key, std::string value){
-    qDebug() << "processValueChanged:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() ;
+    qDebug() << "value - key:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() << "time: " << QTime::currentTime().toString() ;
 
     if(key.compare("i_iniciar_simulador") == 0){
         //Cargar Splash
@@ -339,6 +339,11 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     }
 
     else if(key.compare("i_cargar_estado") == 0){
+
+        m_eNetClient->CambiarEstadoDifusion(false);
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        boardsReady = 0;
+
         int intState = -1; //default - ningun estado
         if (value.compare("apagado") == 0){
             intState = 0;
@@ -386,10 +391,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         if (value.compare("1") == 0){
             qDebug() << " v_proximo_a_estacion, --> 1";
             emit nextToEstation();
-        }/*else{
-            qDebug() << "v_proximo_a_estacion, --> 0";
-            emit departureEstation();
-        }*/
+        }
     }
 
     else if(key.compare("v_estado_puertas") == 0){
@@ -440,7 +442,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     else if(key.compare("i_estacion_destino_sicas") == 0){
         qDebug() << "cargo destino sicas." ;
         QString mensaje = value.c_str();
-        emit cargarDestino(mensaje);
+        emit cargarDestinoSicas(mensaje);
     }
 }
 
@@ -531,7 +533,6 @@ void EventHandler::processKeyPressed(DWORD k)
         qDebug() << "6 key pressed";
     } else if ( k == _SIETE && !SIETE_down  ){
         SIETE_down = true;
-        //this->notifyValueChanged("c_modo_conduccion","atp");
         this->processValueChanged(m_eNetHelper->instructionsHostName, "i_cargar_estado", "puesta_servicio");
         qDebug() << "7 key pressed";
     } else if ( k == _OCHO && !OCHO_down  ){
@@ -643,6 +644,15 @@ void EventHandler::processKeyReleased(DWORD k){
         MENOS_down = false;
         qDebug() << "MENOS key released";
         emit menosReleased();
+    }
+}
+
+void EventHandler::enableDiffusion()
+{
+    boardsReady++;
+    if(boardsReady==5){
+        m_eNetClient->CambiarEstadoDifusion(true);
+        boardsReady = 0;
     }
 }
 

@@ -23,8 +23,8 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     connect(subte,SIGNAL(targetSpeedChanged(double)),this,SLOT(updateTargetSpeed(double)));
     connect(subte,SIGNAL(atpOn()),this,SLOT(initATP()));
     connect(subte,SIGNAL(atpOff()),this,SLOT(resetATP()));
-    connect(eventHandler,SIGNAL(kPressed()),this,SLOT(initATP()));
-    connect(eventHandler,SIGNAL(lPressed()),this,SLOT(resetATP()));
+    //connect(eventHandler,SIGNAL(kPressed()),this,SLOT(initATP()));
+    //connect(eventHandler,SIGNAL(lPressed()),this,SLOT(resetATP()));
     connect(eventHandler,SIGNAL(accelerationInstant(double)),this,SLOT(setACE(double)));
     connect(eventHandler,SIGNAL(nextToEstation()),this,SLOT(nextToEstation()));
     connect(eventHandler,SIGNAL(departureEstation()),this,SLOT(departureEstation()));
@@ -107,7 +107,6 @@ void Atp_Controller::initATP(){
     m_t_evalChangeSpeed->setInterval(500);
     m_t_evalChangeSpeed->start();
 
-    m_eventHandler->notifyValueChanged("c_llave_atp","con");
 }
 
 void Atp_Controller::resetATP(){
@@ -115,7 +114,6 @@ void Atp_Controller::resetATP(){
     this->m_onATP = false;
     this->off_ATP();
     this->m_view->setReset(true);
-    m_eventHandler->notifyValueChanged("c_llave_atp","des");
 }
 
 void Atp_Controller::setDrivingMode(int d){
@@ -198,6 +196,7 @@ void Atp_Controller::departureEstation(){
     if (m_onATP){
 
         this->m_view->setBlinkSpeedTarget(false);
+        qDebug()<<"departure Estation: m_speedTargetPrevious"<< m_speedTargetPrevious;
         m_AF = "4";
         updateTargetSpeed(m_speedTargetPrevious);
         critiqueSpeed(2);

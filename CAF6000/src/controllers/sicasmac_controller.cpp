@@ -16,11 +16,11 @@ SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac
 
     connect(m_sicasmac,SIGNAL(onPressSigRow()),this,SLOT(onPressSigRow()));
     connect(m_sicasmac,SIGNAL(onPressAntRow()),this,SLOT(onPressAntRow()));
-    connect(m_subte,SIGNAL(atpOn()),m_sicasmac,SLOT(turnOnSicas()));
-    connect(m_subte,SIGNAL(atpOff()),m_sicasmac,SLOT(turnOffSicas()));
+    connect(m_subte,SIGNAL(bateriaCon()),m_sicasmac,SLOT(turnOnSicas()));
+    connect(m_subte,SIGNAL(bateriaDes()),m_sicasmac,SLOT(turnOffSicas()));
     connect(m_sicasmac,SIGNAL(sicasOk()),m_subte,SLOT(setSicasOk()));
 
-
+cargarDestinoSicas("Flores");
 
     //MODELAR LAS FALLAS COMO UN VECTOR DE INT
     //cargoCoches("1;des;con;cerrado;abierto;abierto;cerrado;abierto;cerrado;cerrado;abierto;2;con;con;abierto;abierto;abierto;abierto;abierto;cerrado;cerrado;abierto;3;des;con;abierto;abierto;cerrado;cerrado;abierto;abierto;cerrado;cerrado;4;con;con;abierto;abierto;cerrado;cerrado;abierto;abierto;abierto;abierto;5;con;con;abierto;abierto;cerrado;cerrado;cerrado;abierto;abierto;abierto;6;con;con;abierto;abierto;abierto;cerrado;abierto;abierto;cerrado;abierto;");
