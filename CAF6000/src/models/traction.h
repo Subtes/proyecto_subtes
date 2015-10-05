@@ -30,7 +30,7 @@ private:
     int m_lastPosition;
 
     bool m_averia;
-    bool debuguear = false;
+    bool debuguear = true;
 
 
 public:

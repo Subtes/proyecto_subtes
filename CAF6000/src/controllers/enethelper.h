@@ -27,7 +27,7 @@ public:
 
 private:
     void readIni();
-
+    std::string localHost = "127.0.0.1";
 };
 
 #endif // ENETHELPER_H

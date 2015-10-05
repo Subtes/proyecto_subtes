@@ -20,6 +20,13 @@ void ENetHelper::initENet(ENetClient *eNetClient, EventHandler *eventHandler){
     if (!eNetClient->Conectar(serverIp, serverPort, controlsHostName)){
         qDebug() << "ERROR AL CONECTAR CON EL SERVIDOR";
         qDebug() << "Intento conectar con:: servidor " << serverIp.c_str() << " , puerto "<< serverPort << " , host "<< controlsHostName.c_str();
+        if (!eNetClient->Conectar(localHost, serverPort, controlsHostName)){
+                    qDebug() << "ERROR AL CONECTAR CON EL SERVIDOR EN LOCALHOST";
+        } else {
+            qDebug() << "<<<<<<< CONECTADO A LOCALHOST >>>>>>>";
+        }
+    } else {
+        qDebug() << "<<<<<<< CONECTADO A " << serverIp.c_str() << " >>>>>>>";
     }
     eNetClient->Suscribirse(instructionsHostName,"i_iniciar_simulador");
 }
