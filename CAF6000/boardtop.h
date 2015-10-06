@@ -26,6 +26,7 @@ public slots:
     void loadState(int state);
     void atpKeyON();
     void atpKeyOFF();
+    void setHardware(TractionHardware *);
 
 private:
     Ui::BoardTop *ui;

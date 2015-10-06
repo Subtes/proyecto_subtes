@@ -17,10 +17,14 @@ private:
     SingleButton *m_button;
     TractionHardware *m_tractionHardware;
 
+    QTimer * m_checkTB;
+
 public slots:
     void bypassBrakePressed();
     void bypassBrakeReleased();
     void updateHiloLazoStatus(bool status);
+//    void onBypassHD();
+//    void offBypassHD();
 };
 
 #endif // BRAKEBYPASS_CONTROLLER_H

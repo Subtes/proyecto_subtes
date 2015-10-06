@@ -15,7 +15,8 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eve
     m_brakesBypass = NULL;
     m_speedGauge = NULL;
     m_doors = NULL;
-    //m_tractionHardware = new TractionHardware();
+    m_tractionHardware = NULL;
+//    m_tractionHardware = new TractionHardware();
 //    m_checkBypass = new QTimer();
 //    m_checkBypass->setInterval(100);
 
@@ -77,11 +78,13 @@ void BoardCenter::startBoard()
 void BoardCenter::enableScreen()
 {
     this->setEnabled(true);
+    m_tractionBypass->onBypassHD();
 }
 
 void BoardCenter::disableScreen()
 {
     this->setEnabled(false);
+    m_tractionBypass->offBypassHD();
 }
 
 void BoardCenter::resetControls(){
@@ -104,6 +107,10 @@ void BoardCenter::loadState(int state){
     m_brakesBypass->bypassBrakeReleased();
     m_tractionBypass->releaseBypass();
 
+    //Preguntar a Faba si sirve o vale apagar aca las lecturas de hardware (bypasses)
+    m_tractionBypass->offBypassHD();
+    qDebug()<< "Hardware OFF";
+
     if(state == APAGADO){
         lastState = APAGADO;
         m_doors->turnOff();
@@ -115,7 +122,7 @@ void BoardCenter::loadState(int state){
         ui->velocimetro->turnOn();
         ui->bypassFreno->turnOn();
         ui->bypassTraccion->turnOn();
-        m_checkBypass->start();
+        m_tractionBypass->onBypassHD();
     }
 
     m_eventHandler->enableDiffusion();
@@ -137,13 +144,6 @@ void BoardCenter::bypassTraccionOFF(){
     m_tractionBypass->releaseBypass();
 }
 
-void BoardCenter::onCheckBypass(){
-    m_checkBypass->start();
-}
-
-void BoardCenter::offCheckBypass(){
-    m_checkBypass->stop();
-}
 
 void BoardCenter::turnOnWidgets()
 {

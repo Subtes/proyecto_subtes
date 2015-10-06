@@ -46,7 +46,7 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
     m_imageSplash = QPixmap(":/resources/splash.jpg");
 
     if(desktop->screenCount() == 4){
-        qDebug() << "Entre en For de pantallas igual 4 eventhandler: ";
+//        qDebug() << "Entre en For de pantallas igual 4 eventhandler: ";
 
         m_splash1 = new QSplashScreen(m_imageSplash);
         m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
@@ -73,7 +73,7 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
         m_splash3->showFullScreen();
         m_splash4->showFullScreen();
 
-        //para evitar el cierre con un CLICK
+//        para evitar el cierre con un CLICK
         m_splash1->setDisabled(true);
         m_splash2->setDisabled(true);
         m_splash3->setDisabled(true);
@@ -141,6 +141,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_coches_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_renglon_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estacion_destino_sicas");
+            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_salir_de_estacion");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_velocidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_tramo_vel");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
@@ -323,20 +324,20 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         m_subte->updateTargetSpeed(std::stod(value));
     }
 
-    else if(key.compare("i_cambio_senial") == 0){
-        try{
-            QString message = value.c_str();
-            QStringList parameters = message.split(";");
-            std::string state = parameters.at(1).toStdString();
+//    else if(key.compare("i_cambio_senial") == 0){
+//        try{
+//            QString message = value.c_str();
+//            QStringList parameters = message.split(";");
+//            std::string state = parameters.at(1).toStdString();
 
-            if (state.compare("1")==0){
-                emit departureEstation();
-                qDebug() << "senial salida anden recibida, 1";
-            }
-        }catch(...){
-            qDebug()<<"Error en parametros clave;valor recibidos";
-        }
-    }
+//            if (state.compare("1")==0){
+//                emit departureEstation();
+//                qDebug() << "senial salida anden recibida, 1";
+//            }
+//        }catch(...){
+//            qDebug()<<"Error en parametros clave;valor recibidos";
+//        }
+//    }
 
     else if(key.compare("i_cargar_estado") == 0){
 
@@ -444,6 +445,12 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         QString mensaje = value.c_str();
         emit cargarDestinoSicas(mensaje);
     }
+    else if(key.compare("i_salir_de_estacion") == 0){
+        if (value.compare("1") == 0){
+            qDebug() << "i_salir_de_estacion: --> 1";
+            emit departureEstation();
+        }
+    }
 }
 
 void EventHandler::processKeyPressed(DWORD k)
@@ -550,7 +557,7 @@ void EventHandler::processKeyPressed(DWORD k)
     } else if ( k == _J && !J_down  ){
         J_down = true;
         qDebug() << "J key pressed, departureFromEstation";
-        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_cambio_senial", "id;1");
+        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_salir_de_estacion", "1");
     } else if ( k == _MAS && !MAS_down ){
         MAS_down = true;
         qDebug() << "MAS key pressed, departureFromEstation";

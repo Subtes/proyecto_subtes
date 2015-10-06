@@ -19,7 +19,7 @@
 int main(int argc, char *argv[])
 {
     //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-    //QApplication::setAttribute(Qt::AA_UseOpenGLES,true);
+    QApplication::setAttribute(Qt::AA_UseOpenGLES,true);
     //QApplication::setAttribute(Qt::AA_UseDesktopOpenGL,true);
     //QApplication::setAttribute(Qt::AA_UseSoftwareOpenGL,true);
 
@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
 
     m_h->setHardware(m_tHardware);
     m_c->setHardware(m_tHardware);
+    m_t->setHardware(m_tHardware);
 
     QDesktopWidget *desktop = a.desktop();
 

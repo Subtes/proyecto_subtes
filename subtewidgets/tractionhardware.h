@@ -37,6 +37,7 @@ public slots:
     void processRanaChanged();
     void processSetaChanged();
     void processKeyTop();
+    bool isHardwareEnable();
 
 private:
     SDL_Joystick *m_joystick;
