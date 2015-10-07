@@ -20,7 +20,7 @@ TractionHardware::TractionHardware()
     }
 
     m_minInterval = 25635; //m_minInterval = 973;
-    m_neutral = 642; //m_neutral = 522;
+    m_neutral = 600; //m_neutral = 522;
     m_neutralLower = 4500;
     m_neutralTop = -1000;
     m_breakEmergency = 20500;
@@ -184,4 +184,12 @@ TractionHardware::~TractionHardware(){
     SDL_JoystickClose(m_joystick);
     SDL_QuitSubSystem(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);
     this->deleteLater();
+}
+
+bool TractionHardware::isHardwareEnable(){
+    if(m_joystick){
+        return true;
+    }else{
+        return false;
+    }
 }

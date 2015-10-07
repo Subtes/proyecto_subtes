@@ -18,11 +18,14 @@ private:
     SubteStatus *m_subte;
     SingleButton *m_button;
     TractionHardware *m_tractionHardware;
+    QTimer * m_checkTB;
 
 public slots:
     void updateStatus(bool status);
     void pressBypass();
     void releaseBypass();
+    void onBypassHD();
+    void offBypassHD();
 
 };
 

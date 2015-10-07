@@ -11,7 +11,10 @@ TractionBypass_Controller::TractionBypass_Controller(SubteStatus *subte, SingleB
     m_button->setOnPressAsDriver();
     m_button->setLightManagement(false);
 
-    m_button->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));    
+    m_button->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
+
+    m_checkTB = new QTimer();
+    m_checkTB->setInterval(750);
 
     connect(m_tractionHardware,SIGNAL(tractionBypassPressed()),this,SLOT(pressBypass()));
     connect(m_tractionHardware,SIGNAL(tractionBypassReleased()),this,SLOT(releaseBypass()));
@@ -20,6 +23,8 @@ TractionBypass_Controller::TractionBypass_Controller(SubteStatus *subte, SingleB
     connect(m_subte,SIGNAL(CSCPChanged(bool)),this,SLOT(updateStatus(bool)));
 
     updateStatus(m_subte->cscp());
+
+    connect(m_checkTB,SIGNAL(timeout()),m_tractionHardware,SLOT(processBottonChanged()));
 }
 
 TractionBypass_Controller::~TractionBypass_Controller()
@@ -48,4 +53,22 @@ void TractionBypass_Controller::pressBypass()
 {
     m_subte->bypassCSCP(true);
     updateStatus(m_subte->cscp());
+}
+
+void TractionBypass_Controller::onBypassHD(){
+    if (m_tractionHardware->isHardwareEnable()){
+        m_checkTB->start();
+        qDebug()<<"Hardware ON: Bypass Traction";
+    }else{
+        qDebug()<<"No Hardware Baypass Traction";
+    }
+}
+
+void TractionBypass_Controller::offBypassHD(){
+    if (m_tractionHardware->isHardwareEnable()){
+        m_checkTB->stop();
+        qDebug()<<"Hardware OFF: Bypass Traction";
+    }else{
+        qDebug()<<"No Hardware Baypass Traction";
+    }
 }

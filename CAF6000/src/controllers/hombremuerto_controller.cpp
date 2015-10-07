@@ -8,8 +8,8 @@ HombreMuerto_Controller::HombreMuerto_Controller(SubteStatus *subte, TractionLev
 
     connect(m_slider,SIGNAL(hvPressed()),m_subte,SLOT(hombreMuertoPressed()));
     connect(m_slider,SIGNAL(hvReleased()),m_subte,SLOT(hombreMuertoReleased()));
-    connect(th,SIGNAL(manDiedPressed()),m_subte,SLOT(hombreMuertoPressed()));
-    connect(th,SIGNAL(manDiedReleased()),m_subte,SLOT(hombreMuertoReleased()));
+    connect(m_tractionHardware,SIGNAL(manDiedPressed()),m_subte,SLOT(hombreMuertoPressed()));
+    connect(m_tractionHardware,SIGNAL(manDiedReleased()),m_subte,SLOT(hombreMuertoReleased()));
 }
 
 HombreMuerto_Controller::~HombreMuerto_Controller()

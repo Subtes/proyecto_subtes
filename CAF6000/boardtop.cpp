@@ -19,7 +19,7 @@ BoardTop::BoardTop(QWidget *parent, SubteStatus * subte, EventHandler *eventHand
 
     m_connectors = NULL;
     m_topGauges = NULL;
-    m_tractionHardware = new TractionHardware();
+    m_tractionHardware = NULL;
 }
 
 BoardTop::~BoardTop()
@@ -61,6 +61,7 @@ void BoardTop::enableScreen()
 void BoardTop::disableScreen()
 {
     this->setEnabled(false);
+    m_keyTopBoard->offKeyHD();
 }
 
 void BoardTop::resetControls(){
@@ -78,6 +79,7 @@ void BoardTop::loadState(int state)
         m_connectors->setEstado(APAGADO);
         m_keyTopBoard->keyOFF();
         m_topGauges->turnOffGauges();
+//        m_keyTopBoard->offKeyHD();
 
     } else if(state== EN_MARCHA){
         lastState = EN_MARCHA;
@@ -96,4 +98,8 @@ void BoardTop::atpKeyON(){
 
 void BoardTop::atpKeyOFF(){
     m_keyTopBoard->keyTurnOFF();
+}
+
+void BoardTop::setHardware(TractionHardware *th){
+    m_tractionHardware = th;
 }

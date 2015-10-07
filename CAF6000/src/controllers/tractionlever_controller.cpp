@@ -7,7 +7,10 @@ TractionLever_Controller::TractionLever_Controller(SubteStatus * subte, Traction
     m_tractionHardware = th;
 
     m_checkJ = new QTimer();
-    m_checkJ->setInterval(50);
+    m_checkJ->setInterval(100);
+
+    m_checkB = new QTimer();
+    m_checkB->setInterval(500);
 
     connect(m_checkJ,SIGNAL(timeout()),m_tractionHardware,SLOT(processValueChanged()));
     connect(m_checkJ,SIGNAL(timeout()),m_tractionHardware,SLOT(processRanaChanged()));
@@ -33,11 +36,25 @@ void TractionLever_Controller::setValue(int v)
 }
 
 void TractionLever_Controller::onTractionLever(){
-    m_checkJ->start();
+    bool check = m_tractionHardware->isHardwareEnable();
+    if (check){
+        m_checkJ->start();
+        m_checkB->start();
+        qDebug()<<"Hardware ON: Palanca, HV, Seta, Rana";
+    }else{
+        qDebug()<<"No Hardware";
+    }
+
 }
 
 void TractionLever_Controller::offTractionLever(){
-    m_checkJ->stop();
+    if (m_tractionHardware->isHardwareEnable()){
+        m_checkJ->stop();
+        m_checkB->stop();
+        qDebug()<<"Hardware OFF: Palanca, HV, Seta, Rana";
+    }else{
+        qDebug()<<"No Hardware";
+    }
 }
 
 void TractionLever_Controller::processValue(int value){
@@ -58,6 +75,7 @@ void TractionLever_Controller::processValue(int value){
     }else if((value <= 15)&&(value >= -15)){
         emit traction(0);
         emit brake(0);
+        m_tractionLever->setValue(0);
         //qDebug()<<"Valor de Joystick:  ---BRAKE & TRACTION------> 0";
     }else if ((value < -15) && (value >= -95)){
         int br = static_cast<int>((((double)((-1)*value)-15.0)/80.0)*100.0);

@@ -50,7 +50,6 @@ private:
     SpeedGaugeLeds_Controller       *m_speedGauge;
     Doors_Controller                *m_doors;
     TractionHardware                *m_tractionHardware = NULL;
-
     QTimer * m_checkBypass;
 };
 

@@ -235,7 +235,8 @@ Rectangle {
     function turnOn(){
         red.opacity = 1;
         updateMaxSpeed(55);
-        updateSpeed(99);
+        //updateSpeed(99);
+        updateSpeed(0);
         onStatus = true;
     }
 }

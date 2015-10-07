@@ -373,6 +373,7 @@ Rectangle {
 
         v = parseInt(v);
 
+        ims0.opacity=1;
         ims1.opacity=1;
         ims2.opacity=1;
 
@@ -381,16 +382,6 @@ Rectangle {
             ims0.opacity=1;
         }else{
             ims0.opacity=0;
-        };
-
-        if (v === velTramo15){
-            //15
-            image10.opacity=1;
-            ims1.opacity=0;
-            image05.opacity=1;
-        }else{
-            image10.opacity=0;
-            image05.opacity=0;
         };
 
         if (v === velTramo1){
@@ -433,6 +424,18 @@ Rectangle {
             image60.opacity=1;
         }else{
             image60.opacity=0;
+        };
+        if (v === velTramo15){
+            //15
+            ims0.opacity=0;
+            image10.opacity=1;
+            ims1.opacity=0;
+            image05.opacity=1;
+        }else if (v === 10){
+            image05.opacity=0;
+        }else{
+            image10.opacity=0;
+            image05.opacity=0;
         };
     }
 
@@ -771,9 +774,12 @@ Rectangle {
     function setBlinkSpeedTarget(value){
         targetSpeed(0);
         if(value === true){
-            blinkSpeedTarget.start()
+            blinkSpeedTarget.start();
         }else{
-            blinkSpeedTarget.stop()
+            blinkSpeedTarget.stop();
+            ims0.opacity=0;
+            ims1.opacity=0;
+            ims2.opacity=0;
         }
     }
 
@@ -806,6 +812,19 @@ Rectangle {
         for (indexLedAllow=x; indexLedAllow < ledsSpeedAllowed.length; indexLedAllow++){
             ledsSpeedAllowed[indexLedAllow].opacity=0;
         };
+
+        for (indexLed=0; indexLed<=9; indexLed++){
+            digitsL0[indexLed].opacity = 0;
+            digitsL1[indexLed].opacity = 0;
+            digitsL2[indexLed].opacity = 0;
+        }
+
+        setBlinkSpeedTarget(false);
+        setCMC(false);
+        setCL(false);
+        setCorte(false);
+        setFserv(false);
+        setFrenoUrg(false);
     }
 
 }

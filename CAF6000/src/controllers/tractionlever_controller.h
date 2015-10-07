@@ -27,8 +27,8 @@ private:
     TractionHardware * m_tractionHardware;
     TractionLever * m_tractionLever;
     SubteStatus * m_subte;
-
     QTimer * m_checkJ;
+    QTimer * m_checkB;
 };
 
 #endif // TRACTIONLEVER_CONTROLLER_H

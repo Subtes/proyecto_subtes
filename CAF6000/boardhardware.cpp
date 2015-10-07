@@ -1,4 +1,4 @@
-#include <tractionhardware.h>
+//#include <tractionhardware.h>
 
 #include "boardhardware.h"
 #include "ui_boardhardware.h"
@@ -27,7 +27,7 @@ BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte, EventHandler 
     m_rana = NULL;
     m_hombreMuerto = NULL;
     m_setaButton = NULL;
-    //m_tractionHardware = new TractionHardware();
+
     m_tractionHardware = NULL;
 
 }

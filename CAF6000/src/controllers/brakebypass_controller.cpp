@@ -20,7 +20,7 @@ BrakeBypass_Controller::BrakeBypass_Controller(SubteStatus *subte, SingleButton 
     connect(m_button,SIGNAL(buttonReleased()),this,SLOT(bypassBrakeReleased()));
     connect(m_subte,SIGNAL(hiloLazoChanged(bool)),this,SLOT(updateHiloLazoStatus(bool)));
     connect(m_tractionHardware,SIGNAL(brakeBypassPressed()),this,SLOT(bypassBrakePressed()));
-    connect(m_tractionHardware,SIGNAL(brakeBypassReleased()),this,SLOT(bypassBrakeReleased()));
+    connect(m_tractionHardware,SIGNAL(brakeBypassReleased()),this,SLOT(bypassBrakeReleased()));    
 
 }
 
@@ -31,7 +31,7 @@ BrakeBypass_Controller::~BrakeBypass_Controller()
 void BrakeBypass_Controller::bypassBrakePressed()
 {
     m_subte->bypassBrake(true);
-    qDebug()<<"BYPASS ACTIVATES ---------------||||||||||||||";
+    qDebug()<<"BYPASS ACTIVATES";
     if(m_button->isLighted())
         m_button->turnOn();
 }
@@ -39,7 +39,7 @@ void BrakeBypass_Controller::bypassBrakePressed()
 void BrakeBypass_Controller::bypassBrakeReleased()
 {
     m_subte->bypassBrake(false);
-    qDebug()<<"BYPASS DEACTIVATED ---------------||||||||||||||";
+    qDebug()<<"BYPASS DEACTIVATED";
     this->updateHiloLazoStatus(m_subte->getHiloLazo());
 }
 

@@ -77,6 +77,8 @@ void Atp_Controller::initATP(){
     //[REF-9]: 1.25s y tiempo de reacción del ATP: 0.50s).
     this->m_A_freno = 1.75;
 
+    this->m_view->setReset(true);
+
     if(this->m_subte->getDrivingModeATP()){
         setDrivingMode(0);
     }else{
@@ -90,6 +92,7 @@ void Atp_Controller::initATP(){
     m_speedCritique = 0.0;
     m_speedTargetPrevious = 0.0;
     m_speedTarget = 60.0;
+    m_AF = "6";
 
     this->calculateDistance();
 
@@ -177,7 +180,7 @@ void Atp_Controller::updateTargetSpeed(double speed){
 void Atp_Controller::nextToEstation(){
 
 //Esto es un Parche debido al modelo!! ojo ver. Es porque no manda señales manda velocidades que no son unicas.
-    if (m_onATP){
+    if (m_onATP && (m_AF != "1")){
 
         this->m_view->updateTargetSpeed(0.0);
         this->m_view->setBlinkSpeedTarget(true);
@@ -193,11 +196,11 @@ void Atp_Controller::nextToEstation(){
 
 void Atp_Controller::departureEstation(){
     //VV
-    if (m_onATP){
+    if (m_onATP && (m_AF == "1")){
 
         this->m_view->setBlinkSpeedTarget(false);
         qDebug()<<"departure Estation: m_speedTargetPrevious"<< m_speedTargetPrevious;
-        m_AF = "4";
+        m_AF = "6";
         updateTargetSpeed(m_speedTargetPrevious);
         critiqueSpeed(2);
     }
@@ -226,41 +229,45 @@ void Atp_Controller::setAllowedSpeed(double s){
 }
 
 void Atp_Controller::setSpeedTarget(double speed){
-
-    int s = static_cast<int>(speed);
-    switch(s){
-        case 0:
-            m_AF_previous = m_AF;
-            m_AF = "0";
-        break;
-        case 15:
-            m_AF_previous = m_AF;
-            m_AF = "2";
-        break;
-        case 25:
-            m_AF_previous = m_AF;
-            m_AF = "3";
-        break;
-        case 30:
-            m_AF_previous = m_AF;
-            m_AF = "4";
-        break;
-        case 40:
-            m_AF_previous = m_AF;
-            m_AF = "5";
-        break;
-        case 50:
-            m_AF_previous = m_AF;
-            m_AF = "6";
-        break;
-        case 60:
-            m_AF_previous = m_AF;
-            m_AF = "7";
-        break;
+//Parche. Es porque no manda señales manda velocidades que no son unicas.
+    if (m_AF == "1"){
+        m_speedTargetPrevious = speed;
+    }else{
+        int s = static_cast<int>(speed);
+        switch(s){
+            case 0:
+                m_AF_previous = m_AF;
+                m_AF = "0";
+            break;
+            case 15:
+                m_AF_previous = m_AF;
+                m_AF = "2";
+            break;
+            case 25:
+                m_AF_previous = m_AF;
+                m_AF = "3";
+            break;
+            case 30:
+                m_AF_previous = m_AF;
+                m_AF = "4";
+            break;
+            case 40:
+                m_AF_previous = m_AF;
+                m_AF = "5";
+            break;
+            case 50:
+                m_AF_previous = m_AF;
+                m_AF = "6";
+            break;
+            case 60:
+                m_AF_previous = m_AF;
+                m_AF = "7";
+            break;
+        }
+        m_speedTargetPrevious = m_speedTarget;
+        m_speedTarget = speed;
     }
 
-    m_speedTargetPrevious = m_speedTarget;
-    m_speedTarget = speed;
 }
 
 void Atp_Controller::critiqueSpeed(int op){

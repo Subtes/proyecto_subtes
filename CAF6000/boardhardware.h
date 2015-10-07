@@ -1,6 +1,8 @@
 #ifndef BOARDHARDWARE_H
 #define BOARDHARDWARE_H
 
+#include <tractionhardware.h>
+
 #include "baseboard.h"
 #include "src/controllers/horn_controller.h"
 #include "src/controllers/tractionlever_controller.h"
