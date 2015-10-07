@@ -57,6 +57,7 @@ void BoardRight::disableScreen()
 
 void BoardRight::resetControls(){
     loadState(lastState);
+    m_sicasmac->resetSicas();
 }
 
 void BoardRight::loadState(int state){

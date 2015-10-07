@@ -13,21 +13,25 @@ SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac
     DatosPorCoche=8;
     pantallasicas.clear();
     saveId.clear();
+    estAnteriorFallaCocheSicas.clear();
 
     connect(m_sicasmac,SIGNAL(onPressSigRow()),this,SLOT(onPressSigRow()));
     connect(m_sicasmac,SIGNAL(onPressAntRow()),this,SLOT(onPressAntRow()));
     connect(m_subte,SIGNAL(bateriaCon()),m_sicasmac,SLOT(turnOnSicas()));
     connect(m_subte,SIGNAL(bateriaDes()),m_sicasmac,SLOT(turnOffSicas()));
     connect(m_sicasmac,SIGNAL(sicasOk()),m_subte,SLOT(setSicasOk()));
-
-    cargarDestinoSicas("Flores");
-
-    //MODELAR LAS FALLAS COMO UN VECTOR DE INT
-    //cargoCoches("1;des;con;cerrado;abierto;abierto;cerrado;abierto;cerrado;cerrado;abierto;2;con;con;abierto;abierto;abierto;abierto;abierto;cerrado;cerrado;abierto;3;des;con;abierto;abierto;cerrado;cerrado;abierto;abierto;cerrado;cerrado;4;con;con;abierto;abierto;cerrado;cerrado;abierto;abierto;abierto;abierto;5;con;con;abierto;abierto;cerrado;cerrado;cerrado;abierto;abierto;abierto;6;con;con;abierto;abierto;abierto;cerrado;abierto;abierto;cerrado;abierto;");
+    //connect(m_subte,SIGNAL(retentionBrakeChanged(bool)),this,SLOT(ActivoYDesactivoFrenoRetencion(bool)));
 }
 
 SicasMac_Controller::~SicasMac_Controller()
 {
+}
+
+
+void SicasMac_Controller::cargoVectorEstadoAnteriorFalla(){
+    for (int var = 0; var <cantCochesTotal ; ++var) {
+        estAnteriorFallaCocheSicas.push_back("normal");
+    }
 }
 /**
  * @brief SicasMac_Controller::onPressSigRow
@@ -50,15 +54,15 @@ void SicasMac_Controller::onPressSigRow(){
             m_sicasmac->initRenglonSicas();
         }
     }
-
     if(m_sicasmac->getPosActualRenglon()==(pantallasicas.size()-1)){
         m_sicasmac->turnOffSiguiente();
         m_sicasmac->turnOnAnterior();
     }
 }
+
 /**
  * @brief SicasMac_Controller::onPressAntRow
- *  Actualiza la posicion del renglon anterior
+ *  Actualizar la posicion del renglon anterior
  * @param mensaje
  */
 void SicasMac_Controller::onPressAntRow(){
@@ -92,7 +96,6 @@ void SicasMac_Controller::onPressAntRow(){
  * @param mensaje
  */
 void SicasMac_Controller::separoMensajes(QString mensaje){
-    QString trenesBlink;
     if(mensaje != ""){
         QStringList strList;
         strList = separoCaracteres(mensaje);
@@ -101,8 +104,7 @@ void SicasMac_Controller::separoMensajes(QString mensaje){
                 int posicion = buscoPosicion(mensaje.split(';')[0]);
                 if (posicion >= 0){
                     pantallasicas.replace(posicion,mensaje);
-                    trenesBlink = generoBlinkTrenes(strList[1]);
-                    m_sicasmac->textEditSicas(strList[0],trenesBlink,strList[2],posicion);
+                    generoRenglonesSicas(strList[0],strList[1],strList[2],posicion);
                 }
             }
             else
@@ -111,8 +113,7 @@ void SicasMac_Controller::separoMensajes(QString mensaje){
                 pantallasicas.push_back(mensaje);
                 renglon++;
                 if (renglon<5){
-                    trenesBlink = generoBlinkTrenes(strList[1]);
-                    m_sicasmac->textEditSicas(strList[0],trenesBlink,strList[2],renglon);
+                    generoRenglonesSicas(strList[0],strList[1],strList[2],renglon);
                 }
                 m_sicasmac->actualizarTamArreRenglon(renglon);
              }
@@ -127,8 +128,45 @@ void SicasMac_Controller::separoMensajes(QString mensaje){
     }
 }
 
+/**
+ * @brief SicasMac_Controller::generoRenglonesSicas
+ *  Genera el Bink en los trenes en los casos en que haya un error en el tren especifico
+ * @param mensaje
+ */
 
-//X para los casos en que la pantalla tiene un valor y este se borra, actualiza lo anterior
+void SicasMac_Controller::generoRenglonesSicas(QString texto, QString trenes, QString letra, int index){
+    QStringList cocheXcoche = trenes.split(" ");
+    QString sepCocheLetra;
+    QString trenesSinBlink;
+    QString trenesConBlink;
+    QStringList cocheYLetra;
+    QString valorI = "I";
+    bool parpadeo = false;
+    for (int var = 0; var < cocheXcoche.size(); ++var) {
+        trenesSinBlink.push_back("  ");
+        trenesConBlink.push_back("  ");
+        sepCocheLetra = cocheXcoche[var];
+        cocheYLetra =sepCocheLetra.split(",");
+        if (cocheYLetra[1] == valorI){
+            parpadeo = true;
+            trenesConBlink.push_back("  ");
+        }
+        else{
+            trenesConBlink.push_back(cocheYLetra[0]);
+
+        }
+        trenesSinBlink.push_back(cocheYLetra[0]);
+    }
+    m_sicasmac->generarTrenesBlink(trenesConBlink, index, parpadeo);
+    m_sicasmac->textEditSicas(texto,trenesSinBlink,letra,index);
+}
+
+/**
+ * @brief SicasMac_Controller::bajaMensaje
+ * Borra el mensaje y actualiza la vista
+ * @param mensaje
+ */
+
 void SicasMac_Controller::bajaMensaje(QString texto){
     int posicion = buscoPosicion(texto);
     if(posicion >= 0){
@@ -144,7 +182,13 @@ void SicasMac_Controller::bajaMensaje(QString texto){
         m_sicasmac->initRenglonSicas();
    }
 }
-//BIEN
+
+/**
+ * @brief SicasMac_Controller::buscoPosicion
+ *  Buscal posicion exacta del mensaje en el arreglo
+ * @param mensaje
+ */
+
 int SicasMac_Controller::buscoPosicion(QString mensaje){
 
     for (int var = 0; var < saveId.size(); var++) {
@@ -154,17 +198,28 @@ int SicasMac_Controller::buscoPosicion(QString mensaje){
     return -1;
 }
 
-//REFRESCO LA VISTA DE LOS RENGLONES DEL SICAS siempre es de 0 a 4 no importa la pantalla
+/**
+ * @brief SicasMac_Controller::borrarPantallaSicas
+ * Refresca la vista del sicas, borrando todos los campos del mismo va de 0 a 4
+ * @param mensaje
+ */
 
 void SicasMac_Controller::borrarPantallaSicas(){
     for (int var = 0; var < 5; var++){
         m_sicasmac->textEditSicas(" "," "," ",var);
+        m_sicasmac->borrarArregloBlinkSicas(" ",var);
+
     }
 }
 
+/**
+ * @brief SicasMac_Controller::refrescoVista
+ *  Refresca la vista del sicas en los casos en que busque siguiente o anterior.
+ * @param mensaje
+ */
+
 void SicasMac_Controller::refrescoVista(){
     QStringList  strList;
-    QString trenesBlink;
     int actual;
     int inicio = (cantPantallasSicas*5);
     int fin = ((cantPantallasSicas+1)*5);
@@ -175,28 +230,20 @@ void SicasMac_Controller::refrescoVista(){
     for (int var = inicio; var < fin ;var++) {
         actual=(var%5);
         strList = separoCaracteres(pantallasicas[var]);
-        trenesBlink = generoBlinkTrenes(strList[1]);
-        m_sicasmac->textEditSicas(strList[0],trenesBlink,strList[2],actual);
+        generoRenglonesSicas(strList[0],strList[1],strList[2],actual);
     }
-}
-
-QString SicasMac_Controller::generoBlinkTrenes(QString trenes){
-    QStringList cocheXcoche = trenes.split(" ");
-    QString cocheLetra;
-    QString devolverTrenes;
-
-    for (int var = 0; var < cocheXcoche.size(); ++var) {
-       devolverTrenes.push_back("  ");
-       cocheLetra = cocheXcoche[var];
-       devolverTrenes.push_back(cocheLetra.split(",")[0]);
-    }
-    return devolverTrenes;
 }
 
 
 QStringList SicasMac_Controller::separoCaracteres(QString mensaje){
      return (mensaje.split(';'));
 }
+
+/**
+ * @brief SicasMac_Controller::cargoCoches
+ *  Carga las F (fallas) de cada tren, y ademas cada una de las puertas de cada tren
+ * @param mensaje
+ */
 
 void SicasMac_Controller::cargoCoches(QString mensajeCoches){
     int index =0;
@@ -214,6 +261,7 @@ void SicasMac_Controller::cargoCoches(QString mensajeCoches){
             estTrac=cochesList[index];
             index++;
             verificoEstFalla(estFreno,coche);
+            estAnteriorFallaCocheSicas.insert(coche,estFreno);
             for (int datos = 0; datos < DatosPorCoche; ++datos) {
                 verificoEstPuertas(cochesList[index],cantPuertas); //manda las puertas
                 cantPuertas++;
@@ -223,9 +271,39 @@ void SicasMac_Controller::cargoCoches(QString mensajeCoches){
     }
 }
 
-//Senal manda colo
-void SicasMac_Controller::frenoRetencionActivado(){
+/**
+ * @brief SicasMac_Controller::frenoRetencionActivado
+ *  Carga la Señal cuando se activan el freno y se muestra en el SicasMac
+ *  que el freno se activo del mismo modo que si se descativa el mismo es borrado
+ * @param mensaje
+ */
+
+void SicasMac_Controller::ActivoYDesactivoFrenoRetencion(bool state){
+    if(state){
+        for (int var = 0; var < cantCochesTotal; ++var) {
+            if (estAnteriorFallaCocheSicas[var] == "normal" )
+                verificoEstFalla("con",var);
+        }
+        pantallasicas.push_front("Freno de Retencion; 1,F 2,F 3,F 4,F 5,F 6,F;A;alta");
+        renglon++;
+        m_sicasmac->actualizarTamArreRenglon(renglon);
+        refrescoVista();
+    }
+    else{
+        bajaMensaje("Freno de Retencion");
+        for (int var = 0; var < cantCochesTotal; var++) {
+            if (estAnteriorFallaCocheSicas[var] == "normal" ){
+                verificoEstFalla("des",var);
+            }
+        }
+    }
 }
+
+    /**
+ * @brief SicasMac_Controller::verificoEstPuertas
+ * verifica y pinta el estado de las puertas del tren
+ * @param mensaje
+ */
 
 void SicasMac_Controller::verificoEstPuertas(QString falla, int cantPuertas){
     if(falla=="abierto"){
@@ -238,6 +316,12 @@ void SicasMac_Controller::verificoEstPuertas(QString falla, int cantPuertas){
         m_sicasmac->turnBlinkFailure(cantPuertas);
 }
 
+/**
+ * @brief SicasMac_Controller::verificoEstFalla
+ * verifica y pinta el estado de las fallas del tren
+ * @param mensaje
+ */
+
 void SicasMac_Controller::verificoEstFalla(QString falla, int coche){
     if(falla=="con")
         m_sicasmac->turnOnFailure(coche);
@@ -247,8 +331,26 @@ void SicasMac_Controller::verificoEstFalla(QString falla, int coche){
         m_sicasmac->turnInhabFailure(coche);
     if(falla=="int")
         m_sicasmac->turnBlinkFailure(coche);
+
 }
+/**
+ * @brief SicasMac_Controller::cargarDestinoSicas
+ * Carga el Destino en el Sicas, dependiendo de lo que nos pasa instrucciones
+ * @param mensaje
+ */
 
 void SicasMac_Controller::cargarDestinoSicas(QString destino){
     m_sicasmac->cargoDestinoSicas(destino);
+}
+
+void SicasMac_Controller::resetSicas(){
+    for (int var = 0; var <= pantallasicas.size(); var++) {
+          pantallasicas.removeAt(var);
+          saveId.removeAt(var);
+    }
+    borrarPantallaSicas();
+    m_sicasmac->actualizarTamArreRenglon(pantallasicas.size());
+    m_sicasmac->initRenglonSicas();
+    cargoVectorEstadoAnteriorFalla();
+
 }

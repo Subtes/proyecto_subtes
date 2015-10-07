@@ -61,6 +61,8 @@ public slots:
        void turnOnSicas();
        void turnOffSicas();
        void cargoDestinoSicas(QString destino);
+       void generarTrenesBlink(QString trenes, int index,bool parpadeo);
+       void borrarArregloBlinkSicas(QString trenes, int index);
 
 };
 

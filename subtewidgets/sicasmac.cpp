@@ -103,6 +103,21 @@ void SicasMac::textEditSicas(QString error,QString trenes,QString letra, int ind
                               Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, error),
                                     Q_ARG(QVariant, trenes),Q_ARG(QVariant, letra),Q_ARG(QVariant, index));
 }
+void SicasMac::borrarArregloBlinkSicas(QString trenes, int index)
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "borrarTrenesBlink",
+                              Q_RETURN_ARG(QVariant, returnedValue),Q_ARG(QVariant, trenes)
+                              ,Q_ARG(QVariant, index));
+}
+void SicasMac::generarTrenesBlink(QString trenes, int index,bool parpadeo)
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "blinkRenglonTrenes",
+                              Q_RETURN_ARG(QVariant, returnedValue),Q_ARG(QVariant, trenes),
+                              Q_ARG(QVariant, index),Q_ARG(QVariant, parpadeo));
+}
+
 
 void SicasMac::insertTrainSicas(QString coche, QString estFreno)
 {
@@ -125,6 +140,7 @@ void SicasMac::turnOnFailure(int coche)
     QMetaObject::invokeMethod(m_qmlView, "turnOnFailure",
             Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, coche));
 }
+
 void SicasMac::turnBlinkFailure(int coche)
 {
     QVariant returnedValue;
