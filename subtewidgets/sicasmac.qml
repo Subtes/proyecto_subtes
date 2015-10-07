@@ -16,6 +16,7 @@ Rectangle {
     property variant textoError: []
     property variant failure: []
     property variant puertasCoche: []
+    property variant trenConFallaBlink: []
     property int variablePuertas: 0
     property int valorRenglonActual: 0
     property int valorRenglonFin: 0
@@ -79,7 +80,7 @@ Rectangle {
         }
     }
 
-    MouseArea {
+   MouseArea {
         id: siguiente2
         x: 274
         y: 438
@@ -106,7 +107,7 @@ Rectangle {
         }
     }
 
-    MouseArea {
+   MouseArea {
         id: anterior2
         x: 365
         y: 439
@@ -143,7 +144,7 @@ Rectangle {
         height: 34
     }
 
-    Text {
+   Text {
         id: menu
         x: 60
         y: 378
@@ -373,7 +374,7 @@ Rectangle {
         y: 63
         width: 60
         height: 20
-        text: qsTr("")
+        text: qsTr(" ")
         font.bold: true
         font.pixelSize: 14
         font.family: "Arial"
@@ -443,6 +444,7 @@ Rectangle {
         z: 5
         source: "resources/sicas_glass.png"
     }
+
     Image {
         id: sicas_renglon
         x: 99
@@ -465,7 +467,6 @@ Rectangle {
     }
 
     function changeText(error1,trenes2,letra3,val){
-        console.log("1: " + error1 + " 2: " + trenes2 + " 3: " + letra3 + " v: " +val)
         sicassinerror.opacity=0;
         textoError[val].opacity =1;
         textoError[val].text=error1;
@@ -477,21 +478,26 @@ Rectangle {
     }
 
     function getColorText(error1,trenes2,letra3,val){
-        if(letra3=="A"){
+        if(letra3==="A"){
             textoError[val].color="red";
             trenConFalla[val].color="red";
             prioridadLetra[val].color="red";
+            trenConFallaBlink[val].color="red";
         }
 
-        if(letra3=="B"){
+        if(letra3==="B"){
             textoError[val].color="blue";
             trenConFalla[val].color="blue";
             prioridadLetra[val].color="blue";
+            trenConFallaBlink[val].color="blue";
+
         }
-        if(letra3=="C"){
+        if(letra3==="C"){
             textoError[val].color="green";
             trenConFalla[val].color="green";
             prioridadLetra[val].color="green";
+            trenConFallaBlink[val].color="green";
+
         }
     }
 
@@ -574,18 +580,20 @@ Rectangle {
 
    function turnOnFailure(valF){
        failure[valF].state = "con";
-
    }
+
    function turnBlinkFailure(valF){
        failure[valF].state = "int";
-
    }
+
    function turnInhabFailure(valF){
        failure[valF].state = "inhab";
-
    }
 
-   // REPEATER DE PANTALLA SICAS
+
+//REPEAT QUE GENERA para el texto en el renglon de sicas
+
+
    Repeater {
        model: 5
        Text {
@@ -616,12 +624,16 @@ Rectangle {
        }
        onItemAdded: textoError[index] = item
    }
+
    function getXTextError(p){
        return(115)
    }
+
    function getYTextError(p){
        return (180+(20*p))
    }
+
+//REPEAT QUE GENERA en el renglon de la visualizacion del tren
 
    Repeater {
        model: 5
@@ -642,6 +654,10 @@ Rectangle {
                    PropertyChanges { target: trenesE; opacity: 1;}
                },
                State {
+                   name: "parpadeo"
+                   PropertyChanges { target: animationtrenes; running:true;}
+               },
+               State {
                    name: "off"
                    PropertyChanges { target: trenesE; opacity: 0;}
                }
@@ -650,8 +666,101 @@ Rectangle {
            transitions: Transition {
                PropertyAnimation { properties: "opacity"; duration: 200 }
            }
+           SequentialAnimation {
+               id: animationtrenes
+               loops: Animation.Infinite
+
+               PropertyAnimation {
+                   properties: "opacity"
+                   to: 0
+                   duration: 200
+                   target: trenesE
+               }
+               PauseAnimation { duration: 200 }
+               PropertyAnimation {
+                   properties: "opacity"
+                   to: 1
+                   duration: 200
+                   target: trenesE
+               }
+               PauseAnimation { duration: 200 }
+           }
        }
        onItemAdded: trenConFalla[index] = item
+   }
+
+//REPEAT QUE GENERA en la creacion de cada renglon del tren para producir el blink
+
+
+   Repeater {
+       model: 5
+       Text {
+           id: trenesBlink
+           width: 114
+           height: 14
+           opacity: 0
+           x: getXTrenesError(index)
+           y: getYTrenesError(index)
+           text: qsTr("")
+           horizontalAlignment: Text.AlignLeft
+           font.family: "Arial"
+           font.pixelSize: 12
+           states: [
+               State {
+                   name: "on"
+                   PropertyChanges { target: trenesBlink; opacity: 1;}
+               },
+               State {
+                   name: "parpadeo"
+                   PropertyChanges { target: blinkAnimationtrenes; running:true;}
+               },
+               State {
+                   name: "off"
+                   PropertyChanges { target: trenesBlink; opacity: 0;}
+               }
+           ]
+
+           transitions: Transition {
+               PropertyAnimation { properties: "opacity"; duration: 200 }
+           }
+           SequentialAnimation {
+               id: blinkAnimationtrenes
+               loops: Animation.Infinite
+
+               PropertyAnimation {
+                   properties: "opacity"
+                   to: 1
+                   duration: 200
+                   target: trenesBlink
+               }
+               PauseAnimation { duration: 200 }
+               PropertyAnimation {
+                   properties: "opacity"
+                   to: 0
+                   duration: 200
+                   target: trenesBlink
+               }
+               PauseAnimation { duration: 200 }
+           }
+       }
+       onItemAdded: trenConFallaBlink[index] = item
+   }
+
+   function blinkRenglonTrenes(trenes, index, parpadeo){
+       sicassinerror.opacity=0;
+
+       trenConFallaBlink[index].text =trenes;
+       if (parpadeo === true){
+           trenConFallaBlink[index].state = "parpadeo";
+           trenConFalla[index].state = "parpadeo";
+       }
+       else{
+           trenConFallaBlink[index].opacity = 0;
+       }
+   }
+
+   function borrarTrenesBlink(trenes,index){
+       trenConFallaBlink[index].text =trenes;
    }
 
    function getXTrenesError(p){
@@ -663,7 +772,7 @@ Rectangle {
    }
 
 
-   //REPEAT QUE GENERA CADA UNA DE LAS LETRAS
+//REPEAT QUE GENERA CADA UNA DE LAS LETRAS
 
 
    Repeater {
@@ -705,6 +814,7 @@ Rectangle {
        return (180+(20*p))
    }
 
+//REPEAT QUE GENERA en el renglon en la viuaizacion del tren
 
    Repeater {
        model: 48
@@ -774,6 +884,7 @@ Rectangle {
            return (105);
        return(145);
    }
+
    function turnOffDoors(valF){
        puertasCoche[valF].state = "des";
    }
@@ -781,6 +892,7 @@ Rectangle {
    function turnOnDoors(valF){
        puertasCoche[valF].state = "con";
    }
+
    function actualizarTamArreRenglon(valorFin){
        valorRenglonFin=valorFin;
    }
@@ -794,6 +906,7 @@ Rectangle {
 
        }
    }
+
    function moverSelectorAnt(){
        if(sicas_renglon.y >176){
            sicas_renglon.y= sicas_renglon.y -20;
@@ -834,17 +947,19 @@ Rectangle {
    function turnOffAnterior(){
        anterior.opacity=0;
    }
+
    function turnOffSicas(){
        inicioSicas.opacity=1;
    }
+
    function turnOnSicas(){
        inicioSicas.opacity=0;
        mac_sicas.sicasOk();
    }
+
    function cargoDestinoSicas(valordes){
       destino.text = valordes;
    }
-
 
 }//FIN RECTANGLO
 
