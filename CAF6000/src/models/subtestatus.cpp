@@ -468,10 +468,16 @@ void SubteStatus::bypassBrake(bool status)
         qDebug() << "Brake reactivated";
     }
     m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
+    if(m_brake->getEmergencyBrake()){
+        m_eventHandler->notifyValueChanged("c_freno_emergencia","con");
+    } else {
+        m_eventHandler->notifyValueChanged("c_freno_emergencia","des");
+    }
 }
 
 void SubteStatus::bypassCSCP(bool status)
 {
+
     if(status){
         m_cscp->setBypass(true);
         m_eventHandler->notifyValueChanged("c_bypass_traccion","con");
