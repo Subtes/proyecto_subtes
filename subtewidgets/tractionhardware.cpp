@@ -11,7 +11,6 @@ TractionHardware::TractionHardware()
 
     if (m_joystick) {
         qDebug("Opened Joystick 0\n");
-        //qDebug("Name: %s\n", SDL_JoystickNameForIndex(0));
         qDebug("Number of Axes: %d\n", SDL_JoystickNumAxes(m_joystick));
         qDebug("Number of Buttons: %d\n", SDL_JoystickNumButtons(m_joystick));
         qDebug("Number of Balls: %d\n", SDL_JoystickNumBalls(m_joystick));
@@ -193,3 +192,17 @@ bool TractionHardware::isHardwareEnable(){
         return false;
     }
 }
+
+/*
+void TractionHardware::reset(){
+    getdata();
+
+    m_diedMan = buttons.at(0);
+    m_bypassBrake  = buttons.at(5);
+    m_bypassTraction = buttons.at(4);
+    m_ranaAD = buttons.at(1);
+    m_ranaAT = buttons.at(2);
+    m_seta = buttons.at(3);
+    m_keyTop = buttons.at(7);
+}
+*/

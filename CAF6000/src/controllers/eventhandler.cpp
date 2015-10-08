@@ -137,7 +137,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estado_simulador");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cargar_estado");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_averia");
-            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cambio_senial");
+
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_coches_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_renglon_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estacion_destino_sicas");
@@ -325,24 +325,10 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         m_subte->updateTargetSpeed(std::stod(value));
     }
 
-//    else if(key.compare("i_cambio_senial") == 0){
-//        try{
-//            QString message = value.c_str();
-//            QStringList parameters = message.split(";");
-//            std::string state = parameters.at(1).toStdString();
-
-//            if (state.compare("1")==0){
-//                emit departureEstation();
-//                qDebug() << "senial salida anden recibida, 1";
-//            }
-//        }catch(...){
-//            qDebug()<<"Error en parametros clave;valor recibidos";
-//        }
-//    }
-
     else if(key.compare("i_cargar_estado") == 0){
 
         m_eNetClient->CambiarEstadoDifusion(false);
+
         QCoreApplication::processEvents(QEventLoop::AllEvents);
         boardsReady = 0;
 
@@ -484,12 +470,12 @@ void EventHandler::processKeyPressed(DWORD k)
         F5_down = true;
         qDebug() << "F5 key pressed";
     }  else if ( k == _K && !K_down ){
-        this->notifyValueChanged("c_llave_atp","con");
+        //this->notifyValueChanged("c_llave_atp","con");
         K_down = true;
         qDebug() << "K key pressed";
         emit kPressed();
     } else if ( k == _L && !L_down ){
-        this->notifyValueChanged("c_llave_atp","des");
+        //this->notifyValueChanged("c_llave_atp","des");
         L_down = true;
         qDebug() << "L key pressed";
         emit lPressed();
