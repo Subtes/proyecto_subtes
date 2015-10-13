@@ -335,7 +335,7 @@ Rectangle {
         y: 63
         width: 60
         height: 20
-        text: qsTr("Tren: X")
+        text: qsTr("Tren: CAF6000")
         font.bold: true
         font.family: "Arial"
         font.pixelSize: 13
@@ -348,23 +348,10 @@ Rectangle {
         y: 63
         width: 60
         height: 20
-        text: qsTr("Linea: X")
+        text: qsTr("Linea: B")
         font.bold: true
         font.family: "Arial"
         font.pixelSize: 13
-        horizontalAlignment: Text.AlignHCenter
-    }
-
-    Text {
-        id: textoDestino
-        x: 230
-        y: 63
-        width: 60
-        height: 20
-        text: qsTr("Destino: ")
-        font.bold: true
-        font.pixelSize: 14
-        font.family: "Arial"
         horizontalAlignment: Text.AlignHCenter
     }
 
@@ -387,7 +374,7 @@ Rectangle {
         y: 63
         width: 99
         height: 20
-        text: qsTr("N° Agente: X")
+        text: qsTr("N° Agente: 007")
         font.family: "Arial"
         font.pixelSize: 14
         horizontalAlignment: Text.AlignHCenter
@@ -960,6 +947,8 @@ Rectangle {
    function cargoDestinoSicas(valordes){
       destino.text = valordes;
    }
-
+    function ponerOnSicasSinIncidencia(){
+     sicassinerror.opacity=1;
+    }
 }//FIN RECTANGLO
 

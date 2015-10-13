@@ -142,6 +142,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_renglon_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estacion_destino_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_salir_de_estacion");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_freno_retencion");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_velocidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_tramo_vel");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
@@ -422,6 +423,14 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
                 qDebug() << "puertas izquierdas cerrado";
             }
         }
+    }
+
+    else if(key.compare("v_freno_retencion") == 0){
+        qDebug() << "cambio estado freno retencion." ;
+        if (value.compare("des") == 0)
+            m_subte->setRetentionBrake(false);
+        else
+            m_subte->setRetentionBrake(true);
     }
 
     else if(key.compare("i_averia") == 0){

@@ -636,6 +636,14 @@ void SubteStatus::setRetentionBrakeBypass(bool state)
     emit retentionBrakeChanged(m_brake->retentioBrake());
 }
 
+void SubteStatus::setRetentionBrake(bool state)
+{
+    m_brake->setRetentioBrake(state);
+    qDebug() << "emitida la senial retencion: " << m_brake->retentioBrake();
+    emit retentionBrakeChanged(m_brake->retentioBrake());
+}
+
+
 void SubteStatus::setSicasOk(){
     m_eventHandler->notifyValueChanged("c_estado_sicas","ok");
     qDebug() << "c_estado_sicas: ok";
