@@ -66,6 +66,7 @@ INCLUDEPATH +=  $$PWD/../Source/include
 
 DEPENDPATH += $$PWD/../Source
 
-LIBS += -L$$PWD/../Source/lib/ -lSDL
+LIBS += -L$$PWD/../Source/lib/ -lSDL \
+        -L$$PWD/../Source/lib/ -lSDL_mixer
 
 DISTFILES +=

@@ -12,6 +12,7 @@ Rectangle {
     property int velTramo1: 10
     property int velTramo15: 15
     property int velTramo2: 20
+    property int velTramo25: 25
     property int velTramo3: 30
     property int velTramo4: 40
     property int velTramo5: 50
@@ -398,6 +399,19 @@ Rectangle {
             image20.opacity=0;
         };
 
+        if (v === velTramo25){
+            //25
+            ims0.opacity=0;
+            image20.opacity=1;
+            ims1.opacity=0;
+            image05.opacity=1;
+        }else if (v === 20){
+            image05.opacity=0;
+        }else{
+            image20.opacity=0;
+            image05.opacity=0;
+        };
+
         if (v === velTramo3){
             //30
             image30.opacity=1;
@@ -425,6 +439,7 @@ Rectangle {
         }else{
             image60.opacity=0;
         };
+
         if (v === velTramo15){
             //15
             ims0.opacity=0;
@@ -433,10 +448,12 @@ Rectangle {
             image05.opacity=1;
         }else if (v === 10){
             image05.opacity=0;
+        }else if (v === 25){
+            image10.opacity=0;
         }else{
             image10.opacity=0;
             image05.opacity=0;
-        };
+        }
     }
 
     function speedLCD(v,d){

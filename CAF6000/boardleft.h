@@ -1,6 +1,8 @@
 #ifndef BOARDLEFT_H
 #define BOARDLEFT_H
 
+#include <tractionhardware.h>
+
 #include "baseboard.h"
 #include "src/controllers/atp_controller.h"
 
@@ -23,10 +25,13 @@ public slots:
     void resetControls();
     void loadState(int state);
 
+    void setHardware(TractionHardware *th);
+
 private:
     Ui::BoardLeft *ui;
 
     Atp_Controller *m_atp;
+    TractionHardware *m_hardwareSupport;
 };
 
 #endif // BOARDLEFT_H

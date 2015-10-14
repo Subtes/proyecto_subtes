@@ -12,8 +12,6 @@ BoardLeft::BoardLeft(QWidget *parent, SubteStatus * subte, EventHandler *eventHa
     connect(m_eventHandler,SIGNAL(controlEnable()),this,SLOT(enableScreen()));
     connect(m_eventHandler,SIGNAL(controlReset()),this,SLOT(resetControls()));
     connect(m_eventHandler,SIGNAL(cargarEstado(int)),this,SLOT(loadState(int)));
-
-    m_atp = NULL;
 }
 
 BoardLeft::~BoardLeft()
@@ -26,7 +24,8 @@ void BoardLeft::startBoard()
 {
     qDebug() << "board Left startBoard";
 
-    m_atp = new Atp_Controller(m_subte,ui->widget_atp,m_eventHandler);
+    m_atp = new Atp_Controller(m_subte, ui->widget_atp, m_eventHandler);
+    connect(m_atp,SIGNAL(playSound(int)),m_hardwareSupport,SLOT(onSound(int)));
 
     this->setEnabled(false);
 }
@@ -70,4 +69,8 @@ void BoardLeft::loadState(int state){
     }
 
     m_eventHandler->enableDiffusion();
+}
+
+void BoardLeft::setHardware(TractionHardware *th){
+    m_hardwareSupport = th;
 }

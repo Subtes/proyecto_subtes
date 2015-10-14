@@ -48,7 +48,7 @@ signals:
     void _6DtoC();
 
     void allowedSpeedChange(double);
-    //void targetSpeedChange(double);
+    void playSound(int);
 
 public slots:
 
