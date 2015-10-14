@@ -42,6 +42,7 @@ class SicasMac_Controller : public Base_Controller
 public:
     SicasMac_Controller(SubteStatus * subte, SicasMac * sicas);
     ~SicasMac_Controller();
+     void resetSicas();
 
 public slots:
     void onPressSigRow();
@@ -50,7 +51,10 @@ public slots:
     void cargoCoches(QString mensajeCoches);
     void cargarDestinoSicas(QString destino);
     void ActivoYDesactivoFrenoRetencion(bool state);
-    void resetSicas();
+    void estadoHombreMuerto(bool state);
+    void cargarMensajeAcople();
+    void sacoMensajeAcople();
+
 
 };
 

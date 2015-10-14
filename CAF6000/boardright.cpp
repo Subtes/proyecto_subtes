@@ -38,10 +38,19 @@ void BoardRight::startBoard()
     m_manometer = new Manometer_Controller(m_subte,ui->manometer);
     m_sicasmac = new SicasMac_Controller(m_subte,ui->sicasmac);
     m_modoConduccion = new LlaveModoConduccion_Controller(m_subte,ui->modoConduccion);
+
+    //CARGA SICAS CUANDO CAMBIA DE MODO ACOPLE O MANIOBRA A MODO NORMAL
+    connect(m_modoConduccion,SIGNAL(menssajeModeAcople()),m_sicasmac,SLOT(cargarMensajeAcople()));
+    connect(m_modoConduccion,SIGNAL(mensajeModeManiobra()),m_sicasmac,SLOT(cargarMensajeAcople()));
+    connect(m_modoConduccion,SIGNAL(mensajeModeNormal()),m_sicasmac,SLOT(sacoMensajeAcople()));
+
     m_frenoRetencion = new FrenoRetencion_Controller(m_subte,ui->frenoRetencion);
+
+    //CARGA DE SICAS ENVIADA POR INSTRUCCIONES
     connect(m_eventHandler,SIGNAL(cargarDestinoSicas(QString)),m_sicasmac,SLOT(cargarDestinoSicas(QString)));
     connect(m_eventHandler,SIGNAL(cargarMensaje(QString)),m_sicasmac,SLOT(separoMensajes(QString)));
     connect(m_eventHandler,SIGNAL(cargarMensajeCocheSicas(QString)),m_sicasmac,SLOT(cargoCoches(QString)));
+
     this->setEnabled(false);
 }
 

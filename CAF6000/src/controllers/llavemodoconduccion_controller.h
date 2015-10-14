@@ -10,7 +10,10 @@ class LlaveModoConduccion_Controller : public Base_Controller
 public:
     LlaveModoConduccion_Controller(SubteStatus *subte, LlaveModoConduccion *llave);
     ~LlaveModoConduccion_Controller();
-
+signals:
+    menssajeModeAcople();
+    mensajeModeManiobra();
+    mensajeModeNormal();
 private:
     LlaveModoConduccion *m_llave;
 

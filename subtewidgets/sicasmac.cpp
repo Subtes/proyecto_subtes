@@ -255,3 +255,9 @@ void SicasMac::cargoDestinoSicas(QString destino)
     QMetaObject::invokeMethod(m_qmlView, "cargoDestinoSicas",
             Q_RETURN_ARG(QVariant, returnedValue),Q_ARG(QVariant, destino));
 }
+void SicasMac::ponerOnSicasSinIncidencia()
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "ponerOnSicasSinIncidencia",
+            Q_RETURN_ARG(QVariant, returnedValue));
+}

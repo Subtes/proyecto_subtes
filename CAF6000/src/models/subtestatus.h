@@ -166,6 +166,7 @@ public slots:
     void setAtpMode();
     void setAcopleMode();
     void setRetentionBrakeBypass(bool state);
+    void setRetentionBrake(bool state);
     void setSicasOk();
 };
 

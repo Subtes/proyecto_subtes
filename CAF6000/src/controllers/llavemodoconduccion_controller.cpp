@@ -9,6 +9,11 @@ LlaveModoConduccion_Controller::LlaveModoConduccion_Controller(SubteStatus *subt
     connect(m_llave,SIGNAL(acopleMode()),this,SLOT(setAcopleMode()));
     connect(m_llave,SIGNAL(atpMode()),this,SLOT(setAtpMode()));
     connect(m_llave,SIGNAL(maniobraMode()),this,SLOT(setManiobraMode()));
+    connect(m_llave,SIGNAL(acopleMode()),this,SIGNAL(menssajeModeAcople()));
+    connect(m_llave,SIGNAL(maniobraMode()),this,SIGNAL(mensajeModeManiobra()));
+    connect(m_llave,SIGNAL(atpMode()),this,SIGNAL(mensajeModeNormal()));
+
+
 }
 
 LlaveModoConduccion_Controller::~LlaveModoConduccion_Controller()
