@@ -146,18 +146,22 @@ void SicasMac_Controller::generoRenglonesSicas(QString texto, QString trenes, QS
         trenesSinBlink.push_back("  ");
         trenesConBlink.push_back("  ");
         sepCocheLetra = cocheXcoche[var];
-        cocheYLetra =sepCocheLetra.split(",");
-        if (cocheYLetra[1] == valorI){
-            parpadeo = true;
-            trenesConBlink.push_back("  ");
-        }
-        else{
-            trenesConBlink.push_back(cocheYLetra[0]);
 
+        cocheYLetra =sepCocheLetra.split(",");
+        if(cocheYLetra.size()>1){
+            if (cocheYLetra[1] == valorI){
+                parpadeo = true;
+                trenesConBlink.push_back("  ");
+            }
+            else{
+                trenesConBlink.push_back(cocheYLetra[0]);
+            }
         }
-        trenesSinBlink.push_back(cocheYLetra[0]);
+            trenesSinBlink.push_back(cocheYLetra[0]);
+
     }
     m_sicasmac->generarTrenesBlink(trenesConBlink, index, parpadeo);
+
     m_sicasmac->textEditSicas(texto,trenesSinBlink,letra,index);
 }
 

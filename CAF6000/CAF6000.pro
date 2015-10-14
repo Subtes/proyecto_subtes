@@ -129,3 +129,5 @@ RESOURCES += ../subtewidgets/widgetsrsc.qrc \
             boardrsc.qrc
 
 DESTDIR = $$PWD
+
+OTHER_FILES += etc/control.ini
