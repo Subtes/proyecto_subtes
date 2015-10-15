@@ -68,29 +68,27 @@ int main(int argc, char *argv[])
      */
 
         m_t->showFullScreen();
-        m_h->showFullScreen();
+        m_c->showFullScreen();
         m_l->showFullScreen();
 
         QTabWidget *tabRight = new QTabWidget(0);
-        tabRight->addTab(m_c,QObject::tr("Center"));
         tabRight->addTab(m_r,QObject::tr("RightPanel"));
+        tabRight->addTab(m_h,QObject::tr("Hardware"));
         tabRight->addTab(m_tree,QObject::tr("TreePanel"));
 
         tabRight->showFullScreen();
 
-        m_h->move(s0.topLeft());
-        m_l->move(s2.topLeft());
+        m_c->move(s1.topLeft());
+        m_l->move(s0.topLeft());
         m_t->move(s3.topLeft());
 
-        tabRight->move(s1.topLeft());
+        tabRight->move(s2.topLeft());
 
     }else{
 
           m_h->showNormal();
           m_l->showNormal();
-          //m_c->showNormal();
           m_t->showNormal();
-          //m_r->showNormal();
 
           QTabWidget *tabRight = new QTabWidget(0);
           tabRight->addTab(m_c,QObject::tr("Center"));

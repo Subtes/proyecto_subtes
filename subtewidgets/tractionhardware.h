@@ -38,6 +38,7 @@ public slots:
     void processSetaChanged();
     void processKeyTop();
     bool isHardwareEnable();
+    //void reset();
 
 private:
     SDL_Joystick *m_joystick;
