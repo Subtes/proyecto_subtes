@@ -79,7 +79,7 @@ void BoardTop::loadState(int state)
         m_connectors->setEstado(APAGADO);
         m_keyTopBoard->keyOFF();
         m_topGauges->turnOffGauges();
-        m_keyTopBoard->offKeyHD();
+       // m_keyTopBoard->offKeyHD();
 
     } else if(state== EN_MARCHA){
         lastState = EN_MARCHA;
