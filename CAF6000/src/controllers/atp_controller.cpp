@@ -23,8 +23,8 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     connect(subte,SIGNAL(targetSpeedChanged(double)),this,SLOT(updateTargetSpeed(double)));
     connect(subte,SIGNAL(atpOn()),this,SLOT(initATP()));
     connect(subte,SIGNAL(atpOff()),this,SLOT(resetATP()));
-    //connect(eventHandler,SIGNAL(kPressed()),this,SLOT(initATP()));
-    //connect(eventHandler,SIGNAL(lPressed()),this,SLOT(resetATP()));
+
+
     connect(eventHandler,SIGNAL(accelerationInstant(double)),this,SLOT(setACE(double)));
     connect(eventHandler,SIGNAL(nextToEstation()),this,SLOT(nextToEstation()));
     connect(eventHandler,SIGNAL(departureEstation()),this,SLOT(departureEstation()));
@@ -39,7 +39,7 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     connect(this, SIGNAL(desableBreakEmergency()),subte,SLOT(emergencyBrakeReleased()));
     connect(this, SIGNAL(enableBreakService(int)),subte,SLOT(brakeReceived(int)));
     connect(this, SIGNAL(desableBreakService(int)),subte,SLOT(brakeReceived(int)));
-    connect(this,SIGNAL(allowedSpeedChange(double)),subte,SLOT(updateAllowedSpeed(double)));
+    connect(this, SIGNAL(allowedSpeedChange(double)),subte,SLOT(updateAllowedSpeed(double)));
 
 }
 
@@ -98,7 +98,7 @@ void Atp_Controller::initATP(){
 
     m_onATP = true;
 
-    if(this->m_subte->targetSpeed()>0){
+    if(this->m_subte->targetSpeed() > 15.0){
         this->updateTargetSpeed(this->m_subte->targetSpeed());
     }else{
         this->updateTargetSpeed(60.0);
@@ -168,6 +168,7 @@ void Atp_Controller::updateTargetSpeed(double speed){
     if (m_onATP){
         if (m_AF!="1"){
             this->m_view->updateTargetSpeed(speed);
+            emit playSound(1);
             this->setSpeedTarget(speed);
             this->updateAllowedSpeed(speed);
         }else{
@@ -314,20 +315,14 @@ void Atp_Controller::updateAllowedSpeed(double speedTargetNew){
 
 void Atp_Controller::transitionGT(){
     // V = Vo + At
-//    qDebug()<< "******************  Comenzando Transition GT  **********************************";
     double t = ((m_speedTarget - m_speedTargetPrevious)*0.277777777777778)/(-0.7);
     int tAux = static_cast<int>(t*1000);
-    //HH agregar funcion para ver si es mayor a X.5 tomar mayor sino menos (parte entera superior)
-//    qDebug()<< " Tiempo de Transicion ---((m_speedTarget - m_speedTargetPrevious)*0.277777777777778)/(-0.7) --> " << t << "tAux" << tAux;
+
     QTime lapTime = QTime::currentTime();
     QTime ts = QTime::currentTime().addMSecs(tAux);
-//    qDebug()<< " lapTime Reloj seteado en: ---> " << lapTime.toString();
-//    qDebug()<< " ts (tiempo estimado de transicion para Allowed segun New Target) Reloj seteado en: ---> " << ts.toString();
-//    qDebug()<< " m_speedTarget: " << m_speedTarget;
-//    qDebug()<< " m_speedTargetPrevious: " << m_speedTargetPrevious;
+
     double vAllowed;
     vAllowed = m_speedTargetPrevious;
-//    qDebug()<< " vAllowed := m_speedTargetPrevious:  " << vAllowed;
     setAllowedSpeed(vAllowed);
 
     if (m_drivingModeCMC) critiqueSpeed(1);
@@ -338,22 +333,15 @@ void Atp_Controller::transitionGT(){
     while ((lapTime.currentTime() < ts) && (m_speedAllowed > m_speedTarget)){
         lap = lapTime.elapsed();
         if (lap % 2 == 0){
-//            qDebug()<< "---------------------------------IF---------------------------------------------";
             //update allowedSpeed hacer calculo en funcion del tiempo transcurrido
             vAllowed = m_speedTargetPrevious + ((-0.7)*(static_cast<double>(lapTime.elapsed())/static_cast<double>(1000)))*3.6;
             setAllowedSpeed(((vAllowed>m_speedTarget)?vAllowed:m_speedTarget));
-//            qDebug()<< " ((vAllowed>m_speedTarget)?vAllowed:m_speedTarget) ------> " << ((vAllowed>m_speedTarget)?vAllowed:m_speedTarget);
-//            qDebug()<< " vAllowed: "<< vAllowed <<"; " << "m_speedTarget: " << m_speedTarget;
-//            qDebug()<< " lap:  "<< lap;
-//            qDebug()<< "-------------------------------END IF-------------------------------------------";
         }
         QCoreApplication::processEvents(QEventLoop::AllEvents);
 
     }
     critiqueSpeed(2);
     setAllowedSpeed(m_speedTarget);
-//    qDebug()<< "ALLOWED SPEED Set TO: " << m_speedTarget;
-//    qDebug() << "************************** FIN Transition GT ***************************************";
 }
 
 /**
@@ -536,6 +524,7 @@ void Atp_Controller::setACE(double a){
 
 void Atp_Controller::routingA(){
 
+    emit playSound(0);
     this->m_view->setFrenoUrg(true);
     this->m_view->setFserv(true);
     this->m_view->setCorte(true);
@@ -546,6 +535,7 @@ void Atp_Controller::routingA(){
 
 void Atp_Controller::routingB(){
 
+    emit playSound(0);
     this->m_view->setFrenoUrg(false);
     this->m_view->setFserv(true);
     this->m_view->setCorte(true);
@@ -556,6 +546,7 @@ void Atp_Controller::routingB(){
 
 void Atp_Controller::routingC(){
 
+    emit playSound(0);
     this->m_view->setFrenoUrg(false);
     this->m_view->setFserv(false);
     this->m_view->setCorte(true);
@@ -576,26 +567,39 @@ Atp_Controller::~Atp_Controller(){
 
 void Atp_Controller::setSignalTarget(QString s){
 
-//    switch(s){
-//        case "20":
-//            m_speedTarget = 20;
-//        break;
-//        case "30":
-//            m_speedTarget = 30;
-//        break;
-//        case "40":
-//            m_speedTarget = 40;
-//        break;
-//        case "50":
-//            m_speedTarget = 50;
-//        break;
-//        case "60":
-//            m_speedTarget = 60;
-//        break;
-//        default:
-//            m_speedTarget = 60;
-//        break;
-//    }
+    int v = s.toInt();
+    switch(v){
+        case 0:
+            m_speedTarget = 0;
+        break;
+        case 10:
+            m_speedTarget = 10;
+        break;
+        case 15:
+            m_speedTarget = 15;
+        break;
+        case 20:
+            m_speedTarget = 20;
+        break;
+        case 25:
+            m_speedTarget = 25;
+        break;
+        case 30:
+            m_speedTarget = 30;
+        break;
+        case 40:
+            m_speedTarget = 40;
+        break;
+        case 50:
+            m_speedTarget = 50;
+        break;
+        case 60:
+            m_speedTarget = 60;
+        break;
+        default:
+            m_speedTarget = 60;
+        break;
+    }
 
 }
 /**

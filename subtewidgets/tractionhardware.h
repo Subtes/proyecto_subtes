@@ -5,6 +5,7 @@
 #include <QTimer>
 
 #include "SDL.h"
+#include "SDL_mixer.h"
 #undef main
 
 class TractionHardware : public QObject
@@ -39,6 +40,7 @@ public slots:
     void processKeyTop();
     bool isHardwareEnable();
     //void reset();
+    void onSound(int s);
 
 private:
     SDL_Joystick *m_joystick;
@@ -68,6 +70,8 @@ private:
     bool m_seta;
     bool m_keyTop;
 
+    Mix_Music *m_sound_atp_target = NULL;
+    Mix_Music *m_sound_atp_warning = NULL;
 
 };
 

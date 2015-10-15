@@ -5,7 +5,14 @@
 TractionHardware::TractionHardware()
 {
     qDebug()<<"Entro en Seteo TractionHardware:   --->";
-    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_AUDIO);
+    if ((Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096)) == -1){
+        qDebug()<< "WARNING!: No se pudo Inicializar Audio.";
+    }else{
+        qDebug()<< "AUDIO Inicializado";
+        m_sound_atp_target = Mix_LoadMUS("beepTargetATP.wav");
+        m_sound_atp_warning = Mix_LoadMUS("beepWarningATP.wav");
+    }
     SDL_JoystickClose(0);
     m_joystick = SDL_JoystickOpen(0);
 
@@ -178,10 +185,14 @@ void TractionHardware::getdata(){
 }
 
 TractionHardware::~TractionHardware(){
+
+    Mix_FreeMusic(m_sound_atp_target);
+    Mix_FreeMusic(m_sound_atp_warning);
+
     axis.clear();
     buttons.clear();
     SDL_JoystickClose(m_joystick);
-    SDL_QuitSubSystem(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);
+    SDL_QuitSubSystem(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_AUDIO);
     this->deleteLater();
 }
 
@@ -192,6 +203,7 @@ bool TractionHardware::isHardwareEnable(){
         return false;
     }
 }
+
 
 /*
 void TractionHardware::reset(){
@@ -206,3 +218,19 @@ void TractionHardware::reset(){
     m_keyTop = buttons.at(7);
 }
 */
+
+void TractionHardware::onSound(int s){
+    qDebug()<< "<---- onSound ---->";
+    switch(s){
+    case 0:
+        qDebug()<< "Playing SOUND Warning";
+        if (Mix_PlayingMusic() == 0){
+            Mix_PlayMusic(m_sound_atp_warning, 1);
+        }
+        break;
+    case 1:
+        qDebug()<< "Playing SOUND Target";
+        Mix_PlayMusic(m_sound_atp_target, 1);
+        break;
+   }
+}

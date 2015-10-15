@@ -46,7 +46,7 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
     m_imageSplash = QPixmap(":/resources/splash.jpg");
 
     if(desktop->screenCount() == 4){
-//        qDebug() << "Entre en For de pantallas igual 4 eventhandler: ";
+        qDebug() << "Entre en For de pantallas igual 4 eventhandler: ";
 
         m_splash1 = new QSplashScreen(m_imageSplash);
         m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
@@ -545,6 +545,8 @@ void EventHandler::processKeyPressed(DWORD k)
         NUEVE_down = true;
         this->notifyValueChanged("c_pulsador_bateria","des");
         qDebug() << "9 key pressed";
+        qDebug() << "9 key pressed, New TARGET 30";
+        emit newTarget(1);
     } else if ( k == _H && !H_down  ){
         H_down = true;
         qDebug() << "H key pressed, nextToEstation";

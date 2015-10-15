@@ -122,7 +122,8 @@ LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L$$PWD/../ENet/ -lBufferOverflowU \
         -L$$PWD/../ENet/ -lWinMM \
         -L$$PWD/../ENet/ -lENetClient-Cpp \
-        -L$$PWD/../Source/lib/ -lSDL
+        -L$$PWD/../Source/lib/ -lSDL \
+        -L$$PWD/../Source/lib/ -lSDL_mixer
 
 RESOURCES += ../subtewidgets/widgetsrsc.qrc \
             ../subtewidgets/qmlrsc.qrc \

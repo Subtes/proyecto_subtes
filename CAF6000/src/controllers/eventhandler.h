@@ -152,6 +152,8 @@ signals:
     cargarMensajeCocheSicas(QString);
     cargarDestinoSicas(QString);
 
+    newTarget(int);
+
 public slots:
     void processKeyPressed(DWORD k);
     void processKeyReleased(DWORD k);

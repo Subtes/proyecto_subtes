@@ -16,9 +16,7 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eve
     m_speedGauge = NULL;
     m_doors = NULL;
     m_tractionHardware = NULL;
-//    m_tractionHardware = new TractionHardware();
-//    m_checkBypass = new QTimer();
-//    m_checkBypass->setInterval(100);
+
 
     connect(m_eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(m_eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
