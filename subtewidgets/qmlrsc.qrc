@@ -15,5 +15,6 @@
         <file>analog_gauge.qml</file>
         <file>sicasmac.qml</file>
         <file>llavetrespuntos.qml</file>
+        <file>alstom_selectorModoConduccion.qml</file>
     </qresource>
 </RCC>

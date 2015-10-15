@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BoardHardware</class>
+ <widget class="QMainWindow" name="BoardHardware">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1024</width>
+    <height>768</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>HARDWARE</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-image: url(:/resources/panel_5.jpg);</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="maximumSize">
+    <size>
+     <width>1024</width>
+     <height>768</height>
+    </size>
+   </property>
+   <widget class="AlstomTractionLever" name="tractionWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>220</y>
+      <width>240</width>
+      <height>310</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/nada);
+padding-top: 0px;</string>
+    </property>
+   </widget>
+   <widget class="AlstomSelectorModoConduccion" name="ranaWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>561</x>
+      <y>400</y>
+      <width>137</width>
+      <height>137</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>832</x>
+      <y>230</y>
+      <width>91</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/nada);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../subtewidgets/widgetsrsc.qrc">:/resources/alstom_yellowsmall.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>614</x>
+      <y>72</y>
+      <width>111</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/nada);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../subtewidgets/widgetsrsc.qrc">:/resources/alstom_bocinaoff.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>589</x>
+      <y>614</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/nada);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../subtewidgets/widgetsrsc.qrc">:/resources/alstom_greenkeybase.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>589</x>
+      <y>609</y>
+      <width>81</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/nada);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../subtewidgets/widgetsrsc.qrc">:/resources/alstom_greenkey.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>743</x>
+      <y>538</y>
+      <width>141</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/resources/nada);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../subtewidgets/widgetsrsc.qrc">:/resources/alstom_emergenciaoff.png</pixmap>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>AlstomTractionLever</class>
+   <extends>QWidget</extends>
+   <header>alstomtractionlever.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AlstomSelectorModoConduccion</class>
+   <extends>QWidget</extends>
+   <header>alstomselectormodoconduccion.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../subtewidgets/widgetsrsc.qrc"/>
+  <include location="../subtewidgets/widgetsrsc.qrc"/>
+  <include location="../subtewidgets/widgetsrsc.qrc"/>
+ </resources>
+ <connections/>
+</ui>

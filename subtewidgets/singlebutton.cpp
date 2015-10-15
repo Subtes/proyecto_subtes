@@ -14,7 +14,6 @@ SingleButton::SingleButton(QWidget *parent) :
     connect(m_qmlView,SIGNAL(buttonClicked()),this,SIGNAL(buttonClicked()));
     connect(m_qmlView,SIGNAL(buttonReleased()),this,SIGNAL(buttonReleased()));
     connect(m_qmlView,SIGNAL(buttonPressed()),this,SIGNAL(buttonPressed()));
-
 }
 
 SingleButton::~SingleButton()
@@ -136,4 +135,9 @@ void SingleButton::release()
         m_qmlView->setProperty("state", "buttonOnState" );
     else if(QString::compare(state.toString(),"buttonOffStateNestled")==0)
         m_qmlView->setProperty("state", "buttonOffState" );
+}
+
+void SingleButton::setSize(QSize size)
+{
+    m_qmlView->setSize(size);
 }

@@ -122,5 +122,34 @@
         <file>resources/sicas_doors.png</file>
         <file>resources/sicas_renglon.png</file>
         <file>resources/inicio_sicas.png</file>
+        <file>resources/alstom_agujared.png</file>
+        <file>resources/alstom_agujayellow.png</file>
+        <file>resources/alstom_blue.png</file>
+        <file>resources/alstom_blue_on.png</file>
+        <file>resources/alstom_bocinaoff.png</file>
+        <file>resources/alstom_bocinaon.png</file>
+        <file>resources/alstom_emergenciaoff.png</file>
+        <file>resources/alstom_emergenciaon.png</file>
+        <file>resources/alstom_giratorio.png</file>
+        <file>resources/alstom_giratorio_base.png</file>
+        <file>resources/alstom_glass.png</file>
+        <file>resources/alstom_green.png</file>
+        <file>resources/alstom_green_on.png</file>
+        <file>resources/alstom_greenkey.png</file>
+        <file>resources/alstom_greenkeybase.png</file>
+        <file>resources/alstom_llave_a.png</file>
+        <file>resources/alstom_llave_b.png</file>
+        <file>resources/alstom_manometro_base.png</file>
+        <file>resources/alstom_palanca.png</file>
+        <file>resources/alstom_perilla1.png</file>
+        <file>resources/alstom_perilla2.png</file>
+        <file>resources/alstom_perilla3.png</file>
+        <file>resources/alstom_perilla4.png</file>
+        <file>resources/alstom_red.png</file>
+        <file>resources/alstom_red_on.png</file>
+        <file>resources/alstom_yellow.png</file>
+        <file>resources/alstom_yellow_on.png</file>
+        <file>resources/alstom_yellowsmall.png</file>
+        <file>resources/alstom_yellowsmall_on.png</file>
     </qresource>
 </RCC>
