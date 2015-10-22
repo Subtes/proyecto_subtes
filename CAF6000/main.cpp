@@ -1,7 +1,6 @@
 #include <QApplication>
 #include <QDebug>
 #include <QDesktopWidget>
-#include <QSplashScreen>
 
 #include <tractionhardware.h>
 

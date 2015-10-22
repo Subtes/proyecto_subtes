@@ -54,7 +54,6 @@ bool Brake::getEmergencyBrake() const
    if (m_bypass)
        return false;
 
-
     if (!m_traction->hombreMuerto())
         return true;
 

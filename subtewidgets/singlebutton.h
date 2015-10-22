@@ -28,6 +28,7 @@ public:
     void setOnPressAsDriver();
     void setOnClickAsDriver();
     void setLightManagement(bool status);
+    void setSize(QSize size);
 
 private:
     Ui::SingleButton *ui;

@@ -1,9 +1,8 @@
 #include "baseboard.h"
 
-BaseBoard::BaseBoard(QWidget *parent, SubteStatus *subte, EventHandler *eventHandler) :
+BaseBoard::BaseBoard(QWidget *parent, SubteState * subte, EventHandler *eventHandler) :
     QMainWindow(parent)
 {
-    //SUBTE Model
     m_subte = subte;
     m_eventHandler = eventHandler;
 }
@@ -12,3 +11,4 @@ BaseBoard::~BaseBoard()
 {
 
 }
+

@@ -23,7 +23,9 @@ HEADERS += \
     sicasmac.h \
     llavemodoconduccion.h \
     llavetecho.h \
-    tractionhardware.h
+    tractionhardware.h \
+    alstomtractionlever.h \
+    alstomselectormodoconduccion.h
 
 SOURCES += \
     tractionlever.cpp \
@@ -40,7 +42,9 @@ SOURCES += \
     sicasmac.cpp \
     llavemodoconduccion.cpp \
     llavetecho.cpp \
-    tractionhardware.cpp
+    tractionhardware.cpp \
+    alstomtractionlever.cpp \
+    alstomselectormodoconduccion.cpp
 
 FORMS += \
     tractionlever.ui \
@@ -56,7 +60,9 @@ FORMS += \
     manometer.ui \
     sicasmac.ui \
     llavemodoconduccion.ui \
-    llavetecho.ui
+    llavetecho.ui \
+    alstomtractionlever.ui \
+    alstomselectormodoconduccion.ui
 
 RESOURCES += \
             qmlrsc.qrc \

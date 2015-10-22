@@ -468,6 +468,7 @@ void SubteStatus::bypassBrake(bool status)
         qDebug() << "Brake reactivated";
     }
     m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
+
     if(m_brake->getEmergencyBrake()){
         m_eventHandler->notifyValueChanged("c_freno_emergencia","con");
     } else {
@@ -633,7 +634,6 @@ void SubteStatus::setRetentionBrakeBypass(bool state)
     }else{
         m_eventHandler->notifyValueChanged("c_anulacion_freno_retencion","des");
     }
-    emit retentionBrakeChanged(m_brake->retentioBrake());
 }
 
 void SubteStatus::setRetentionBrake(bool state)
