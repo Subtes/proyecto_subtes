@@ -25,9 +25,9 @@ TopGauges_Controller::TopGauges_Controller(SubteStatus * subte, AnalogGauge * vo
     m_effortmeter->setMaxAngle(117);
     m_effortmeter->setOffsetAngle(117);
 
-    connect(subte,SIGNAL(effortChanged(double)),this,SLOT(updateEffort(double)));
-    connect(subte,SIGNAL(voltChanged(double)),this,SLOT(updateVolts(double)));
-    connect(subte,SIGNAL(ampsChanged(double)),this,SLOT(updateAms(double)));
+    connect(m_subte,SIGNAL(effortChanged(double)),this,SLOT(updateEffort(double)));
+    connect(m_subte,SIGNAL(voltChanged(double)),this,SLOT(updateVolts(double)));
+    connect(m_subte,SIGNAL(ampsChanged(double)),this,SLOT(updateAms(double)));
 
 }
 
@@ -53,6 +53,10 @@ void TopGauges_Controller::turnOffGauges()
     m_ammeter->updateNeedle(-4000.0);
     m_effortmeter->updateNeedle(-100.0);
     m_voltmeter->updateNeedle(0.0);
+
+    disconnect(m_subte,SIGNAL(effortChanged(double)),this,SLOT(updateEffort(double)));
+    disconnect(m_subte,SIGNAL(voltChanged(double)),this,SLOT(updateVolts(double)));
+    disconnect(m_subte,SIGNAL(ampsChanged(double)),this,SLOT(updateAms(double)));
 }
 
 void TopGauges_Controller::turnOnGauges()
@@ -61,4 +65,8 @@ void TopGauges_Controller::turnOnGauges()
     m_effortmeter->updateNeedle(0.0);
     //TODO: este valor deberia ser leido desde el blackboard
     m_voltmeter->updateNeedle(117);
+
+    connect(m_subte,SIGNAL(effortChanged(double)),this,SLOT(updateEffort(double)));
+    connect(m_subte,SIGNAL(voltChanged(double)),this,SLOT(updateVolts(double)));
+    connect(m_subte,SIGNAL(ampsChanged(double)),this,SLOT(updateAms(double)));
 }
