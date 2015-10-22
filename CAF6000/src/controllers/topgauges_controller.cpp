@@ -59,5 +59,6 @@ void TopGauges_Controller::turnOnGauges()
 {
     m_ammeter->updateNeedle(0.0);
     m_effortmeter->updateNeedle(0.0);
-    m_voltmeter->updateNeedle(1.0);
+    //TODO: este valor deberia ser leido desde el blackboard
+    m_voltmeter->updateNeedle(117);
 }
