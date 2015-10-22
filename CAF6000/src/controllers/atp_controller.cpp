@@ -97,8 +97,9 @@ void Atp_Controller::initATP(){
     this->calculateDistance();
 
     m_onATP = true;
+    qDebug()<<"ATP init, TargetSpeed: " << m_subte->targetSpeed();
 
-    if(this->m_subte->targetSpeed() > 15.0){
+    if((this->m_subte->targetSpeed()) > 15.0){
         this->updateTargetSpeed(this->m_subte->targetSpeed());
     }else{
         this->updateTargetSpeed(60.0);
