@@ -22,6 +22,9 @@ void TopBoardConnectors_Controller::setBattery(SingleButton *batteryCon, SingleB
 
     connect(m_batteryCon,SIGNAL(buttonPressed()),this,SLOT(batteryConPressed()));
     connect(m_batteryDes,SIGNAL(buttonPressed()),this,SLOT(batteryDesPressed()));
+
+    connect(m_batteryCon,SIGNAL(buttonPressed()),this,SIGNAL(batteryCon()));
+    connect(m_batteryDes,SIGNAL(buttonPressed()),this,SIGNAL(batteryDes()));
 }
 
 void TopBoardConnectors_Controller::setConmutadorPuestaServicio(SingleButton *conmutador,SingleButton *luzLlaveDes,SingleButton *luzLlaveCon, SingleButton *arranqueDes,SingleButton *arranqueCon){

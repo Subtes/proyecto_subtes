@@ -49,6 +49,9 @@ void BoardTop::startBoard()
     m_topGauges = new TopGauges_Controller(m_subte,ui->voltmeter,ui->ammeter,ui->effortmeter);
     m_keyTopBoard = new Key_TopBoard_Controller(m_subte,ui->llaveTecho, m_tractionHardware);
 
+    connect(m_connectors,SIGNAL(batteryCon()),m_topGauges,SLOT(turnOnGauges()));
+    connect(m_connectors,SIGNAL(batteryDes()),m_topGauges,SLOT(turnOffGauges()));
+
     this->setEnabled(false);
 }
 

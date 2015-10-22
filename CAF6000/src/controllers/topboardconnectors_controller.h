@@ -86,6 +86,10 @@ private slots:
     void megaphoneDesPressed();
     void parkingBrakeConPressed();
     void parkingBrakeDesPressed();
+
+signals:
+    batteryCon();
+    batteryDes();
 };
 
 #endif // TOPBOARDCONNECTORS_CONTROLLER_H
