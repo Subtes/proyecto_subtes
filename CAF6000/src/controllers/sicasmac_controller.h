@@ -47,13 +47,19 @@ public:
 public slots:
     void onPressSigRow();
     void onPressAntRow();
+    void prendoSicas();
     void separoMensajes(QString mensaje);
     void cargoCoches(QString mensajeCoches);
     void cargarDestinoSicas(QString destino);
-    void ActivoYDesactivoFrenoRetencion(bool state);
+  //  void ActivoYDesactivoFrenoRetencion(bool state);
+   // void puertasAbiertasIzq();
+  //  void puertasCerradasIzq();
+  //  void puertasAbiertasDer();
+  //  void puertasCerradasDer();
     void estadoHombreMuerto(bool state);
     void cargarMensajeAcople();
     void sacoMensajeAcople();
+    void logicaPuertasSicas(bool b);
 
 
 };

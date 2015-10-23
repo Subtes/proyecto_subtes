@@ -18,11 +18,17 @@ SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac
     connect(m_sicasmac,SIGNAL(onPressSigRow()),this,SLOT(onPressSigRow()));
     connect(m_sicasmac,SIGNAL(onPressAntRow()),this,SLOT(onPressAntRow()));
     connect(m_subte,SIGNAL(bateriaCon()),m_sicasmac,SLOT(turnOnSicas()));
+    connect(m_subte,SIGNAL(bateriaCon()),this,SLOT(prendoSicas()));
     connect(m_subte,SIGNAL(bateriaDes()),m_sicasmac,SLOT(turnOffSicas()));
     connect(m_sicasmac,SIGNAL(sicasOk()),m_subte,SLOT(setSicasOk()));
-    connect(m_subte,SIGNAL(retentionBrakeChanged(bool)),this,SLOT(ActivoYDesactivoFrenoRetencion(bool)));
     connect(m_subte,SIGNAL(hiloLazoChanged(bool)),this,SLOT(estadoHombreMuerto(bool)));
+//    connect(m_subte,SIGNAL(rightDoorsOpened()),this,SLOT(puertasAbiertasDer()));
+//    connect(m_subte,SIGNAL(rightDoorsClosed()),this,SLOT(puertasCerradasDer()));
+//    connect(m_subte,SIGNAL(leftDoorsOpened()),this,SLOT(puertasAbiertasIzq()));
+//    connect(m_subte,SIGNAL(leftDoorsClosed()),this,SLOT(puertasCerradasIzq()));
+    connect(m_subte,SIGNAL(CSCPChanged(bool)),this,SLOT(logicaPuertasSicas(bool)));
     cargoVectorEstadoAnteriorFalla();
+
 }
 
 SicasMac_Controller::~SicasMac_Controller()
@@ -144,6 +150,8 @@ void SicasMac_Controller::generoRenglonesSicas(QString texto, QString trenes, QS
     QString trenesConBlink;
     QStringList cocheYLetra;
     QString valorI = "I";
+    QString valorD = "D";
+    bool guion = false;
     bool parpadeo = false;
     for (int var = 0; var < cocheXcoche.size(); ++var) {
         trenesSinBlink.push_back("  ");
@@ -156,17 +164,25 @@ void SicasMac_Controller::generoRenglonesSicas(QString texto, QString trenes, QS
                 parpadeo = true;
                 trenesConBlink.push_back("  ");
             }
+            else if (cocheYLetra[1] == valorD){
+                guion = true;
+                trenesConBlink.push_back(" - ");
+                trenesSinBlink.push_back(" - ");
+
+            }
             else{
                 trenesConBlink.push_back(cocheYLetra[0]);
             }
         }
         else{
-             trenesConBlink.push_back(cocheYLetra[0]);
+            trenesConBlink.push_back(cocheYLetra[0]);
         }
-        trenesSinBlink.push_back(cocheYLetra[0]);
+        if(!guion){
+            trenesSinBlink.push_back(cocheYLetra[0]);
+        }
     }
-        m_sicasmac->generarTrenesBlink(trenesConBlink, actual, parpadeo);
-        m_sicasmac->textEditSicas(texto,trenesSinBlink,letra,actual);
+    m_sicasmac->generarTrenesBlink(trenesConBlink, actual, parpadeo);
+    m_sicasmac->textEditSicas(texto,trenesSinBlink,letra,actual);
 }
 
 
@@ -177,7 +193,7 @@ void SicasMac_Controller::generoRenglonesSicas(QString texto, QString trenes, QS
  */
 
 void SicasMac_Controller::cargarMensajeAcople(){
-    separoMensajes("Conmutador Acop/Manio;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
+    separoMensajes("Conmutador Acop/Manio;1,F -,F -,F -,F -,F -,F;C;alta");
     refrescoVista();
 }
 
@@ -310,24 +326,24 @@ void SicasMac_Controller::cargoCoches(QString mensajeCoches){
  * @param mensaje
  */
 
-void SicasMac_Controller::ActivoYDesactivoFrenoRetencion(bool state){
-    if(state){
-       /* for (int var = 0; var < cantCochesTotal; var++) {
-            if (estAnteriorFallaCocheSicas[var] == "normal" )
-                verificoEstFalla("con",var);
-        }*/
-        separoMensajes("Aviso Presion Frenos;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
-        refrescoVista();
-    }
-    else{
-        bajaMensaje("Aviso Presion Frenos");
-       /* for (int var = 0; var < cantCochesTotal; var++) {
-            if (estAnteriorFallaCocheSicas[var] == "normal" ){
-                verificoEstFalla("des",var);
-            }
-        }*/
-    }
-}
+//void SicasMac_Controller::ActivoYDesactivoFrenoRetencion(bool state){
+//    if(state){
+//       /* for (int var = 0; var < cantCochesTotal; var++) {
+//            if (estAnteriorFallaCocheSicas[var] == "normal" )
+//                verificoEstFalla("con",var);
+//        }*/
+//        separoMensajes("Aviso Presion Frenos;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
+//        refrescoVista();
+//    }
+//    else{
+//        bajaMensaje("Aviso Presion Frenos");
+//       /* for (int var = 0; var < cantCochesTotal; var++) {
+//            if (estAnteriorFallaCocheSicas[var] == "normal" ){
+//                verificoEstFalla("des",var);
+//            }
+//        }*/
+//    }
+//}
 
     /**
  * @brief SicasMac_Controller::verificoEstPuertas
@@ -373,6 +389,12 @@ void SicasMac_Controller::cargarDestinoSicas(QString destino){
     m_sicasmac->cargoDestinoSicas(destino);
 }
 
+/**
+ * @brief SicasMac_Controller::resetSicas
+ * Inicializo todos los valores del sicas
+ * @param mensaje
+ */
+
 void SicasMac_Controller::resetSicas(){
     for (int var = 0; var <= pantallasicas.size(); var++) {
           pantallasicas.removeAt(var);
@@ -385,17 +407,55 @@ void SicasMac_Controller::resetSicas(){
     cargoVectorEstadoAnteriorFalla();
 }
 
+/**
+ * @brief SicasMac_Controller::
+ * determina el estado del mensaje basandose en el estado de las f de cada coche
+ * @param mensaje
+ */
+
+
+
+/**
+ * @brief SicasMac_Controller::estadoHombreMuerto
+ * aplica el mensaje de aviso presion freno en los casos en que se aplique algun freno
+ * @param mensaje
+ */
+
+//agregar para que cambie tambien los coches afectados
+
 void SicasMac_Controller::estadoHombreMuerto(bool state){
+    QString mensaje="Aviso Presion Frenos;";
+    QString s ;
     if(!state){
         for (int var = 0; var < cantCochesTotal; var++) {
-            if (estAnteriorFallaCocheSicas[var] == "norm" )
+            s = QString::number(var+1);
+            if (estAnteriorFallaCocheSicas[var] == "norm" ){
                 verificoEstFalla("con",var);
+                mensaje.append(s);
+                mensaje.append(",F ");
+            }
+            else if (estAnteriorFallaCocheSicas[var] == "int" ){
+                mensaje.append(s);
+                mensaje.append(",I ");
+            }
+            else if (estAnteriorFallaCocheSicas[var] == "des" ){
+                mensaje.append(s);
+                mensaje.append(",D ");
+            }
+            else{
+                mensaje.append(s);
+                mensaje.append(",F ");
+            }
         }
-        separoMensajes("Freno Activado;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
+        mensaje.append(";C;alta");
+    //    qDebug()<<" Mensaje  "<<mensaje;
+
+        separoMensajes(mensaje);
+        //separoMensajes("Aviso Presion Frenos;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
         refrescoVista();
     }
     else{
-        bajaMensaje("Freno Activado");
+        bajaMensaje("Aviso Presion Frenos");
         for (int var = 0; var < cantCochesTotal; var++) {
             if (estAnteriorFallaCocheSicas[var] == "norm" ){
                 verificoEstFalla("des",var);
@@ -404,3 +464,65 @@ void SicasMac_Controller::estadoHombreMuerto(bool state){
     }
 }
 
+ /*
+ * @brief SicasMac_Controller::logicaPuertasSicas
+ * genera los guines en el coche para la visual de las puertas abiertas y cerradas
+ * @param mensaje
+ */
+void SicasMac_Controller::logicaPuertasSicas(bool b){
+ int cantPuertas=0;
+    if(m_subte->leftDoors()){
+        for (int var = 0; var < cantCochesTotal; var++) {
+            for (int datos = 0; datos < 4; datos++) {
+                verificoEstPuertas("abierto",cantPuertas); //las puertas
+                cantPuertas++;
+            }
+            cantPuertas = cantPuertas + 4;
+        }
+        qDebug()<< "cantpuertas abiertas left  "<<cantPuertas;
+        separoMensajes("Puertas Abiertas;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
+        refrescoVista();
+    }
+    else{
+        for (int var = 0; var < cantCochesTotal; var++) {
+            for (int datos = 0; datos < 4; datos++) {
+                verificoEstPuertas("cerrado",cantPuertas); //las puertas
+                cantPuertas++;
+            }
+            cantPuertas = cantPuertas + 4;
+        }
+        bajaMensaje("Puertas Abiertas");
+        qDebug()<< "cantpuertas cerradas left  "<<cantPuertas;
+
+   }
+   cantPuertas=0;
+   if(m_subte->rightDoors()){
+      for (int var = 0; var < cantCochesTotal; var++) {
+            cantPuertas = cantPuertas + 4;
+            for (int datos = 0; datos < 4; datos++) {
+                verificoEstPuertas("abierto",cantPuertas); //las puertas
+                cantPuertas++;
+            }
+        }
+        separoMensajes("Puertas Abiertas;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
+        refrescoVista();
+        qDebug()<< "cantpuertas abiertas der  "<<cantPuertas;
+
+    }
+   else{
+        for (int var = 0; var < cantCochesTotal; var++) {
+            cantPuertas = cantPuertas + 4;
+            for (int datos = 0; datos < 4; datos++) {
+                verificoEstPuertas("cerrado",cantPuertas); //las puertas
+                cantPuertas++;
+            }
+        }
+        bajaMensaje("Puertas Abiertas");
+        qDebug()<< "cantpuertas cerradas der  "<<cantPuertas;
+
+    }
+}
+
+void SicasMac_Controller::prendoSicas(){
+    refrescoVista();
+}

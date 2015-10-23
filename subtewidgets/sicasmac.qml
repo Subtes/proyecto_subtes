@@ -331,7 +331,7 @@ Rectangle {
 
     Text {
         id: tren
-        x: 47
+        x: 64
         y: 63
         width: 60
         height: 20
@@ -344,7 +344,7 @@ Rectangle {
 
     Text {
         id: linea
-        x: 134
+        x: 148
         y: 63
         width: 60
         height: 20
@@ -423,8 +423,8 @@ Rectangle {
 
     Image {
         id: glass
-        x: 40
-        y: 35
+        x: 38
+        y: 38
         opacity: 0.7
         width: 518
         height: 387
@@ -445,8 +445,8 @@ Rectangle {
     Image {
         id: inicioSicas
         opacity: 1;
-        x: 40
-        y: 35
+        x: 36
+        y: 37
         width: 518
         height: 387
         z: 4
