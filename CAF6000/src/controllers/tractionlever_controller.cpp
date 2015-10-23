@@ -54,8 +54,10 @@ void TractionLever_Controller::offTractionLever(){
 void TractionLever_Controller::processValue(int value){
 
     if (value > 100){
+        qDebug()<<" Valor de Traction MAYOR a 100, Controlar limites de parametros de configuracion de Joystick/Traccion! "<< value;
         value = 100;
     }else if (value < -100){
+        qDebug()<<" Valor de Traction MENOR a -100, Controlar limites de parametros de configuracion de Joystick/Traccion! "<< value;
         value = -100;
     }
 
@@ -63,16 +65,20 @@ void TractionLever_Controller::processValue(int value){
         int tr = static_cast<int>((((double)value-15.0)/85.0)*100.0);
         m_subte->tractionReceived(tr);
         m_tractionLever->setValue(value);
+        //qDebug()<<"Valor de Joystick:  ---TRACTION------>"<< value;
     }else if((value <= 15)&&(value >= -15)){
         m_subte->tractionReceived(0);
         m_subte->brakeReceived(0);
         m_tractionLever->setValue(0);
+        //qDebug()<<"Valor de Joystick:  ---BRAKE & TRACTION------> 0";
     }else if ((value < -15) && (value >= -95)){
         int br = static_cast<int>((((double)((-1)*value)-15.0)/80.0)*100.0);
         m_subte->brakeReceived(br);
         m_tractionLever->setValue(value);
+        //qDebug()<<"Valor de Joystick:  ---BRAKE------>"<< value;
     }else if (value < -95){
         m_subte->brakeReceived(100);
         m_tractionLever->setValue(-100);
+        //qDebug()<<"Valor de Joystick:  ---BRAKE EMERGENCY!!!!!!------";
     }
 }
