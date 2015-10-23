@@ -60,10 +60,10 @@ void TractionLever_Controller::offTractionLever(){
 void TractionLever_Controller::processValue(int value){
 
     if (value > 100){
-        qDebug()<<" Valor de Traction MAYOR a 100, Controlar! "<< value;
+        qDebug()<<" Valor de Traction MAYOR a 100, Controlar limites de parametros de configuracion de Joystick/Traccion! "<< value;
         value = 100;
     }else if (value < -100){
-        qDebug()<<" Valor de Traction MAYOR a 100, Controlar! "<< value;
+        qDebug()<<" Valor de Traction MENOR a -100, Controlar limites de parametros de configuracion de Joystick/Traccion! "<< value;
         value = -100;
     }
 
