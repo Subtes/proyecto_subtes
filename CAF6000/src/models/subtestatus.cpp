@@ -11,7 +11,6 @@ SubteStatus::SubteStatus()
     m_traction->linkCSCP(m_cscp);
     m_traction->linkATP(m_ATP_model);
 
-
     m_speed = 0;
     m_effort = 0;
     m_volts = 0;
@@ -40,6 +39,9 @@ SubteStatus::~SubteStatus()
 void SubteStatus::setHandler(EventHandler *eventHandler)
 {
     m_eventHandler = eventHandler;
+    m_brake->setHandler(eventHandler);
+    m_traction->setHandler(eventHandler);
+
 }
 
 void SubteStatus::reset()
@@ -108,9 +110,7 @@ bool SubteStatus::emergencyBrake() const
  */
 bool SubteStatus::getHiloLazo()
 {
-    if(m_brake->averia()) return false;
-    if(m_brake->getEmergencyBrake()) return false;
-    return true;
+    return m_brake->getHiloLazo();
 }
 
 bool SubteStatus::horn() const
@@ -138,11 +138,6 @@ std::string SubteStatus::rana() const
     return m_rana;
 }
 
-int SubteStatus::tractionLeverPosition() const
-{
-    return m_traction->position();
-}
-
 // SLOTS ///////////////////
 /**
  * @brief SubteStatus::updateSpeed: checkea que haya un cambio de velocidad, si hay,
@@ -158,9 +153,9 @@ void SubteStatus::updateSpeed(double value){
             m_cscp->setBypass(false);
             emit CSCPChanged(m_cscp->evalCircuit());
         }
+
         if( m_speed <= 0 && m_brake->getEmergencyBrake()){
-            m_brake->setEmergencyBrake(false);
-            m_eventHandler->notifyValueChanged("c_freno_emergencia","des");
+            m_brake->setEmergencyBrake_atp(false);
         }
     }
 }
@@ -201,76 +196,43 @@ void SubteStatus::washer()
  * @param value: posicion de la palanca
  */
 void SubteStatus::tractionReceived(int value){
-    double tractionToEmit = m_traction->updateTraction(value);
-    if((value<10) || (abs(tractionToEmit - m_traction->lastTraction()) >= 5)){
-        m_eventHandler->notifyValueChanged("c_traccion",std::to_string(tractionToEmit));
-        m_traction->setLastTraction(tractionToEmit);
-        if(m_cscp->leftDoors() && m_cscp->rightDoors() && tractionToEmit>0){
-            closeLeftDoors();
-            closeRightDoors();
-        }
-    }
+    m_traction->updateTraction(value);
 }
 
 void SubteStatus::brakeReceived(int value){
     m_brake->setBrake(value);
-    m_traction->updateTraction();
-    if((value<10) || (abs(value - m_brake->lastBrake()) >= 5)){
-        m_eventHandler->notifyValueChanged("c_freno",std::to_string(value));
-        m_brake->setLastBrake(value);
-    }
 }
 
 /**
  * @brief SubteStatus::emergencyBrakeActived: se corta el hilo de lazo
  */
-void SubteStatus::emergencyBrakeActived(){
-    m_brake->setEmergencyBrake(true);
-    m_eventHandler->notifyValueChanged("c_freno_emergencia","con");
-    m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
-    qDebug() << "c_traccion: "<< m_traction->getTraction();
-    qDebug() << "c_freno_emergencia: con";
+void SubteStatus::ATP_emergencyBrakeActivated(){
+    m_brake->setEmergencyBrake_atp(true);
+    m_traction->notifyTraction();
     emit hiloLazoChanged(getHiloLazo());
 }
 
-void SubteStatus::emergencyBrakeReleased(){
-    m_brake->setEmergencyBrake(false);
-    m_eventHandler->notifyValueChanged("c_freno_emergencia","des");
-    m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
-    qDebug() << "c_traccion: "<< m_traction->getTraction();
-    qDebug() << "c_freno_emergencia: des";
+void SubteStatus::ATP_emergencyBrakeReleased(){
+    m_brake->setEmergencyBrake_atp(false);
+    m_traction->notifyTraction();
     emit hiloLazoChanged(getHiloLazo());
 }
 
 void SubteStatus::hombreMuertoPressed(){
     m_traction->setHombreMuerto(true);
-    m_eventHandler->notifyValueChanged("c_dispositivo_hombre_muerto","con");
-    qDebug() << "c_hombreMuerto: pressed";
+    m_traction->notifyHM();
+    m_traction->notifyTraction();
+    //m_brake->notifyEmergencyBrake();
     emit hiloLazoChanged(getHiloLazo());
-
-    m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
-    qDebug() << "c_traccion: "<< m_traction->getTraction();
-
-    if(m_brake->getEmergencyBrake()){
-        m_eventHandler->notifyValueChanged("c_freno_emergencia","con");
-    } else {
-        m_eventHandler->notifyValueChanged("c_freno_emergencia","des");
-    }
 }
 
 void SubteStatus::hombreMuertoReleased(){
     m_traction->setHombreMuerto(false);
-    m_eventHandler->notifyValueChanged("c_dispositivo_hombre_muerto","des");
-    qDebug() << "c_hombreMuerto: released";
+    m_traction->notifyHM();
+    m_traction->notifyTraction();
+    m_brake->notifyEmergencyBrake();
     emit hiloLazoChanged(getHiloLazo());
-
-    m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
-
-    if(m_brake->getEmergencyBrake()){
-        m_eventHandler->notifyValueChanged("c_freno_emergencia","con");
-    } else {
-        m_eventHandler->notifyValueChanged("c_freno_emergencia","des");
-    }}
+}
 
 /**
  * @brief SubteStatus::disyuntoresCON: Para poder conectar los disyuntores, es necesario:
@@ -319,17 +281,19 @@ void SubteStatus::emergencyOverridePressed(){
 }
 
 void SubteStatus::setaActivated(){
-    emergencyBrakeActived();
     m_seta = true;
+    m_brake->setEmergencyBrake_seta(true);
+    m_traction->notifyTraction();
     m_eventHandler->notifyValueChanged("c_seta_emergencia","con");
-    qDebug() << "c_seta_emergencia: con";
+    emit hiloLazoChanged(getHiloLazo());
 }
 
 void SubteStatus::setaDeactivated(){
-    emergencyBrakeReleased();
     m_seta = false;
+    m_brake->setEmergencyBrake_seta(false);
+    m_traction->notifyTraction();
     m_eventHandler->notifyValueChanged("c_seta_emergencia","des");
-    qDebug() << "c_seta_emergencia: des";
+    emit hiloLazoChanged(getHiloLazo());
 }
 
 void SubteStatus::keyActivated(){
@@ -357,7 +321,7 @@ void SubteStatus::ranaCERO(){
     m_rana = "0";
     m_traction->setDirection(Traction::RANA::CERO);
     m_eventHandler->notifyValueChanged("c_rana","0");
-    m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
+    m_traction->notifyTraction();
     qDebug() << "c_rana: 0";
     qDebug() << "c_traccion: " << m_traction->getTraction();
 }
@@ -367,14 +331,6 @@ void SubteStatus::ranaAT(){
     m_traction->setDirection(Traction::RANA::AT);
     m_eventHandler->notifyValueChanged("c_rana","at");
     qDebug() << "c_rana: AT";
-}
-
-void SubteStatus::tractionLeverChanged(int value){
-    m_traction->setPosition(value);
-    if((value<10) || (abs(value - m_traction->lastPosition())>=5)){
-        m_eventHandler->notifyValueChanged("c_regulador_de_mando",std::to_string(value));
-        m_traction->setLastPosition(value);
-    }
 }
 
 void SubteStatus::cutTraction(){
@@ -467,18 +423,12 @@ void SubteStatus::bypassBrake(bool status)
         m_eventHandler->notifyValueChanged("c_bypass_freno","des");
         qDebug() << "Brake reactivated";
     }
-    m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
-
-    if(m_brake->getEmergencyBrake()){
-        m_eventHandler->notifyValueChanged("c_freno_emergencia","con");
-    } else {
-        m_eventHandler->notifyValueChanged("c_freno_emergencia","des");
-    }
+    m_traction->notifyTraction();
+    m_brake->notifyEmergencyBrake();
 }
 
 void SubteStatus::bypassCSCP(bool status)
 {
-
     if(status){
         m_cscp->setBypass(true);
         m_eventHandler->notifyValueChanged("c_bypass_traccion","con");
@@ -490,8 +440,7 @@ void SubteStatus::bypassCSCP(bool status)
         }
         m_eventHandler->notifyValueChanged("c_bypass_traccion","des");
     }
-
-    m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
+    m_traction->notifyTraction();
     emit CSCPChanged(m_cscp->evalCircuit());
     qDebug() << "CSCPChanged " + m_cscp->evalCircuit();
 }
@@ -571,14 +520,14 @@ bool SubteStatus::getDrivingModeATP(){
 void SubteStatus::setTractionFailure()
 {
     m_traction->setAveria(true);
-    m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
+    m_traction->notifyTraction();
 }
 
 void SubteStatus::setBrakeFailure()
 {
     m_brake->setAveria(true);
+    m_brake->notifyEmergencyBrake();
     emit hiloLazoChanged(getHiloLazo());
-    m_eventHandler->notifyValueChanged("c_freno_emergencia","con");
 }
 
 void SubteStatus::setCSCPFailure()
@@ -590,18 +539,14 @@ void SubteStatus::setCSCPFailure()
 void SubteStatus::resolveTractionFailure()
 {
     m_traction->setAveria(false);
-    m_eventHandler->notifyValueChanged("c_traccion",std::to_string(m_traction->getTraction()));
+    m_traction->notifyTraction();
 }
 
 void SubteStatus::resolveBrakeFailure()
 {
     m_brake->setAveria(false);
+    m_brake->notifyEmergencyBrake();
     emit hiloLazoChanged(getHiloLazo());
-
-    if(m_brake->getEmergencyBrake())
-        m_eventHandler->notifyValueChanged("c_freno_emergencia","con");
-    else
-        m_eventHandler->notifyValueChanged("c_freno_emergencia","des");
 }
 
 void SubteStatus::resolveCSCPFailure()

@@ -3,8 +3,9 @@
 
 Brake::Brake()
 {
-    m_emergencyBrake = false;
-    m_parkingBrake = false;
+    m_emergencyBrake_atp = false;
+    m_emergencyBrake_setas = false;
+    m_emergencyBrake_tractionLever = false;
     m_brake = 0;
     m_lastBrake = 0;
     m_bypass = false;
@@ -22,25 +23,29 @@ void Brake::linkTraction(Traction *traction)
     m_traction = traction;
 }
 
+void Brake::setHandler(EventHandler * eventHandler)
+{
+    m_eventHandler = eventHandler;
+}
+
 bool Brake::braking()
 {
-    if (m_brake>0){
-        qDebug() << "frenos > 0";
+    if (m_bypass){
+        return false;
     }
 
-    if (m_emergencyBrake){
-        qDebug() << "freno de emergencia activado";
+    if(m_averia){
+        return true;
     }
 
-    if (m_bypass) return false;
-    if(m_averia) { qDebug() << "averia en frenos! frena el coche"; return true; }
-    return m_brake>0 || m_emergencyBrake;
+    return m_brake>0 || getEmergencyBrake();
 }
 
 void Brake::reset()
 {
-    m_emergencyBrake = true;
-    m_parkingBrake = false;
+    m_emergencyBrake_atp = false;
+    m_emergencyBrake_setas = false;
+    m_emergencyBrake_tractionLever = false;
     m_brake = 0;
     m_lastBrake = 0;
     m_bypass = false;
@@ -49,23 +54,38 @@ void Brake::reset()
     m_anulacionFrenoRetencion = false;
 }
 
+bool Brake::getHiloLazo(){
+    if (m_bypass)
+        return true;
+
+    return  m_traction->hombreMuerto() &&
+            !m_averia &&
+            !m_emergencyBrake_atp &&
+            !m_emergencyBrake_setas &&
+            !m_emergencyBrake_tractionLever;
+}
+
 bool Brake::getEmergencyBrake() const
 {
    if (m_bypass)
        return false;
 
-    if (!m_traction->hombreMuerto())
-        return true;
-
     if (m_averia)
         return true;
 
-    return m_emergencyBrake;
+    return m_emergencyBrake_atp || m_emergencyBrake_setas || m_emergencyBrake_tractionLever;
 }
 
-void Brake::setEmergencyBrake(bool value)
+void Brake::setEmergencyBrake_atp(bool value)
 {
-    m_emergencyBrake = value;
+    m_emergencyBrake_atp = value;
+    notifyEmergencyBrake();
+}
+
+void Brake::setEmergencyBrake_seta(bool value)
+{
+    m_emergencyBrake_setas = value;
+    notifyEmergencyBrake();
 }
 
 double Brake::getBrake() const
@@ -75,27 +95,20 @@ double Brake::getBrake() const
 
 void Brake::setBrake(double value)
 {
-    m_brake = value;
-}
-
-bool Brake::parkingBrake() const
-{
-    return m_parkingBrake;
-}
-
-void Brake::setParkingBrake(bool parkingBrake)
-{
-    m_parkingBrake = parkingBrake;
-}
-
-double Brake::lastBrake() const
-{
-    return m_lastBrake;
-}
-
-void Brake::setLastBrake(double lastBrake)
-{
-    m_lastBrake = lastBrake;
+    if (value==100){
+        m_brake = value;
+        m_lastBrake = value;
+        m_emergencyBrake_tractionLever = true;
+        notifyEmergencyBrake();
+    } else if((value<10) || (abs(value - m_lastBrake) >= 3)){
+        if (m_emergencyBrake_tractionLever){
+            m_emergencyBrake_tractionLever = false;
+            notifyEmergencyBrake();
+        }
+        m_brake = value;
+        notifyBrake();
+        m_lastBrake = value;
+    }
 }
 
 bool Brake::bypass() const
@@ -139,4 +152,20 @@ bool Brake::anulacionFrenoRetencion() const
 void Brake::setAnulacionFrenoRetencion(bool anulacionFrenoRetencion)
 {
     m_anulacionFrenoRetencion = anulacionFrenoRetencion;
+}
+
+void Brake::notifyEmergencyBrake(){
+    if (getEmergencyBrake()){
+        m_eventHandler->notifyValueChanged(NOMBRE_FRENO_EMERGENCIA,VALOR_CON_FRENO_EMERGENCIA);
+    }else{
+        m_eventHandler->notifyValueChanged(NOMBRE_FRENO_EMERGENCIA,VALOR_DES_FRENO_EMERGENCIA);
+    }
+}
+
+void Brake::notifyHMBrake(){
+    m_eventHandler->notifyValueChanged(NOMBRE_FRENO_HM,VALOR_FRENO_HM);
+}
+
+void Brake::notifyBrake(){
+    m_eventHandler->notifyValueChanged(NOMBRE_FRENO,std::to_string(getBrake()));
 }

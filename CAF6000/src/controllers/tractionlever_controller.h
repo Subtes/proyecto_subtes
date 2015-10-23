@@ -18,11 +18,6 @@ public slots:
     void offTractionLever();
     void processValue(int);
 
-signals:
-    void traction(int);
-    void brake(int);
-    void emergencyBrake();
-
 private:
     TractionHardware * m_tractionHardware;
     TractionLever * m_tractionLever;

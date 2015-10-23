@@ -157,7 +157,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             emit controlReset();
 
             m_eNetClient->CambiarValorClave("c_rana",m_subte->rana());
-            m_eNetClient->CambiarValorClave("c_regulador_mando",std::to_string((int)m_subte->tractionLeverPosition()));
             m_eNetClient->CambiarValorClave("c_traccion",std::to_string((int)m_subte->traction()));
             m_eNetClient->CambiarValorClave("c_freno_emergencia","des");
             m_eNetClient->CambiarValorClave("c_grifob138","con");
@@ -282,7 +281,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             emit controlReset();
 
             m_eNetClient->CambiarValorClave("c_rana",m_subte->rana());
-            m_eNetClient->CambiarValorClave("c_regulador_de_mando",std::to_string((int)m_subte->tractionLeverPosition()));
             m_eNetClient->CambiarValorClave("c_traccion",std::to_string((int)m_subte->traction()));
             m_eNetClient->CambiarValorClave("c_freno_emergencia","des");
             m_eNetClient->CambiarValorClave("c_llave_atp","des");
@@ -312,7 +310,8 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             std::string state = parameters.at(1).toStdString();
 
             if (state.compare("0")==0){
-                m_subte->emergencyBrakeActived();
+                //TODO: llamar al ATP para que cambie target a 0 - eso fuerza modo CL
+                m_subte->ATP_emergencyBrakeActivated();
             }
         }
     }
