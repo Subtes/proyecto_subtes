@@ -95,6 +95,9 @@ private:
     double m_speedAllowed;
     double m_speedAllowedPrevious;
 
+    //State transition, true if ATP is on transition
+    bool m_transition;
+
     //Tasa desaceleracion
     double m_A1 = 0.7;
 
