@@ -114,8 +114,6 @@ void BoardHardware::loadState(int state){
     else if(state == EN_MARCHA){
         lastState = EN_MARCHA;
         m_rana->setValue(1);
-        m_tractionLever->onTractionLever();
-        qDebug()<<"---- En Marcha ----";
     }
 
     m_eventHandler->enableDiffusion();

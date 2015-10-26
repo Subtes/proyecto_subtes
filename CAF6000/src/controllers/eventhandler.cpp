@@ -156,9 +156,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_subte->reset();
             emit controlReset();
 
-            m_eNetClient->CambiarValorClave("c_rana",m_subte->rana());
-            m_eNetClient->CambiarValorClave("c_traccion",std::to_string((int)m_subte->traction()));
-            m_eNetClient->CambiarValorClave("c_freno_emergencia","des");
             m_eNetClient->CambiarValorClave("c_grifob138","con");
             m_eNetClient->CambiarValorClave("c_grifol2","con");
             m_eNetClient->CambiarValorClave("c_grifob73","con");
@@ -205,8 +202,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_33f1_6","con");
             m_eNetClient->CambiarValorClave("c_rana_6","0");
             m_eNetClient->CambiarValorClave("c_seta_emergencia_6","des");
-            m_eNetClient->CambiarValorClave("c_llave_atp","des");
-
 
             emit controlDisable();
             m_eNetClient->CambiarValorClave("c_listo","1");
@@ -263,7 +258,8 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_termico_33f1_6","con");
             m_eNetClient->CambiarValorClave("c_rana_6","0");
             m_eNetClient->CambiarValorClave("c_seta_emergencia_6","des");
-            m_eNetClient->CambiarValorClave("c_llave_atp","des");
+
+            //m_eNetClient->Desconectar();
 
             Sleep(1000);
             emit closeApp();
@@ -279,12 +275,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
 
             m_subte->reset();
             emit controlReset();
-
-            m_eNetClient->CambiarValorClave("c_rana",m_subte->rana());
-            m_eNetClient->CambiarValorClave("c_traccion",std::to_string((int)m_subte->traction()));
-            m_eNetClient->CambiarValorClave("c_freno_emergencia","des");
-            m_eNetClient->CambiarValorClave("c_llave_atp","des");
-
             emit controlDisable();
 
             m_eNetClient->CambiarValorClave("c_listo","1");

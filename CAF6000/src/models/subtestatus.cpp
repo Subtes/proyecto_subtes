@@ -300,14 +300,14 @@ void SubteStatus::keyActivated(){
     m_keyATP = true;
     m_eventHandler->notifyValueChanged("c_llave_atp","con");
     emit atpOn();
-    qDebug() << "keyATP: " << m_keyATP;
+    qDebug() << "keyATP Model: " << m_keyATP;
 }
 
 void SubteStatus::keyDeactivated(){
     m_keyATP = false;
     m_eventHandler->notifyValueChanged("c_llave_atp","des");
     emit atpOff();
-    qDebug() << "keyATP: " << m_keyATP;
+    qDebug() << "keyATP Model: " << m_keyATP;
 }
 
 void SubteStatus::ranaAD(){

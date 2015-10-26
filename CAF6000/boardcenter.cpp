@@ -105,9 +105,7 @@ void BoardCenter::loadState(int state){
     m_brakesBypass->bypassBrakeReleased();
     m_tractionBypass->releaseBypass();
 
-    //Preguntar a Faba si sirve o vale apagar aca las lecturas de hardware (bypasses)
-    m_tractionBypass->offBypassHD();
-    qDebug()<< "Hardware OFF";
+
 
     if(state == APAGADO){
         lastState = APAGADO;
@@ -120,7 +118,7 @@ void BoardCenter::loadState(int state){
         ui->velocimetro->turnOn();
         ui->bypassFreno->turnOn();
         ui->bypassTraccion->turnOn();
-        m_tractionBypass->onBypassHD();
+
     }
 
     m_eventHandler->enableDiffusion();

@@ -63,6 +63,7 @@ void Key_TopBoard_Controller::processKeyTop(int k){
 
 void Key_TopBoard_Controller::onKeyHD(){
     if (m_tractionHardware->isHardwareEnable()){
+        m_tractionHardware->reset();
         m_checkJ->start();
         qDebug()<<"Hardware ON: LLave Hardware ON";
     }else{
