@@ -207,7 +207,7 @@ bool TractionHardware::isHardwareEnable(){
 }
 
 
-/*
+
 void TractionHardware::reset(){
     getdata();
 
@@ -219,7 +219,7 @@ void TractionHardware::reset(){
     m_seta = buttons.at(3);
     m_keyTop = buttons.at(7);
 }
-*/
+
 
 void TractionHardware::onSound(int s){
     qDebug()<< "<---- onSound ---->";

@@ -13,6 +13,7 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     this->m_eventHandler = eventHandler;
 
     this->m_onATP = false;
+    this->m_transition = false;
 
     this->onATP();
 
@@ -97,13 +98,29 @@ void Atp_Controller::initATP(){
     this->calculateDistance();
 
     m_onATP = true;
-    qDebug()<<"ATP init, TargetSpeed: " << m_subte->targetSpeed();
-
-    if((this->m_subte->targetSpeed()) > 15.0){
-        this->updateTargetSpeed(this->m_subte->targetSpeed());
+    if (m_transition){
+        qDebug() << "ATP reinicializado cuando estaba en transicion, ---> TARGET SPEED: 0.0, ALLOWED SPEED: 15.0";
+        updateTargetSpeed(15.0);
+        m_subte->updateTargetSpeed(0.0);
+        m_subte->updateAllowedSpeed(15.0);
+        m_speedAllowed = 15.0;
+        m_speedAllowedPrevious = 15.0;
+        m_speedTarget = 0.0;
+        m_speedTargetPrevious = 0.0;
+        m_view->updateTargetSpeed(0.0);
+        m_view->updateAllowedSpeed(15.0);
+        m_transition = false;
     }else{
-        this->updateTargetSpeed(60.0);
+        qDebug() << "ATP reinicializado fuera de transicioncuando";
+        if((this->m_subte->targetSpeed()) > 0.0){
+            this->updateTargetSpeed(this->m_subte->targetSpeed());
+            qDebug()<<"ATP init, TargetSpeed from MODEL: " << m_subte->targetSpeed();
+        }else{
+            this->updateTargetSpeed(60.0);
+            qDebug()<<"ATP init, TargetSpeed from DEFAULT ATP: 60.0";
+        }
     }
+
 
     //Intervalo de trabajo del ATP, salva en caso de quedar la velocidad planchada CTE y no recibir muestreo.
     //VV No estaria haciendo Falta no recuerdo bien porque pense esto, salio de la charla con Fabri, VER. (Luego de la limpieza de codigo quitar, parece que hace falta por una cuestionde refresco)
@@ -316,6 +333,7 @@ void Atp_Controller::updateAllowedSpeed(double speedTargetNew){
 
 void Atp_Controller::transitionGT(){
     // V = Vo + At
+    m_transition = true;
     double t = ((m_speedTarget - m_speedTargetPrevious)*0.277777777777778)/(-0.7);
     int tAux = static_cast<int>(t*1000);
 
@@ -343,6 +361,7 @@ void Atp_Controller::transitionGT(){
     }
     critiqueSpeed(2);
     setAllowedSpeed(m_speedTarget);
+    m_transition = false;
 }
 
 /**
@@ -354,6 +373,8 @@ void Atp_Controller::transitionGT(){
  * V = 3.6*RAIZ(2*Aref*D)
  */
 void Atp_Controller::transitionGD(){
+
+    m_transition = true;
 
     double a = 0.6;
     double dp = 403.0;
@@ -396,7 +417,9 @@ void Atp_Controller::transitionGD(){
         }
     }
     setAllowedSpeed(15.0);
-    m_view->updateTargetSpeed(0.0);    
+    m_view->updateTargetSpeed(0.0);
+
+    m_transition = false;
 }
 
 void Atp_Controller::calculateDistance(){
