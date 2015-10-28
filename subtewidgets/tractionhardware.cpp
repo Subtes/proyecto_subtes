@@ -51,7 +51,7 @@ TractionHardware::TractionHardware()
 void TractionHardware::processValueChanged(){
 
     getdata();
-    qDebug()<<"Valor: --->  "<< (this->axis.at(0));
+    //qDebug()<<"Valor Joystick: --->  "<< (this->axis.at(0));
     m_value = this->axis.at(0);
     bool m_auXdiedMan = this->buttons.at(0);
 
@@ -59,10 +59,10 @@ void TractionHardware::processValueChanged(){
         m_traction = 0;
     }else if (m_value < m_neutralTop){
         m_traction = static_cast<int>(((m_value-m_neutralTop)*100)/m_rangoT);
-        qDebug()<<"Valor TRACCION Emitido TH: --->  "<< m_traction;
+        //qDebug()<<"Valor TRACCION Joystick Emitido TH: --->  "<< m_traction;
     }else if (m_value > m_neutralLower){
         m_traction = -(static_cast<int>(((m_value-m_neutralLower)*100)/m_rangoB));
-        qDebug()<<"Valor BRAKE Emitido TH: --->  "<< m_traction;
+        //qDebug()<<"Valor BRAKE Joystick Emitido TH: --->  "<< m_traction;
     }
 
     emit positionChanged(m_traction);
@@ -91,10 +91,10 @@ void TractionHardware::processBottonChanged(){
 
         if (m_bypassBrake){
             emit brakeBypassPressed();
-            qDebug()<< "BOTON Bypass Freno presionado";
+            qDebug()<< "BOTON Joystick Bypass Freno presionado";
         }else{
             emit brakeBypassReleased();
-            qDebug()<< "BOTON Bypass Freno soltado";
+            qDebug()<< "BOTON Joystick Bypass Freno soltado";
         }
 
     }
@@ -105,10 +105,10 @@ void TractionHardware::processBottonChanged(){
 
         if (m_bypassTraction){
             emit tractionBypassPressed();
-            qDebug()<< "BOTON Bypass Traccion presionado";
+            qDebug()<< "BOTON Joystick Bypass Traccion presionado";
         }else{
             emit tractionBypassReleased();
-            qDebug()<< "BOTON Bypass Traccion soltado";
+            qDebug()<< "BOTON Joystick Bypass Traccion soltado";
         }
     }
 
@@ -129,6 +129,8 @@ void TractionHardware::processRanaChanged(){
 
         if (m_ranaAT) toEmit = -1;
         if (m_ranaAD) toEmit = 1;
+
+        qDebug() << "RANA Joystick: " << toEmit;
 
         emit ranaY(toEmit);
     }
@@ -162,10 +164,10 @@ void TractionHardware::processKeyTop(){
         m_keyTop = m_auXkeyTop;
         if (m_keyTop){
             emit processKeyTop(1);
-            qDebug()<< "SETA Joystick ON";
+            qDebug()<< "Key Joystick ON";
         }else{
             emit processKeyTop(0);
-            qDebug()<< "SETA Joystick OFF";
+            qDebug()<< "Key Joystick OFF";
         }
     }
 
@@ -218,11 +220,12 @@ void TractionHardware::reset(){
     m_ranaAT = buttons.at(2);
     m_seta = buttons.at(3);
     m_keyTop = buttons.at(7);
+    qDebug()<< "Reset Hardware: "<< "diedMan: "<< m_diedMan << " bypassBrake: " << m_bypassBrake << " bypassTraction: " << m_bypassTraction << " ranaAD: "<< m_ranaAD << " ranaAT: " << m_ranaAT << " seta: " << m_seta << "keyTop" << m_keyTop;
 }
 
 
 void TractionHardware::onSound(int s){
-    qDebug()<< "<---- onSound ---->";
+    qDebug()<< "<---- onSound HARDWARE---->";
     switch(s){
     case 0:
         qDebug()<< "Playing SOUND Warning";

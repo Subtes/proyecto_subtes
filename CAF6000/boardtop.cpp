@@ -80,16 +80,16 @@ void BoardTop::loadState(int state)
     if(state == APAGADO){
         lastState = APAGADO;
         m_connectors->setEstado(APAGADO);
-        m_keyTopBoard->keyOFF();
+        m_keyTopBoard->keyTurnOFF();
         m_topGauges->turnOffGauges();
-       // m_keyTopBoard->offKeyHD();
+
 
     } else if(state== EN_MARCHA){
         lastState = EN_MARCHA;
         m_connectors->setEstado(EN_MARCHA);
-        m_keyTopBoard->keyON();
+        m_keyTopBoard->keyTurnON();
         m_topGauges->turnOnGauges();
-        m_keyTopBoard->onKeyHD();
+
     }
     m_connectors->reset();
     m_eventHandler->enableDiffusion();

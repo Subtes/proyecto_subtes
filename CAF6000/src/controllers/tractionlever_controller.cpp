@@ -7,15 +7,15 @@ TractionLever_Controller::TractionLever_Controller(SubteStatus * subte, Traction
     m_tractionHardware = th;
 
     m_checkJ = new QTimer();
-    m_checkJ->setInterval(100);
+    m_checkJ->setInterval(50);
 
     m_checkB = new QTimer();
-    m_checkB->setInterval(500);
+    m_checkB->setInterval(250);
 
     connect(m_checkJ,SIGNAL(timeout()),m_tractionHardware,SLOT(processValueChanged()));
-    connect(m_checkJ,SIGNAL(timeout()),m_tractionHardware,SLOT(processRanaChanged()));
-    connect(m_checkJ,SIGNAL(timeout()),m_tractionHardware,SLOT(processSetaChanged()));
-    connect(m_checkJ,SIGNAL(timeout()),m_tractionHardware,SLOT(processBottonChanged()));
+    connect(m_checkB,SIGNAL(timeout()),m_tractionHardware,SLOT(processRanaChanged()));
+    connect(m_checkB,SIGNAL(timeout()),m_tractionHardware,SLOT(processSetaChanged()));
+    connect(m_checkB,SIGNAL(timeout()),m_tractionHardware,SLOT(processBottonChanged()));
     connect(m_tractionHardware,SIGNAL(positionChanged(int)),this,SLOT(processValue(int)));
     connect(m_tractionLever,SIGNAL(positionChanged(int)),this,SLOT(processValue(int)));
     connect(m_tractionLever,SIGNAL(positionChanged(int)),m_subte,SLOT(tractionLeverChanged(int)));
@@ -38,6 +38,7 @@ void TractionLever_Controller::setValue(int v)
 void TractionLever_Controller::onTractionLever(){
     bool check = m_tractionHardware->isHardwareEnable();
     if (check){
+        m_tractionHardware->reset();
         m_checkJ->start();
         m_checkB->start();
         qDebug()<<"Hardware ON: Palanca, HV, Seta, Rana";
