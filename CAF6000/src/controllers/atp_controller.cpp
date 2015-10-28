@@ -35,8 +35,8 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
         //Salidas Externas:
     connect(this, SIGNAL(cutTraction()),subte,SLOT(cutTraction()));
     connect(this, SIGNAL(enableTraction()),subte,SLOT(enableTraction()));
-    connect(this, SIGNAL(enableBreakEmergency()),subte,SLOT(emergencyBrakeActived()));
-    connect(this, SIGNAL(desableBreakEmergency()),subte,SLOT(emergencyBrakeReleased()));
+    connect(this, SIGNAL(enableBreakEmergency()),subte,SLOT(ATP_emergencyBrakeActivated()));
+    connect(this, SIGNAL(desableBreakEmergency()),subte,SLOT(ATP_emergencyBrakeReleased()));
     connect(this, SIGNAL(enableBreakService(int)),subte,SLOT(brakeReceived(int)));
     connect(this, SIGNAL(desableBreakService(int)),subte,SLOT(brakeReceived(int)));
     connect(this, SIGNAL(allowedSpeedChange(double)),subte,SLOT(updateAllowedSpeed(double)));

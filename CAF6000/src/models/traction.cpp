@@ -6,10 +6,7 @@ Traction::Traction()
     m_traction = 0;
     m_rana = RANA::CERO;
     m_hombreMuerto = false;
-
     m_lastTraction = 0;
-    m_position = 0;
-    m_lastPosition = 0;
 }
 
 Traction::~Traction()
@@ -28,16 +25,17 @@ void Traction::linkATP(ATP_model *a){
     m_atp = a;
 }
 
+void Traction::setHandler(EventHandler * eventHandler)
+{
+    m_eventHandler = eventHandler;
+}
+
 void Traction::reset()
 {
     m_traction = 0;
     m_rana = RANA::CERO;
     m_hombreMuerto = false;
-
     m_lastTraction = 0;
-    m_position = 0;
-    m_lastPosition = 0;
-
     m_averia = false;
 }
 
@@ -45,6 +43,9 @@ void Traction::setDirection(RANA r){
     m_rana = r;
 }
 
+/**
+ * @brief Traction::updateTraction: aca se decide si hay traccion o no.
+ */
 int Traction::getTraction()
 {
     if(debuguear){
@@ -74,46 +75,16 @@ int Traction::getTraction()
     }
 }
 
-double Traction::updateTraction(int traction)
+/**
+ * @brief Traction::updateTraction: se notifica solo si hay un cambio en la traccion
+ * respecto a la ultima.
+ */
+void Traction::updateTraction(int traction)
 {
     m_traction = traction;
-    return this->getTraction();
-}
-
-double Traction::updateTraction()
-{
-    m_traction = m_lastTraction;
-    return this->getTraction();
-}
-
-void Traction::setLastTraction(int lastTraction)
-{
-    m_lastTraction = lastTraction;
-}
-
-int Traction::lastTraction() const
-{
-    return m_lastTraction;
-}
-
-void Traction::setPosition(int tractionLeverPosition)
-{
-    m_position = tractionLeverPosition;
-}
-
-int Traction::position() const
-{
-    return m_position;
-}
-
-void Traction::setLastPosition(int lastPosition)
-{
-    m_lastPosition = lastPosition;
-}
-
-int Traction::lastPosition() const
-{
-    return m_lastPosition;
+    if(m_lastTraction != getTraction()){
+        notifyTraction();
+    }
 }
 
 bool Traction::hombreMuerto() const
@@ -134,4 +105,34 @@ bool Traction::averia() const
 void Traction::setAveria(bool averia)
 {
     m_averia = averia;
+}
+
+/**
+ * @brief Traction::updateTraction: en caso de que la diferencia entre la ultima traccion emitida y
+ * la nueva sea mayor a 5, se notifica el cambio en blackboard.
+ * y se cierran las puertas
+ */
+void Traction::notifyTraction()
+{
+    double tractionToEmit = getTraction();
+
+    if((tractionToEmit<15) || (abs(tractionToEmit - m_lastTraction) >= 5)){
+        m_lastTraction = tractionToEmit;
+        m_eventHandler->notifyValueChanged(NOMBRE_TRACCION,std::to_string(tractionToEmit));
+        if((tractionToEmit>0) && (m_cscp->leftDoors() || m_cscp->rightDoors())){
+            m_cscp->closeLeftDoors();
+            m_cscp->closeRightDoors();
+        }
+    }
+}
+
+void Traction::notifyHM()
+{
+    if(m_hombreMuerto){
+        m_eventHandler->notifyValueChanged(NOMBRE_HOMBRE_MUERTO,VALOR_HOMBRE_MUERTO_CON);
+        m_eventHandler->notifyValueChanged(NOMBRE_FRENO_HOMBRE_MUERTO,std::to_string(m_brake->getBrake()));
+    } else {
+        m_eventHandler->notifyValueChanged(NOMBRE_HOMBRE_MUERTO,VALOR_HOMBRE_MUERTO_DES);
+        m_eventHandler->notifyValueChanged(NOMBRE_FRENO_HOMBRE_MUERTO,VALOR_FRENO_HOMBRE_MUERTO);
+    }
 }

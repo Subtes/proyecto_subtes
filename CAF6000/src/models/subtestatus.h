@@ -15,6 +15,8 @@
 #include "src/models/atp_model.h"
 
 class EventHandler;
+class Brake;
+class Traction;
 
 class SubteStatus : public QObject
 {
@@ -99,7 +101,6 @@ public:
     bool seta() const;
     bool keyTopBoard() const;
     std::string rana() const;
-    int tractionLeverPosition() const;
     bool getDrivingModeATP();
     void setDrivingModeATP(bool status);
 
@@ -113,8 +114,8 @@ public slots:
     void washer();
     void tractionReceived(int value);
     void brakeReceived(int value);
-    void emergencyBrakeActived();
-    void emergencyBrakeReleased();
+    void ATP_emergencyBrakeActivated();
+    void ATP_emergencyBrakeReleased();
     void hombreMuertoPressed();
     void hombreMuertoReleased();
     void openRightDoors();
@@ -133,7 +134,6 @@ public slots:
     void ranaAD();
     void ranaCERO();
     void ranaAT();
-    void tractionLeverChanged(int value);
     void cutTraction();
     void enableTraction();
     void setBatteryConnector(bool status);

@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
         QRect s3 = desktop->screenGeometry(3);//Dimensiones -->  QRect(-1024,0 1024x768)
 
 
-    /**
+        /**
      * Dimensiones -->  QRect(0,0 1024x768)
      * Dimensiones -->  QRect(1024,0 1024x768)
      * Dimensiones -->  QRect(-1024,0 1024x768)
@@ -86,18 +86,18 @@ int main(int argc, char *argv[])
 
     }else{
 
-          m_h->showNormal();
-          m_l->showNormal();
-          m_t->showNormal();
+        m_h->showNormal();
+        m_l->showNormal();
+        m_t->showNormal();
 
-          QTabWidget *tabRight = new QTabWidget(0);
-          tabRight->addTab(m_c,QObject::tr("Center"));
-          tabRight->addTab(m_r,QObject::tr("RightPanel"));
-          tabRight->addTab(m_tree,QObject::tr("TreePanel"));
+        QTabWidget *tabRight = new QTabWidget(0);
+        tabRight->addTab(m_c,QObject::tr("Center"));
+        tabRight->addTab(m_r,QObject::tr("RightPanel"));
+        tabRight->addTab(m_tree,QObject::tr("TreePanel"));
 
-          tabRight->setMinimumWidth(1024);
-          tabRight->setMinimumHeight(768);
-          tabRight->showNormal();
+        tabRight->setMinimumWidth(1024);
+        tabRight->setMinimumHeight(768);
+        tabRight->showNormal();
 
     }
 
