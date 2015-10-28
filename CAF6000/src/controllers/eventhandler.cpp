@@ -546,11 +546,11 @@ void EventHandler::processKeyPressed(DWORD k)
         this->processValueChanged(m_eNetHelper->instructionsHostName, "i_salir_de_estacion", "1");
     } else if ( k == _MAS && !MAS_down ){
         MAS_down = true;
-        qDebug() << "MAS key pressed, departureFromEstation";
+        qDebug() << "MAS key pressed, ";
         emit masPressed();
     } else if ( k == _MENOS && !MENOS_down ){
         MENOS_down = true;
-        qDebug() << "MENOS key pressed, departureFromEstation";
+        qDebug() << "MENOS key pressed, ";
         emit menosPressed();
     }
 }

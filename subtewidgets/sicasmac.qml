@@ -455,6 +455,7 @@ Rectangle {
 
     function changeText(error1,trenes2,letra3,val){
         sicassinerror.opacity=0;
+        sicas_renglon.opacity=0.5;
         textoError[val].opacity =1;
         textoError[val].text=error1;
         trenConFalla[val].opacity =1;
@@ -734,6 +735,7 @@ Rectangle {
    }
 
    function blinkRenglonTrenes(trenes, index, parpadeo){
+       sicas_renglon.opacity=0.5;
        sicassinerror.opacity=0;
 
        trenConFallaBlink[index].text =trenes;
@@ -949,6 +951,8 @@ Rectangle {
    }
     function ponerOnSicasSinIncidencia(){
      sicassinerror.opacity=1;
+     sicas_renglon.opacity=0;
+     turnOffSiguiente();
     }
 }//FIN RECTANGLO
 

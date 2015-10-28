@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
     m_c->setHardware(m_tHardware);
     m_t->setHardware(m_tHardware);
     m_l->setHardware(m_tHardware);
+    m_r->setHardware(m_tHardware);
 
     QDesktopWidget *desktop = a.desktop();
 
