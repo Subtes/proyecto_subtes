@@ -25,12 +25,12 @@ TractionHardware::TractionHardware()
         qDebug("Couldn't open Joystick 0\n");
     }
 
-    m_minInterval = 25635; //m_minInterval = 973;
+    m_minInterval = 30068; //m_minInterval = 973;
     m_neutral = 600; //m_neutral = 522;
-    m_neutralLower = 4500;
-    m_neutralTop = -1000;
+    m_neutralLower = 900;
+    m_neutralTop = 500;
     m_breakEmergency = 20500;
-    m_maxInterval = -26049; //m_maxInterval = 104;
+    m_maxInterval = -26113; //m_maxInterval = 104;
 
     m_traction = 0;
     m_value = 0;
@@ -43,24 +43,26 @@ TractionHardware::TractionHardware()
     m_seta = false;
     m_keyTop = false;
 
-    m_rangoT = m_maxInterval - m_neutral;
-    m_rangoB = m_minInterval - m_neutral;
+    m_rangoT = m_maxInterval - m_neutralTop;
+    m_rangoB = m_minInterval - m_neutralLower;
 
 }
 
 void TractionHardware::processValueChanged(){
 
     getdata();
-    //qDebug()<<"Valor: --->  "<< (this->axis.at(0));
+    qDebug()<<"Valor: --->  "<< (this->axis.at(0));
     m_value = this->axis.at(0);
     bool m_auXdiedMan = this->buttons.at(0);
 
-    if (m_value < m_neutral){
-        m_traction = static_cast<int>(((m_value-m_neutral)*100)/m_rangoT);
-        //qDebug()<<"Valor TRACCION Emitido TH: --->  "<< m_traction;
-    }else{
-        m_traction = -(static_cast<int>(((m_value-m_neutral)*100)/m_rangoB));
-        //qDebug()<<"Valor BRAKE Emitido TH: --->  "<< m_traction;
+    if ((m_neutralTop < m_value) && (m_value < m_neutralLower)){
+        m_traction = 0;
+    }else if (m_value < m_neutralTop){
+        m_traction = static_cast<int>(((m_value-m_neutralTop)*100)/m_rangoT);
+        qDebug()<<"Valor TRACCION Emitido TH: --->  "<< m_traction;
+    }else if (m_value > m_neutralLower){
+        m_traction = -(static_cast<int>(((m_value-m_neutralLower)*100)/m_rangoB));
+        qDebug()<<"Valor BRAKE Emitido TH: --->  "<< m_traction;
     }
 
     emit positionChanged(m_traction);
