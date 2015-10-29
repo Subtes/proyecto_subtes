@@ -39,7 +39,7 @@ public slots:
     void processSetaChanged();
     void processKeyTop();
     bool isHardwareEnable();
-    //void reset();
+    void reset();
     void onSound(int s);
 
 private:

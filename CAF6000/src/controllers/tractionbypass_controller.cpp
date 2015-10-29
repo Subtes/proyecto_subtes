@@ -57,6 +57,7 @@ void TractionBypass_Controller::pressBypass()
 
 void TractionBypass_Controller::onBypassHD(){
     if (m_tractionHardware->isHardwareEnable()){
+        m_tractionHardware->reset();
         m_checkTB->start();
         qDebug()<<"Hardware ON: Bypass Traction";
     }else{
