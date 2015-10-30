@@ -17,6 +17,7 @@
 class EventHandler;
 class Brake;
 class Traction;
+class CSCP;
 
 class SubteStatus : public QObject
 {
@@ -72,8 +73,8 @@ signals:
 
 public:
 
-    static const bool PUERTAS_CERRADAS = true;
-    static const bool PUERTAS_ABIERTAS = false;
+    static const bool PUERTAS_CERRADAS = false;
+    static const bool PUERTAS_ABIERTAS = true;
 
     SubteStatus();
     ~SubteStatus();

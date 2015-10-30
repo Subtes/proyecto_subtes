@@ -41,6 +41,7 @@ void SubteStatus::setHandler(EventHandler *eventHandler)
     m_eventHandler = eventHandler;
     m_brake->setHandler(eventHandler);
     m_traction->setHandler(eventHandler);
+    m_cscp->setHandler(eventHandler);
 
 }
 
@@ -156,6 +157,11 @@ void SubteStatus::updateSpeed(double value){
 
         if( m_speed <= 0 && m_brake->getEmergencyBrake()){
             m_brake->setEmergencyBrake_atp(false);
+        }
+
+        if((m_speed>4) && (m_cscp->leftDoors() || m_cscp->rightDoors())){
+            m_cscp->notifyActionLeftDoors(CSCP::CLOSE);
+            m_cscp->notifyActionRightDoors(CSCP::CLOSE);
         }
     }
 }
@@ -474,17 +480,11 @@ void SubteStatus::closeRightDoors()
 }
 
 void SubteStatus::updateLeftDoorsButtons(bool state) {
-    if (state == SubteStatus::PUERTAS_ABIERTAS) //open
-        m_eventHandler->notifyValueChanged("c_pulsador_puertas", "izquierda;abrir");
-    else
-        m_eventHandler->notifyValueChanged("c_pulsador_puertas", "izquierda;cerrar");
+    m_cscp->notifyActionLeftDoors(state);
 }
 
 void SubteStatus::updateRightDoorsButtons(bool state) {
-    if (state == SubteStatus::PUERTAS_ABIERTAS) //open
-        m_eventHandler->notifyValueChanged("c_pulsador_puertas", "derecha;abrir");
-    else
-        m_eventHandler->notifyValueChanged("c_pulsador_puertas", "derecha;cerrar");
+    m_cscp->notifyActionRightDoors(state);
 }
 
 void SubteStatus::updatePreassureRed(double value)

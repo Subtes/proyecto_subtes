@@ -32,11 +32,20 @@ TractionBypass_Controller::~TractionBypass_Controller()
 
 }
 
+/**
+ * @brief TractionBypass_Controller::updateStatus - maneja las luces del boton, solo prende
+ * si se cumple el CSCP y ademas, se verifica que las puertas esten cerrqadas, asi, si el
+ * CSCP no se cumple, sea cual sea el estado de las puertas se paaga la luz, pero para que
+ * se prenda, deben estar las puertas cerradas y con el CSCP cumplido.
+ * @param status: el estado de CSCP
+ */
 void TractionBypass_Controller::updateStatus(bool status)
 {
     if(m_button->isLighted()){
         if(status){
-            m_button->turnOn();
+            if(!m_subte->leftDoors() && !m_subte->rightDoors()){
+                m_button->turnOn();
+            }
         }else{
             m_button->turnOff();
         }

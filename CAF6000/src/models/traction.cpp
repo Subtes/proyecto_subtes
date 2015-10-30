@@ -119,10 +119,6 @@ void Traction::notifyTraction()
     if((tractionToEmit<15) || (abs(tractionToEmit - m_lastTraction) >= 5)){
         m_lastTraction = tractionToEmit;
         m_eventHandler->notifyValueChanged(NOMBRE_TRACCION,std::to_string(tractionToEmit));
-        if((tractionToEmit>0) && (m_cscp->leftDoors() || m_cscp->rightDoors())){
-            m_cscp->closeLeftDoors();
-            m_cscp->closeRightDoors();
-        }
     }
 }
 

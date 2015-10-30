@@ -13,6 +13,11 @@ CSCP::~CSCP()
 
 }
 
+void CSCP::setHandler(EventHandler * eventHandler)
+{
+    m_eventHandler = eventHandler;
+}
+
 void CSCP::reset()
 {
     m_leftDoors = CLOSE;
@@ -88,4 +93,20 @@ bool CSCP::parkingBrake() const
 void CSCP::setParkingBrake(bool parkingBrake)
 {
     m_parkingBrake = parkingBrake;
+}
+
+void CSCP::notifyActionLeftDoors(bool state)
+{
+    if (state)
+        m_eventHandler->notifyValueChanged(NOMBRE_PUERTAS, LADO_IZ + ';' + ACCION_ABR);
+    else
+        m_eventHandler->notifyValueChanged(NOMBRE_PUERTAS, LADO_IZ + ';' + ACCION_CRR);
+}
+
+void CSCP::notifyActionRightDoors(bool state)
+{
+    if (state)
+        m_eventHandler->notifyValueChanged(NOMBRE_PUERTAS, LADO_DE + ';' + ACCION_ABR);
+    else
+        m_eventHandler->notifyValueChanged(NOMBRE_PUERTAS, LADO_DE + ';' + ACCION_CRR );
 }
