@@ -8,6 +8,7 @@
 #include "src/controllers/eventhandler.h"
 
 class Brake;
+class CSCP;
 class EventHandler;
 
 class Traction
