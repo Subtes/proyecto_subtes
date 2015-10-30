@@ -1,6 +1,8 @@
 #ifndef BOARDRIGHT_H
 #define BOARDRIGHT_H
 
+#include <tractionhardware.h>
+
 #include "baseboard.h"
 #include "src/controllers/circuitbreakercon_controller.h"
 #include "src/controllers/circuitbreakerdes_controller.h"
@@ -28,6 +30,8 @@ public slots:
     void resetControls();
     void loadState(int state);
 
+    void setHardware(TractionHardware *th);
+
 private:
     Ui::BoardRight *ui;
     Manometer_Controller * m_manometer;
@@ -37,6 +41,8 @@ private:
     LlaveModoConduccion_Controller * m_modoConduccion;
     FrenoRetencion_Controller * m_frenoRetencion;
     int lastState=0;
+
+    TractionHardware *m_hardwareSupport;
 };
 
 #endif // BOARDRIGHT_H

@@ -1,5 +1,8 @@
 #ifndef SICASMAC_CONTROLLER_H
 #define SICASMAC_CONTROLLER_H
+
+#include <tractionhardware.h>
+
 #include "sicasmac.h"
 #include "base_controller.h"
 #include "QString"
@@ -33,6 +36,8 @@ class SicasMac_Controller : public Base_Controller
     void generoRenglonesSicas(QString texto, QString trenes, QString letra, int renglon);
     void cargoVectorEstadoAnteriorFalla();
 
+    TractionHardware *m_hardwareSupport = NULL;
+
 
 
 
@@ -40,7 +45,7 @@ class SicasMac_Controller : public Base_Controller
 
 
 public:
-    SicasMac_Controller(SubteStatus * subte, SicasMac * sicas);
+    SicasMac_Controller(SubteStatus * subte, SicasMac * sicas, TractionHardware *th);
     ~SicasMac_Controller();
      void resetSicas();
 
@@ -51,12 +56,7 @@ public slots:
     void separoMensajes(QString mensaje);
     void cargoCoches(QString mensajeCoches);
     void cargarDestinoSicas(QString destino);
-  //  void ActivoYDesactivoFrenoRetencion(bool state);
-   // void puertasAbiertasIzq();
-  //  void puertasCerradasIzq();
-  //  void puertasAbiertasDer();
-  //  void puertasCerradasDer();
-    void estadoHombreMuerto(bool state);
+    void estadoFreno(bool state);
     void cargarMensajeAcople();
     void sacoMensajeAcople();
     void logicaPuertasSicas(bool b);

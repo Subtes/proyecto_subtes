@@ -1,3 +1,5 @@
+#include <tractionhardware.h>
+
 #include "boardright.h"
 #include "ui_boardright.h"
 
@@ -36,7 +38,7 @@ void BoardRight::startBoard()
     m_CON_Disyuntor = new CircuitBreakerCON_Controller(m_subte,ui->CONDisy_widget );
     m_DES_Disyuntor = new CircuitBreakerDES_Controller(m_subte,ui->DESDisy_widget );
     m_manometer = new Manometer_Controller(m_subte,ui->manometer);
-    m_sicasmac = new SicasMac_Controller(m_subte,ui->sicasmac);
+    m_sicasmac = new SicasMac_Controller(m_subte,ui->sicasmac, m_hardwareSupport);
     m_modoConduccion = new LlaveModoConduccion_Controller(m_subte,ui->modoConduccion);
 
     //CARGA SICAS CUANDO CAMBIA DE MODO ACOPLE O MANIOBRA A MODO NORMAL
@@ -50,7 +52,6 @@ void BoardRight::startBoard()
     connect(m_eventHandler,SIGNAL(cargarDestinoSicas(QString)),m_sicasmac,SLOT(cargarDestinoSicas(QString)));
     connect(m_eventHandler,SIGNAL(cargarMensaje(QString)),m_sicasmac,SLOT(separoMensajes(QString)));
     connect(m_eventHandler,SIGNAL(cargarMensajeCocheSicas(QString)),m_sicasmac,SLOT(cargoCoches(QString)));
-
     this->setEnabled(false);
 }
 
@@ -89,4 +90,8 @@ void BoardRight::loadState(int state){
     }
 
     m_eventHandler->enableDiffusion();
+}
+
+void BoardRight::setHardware(TractionHardware *th){
+    m_hardwareSupport = th;
 }

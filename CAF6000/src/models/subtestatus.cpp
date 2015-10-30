@@ -429,6 +429,7 @@ void SubteStatus::bypassBrake(bool status)
         m_eventHandler->notifyValueChanged("c_bypass_freno","des");
         qDebug() << "Brake reactivated";
     }
+    emit hiloLazoChanged(getHiloLazo());
     m_traction->notifyTraction();
     m_brake->notifyEmergencyBrake();
 }

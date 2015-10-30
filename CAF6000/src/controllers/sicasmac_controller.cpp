@@ -1,6 +1,6 @@
 #include "sicasmac_controller.h"
 
-SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac)
+SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac, TractionHardware *th)
     : Base_Controller(subte)
 {
     m_subte = subte;
@@ -15,19 +15,18 @@ SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac
     saveId.clear();
     estAnteriorFallaCocheSicas.clear();
 
+    m_hardwareSupport = th;
+
     connect(m_sicasmac,SIGNAL(onPressSigRow()),this,SLOT(onPressSigRow()));
     connect(m_sicasmac,SIGNAL(onPressAntRow()),this,SLOT(onPressAntRow()));
     connect(m_subte,SIGNAL(bateriaCon()),m_sicasmac,SLOT(turnOnSicas()));
     connect(m_subte,SIGNAL(bateriaCon()),this,SLOT(prendoSicas()));
     connect(m_subte,SIGNAL(bateriaDes()),m_sicasmac,SLOT(turnOffSicas()));
     connect(m_sicasmac,SIGNAL(sicasOk()),m_subte,SLOT(setSicasOk()));
-    connect(m_subte,SIGNAL(hiloLazoChanged(bool)),this,SLOT(estadoHombreMuerto(bool)));
-//    connect(m_subte,SIGNAL(rightDoorsOpened()),this,SLOT(puertasAbiertasDer()));
-//    connect(m_subte,SIGNAL(rightDoorsClosed()),this,SLOT(puertasCerradasDer()));
-//    connect(m_subte,SIGNAL(leftDoorsOpened()),this,SLOT(puertasAbiertasIzq()));
-//    connect(m_subte,SIGNAL(leftDoorsClosed()),this,SLOT(puertasCerradasIzq()));
+    connect(m_subte,SIGNAL(hiloLazoChanged(bool)),this,SLOT(estadoFreno(bool)));
     connect(m_subte,SIGNAL(CSCPChanged(bool)),this,SLOT(logicaPuertasSicas(bool)));
     cargoVectorEstadoAnteriorFalla();
+    cargarMensajeAcople();
 
 }
 
@@ -134,6 +133,7 @@ void SicasMac_Controller::separoMensajes(QString mensaje){
             bajaMensaje(strList[0]);
         }
     }
+ refrescoVista();
 }
 
 /**
@@ -193,7 +193,7 @@ void SicasMac_Controller::generoRenglonesSicas(QString texto, QString trenes, QS
  */
 
 void SicasMac_Controller::cargarMensajeAcople(){
-    separoMensajes("Conmutador Acop/Manio;1,F -,F -,F -,F -,F -,F;C;alta");
+    separoMensajes("Conmutador Acop/Manio;1,F -,F -,F -,F -,F -,F;A;alta");
     refrescoVista();
 }
 
@@ -296,11 +296,11 @@ QStringList SicasMac_Controller::separoCaracteres(QString mensaje){
 void SicasMac_Controller::cargoCoches(QString mensajeCoches){
     int index =0;
     int cantPuertas=0;
+    bool mensajePuertas=false;
     QString tren, estFreno,estTrac;
     if(mensajeCoches != ""){
         QStringList cochesList;
         cochesList = mensajeCoches.split(';');
-
         for (int coche = 0; coche < cantCochesTotal; ++coche) {
             tren=cochesList[index];
             index++;
@@ -312,40 +312,21 @@ void SicasMac_Controller::cargoCoches(QString mensajeCoches){
             estAnteriorFallaCocheSicas.insert(coche,estFreno);
             for (int datos = 0; datos < DatosPorCoche; ++datos) {
                 verificoEstPuertas(cochesList[index],cantPuertas); //las puertas
+                if (cochesList[index]== "abierto"){
+                    mensajePuertas=true;
+                }
                 cantPuertas++;
                 index++;
             }
+        }
+        if (mensajePuertas){
+            separoMensajes("Puertas Abiertas;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
+            refrescoVista();
         }
     }
 }
 
 /**
- * @brief SicasMac_Controller::frenoRetencionActivado
- *  Carga la Señal cuando se activan el freno y se muestra en el SicasMac
- *  que el freno se activo del mismo modo que si se descativa el mismo es borrado
- * @param mensaje
- */
-
-//void SicasMac_Controller::ActivoYDesactivoFrenoRetencion(bool state){
-//    if(state){
-//       /* for (int var = 0; var < cantCochesTotal; var++) {
-//            if (estAnteriorFallaCocheSicas[var] == "normal" )
-//                verificoEstFalla("con",var);
-//        }*/
-//        separoMensajes("Aviso Presion Frenos;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
-//        refrescoVista();
-//    }
-//    else{
-//        bajaMensaje("Aviso Presion Frenos");
-//       /* for (int var = 0; var < cantCochesTotal; var++) {
-//            if (estAnteriorFallaCocheSicas[var] == "normal" ){
-//                verificoEstFalla("des",var);
-//            }
-//        }*/
-//    }
-//}
-
-    /**
  * @brief SicasMac_Controller::verificoEstPuertas
  * verifica y pinta el estado de las puertas del tren
  * @param mensaje
@@ -396,8 +377,12 @@ void SicasMac_Controller::cargarDestinoSicas(QString destino){
  */
 
 void SicasMac_Controller::resetSicas(){
-    for (int var = 0; var <= pantallasicas.size(); var++) {
-          pantallasicas.removeAt(var);
+    pantallasicas.clear();
+    saveId.clear();
+    cantPantallasSicas=0;
+    renglon=-1;
+   for (int var = 0; var <= pantallasicas.size(); var++) {
+        pantallasicas.removeAt(var);
           saveId.removeAt(var);
     }
     borrarPantallaSicas();
@@ -405,15 +390,9 @@ void SicasMac_Controller::resetSicas(){
     m_sicasmac->initRenglonSicas();
     m_sicasmac->ponerOnSicasSinIncidencia();
     cargoVectorEstadoAnteriorFalla();
+    cargarMensajeAcople();
+
 }
-
-/**
- * @brief SicasMac_Controller::
- * determina el estado del mensaje basandose en el estado de las f de cada coche
- * @param mensaje
- */
-
-
 
 /**
  * @brief SicasMac_Controller::estadoHombreMuerto
@@ -423,7 +402,7 @@ void SicasMac_Controller::resetSicas(){
 
 //agregar para que cambie tambien los coches afectados
 
-void SicasMac_Controller::estadoHombreMuerto(bool state){
+void SicasMac_Controller::estadoFreno(bool state){
     QString mensaje="Aviso Presion Frenos;";
     QString s ;
     if(!state){
@@ -448,10 +427,7 @@ void SicasMac_Controller::estadoHombreMuerto(bool state){
             }
         }
         mensaje.append(";C;alta");
-    //    qDebug()<<" Mensaje  "<<mensaje;
-
         separoMensajes(mensaje);
-        //separoMensajes("Aviso Presion Frenos;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
         refrescoVista();
     }
     else{
@@ -464,7 +440,7 @@ void SicasMac_Controller::estadoHombreMuerto(bool state){
     }
 }
 
- /*
+ /**
  * @brief SicasMac_Controller::logicaPuertasSicas
  * genera los guines en el coche para la visual de las puertas abiertas y cerradas
  * @param mensaje
@@ -526,3 +502,4 @@ void SicasMac_Controller::logicaPuertasSicas(bool b){
 void SicasMac_Controller::prendoSicas(){
     refrescoVista();
 }
+
