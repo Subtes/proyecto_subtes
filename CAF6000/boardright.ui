@@ -76,10 +76,10 @@
    <widget class="LlaveModoConduccion" name="modoConduccion" native="true">
     <property name="geometry">
      <rect>
-      <x>803</x>
-      <y>500</y>
-      <width>78</width>
-      <height>78</height>
+      <x>787</x>
+      <y>496</y>
+      <width>110</width>
+      <height>100</height>
      </rect>
     </property>
    </widget>
