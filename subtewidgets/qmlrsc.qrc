@@ -16,5 +16,11 @@
         <file>sicasmac.qml</file>
         <file>llavetrespuntos.qml</file>
         <file>alstom_selectorModoConduccion.qml</file>
+        <file>caf6000_subwaycarselection.qml</file>
+        <file>caf6000_subwaycaroption.qml</file>
+        <file>caf6000_subwaycartermicas.qml</file>
+        <file>caf6000_subwaycargrifos.qml</file>
+        <file>caf6000_subwaycarsalon.qml</file>
+        <file>caf6000_subwaycarcabina.qml</file>
     </qresource>
 </RCC>

@@ -10,6 +10,7 @@
 #include "boardright.h"
 #include "boardtop.h"
 #include "src/instructionsolutionpanel/mainwindow.h"
+#include "src/instructionsolutionpanel/instructionpanel.h"
 
 #include "src/controllers/eventhandler.h"
 #include "src/controllers/keypresseater.h"
@@ -40,6 +41,7 @@ int main(int argc, char *argv[])
     BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
     BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
     MainWindow *m_tree = new MainWindow(0,m_eventHandler);
+    InstructionPanel *m_ip = new InstructionPanel(0);
 
     m_h->setHardware(m_tHardware);
     m_c->setHardware(m_tHardware);
@@ -75,6 +77,7 @@ int main(int argc, char *argv[])
         tabRight->addTab(m_r,QObject::tr("RightPanel"));
         tabRight->addTab(m_h,QObject::tr("Hardware"));
         tabRight->addTab(m_tree,QObject::tr("TreePanel"));
+        tabRight->addTab(m_ip,QObject::tr("InstructionPanel"));
 
         tabRight->showFullScreen();
 
@@ -94,6 +97,7 @@ int main(int argc, char *argv[])
         tabRight->addTab(m_c,QObject::tr("Center"));
         tabRight->addTab(m_r,QObject::tr("RightPanel"));
         tabRight->addTab(m_tree,QObject::tr("TreePanel"));
+        tabRight->addTab(m_ip,QObject::tr("InstructionPanel"));
 
         tabRight->setMinimumWidth(1024);
         tabRight->setMinimumHeight(768);

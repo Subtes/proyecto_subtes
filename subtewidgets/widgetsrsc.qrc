@@ -151,5 +151,8 @@
         <file>resources/alstom_yellow_on.png</file>
         <file>resources/alstom_yellowsmall.png</file>
         <file>resources/alstom_yellowsmall_on.png</file>
+        <file>resources/caf6000/coches_crop.png</file>
+        <file>resources/caf6000/Panel_Lateral.PNG</file>
+        <file>resources/caf6000/Salon_Mod.PNG</file>
     </qresource>
 </RCC>

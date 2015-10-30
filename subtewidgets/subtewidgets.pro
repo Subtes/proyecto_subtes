@@ -22,7 +22,13 @@ HEADERS += \
     llavetecho.h \
     tractionhardware.h \
     alstomtractionlever.h \
-    alstomselectormodoconduccion.h
+    alstomselectormodoconduccion.h \
+    caf6000subwaycarcabina.h \
+    caf6000subwaycargrifos.h \
+    caf6000subwaycaroption.h \
+    caf6000subwaycarselection.h \
+    caf6000subwaycartermicas.h \
+    caf6000subwaycarsalon.h
 
 SOURCES += \
     tractionlever.cpp \
@@ -41,7 +47,13 @@ SOURCES += \
     llavetecho.cpp \
     tractionhardware.cpp \
     alstomtractionlever.cpp \
-    alstomselectormodoconduccion.cpp
+    alstomselectormodoconduccion.cpp \
+    caf6000subwaycarcabina.cpp \
+    caf6000subwaycargrifos.cpp \
+    caf6000subwaycaroption.cpp \
+    caf6000subwaycarselection.cpp \
+    caf6000subwaycartermicas.cpp \
+    caf6000subwaycarsalon.cpp
 
 FORMS += \
     tractionlever.ui \
@@ -59,7 +71,13 @@ FORMS += \
     llavemodoconduccion.ui \
     llavetecho.ui \
     alstomtractionlever.ui \
-    alstomselectormodoconduccion.ui
+    alstomselectormodoconduccion.ui \
+    caf6000subwaycarcabina.ui \
+    caf6000subwaycargrifos.ui \
+    caf6000subwaycaroption.ui \
+    caf6000subwaycarselection.ui \
+    caf6000subwaycartermicas.ui \
+    caf6000subwaycarsalon.ui
 
 RESOURCES += \
             qmlrsc.qrc \

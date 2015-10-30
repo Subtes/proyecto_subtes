@@ -1,21 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>InstructionPanel</class>
  <widget class="QWidget" name="InstructionPanel">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1024</width>
+    <height>768</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1024</width>
+    <height>768</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1024</width>
+    <height>768</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <widget class="caf6000subwaycarselection" name="panel_superior" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>93</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>1024</width>
+     <height>93</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>1024</width>
+     <height>93</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="caf6000subwaycaroption" name="panel_lateral" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>94</y>
+     <width>124</width>
+     <height>675</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>124</width>
+     <height>675</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>124</width>
+     <height>675</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="caf6000subwaycarsalon" name="panel_central" native="true">
+   <property name="geometry">
+    <rect>
+     <x>125</x>
+     <y>94</y>
+     <width>900</width>
+     <height>675</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>900</width>
+     <height>675</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>900</width>
+     <height>675</height>
+    </size>
+   </property>
+  </widget>
  </widget>
- <pixmapfunction/>
+ <customwidgets>
+  <customwidget>
+   <class>caf6000subwaycaroption</class>
+   <extends>QWidget</extends>
+   <header>caf6000subwaycaroption.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>caf6000subwaycarselection</class>
+   <extends>QWidget</extends>
+   <header>caf6000subwaycarselection.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>caf6000subwaycarsalon</class>
+   <extends>QWidget</extends>
+   <header location="global">caf6000subwaycarsalon.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
  <connections/>
 </ui>
