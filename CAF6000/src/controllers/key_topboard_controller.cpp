@@ -19,11 +19,13 @@ Key_TopBoard_Controller::Key_TopBoard_Controller(SubteStatus *modelo, LlaveTecho
 void Key_TopBoard_Controller::keyON(){
     qDebug() << "Entro en controller.keyON";
     m_modelo->keyActivated();
+    m_modelo->setModeOperation(5);
 }
 
 void Key_TopBoard_Controller::keyOFF(){
     qDebug() << "Entro en controller.keyOFF";
     m_modelo->keyDeactivated();
+    m_modelo->setModeOperation(1);
 }
 
 void Key_TopBoard_Controller::keyTurnON()

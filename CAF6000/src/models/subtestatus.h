@@ -39,7 +39,6 @@ private:
     double m_pressure_red;
     double m_pressure_white;
 
-
     // CONTROL STATUS
     bool m_horn;
     bool m_emergencyOverride;
@@ -48,6 +47,7 @@ private:
     std::string m_rana;
     bool m_CMC;
     bool m_CL;
+    int m_modeOperation;
 
 signals:
     // STATE CHANGE NOTIFICATION
@@ -70,6 +70,7 @@ signals:
     retentionBrakeChanged(bool status);
     bateriaCon();
     bateriaDes();
+    modeOperation(int m);
 
 public:
 
@@ -103,7 +104,6 @@ public:
     bool keyTopBoard() const;
     std::string rana() const;
     bool getDrivingModeATP();
-    void setDrivingModeATP(bool status);
 
 public slots:
     // STATE CHANGE INVOCATIONS - SETTERS
@@ -169,6 +169,9 @@ public slots:
     void setRetentionBrakeBypass(bool state);
     void setRetentionBrake(bool state);
     void setSicasOk();
+    // CMC, CL
+    void setDrivingModeATP(bool status);
+    void setModeOperation(int m);
 };
 
 #endif // SUBTESTATUS_H
