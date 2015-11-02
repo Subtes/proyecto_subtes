@@ -26,6 +26,7 @@ SubteStatus::SubteStatus()
     m_keyATP = false;
     m_rana = "0";
     m_CMC = true;
+    m_modeOperation = 0;
 }
 
 SubteStatus::~SubteStatus()
@@ -593,4 +594,9 @@ void SubteStatus::setRetentionBrake(bool state)
 void SubteStatus::setSicasOk(){
     m_eventHandler->notifyValueChanged("c_estado_sicas","ok");
     qDebug() << "c_estado_sicas: ok";
+}
+
+void SubteStatus::setModeOperation(int m){
+    m_modeOperation = m;
+    emit modeOperation(m);
 }

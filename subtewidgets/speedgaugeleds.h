@@ -26,6 +26,7 @@ public slots:
     void updateSpeed(double speed);
     void turnOff();
     void turnOn();
+    void setMode(int);
 };
 
 #endif // SPEEDGAUGELEDS_H

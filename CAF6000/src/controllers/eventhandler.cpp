@@ -79,7 +79,6 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
         m_splash3->setDisabled(true);
         m_splash4->setDisabled(true);
 
-
     }else{
         m_splash1 = new QSplashScreen(m_imageSplash);
         m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);

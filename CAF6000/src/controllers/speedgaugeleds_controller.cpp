@@ -7,6 +7,7 @@ SpeedGaugeLeds_Controller::SpeedGaugeLeds_Controller(SubteStatus *subte, SpeedGa
 
     connect(subte,SIGNAL(speedChanged(double)),this,SLOT(updateSpeed(double)));
     connect(subte,SIGNAL(allowedSpeedChanged(double)),this,SLOT(updateTargetSpeed(double)));
+    connect(subte,SIGNAL(modeOperation(int)),this,SLOT(modeOperation(int)));
 }
 
 SpeedGaugeLeds_Controller::~SpeedGaugeLeds_Controller()
@@ -24,4 +25,8 @@ void SpeedGaugeLeds_Controller::updateTargetSpeed(double speed){
 
 void SpeedGaugeLeds_Controller::updateAllowedSpeed(double speed){
     m_gauge->updateAllowedSpeed(speed);
+}
+
+void SpeedGaugeLeds_Controller::modeOperation(int m){
+    m_gauge->setMode(m);
 }

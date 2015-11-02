@@ -57,3 +57,14 @@ void SpeedGaugeLeds::updateAllowedSpeed(double speed){
             Q_RETURN_ARG(QVariant, returnedValue),
             Q_ARG(QVariant, speed));
 }
+
+void SpeedGaugeLeds::setMode(int m){
+
+    qDebug() << "SpeedGaugeLeds::setMode.........." << m;
+
+    QVariant returnedValue;
+
+    QMetaObject::invokeMethod(m_qmlView, "setOperationMode",
+            Q_RETURN_ARG(QVariant, returnedValue),
+            Q_ARG(QVariant, m));
+}

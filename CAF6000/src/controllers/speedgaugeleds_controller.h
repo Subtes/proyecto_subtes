@@ -19,6 +19,7 @@ public slots:
     void updateSpeed(double speed);
     void updateTargetSpeed(double speed);
     void updateAllowedSpeed(double speed);
+    void modeOperation(int m);
 };
 
 #endif // SPEEDGAUGELEDS_CONTROLLER_H

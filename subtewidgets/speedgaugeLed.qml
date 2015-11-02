@@ -234,9 +234,183 @@ Rectangle {
 
     function turnOn(){
         red.opacity = 1;
-        updateMaxSpeed(55);
-        //updateSpeed(99);
+        updateMaxSpeed(60);
         updateSpeed(0);
         onStatus = true;
     }
+
+/******************** Modos ATP ATO EEE --- As ***********************/
+    Image {
+        id: m_sourceModoOFF
+        x: speedGauge.width * 0.4307
+        y: speedGauge.width * 0.5576
+        width: speedGauge.width * 0.1384
+        height: speedGauge.width * 0.07115
+        source: "resources/velocimetroMODO---.png"
+        antialiasing: true
+        smooth: true
+    }
+
+    Image {
+        id: m_sourceModo
+        x: speedGauge.width * 0.4307
+        y: speedGauge.width * 0.5576
+        width: speedGauge.width * 0.1384
+        height: speedGauge.width * 0.07115
+        source: "resources/velocimetroMODO.png"
+        antialiasing: true
+        smooth: true
+    }
+
+    Image {
+        id: m_sourceModo20
+        x: speedGauge.width * 0.4307
+        y: speedGauge.width * 0.5576
+        width: speedGauge.width * 0.1384
+        height: speedGauge.width * 0.07115
+        source: "resources/velocimetroMODO20.png"
+        antialiasing: true
+        smooth: true
+    }
+
+    Image {
+        id: m_sourceModoAs
+        x: speedGauge.width * 0.4307
+        y: speedGauge.width * 0.5576
+        width: speedGauge.width * 0.1384
+        height: speedGauge.width * 0.07115
+        source: "resources/velocimetroMODOAs.png"
+        antialiasing: true
+        smooth: true
+    }
+
+    Image {
+        id: m_sourceModoATO
+        x: speedGauge.width * 0.4307
+        y: speedGauge.width * 0.5576
+        width: speedGauge.width * 0.1384
+        height: speedGauge.width * 0.07115
+        source: "resources/velocimetroMODOAto.png"
+        antialiasing: true
+        smooth: true
+    }
+
+    Image {
+        id: m_sourceModoATP
+        x: speedGauge.width * 0.4307
+        y: speedGauge.width * 0.5576
+        width: speedGauge.width * 0.1384
+        height: speedGauge.width * 0.07115
+        source: "resources/velocimetroMODOAtP.png"
+        antialiasing: true
+        smooth: true
+    }
+
+    Image {
+        id: m_sourceModoEEE
+        x: speedGauge.width * 0.4307
+        y: speedGauge.width * 0.5576
+        width: speedGauge.width * 0.1384
+        height: speedGauge.width * 0.07115
+        source: "resources/velocimetroMODOEEE.png"
+        antialiasing: true
+        smooth: true
+    }
+
+    states: [
+        State {
+            name: "m_sourceModoOFF";
+            PropertyChanges { target: m_sourceModoOFF;      opacity: 1}
+            PropertyChanges { target: m_sourceModo;       opacity: 0}
+            PropertyChanges { target: m_sourceModo20; opacity: 0}
+            PropertyChanges { target: m_sourceModoAs;  opacity: 0}
+            PropertyChanges { target: m_sourceModoATO;  opacity: 0}
+            PropertyChanges { target: m_sourceModoATP;  opacity: 0}
+            PropertyChanges { target: m_sourceModoEEE;  opacity: 0}
+        },
+        State {
+            name: "m_sourceModo";
+            PropertyChanges { target: m_sourceModoOFF;      opacity: 0}
+            PropertyChanges { target: m_sourceModo;       opacity: 1}
+            PropertyChanges { target: m_sourceModo20; opacity: 0}
+            PropertyChanges { target: m_sourceModoAs;  opacity: 0}
+            PropertyChanges { target: m_sourceModoATO;  opacity: 0}
+            PropertyChanges { target: m_sourceModoATP;  opacity: 0}
+            PropertyChanges { target: m_sourceModoEEE;  opacity: 0}
+        },
+        State {
+            name: "m_sourceModo20";
+            PropertyChanges { target: m_sourceModoOFF;      opacity: 0}
+            PropertyChanges { target: m_sourceModo;       opacity: 0}
+            PropertyChanges { target: m_sourceModo20; opacity: 1}
+            PropertyChanges { target: m_sourceModoAs;  opacity: 0}
+            PropertyChanges { target: m_sourceModoATO;  opacity: 0}
+            PropertyChanges { target: m_sourceModoATP;  opacity: 0}
+            PropertyChanges { target: m_sourceModoEEE;  opacity: 0}
+        },
+        State {
+            name: "m_sourceModoAs";
+            PropertyChanges { target: m_sourceModoOFF;      opacity: 0}
+            PropertyChanges { target: m_sourceModo;       opacity: 0}
+            PropertyChanges { target: m_sourceModo20; opacity: 0}
+            PropertyChanges { target: m_sourceModoAs;  opacity: 1}
+            PropertyChanges { target: m_sourceModoATO;  opacity: 0}
+            PropertyChanges { target: m_sourceModoATP;  opacity: 0}
+            PropertyChanges { target: m_sourceModoEEE;  opacity: 0}
+        },
+        State {
+            name: "m_sourceModoATO";
+            PropertyChanges { target: m_sourceModoOFF;      opacity: 0}
+            PropertyChanges { target: m_sourceModo;       opacity: 0}
+            PropertyChanges { target: m_sourceModo20; opacity: 0}
+            PropertyChanges { target: m_sourceModoAs;  opacity: 0}
+            PropertyChanges { target: m_sourceModoATO;  opacity: 1}
+            PropertyChanges { target: m_sourceModoATP;  opacity: 0}
+            PropertyChanges { target: m_sourceModoEEE;  opacity: 0}
+        },
+        State {
+            name: "m_sourceModoATP";
+            PropertyChanges { target: m_sourceModoOFF;      opacity: 0}
+            PropertyChanges { target: m_sourceModo;       opacity: 0}
+            PropertyChanges { target: m_sourceModo20; opacity: 0}
+            PropertyChanges { target: m_sourceModoAs;  opacity: 0}
+            PropertyChanges { target: m_sourceModoATO;  opacity: 0}
+            PropertyChanges { target: m_sourceModoATP;  opacity: 1}
+            PropertyChanges { target: m_sourceModoEEE;  opacity: 0}
+        },
+        State {
+            name: "m_sourceModoEEE";
+            PropertyChanges { target: m_sourceModoOFF;      opacity: 0}
+            PropertyChanges { target: m_sourceModo;       opacity: 0}
+            PropertyChanges { target: m_sourceModo20; opacity: 0}
+            PropertyChanges { target: m_sourceModoAs;  opacity: 0}
+            PropertyChanges { target: m_sourceModoATO;  opacity: 0}
+            PropertyChanges { target: m_sourceModoATP;  opacity: 0}
+            PropertyChanges { target: m_sourceModoEEE;  opacity: 1}
+        }
+    ]
+
+    state: "m_sourceModo"
+
+    function setOperationMode(m){
+        if (m === 0){
+            speedGauge.state = "m_sourceModoOFF";
+        }else if (m === 1){
+            speedGauge.state = "m_sourceModo";
+        }else if (m === 2){
+            speedGauge.state = "m_sourceModo20";
+        }else if (m === 3){
+            speedGauge.state = "m_sourceModoAs";
+        }else if (m === 4){
+            speedGauge.state = "m_sourceModoATO";
+        }else if (m === 5){
+            speedGauge.state = "m_sourceModoATP";
+        }else if (m === 6){
+            speedGauge.state = "m_sourceModoEEE";
+        }
+        else{
+            speedGauge.state = "m_sourceModoOFF";
+        }
+    }
+
 }
