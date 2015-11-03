@@ -95,6 +95,12 @@ bool Traction::hombreMuerto() const
 void Traction::setHombreMuerto(bool hombreMuerto)
 {
     m_hombreMuerto = hombreMuerto;
+    if(hombreMuerto){
+        m_brake->setEmergencyBrake_HM(false);
+    } else {
+        m_brake->setEmergencyBrake_HM(true);
+    }
+    notifyHM();
 }
 
 bool Traction::averia() const
@@ -126,9 +132,7 @@ void Traction::notifyHM()
 {
     if(m_hombreMuerto){
         m_eventHandler->notifyValueChanged(NOMBRE_HOMBRE_MUERTO,VALOR_HOMBRE_MUERTO_CON);
-        m_eventHandler->notifyValueChanged(NOMBRE_FRENO_HOMBRE_MUERTO,std::to_string(m_brake->getBrake()));
     } else {
         m_eventHandler->notifyValueChanged(NOMBRE_HOMBRE_MUERTO,VALOR_HOMBRE_MUERTO_DES);
-        m_eventHandler->notifyValueChanged(NOMBRE_FRENO_HOMBRE_MUERTO,VALOR_FRENO_HOMBRE_MUERTO);
     }
 }

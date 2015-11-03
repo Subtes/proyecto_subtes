@@ -43,7 +43,6 @@ void SubteStatus::setHandler(EventHandler *eventHandler)
     m_brake->setHandler(eventHandler);
     m_traction->setHandler(eventHandler);
     m_cscp->setHandler(eventHandler);
-
 }
 
 void SubteStatus::reset()
@@ -179,19 +178,16 @@ void SubteStatus::updateAllowedSpeed(double value){
 
 void SubteStatus::wiperOn()
 {
-    qDebug() << "c_limpiaParabrisas: on";
     m_eventHandler->notifyValueChanged("c_limpiaParabrisas","on");
 }
 
 void SubteStatus::wiperOff()
 {
-    qDebug() << "c_limpiaParabrisas: off";
     m_eventHandler->notifyValueChanged("c_limpiaParabrisas","off");
 }
 
 void SubteStatus::washer()
 {
-    qDebug() << "c_lavaParabrisas: on";
     m_eventHandler->notifyValueChanged("c_lavaParabrisas","on");
 }
 
@@ -227,17 +223,13 @@ void SubteStatus::ATP_emergencyBrakeReleased(){
 
 void SubteStatus::hombreMuertoPressed(){
     m_traction->setHombreMuerto(true);
-    m_traction->notifyHM();
     m_traction->notifyTraction();
-    //m_brake->notifyEmergencyBrake();
     emit hiloLazoChanged(getHiloLazo());
 }
 
 void SubteStatus::hombreMuertoReleased(){
     m_traction->setHombreMuerto(false);
-    m_traction->notifyHM();
     m_traction->notifyTraction();
-    m_brake->notifyEmergencyBrake();
     emit hiloLazoChanged(getHiloLazo());
 }
 
