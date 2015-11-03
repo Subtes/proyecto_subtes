@@ -5,12 +5,14 @@ Rectangle {
     id: pedal
     width: 150
     height: 150
-    color: "#00000000"
-    border.color: "#00000000"
+    color: "transparent"
+    border.color: "transparent"
     focus: true
 
-    signal pedalPressed
-    signal pedalReleased
+    property int v : 0
+
+    signal pedalPressed(int w)
+    signal pedalReleased(int w)
 
 //    SoundEffect {
 //        id: horn
@@ -21,18 +23,19 @@ Rectangle {
         //horn.play();
         down.opacity = 1;
         up.opacity = 0;
-        pedal.pedalPressed();
+        pedal.pedalPressed(0);
     }
 
     function release() {
         //horn.stop();
         down.opacity = 0;
         up.opacity = 1;
-        pedal.pedalReleased();
+        pedal.pedalReleased(0);
     }
 
     Image {
-        id: up
+        objectName: "upname"
+        id: up        
         anchors.fill: parent
         fillMode: Image.PreserveAspectFit
         source: "resources/bocina_up.png"
@@ -40,7 +43,8 @@ Rectangle {
     }
 
     Image {
-        id: down
+        objectName: "downname"
+        id: down        
         height: 205
         anchors.fill: parent
         fillMode: Image.PreserveAspectFit

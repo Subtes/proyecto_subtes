@@ -81,7 +81,8 @@ FORMS += \
 
 RESOURCES += \
             qmlrsc.qrc \
-            widgetsrsc.qrc
+            widgetsrsc.qrc \
+    widgetsrsc2.qrc
 
 INCLUDEPATH +=  $$PWD/../Source/include
 

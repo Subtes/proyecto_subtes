@@ -5,8 +5,8 @@ Horn_Controller::Horn_Controller(SubteStatus *subte,FootHorn *pedal)
     m_subte = subte;
     m_pedal = pedal;
 
-    connect(m_pedal,SIGNAL(hornPressed()),m_subte,SLOT(hornOn()));
-    connect(m_pedal,SIGNAL(hornReleased()),m_subte,SLOT(hornOff()));
+    connect(m_pedal,SIGNAL(hornPressed(int)),m_subte,SLOT(hornOn(int)));
+    connect(m_pedal,SIGNAL(hornReleased(int)),m_subte,SLOT(hornOff(int)));
 }
 
 Horn_Controller::~Horn_Controller()

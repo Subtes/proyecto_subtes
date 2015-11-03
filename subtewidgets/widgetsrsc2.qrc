@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/caf6000/coches_crop.png</file>
+        <file>resources/caf6000/coches_opcion_desatu_crop.png</file>
+        <file>resources/caf6000/Panel_Lateral.PNG</file>
+        <file>resources/caf6000/Panel_Lateral2.png</file>
+        <file>resources/caf6000/PaneNeumatico_mod.png</file>
+        <file>resources/caf6000/Salon_Mod.PNG</file>
+        <file>resources/caf6000/Termicas_Mod.PNG</file>
+    </qresource>
+</RCC>

@@ -255,14 +255,14 @@ void SubteStatus::disyuntoresDes(){
     qDebug() << "Pressed DES Disyuntor";
     }
 
-void SubteStatus::hornOn()
+void SubteStatus::hornOn(int v)
 {
     qDebug() << "c_bocina: on";
     m_eventHandler->notifyValueChanged("c_bocina","on");
     m_horn = true;
 }
 
-void SubteStatus::hornOff()
+void SubteStatus::hornOff(int v)
 {
     qDebug() << "c_bocina: off";
     m_eventHandler->notifyValueChanged("c_bocina","Off");

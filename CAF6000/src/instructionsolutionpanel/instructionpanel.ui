@@ -28,7 +28,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="caf6000subwaycarselection" name="panel_superior" native="true">
+  <widget class="QWidget" name="panel_superior" native="true">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -50,7 +50,7 @@
     </size>
    </property>
   </widget>
-  <widget class="caf6000subwaycaroption" name="panel_lateral" native="true">
+  <widget class="QWidget" name="panel_lateral" native="true">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -72,19 +72,19 @@
     </size>
    </property>
   </widget>
-  <widget class="caf6000subwaycarsalon" name="panel_central" native="true">
+  <widget class="QWidget" name="panel_central" native="true">
    <property name="geometry">
     <rect>
-     <x>125</x>
-     <y>94</y>
-     <width>900</width>
-     <height>675</height>
+     <x>230</x>
+     <y>350</y>
+     <width>600</width>
+     <height>200</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>900</width>
-     <height>675</height>
+     <width>600</width>
+     <height>200</height>
     </size>
    </property>
    <property name="maximumSize">
@@ -94,25 +94,51 @@
     </size>
    </property>
   </widget>
+  <widget class="QQuickWidget" name="n1">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>110</y>
+     <width>300</width>
+     <height>200</height>
+    </rect>
+   </property>
+   <property name="resizeMode">
+    <enum>QQuickWidget::SizeRootObjectToView</enum>
+   </property>
+  </widget>
+  <widget class="QQuickWidget" name="n2">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>110</y>
+     <width>300</width>
+     <height>200</height>
+    </rect>
+   </property>
+   <property name="resizeMode">
+    <enum>QQuickWidget::SizeRootObjectToView</enum>
+   </property>
+  </widget>
+  <widget class="QQuickWidget" name="n3">
+   <property name="geometry">
+    <rect>
+     <x>750</x>
+     <y>110</y>
+     <width>300</width>
+     <height>200</height>
+    </rect>
+   </property>
+   <property name="resizeMode">
+    <enum>QQuickWidget::SizeRootObjectToView</enum>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>caf6000subwaycaroption</class>
+   <class>QQuickWidget</class>
    <extends>QWidget</extends>
-   <header>caf6000subwaycaroption.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>caf6000subwaycarselection</class>
-   <extends>QWidget</extends>
-   <header>caf6000subwaycarselection.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>caf6000subwaycarsalon</class>
-   <extends>QWidget</extends>
-   <header location="global">caf6000subwaycarsalon.h</header>
-   <container>1</container>
+   <header>QtQuickWidgets/QQuickWidget</header>
   </customwidget>
  </customwidgets>
  <resources/>

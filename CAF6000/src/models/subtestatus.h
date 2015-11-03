@@ -124,8 +124,8 @@ public slots:
     void closeRightDoors();
     void disyuntoresCon();
     void disyuntoresDes();
-    void hornOn();
-    void hornOff();
+    void hornOn(int v);
+    void hornOff(int v);
     void emergencyOverridePressed();
     void setaActivated();
     void setaDeactivated();

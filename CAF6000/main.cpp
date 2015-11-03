@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
     BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
     MainWindow *m_tree = new MainWindow(0,m_eventHandler);
-    InstructionPanel *m_ip = new InstructionPanel(0);
+    InstructionPanel *m_ip = new InstructionPanel(0,m_subte,m_eventHandler);
 
     m_h->setHardware(m_tHardware);
     m_c->setHardware(m_tHardware);

@@ -23,8 +23,8 @@ private:
     QQuickItem *m_qmlView;
 
 signals:
-    hornPressed();
-    hornReleased();
+    hornPressed(int);
+    hornReleased(int);
 
 };
 

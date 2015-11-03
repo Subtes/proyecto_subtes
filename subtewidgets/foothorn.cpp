@@ -11,8 +11,8 @@ FootHorn::FootHorn(QWidget *parent) :
 
     m_qmlView = ui->pedal->rootObject();
 
-    connect (m_qmlView,SIGNAL(pedalPressed()),this,SIGNAL(hornPressed()));
-    connect (m_qmlView,SIGNAL(pedalReleased()),this,SIGNAL(hornReleased()));
+    connect (m_qmlView,SIGNAL(pedalPressed(int)),this,SIGNAL(hornPressed(int)));
+    connect (m_qmlView,SIGNAL(pedalReleased(int)),this,SIGNAL(hornReleased(int)));
 }
 
 FootHorn::~FootHorn()
