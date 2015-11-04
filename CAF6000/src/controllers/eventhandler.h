@@ -82,6 +82,7 @@ private:
     QPixmap m_imageSplash;
 
     int boardsReady = 0;
+    std::string m_cargandoEstado = "";
 
     bool splashPassed;
 

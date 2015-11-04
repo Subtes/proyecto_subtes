@@ -322,8 +322,10 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
 
         int intState = -1; //default - ningun estado
         if (value.compare("apagado") == 0){
+            m_cargandoEstado = "apagado";
             intState = 0;
         } else if(value.compare("puesta_servicio") == 0){
+            m_cargandoEstado = "puesta_servicio";
             intState = 1;
         }
         emit cargarEstado(intState);
@@ -645,6 +647,8 @@ void EventHandler::enableDiffusion()
     if(boardsReady==5){
         m_eNetClient->CambiarEstadoDifusion(true);
         boardsReady = 0;
+        m_eNetClient->CambiarValorClave("c_estado_cargado",m_cargandoEstado);
+        m_cargandoEstado = "";
     }
 }
 
