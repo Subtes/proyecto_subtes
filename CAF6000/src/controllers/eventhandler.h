@@ -155,6 +155,7 @@ signals:
     cargarDestinoSicas(QString);
 
     newTarget(int);
+    signalRaped();
 
 public slots:
     void processKeyPressed(DWORD k);

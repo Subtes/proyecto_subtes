@@ -272,6 +272,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             if (state.compare("0")==0){
                 //TODO: llamar al ATP para que cambie target a 0 - eso fuerza modo CL
                 m_subte->ATP_emergencyBrakeActivated();
+                m_subte->updateTargetSpeed(0);
             }
         }
     }

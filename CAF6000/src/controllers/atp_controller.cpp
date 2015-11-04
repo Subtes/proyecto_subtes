@@ -25,7 +25,6 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     connect(subte,SIGNAL(atpOn()),this,SLOT(initATP()));
     connect(subte,SIGNAL(atpOff()),this,SLOT(resetATP()));
 
-
     connect(eventHandler,SIGNAL(accelerationInstant(double)),this,SLOT(setACE(double)));
     connect(eventHandler,SIGNAL(nextToEstation()),this,SLOT(nextToEstation()));
     connect(eventHandler,SIGNAL(departureEstation()),this,SLOT(departureEstation()));
@@ -189,8 +188,16 @@ void Atp_Controller::updateTargetSpeed(double speed){
             emit playSound(1);
             this->setSpeedTarget(speed);
             this->updateAllowedSpeed(speed);
-        }else{
+        }else if (speed != 0.0){
             this->setSpeedTarget(speed);
+        }else{
+            m_subte->updateAllowedSpeed(0.0);
+            m_speedAllowed = 0.0;
+            m_speedAllowedPrevious = 0.0;
+            m_speedTarget = 0.0;
+            m_speedTargetPrevious = 0.0;
+            m_view->updateTargetSpeed(0.0);
+            m_view->updateAllowedSpeed(0.0);
         }
 
     }
@@ -359,8 +366,13 @@ void Atp_Controller::transitionGT(){
         QCoreApplication::processEvents(QEventLoop::AllEvents);
 
     }
+
     critiqueSpeed(2);
-    setAllowedSpeed(m_speedTarget);
+
+    if(m_AF != "0"){
+        setAllowedSpeed(m_speedTarget);
+    }
+
     m_transition = false;
 }
 
@@ -416,8 +428,10 @@ void Atp_Controller::transitionGD(){
             setAllowedSpeed(((v_aux>15.0)?v_aux:15.0));
         }
     }
-    setAllowedSpeed(15.0);
-    m_view->updateTargetSpeed(0.0);
+    if (m_AF != "0"){
+        setAllowedSpeed(15.0);
+        m_view->updateTargetSpeed(0.0);
+    }
 
     m_transition = false;
 }
