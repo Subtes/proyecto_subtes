@@ -1,14 +1,13 @@
 import QtQuick 2.0
 
 Rectangle {
-    id: rectangle1
+    id: modeDriveBck
     width: 410
     height: 207
     color: "#00000000"
     border.color: "#00000000"
 
-
-
+    signal selectedOption(int op);
 
     Image {
         id: image1
@@ -35,5 +34,43 @@ Rectangle {
         rotation: 0
         source: "resources/MODO_cmc.png"
     }
-}
 
+    MouseArea {
+        id: mouseArea1
+        x: 170
+        y: 14
+        width: 144
+        height: 154
+        onClicked: {
+            if ( modeDriveBck.state == "StateCL"){
+                modeDriveBck.state = "StateCMC";
+                selectedOption(0);
+                console.log("selected CMC: 0");
+            }
+            else{
+                modeDriveBck.state = "StateCL";
+                selectedOption(1);
+                console.log("selected CL: 1");
+            }
+        }
+    }
+
+    states: [
+        State {
+            name: "StateCL"
+
+            PropertyChanges {
+                target: image3
+                rotation: 65
+            }
+        },
+        State {
+            name: "StateCMC"
+
+            PropertyChanges {
+                target: image3
+                rotation: 0
+            }
+        }
+    ]
+}

@@ -24,7 +24,7 @@ Atp_Controller::Atp_Controller(SubteStatus *subte, Atp *view, EventHandler *even
     connect(subte,SIGNAL(targetSpeedChanged(double)),this,SLOT(updateTargetSpeed(double)));
     connect(subte,SIGNAL(atpOn()),this,SLOT(initATP()));
     connect(subte,SIGNAL(atpOff()),this,SLOT(resetATP()));
-
+    connect(subte,SIGNAL(modeDrivingChanged(int)),this,SLOT(setDrivingMode(int)));
 
     connect(eventHandler,SIGNAL(accelerationInstant(double)),this,SLOT(setACE(double)));
     connect(eventHandler,SIGNAL(nextToEstation()),this,SLOT(nextToEstation()));
@@ -80,7 +80,19 @@ void Atp_Controller::initATP(){
 
     this->m_view->setReset(true);
 
-    if(this->m_subte->getDrivingModeATP()){
+    m_speed = 0.0;
+    m_speedAllowed = 0.0;
+    m_speedAllowedPrevious = 0.0;
+    m_speedCritique = 0.0;
+    m_speedTargetPrevious = 0.0;
+    m_speedTarget = 0.0;
+    m_AF = "0";
+//    m_speedTarget = 60.0;
+//    m_AF = "6";
+
+    m_onATP = true;
+
+    if(this->m_subte->getDrivingModeATP() == 0){
         setDrivingMode(0);
     }else{
         setDrivingMode(1);
@@ -88,38 +100,37 @@ void Atp_Controller::initATP(){
 
     set_uTVC();
 
-    m_speed = 0.0;
-    m_speedAllowed = 0.0;
-    m_speedCritique = 0.0;
-    m_speedTargetPrevious = 0.0;
-    m_speedTarget = 60.0;
-    m_AF = "6";
-
     this->calculateDistance();
 
-    m_onATP = true;
-    if (m_transition){
-        qDebug() << "ATP reinicializado cuando estaba en transicion, ---> TARGET SPEED: 0.0, ALLOWED SPEED: 15.0";
-        updateTargetSpeed(15.0);
-        m_subte->updateTargetSpeed(0.0);
-        m_subte->updateAllowedSpeed(15.0);
-        m_speedAllowed = 15.0;
-        m_speedAllowedPrevious = 15.0;
-        m_speedTarget = 0.0;
-        m_speedTargetPrevious = 0.0;
-        m_view->updateTargetSpeed(0.0);
-        m_view->updateAllowedSpeed(15.0);
-        m_transition = false;
-    }else{
-        qDebug() << "ATP reinicializado fuera de transicioncuando";
-        if((this->m_subte->targetSpeed()) > 0.0){
-            this->updateTargetSpeed(this->m_subte->targetSpeed());
-            qDebug()<<"ATP init, TargetSpeed from MODEL: " << m_subte->targetSpeed();
-        }else{
-            this->updateTargetSpeed(60.0);
-            qDebug()<<"ATP init, TargetSpeed from DEFAULT ATP: 60.0";
-        }
-    }
+//    m_onATP = true;
+//    if (m_drivingModeCMC){
+
+//            if (m_transition){
+//                qDebug() << "ATP reinicializado cuando estaba en transicion, ---> TARGET SPEED: 0.0, ALLOWED SPEED: 15.0";
+//                updateTargetSpeed(15.0);
+//                m_subte->updateTargetSpeed(0.0);
+//                m_subte->updateAllowedSpeed(15.0);
+//                m_speedAllowed = 15.0;
+//                m_speedAllowedPrevious = 15.0;
+//                m_speedTarget = 0.0;
+//                m_speedTargetPrevious = 0.0;
+//                m_view->updateTargetSpeed(0.0);
+//                m_view->updateAllowedSpeed(15.0);
+//                m_transition = false;
+//            }else{
+//                qDebug() << "ATP reinicializado en un tramo fuera de transicion";
+//                if((this->m_subte->targetSpeed()) > 0.0){
+//                    this->updateTargetSpeed(this->m_subte->targetSpeed());
+//                    qDebug()<<"ATP init, TargetSpeed from MODEL: " << m_subte->targetSpeed();
+//                }else{
+//                    this->updateTargetSpeed(60.0);
+//                    qDebug()<<"ATP init, TargetSpeed from DEFAULT ATP: 60.0";
+//                }
+//            }
+//     }else{
+//        updateAllowedSpeed(10.0);
+//        this->m_view->updateTargetSpeed(0.0);
+//    }
 
 
     //Intervalo de trabajo del ATP, salva en caso de quedar la velocidad planchada CTE y no recibir muestreo.
@@ -139,11 +150,42 @@ void Atp_Controller::resetATP(){
 
 void Atp_Controller::setDrivingMode(int d){
  //VV Falta chequear off sets, y ver modo AL AT si van en true y se prende falla en ATP.
+
+    m_drivingModeCMC = false;
+    m_drivingModeCL = false;
+    m_drivingModeAT = false;
+    m_drivingModeAT = false;
+
+    this->m_view->setCMC(false);
+    this->m_view->setCL(false);
+    this->m_view->setFalla(false);
+
     switch(d){
     case 0:
         m_drivingModeCMC = true;
         this->m_view->setCMC(true);
-        this->m_view->setCL(false);
+        if (m_transition){
+            qDebug() << "ATP reinicializado cuando estaba en transicion, ---> TARGET SPEED: 0.0, ALLOWED SPEED: 15.0";
+            //updateTargetSpeed(15.0);
+            //m_subte->updateTargetSpeed(0.0);
+            //m_subte->updateAllowedSpeed(15.0);
+            m_speedAllowed = 15.0;
+            m_speedAllowedPrevious = 15.0;
+            m_speedTarget = 0.0;
+            m_speedTargetPrevious = m_subte->targetSpeed();
+            m_view->updateTargetSpeed(0.0);
+            m_view->updateAllowedSpeed(15.0);
+            m_transition = false;
+        }else{
+            qDebug() << "ATP reinicializado en un tramo fuera de transicion";
+            if((this->m_subte->targetSpeed()) > 0.0){
+                this->updateTargetSpeed(this->m_subte->targetSpeed());
+                qDebug()<<"ATP init, TargetSpeed from MODEL: " << m_subte->targetSpeed();
+            }else{
+                this->updateTargetSpeed(60.0);
+                qDebug()<<"ATP init, TargetSpeed from DEFAULT ATP: 60.0";
+            }
+        }
         m_OS_ACT = 4.0;
         m_OS_LCT = 5.0;
         m_OS_AFS = 2.0;
@@ -153,7 +195,11 @@ void Atp_Controller::setDrivingMode(int d){
     case 1:
         m_drivingModeCL = true;
         this->m_view->setCL(true);
-        this->m_view->setCMC(false);
+        m_AF = "0";
+        updateAllowedSpeed(10.0);
+        m_speedTargetPrevious = m_speedTarget;
+        m_speedTarget = 0.0;
+        this->m_view->updateTargetSpeed(0.0);
         m_OS_ACT = 2.0;
         m_OS_LCT = 3.0;
         m_OS_AFS = 1.0;
@@ -181,25 +227,38 @@ void Atp_Controller::setDrivingMode(int d){
     }
 }
 
-void Atp_Controller::updateTargetSpeed(double speed){
+void Atp_Controller::updateTargetSpeed(double speedTgNew){
 
     if (m_onATP){
-        if (m_AF!="1"){
-            this->m_view->updateTargetSpeed(speed);
-            emit playSound(1);
-            this->setSpeedTarget(speed);
-            this->updateAllowedSpeed(speed);
-        }else{
-            this->setSpeedTarget(speed);
-        }
+        emit playSound(1);
 
+        if ((m_AF!="1")&&(!m_drivingModeCL)){
+            this->m_view->updateTargetSpeed(speedTgNew);
+            this->setSpeedTarget(speedTgNew);
+            this->updateAllowedSpeed(speedTgNew);
+
+        }else /*if (speedTgNew != 0.0)*/{
+            this->setSpeedTarget(speedTgNew);
+
+        }/*else{
+            //Esta en transicion GD
+            m_AF = "0";
+            m_subte->updateAllowedSpeed(0.0);
+            m_speedAllowed = 0.0;
+            m_speedAllowedPrevious = 0.0;
+            m_speedTarget = 0.0;
+            m_speedTargetPrevious = 0.0;
+            m_view->updateTargetSpeed(0.0);
+            m_view->updateAllowedSpeed(0.0);
+            this->setSpeedTarget(0.0);
+        }*/
     }
 }
 
 void Atp_Controller::nextToEstation(){
 
 //Esto es un Parche debido al modelo!! ojo ver. Es porque no manda señales manda velocidades que no son unicas.
-    if (m_onATP && (m_AF != "1")){
+    if (m_onATP && (m_AF != "1") && (m_AF != "0")){
 
         this->m_view->updateTargetSpeed(0.0);
         this->m_view->setBlinkSpeedTarget(true);
@@ -215,7 +274,7 @@ void Atp_Controller::nextToEstation(){
 
 void Atp_Controller::departureEstation(){
     //VV
-    if (m_onATP && (m_AF == "1")){
+    if (m_onATP && (m_AF == "1") && (m_AF != "0")){
 
         this->m_view->setBlinkSpeedTarget(false);
         qDebug()<<"departure Estation: m_speedTargetPrevious"<< m_speedTargetPrevious;
@@ -249,7 +308,7 @@ void Atp_Controller::setAllowedSpeed(double s){
 
 void Atp_Controller::setSpeedTarget(double speed){
 //Parche. Es porque no manda señales manda velocidades que no son unicas.
-    if (m_AF == "1"){
+    if ((m_AF == "1")||(m_drivingModeCL)){
         m_speedTargetPrevious = speed;
     }else{
         int s = static_cast<int>(speed);
@@ -349,7 +408,7 @@ void Atp_Controller::transitionGT(){
     //WHILE timeLAP ...
     int lap = 0;
     lapTime.start();
-    while ((lapTime.currentTime() < ts) && (m_speedAllowed > m_speedTarget)){
+    while ((lapTime.currentTime() < ts) && (m_speedAllowed > m_speedTarget) && (m_AF != "0")){
         lap = lapTime.elapsed();
         if (lap % 2 == 0){
             //update allowedSpeed hacer calculo en funcion del tiempo transcurrido
@@ -359,8 +418,13 @@ void Atp_Controller::transitionGT(){
         QCoreApplication::processEvents(QEventLoop::AllEvents);
 
     }
+
     critiqueSpeed(2);
-    setAllowedSpeed(m_speedTarget);
+
+    if(m_AF != "0"){
+        setAllowedSpeed(m_speedTarget);
+    }
+
     m_transition = false;
 }
 
@@ -401,7 +465,7 @@ void Atp_Controller::transitionGD(){
     double d_aux = d_ini;
     double calc_Ant = 0;
 
-    while ((d_aux >= 0) && (m_speedAllowed > m_speedTarget)){
+    while ((d_aux >= 0) && (m_speedAllowed > m_speedTarget) && (m_AF != "0")){
         calc = (static_cast<double>(timer.elapsed())/static_cast<double>(1000));
         sp = (m_speed*0.277777777777778);
         if (calc_Ant > 0)
@@ -416,8 +480,10 @@ void Atp_Controller::transitionGD(){
             setAllowedSpeed(((v_aux>15.0)?v_aux:15.0));
         }
     }
-    setAllowedSpeed(15.0);
-    m_view->updateTargetSpeed(0.0);
+    if (m_AF != "0"){
+        setAllowedSpeed(15.0);
+        m_view->updateTargetSpeed(0.0);
+    }
 
     m_transition = false;
 }

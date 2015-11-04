@@ -24,7 +24,8 @@ HEADERS += \
     alstomtractionlever.h \
     alstomselectormodoconduccion.h \
     alstomtcms.h \
-    auxiliarypanel.h
+    auxiliarypanel.h \
+    drivingmodeselector.h
 
 SOURCES += \
     tractionlever.cpp \
@@ -45,7 +46,8 @@ SOURCES += \
     alstomtractionlever.cpp \
     alstomselectormodoconduccion.cpp \
     alstomtcms.cpp \
-    auxiliarypanel.cpp
+    auxiliarypanel.cpp \
+    drivingmodeselector.cpp
 
 FORMS += \
     tractionlever.ui \
@@ -65,7 +67,8 @@ FORMS += \
     alstomtractionlever.ui \
     alstomselectormodoconduccion.ui \
     alstomtcms.ui \
-    auxiliarypanel.ui
+    auxiliarypanel.ui \
+    drivingmodeselector.ui
 
 RESOURCES += \
             qmlrsc.qrc \

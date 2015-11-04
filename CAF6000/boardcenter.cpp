@@ -53,6 +53,8 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eve
     connect(m_eventHandler,SIGNAL(menosPressed()),this,SLOT(bypassFrenoON()));
     connect(m_eventHandler,SIGNAL(menosReleased()),this,SLOT(bypassFrenoOFF()));
 
+    connect(ui->drivingSelectorMode,SIGNAL(selectedOption(int)),subte,SLOT(setDrivingModeATP(int)));
+
     connect(m_subte,SIGNAL(bateriaCon()),this,SLOT(turnOnWidgets()));
     connect(m_subte,SIGNAL(bateriaDes()),this,SLOT(turnOffWidgets()));
 }
@@ -80,8 +82,6 @@ void BoardCenter::startBoard()
     ui->faros->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blueplane.png"));
     ui->luzCabina->setButtonImage(QUrl("qrc:/resources/luzcabinaON.png"),QUrl("qrc:/resources/luzcabina.png"));
     ui->publicoCabina->setButtonImage(QUrl("qrc:/resources/publico-cabinaR.png"),QUrl("qrc:/resources/publico-cabinaL.png"));
-    ui->modoConduccion->setClearColor(Qt::transparent);
-    ui->modoConduccion->setAttribute(Qt::WA_AlwaysStackOnTop);
 
     this->setEnabled(false);
 
@@ -89,8 +89,6 @@ void BoardCenter::startBoard()
     connect(ui->bypassFrenoTraccion,SIGNAL(pressed()),m_tractionBypass,SLOT(pressBypass()));
     connect(ui->bypassFrenoTraccion,SIGNAL(released()),m_brakesBypass,SLOT(bypassBrakeReleased()));
     connect(ui->bypassFrenoTraccion,SIGNAL(released()),m_tractionBypass,SLOT(releaseBypass()));
-
-    //m_checkBypass->stop();
 
 }
 

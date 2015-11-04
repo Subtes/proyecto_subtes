@@ -226,30 +226,6 @@
      </rect>
     </property>
    </widget>
-   <widget class="QQuickWidget" name="modoConduccion">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>20</y>
-      <width>411</width>
-      <height>211</height>
-     </rect>
-    </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="resizeMode">
-     <enum>QQuickWidget::SizeRootObjectToView</enum>
-    </property>
-    <property name="source">
-     <url>
-      <string>qrc:/mode_selector.qml</string>
-     </url>
-    </property>
-   </widget>
    <widget class="SingleButton" name="luzCabina" native="true">
     <property name="geometry">
      <rect>
@@ -311,6 +287,16 @@
      <string>OO</string>
     </property>
    </widget>
+   <widget class="DrivingModeSelector" name="drivingSelectorMode" native="true">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>20</y>
+      <width>411</width>
+      <height>211</height>
+     </rect>
+    </property>
+   </widget>
    <zorder>velocimetro</zorder>
    <zorder>wiper</zorder>
    <zorder>anulacionEmergencia</zorder>
@@ -328,19 +314,20 @@
    <zorder>antivaho</zorder>
    <zorder>faros</zorder>
    <zorder>iluminacionPulsadores</zorder>
-   <zorder>modoConduccion</zorder>
    <zorder>luzCabina</zorder>
    <zorder>publicoCabina</zorder>
    <zorder>selectorPuertas</zorder>
    <zorder>bypassFrenoTraccion</zorder>
+   <zorder>drivingSelectorMode</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>QQuickWidget</class>
+   <class>SingleButton</class>
    <extends>QWidget</extends>
-   <header>QQuickWidget</header>
+   <header>singlebutton.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>Wiper</class>
@@ -355,9 +342,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>SingleButton</class>
+   <class>DrivingModeSelector</class>
    <extends>QWidget</extends>
-   <header>singlebutton.h</header>
+   <header>drivingmodeselector.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
