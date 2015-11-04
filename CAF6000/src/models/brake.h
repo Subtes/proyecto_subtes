@@ -15,8 +15,6 @@ private:
     const std::string NOMBRE_FRENO_EMERGENCIA = "c_freno_emergencia";
     const std::string VALOR_CON_FRENO_EMERGENCIA = "con";
     const std::string VALOR_DES_FRENO_EMERGENCIA = "des";
-    const std::string NOMBRE_FRENO_HM = "c_freno";
-    const std::string VALOR_FRENO_HM = "50";
 
     Traction *m_traction;
     EventHandler * m_eventHandler;
@@ -24,6 +22,7 @@ private:
     bool m_emergencyBrake_tractionLever;
     bool m_emergencyBrake_atp;
     bool m_emergencyBrake_setas;
+    bool m_emergencyBrake_HM;
     double m_brake;
     double m_lastBrake;
     bool m_bypass;
@@ -40,7 +39,6 @@ public:
     void reset();
 
     void notifyEmergencyBrake();
-    void notifyHMBrake();
     void notifyBrake();
 
 
@@ -49,6 +47,7 @@ public:
     bool getHiloLazo();
     void setEmergencyBrake_atp(bool value);
     void setEmergencyBrake_seta(bool value);
+    void setEmergencyBrake_HM(bool value);
     double getBrake() const;
     void setBrake(double value);
     bool bypass() const;

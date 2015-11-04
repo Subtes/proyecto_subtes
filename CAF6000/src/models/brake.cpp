@@ -6,6 +6,7 @@ Brake::Brake()
     m_emergencyBrake_atp = false;
     m_emergencyBrake_setas = false;
     m_emergencyBrake_tractionLever = false;
+    m_emergencyBrake_HM = false;
     m_brake = 0;
     m_lastBrake = 0;
     m_bypass = false;
@@ -46,6 +47,7 @@ void Brake::reset()
     m_emergencyBrake_atp = false;
     m_emergencyBrake_setas = false;
     m_emergencyBrake_tractionLever = false;
+    m_emergencyBrake_HM = false;
     m_brake = 0;
     m_lastBrake = 0;
     m_bypass = false;
@@ -73,7 +75,7 @@ bool Brake::getEmergencyBrake() const
     if (m_averia)
         return true;
 
-    return m_emergencyBrake_atp || m_emergencyBrake_setas || m_emergencyBrake_tractionLever;
+    return m_emergencyBrake_atp || m_emergencyBrake_setas || m_emergencyBrake_tractionLever || m_emergencyBrake_HM;
 }
 
 void Brake::setEmergencyBrake_atp(bool value)
@@ -85,6 +87,13 @@ void Brake::setEmergencyBrake_atp(bool value)
 void Brake::setEmergencyBrake_seta(bool value)
 {
     m_emergencyBrake_setas = value;
+    notifyEmergencyBrake();
+}
+
+
+void Brake::setEmergencyBrake_HM(bool value)
+{
+    m_emergencyBrake_HM = value;
     notifyEmergencyBrake();
 }
 
@@ -160,10 +169,6 @@ void Brake::notifyEmergencyBrake(){
     }else{
         m_eventHandler->notifyValueChanged(NOMBRE_FRENO_EMERGENCIA,VALOR_DES_FRENO_EMERGENCIA);
     }
-}
-
-void Brake::notifyHMBrake(){
-    m_eventHandler->notifyValueChanged(NOMBRE_FRENO_HM,VALOR_FRENO_HM);
 }
 
 void Brake::notifyBrake(){
