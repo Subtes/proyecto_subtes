@@ -1,0 +1,251 @@
+{
+  "modelo": "CAF6000",
+  "configuracion": "MM-MM-MM",
+  "recurso": "CAF6000-MM-MM-MM",
+  "coches": [
+    {
+      "numero": "coche1",
+      "tipo": "M",
+      "paneles": [
+                  {
+                    "tipo": "grifos",
+                    "recurso": null,
+                    "image": null,
+                    "grifos": [
+                                {"name":"B-138","estado":"CON"},
+                                {"name":"L-2","estado":"CON"},
+                                {"name":"B-73","estado":"CON"}
+                              ]
+                  },
+                  {
+                    "tipo": "termicos",
+                    "recurso": "CAF6000-N3-TERMICAS",
+                    "image": "N2-B-TERMICAS",
+                    "termicas": [
+                                  {"name":"33F1","estado":"CON"},
+                                  {"name":"53F1","estado":"CON"},
+                                  {"name":"57F1","estado":"CON"}
+                              ]
+                  },
+                  {
+                    "tipo": "pupitre",
+                    "recurso": null,
+                    "image": null,
+                    "grifos": [
+                                {"name":"RANA","estado":"0"},
+                                {"name":"SETA","estado":"CON"}
+                              ]
+                  },
+                  {
+                    "tipo": "salon",
+                    "recurso": null,
+                    "image": null,
+                    "componente": [
+                                    {"name":null,"estado":null},
+                                    {"name":null,"estado":null}
+                              ]
+                  }
+                ]
+    },
+    {
+      "numero": "coche2",
+      "tipo": "M",
+      "paneles": [
+                  {
+                    "tipo": "grifos",
+                    "recurso": "CAF6000-N3-GRIFOS",
+                    "grifos": [
+                                {"name":"B-138","estado":"CON"},
+                                {"name":"L-2","estado":"CON"},
+                                {"name":"B-73","estado":"CON"}
+                              ]
+                  },
+                  {
+                    "tipo": "termicos",
+                    "recurso": "CAF6000-N3-TERMICAS",
+                    "termicas": [
+                                  {"name":"33F1","estado":"CON"},
+                                  {"name":"53F1","estado":"CON"},
+                                  {"name":"57F1","estado":"CON"}
+                              ]
+                  },
+                  {
+                    "tipo": "pupitre",
+                    "recurso": null,
+                    "componente": [
+                                    {"name":null,"estado":null},
+                                    {"name":null,"estado":null}
+                                  ]
+                  },
+                  {
+                    "tipo": "salon",
+                    "recurso": null,
+                    "grifos": [
+                                {"name":null,"estado":null},
+                                {"name":null,"estado":null}
+                              ]
+                  }
+                ]
+    },
+    {
+      "numero": "coche3",
+      "tipo": "M",
+      "paneles": [
+                  {
+                    "tipo": "grifos",
+                    "recurso": "CAF6000-N3-GRIFOS",
+                    "grifos": [
+                                {"name":"B-138","estado":"CON"},
+                                {"name":"L-2","estado":"CON"},
+                                {"name":"B-73","estado":"CON"}
+                              ]
+                  },
+                  {
+                    "tipo": "termicos",
+                    "recurso": "CAF6000-N3-TERMICAS",
+                    "termicas": [
+                                  {"name":"33F1","estado":"CON"},
+                                  {"name":"53F1","estado":"CON"},
+                                  {"name":"57F1","estado":"CON"}
+                              ]
+                  },
+                  {
+                    "tipo": "pupitre",
+                    "recurso": null,
+                    "componente": [
+                                    {"name":null,"estado":null},
+                                    {"name":null,"estado":null}
+                                  ]
+                  },
+                  {
+                    "tipo": "salon",
+                    "recurso": null,
+                    "grifos": [
+                                {"name":null,"estado":null},
+                                {"name":null,"estado":null}
+                              ]
+                  }
+                ]
+    },
+    {
+      "numero": "coche4",
+      "tipo": "M",
+      "paneles": [
+                  {
+                    "tipo": "grifos",
+                    "recurso": "CAF6000-N3-GRIFOS",
+                    "grifos": [
+                                {"name":"B-138","estado":"CON"},
+                                {"name":"L-2","estado":"CON"},
+                                {"name":"B-73","estado":"CON"}
+                              ]
+                  },
+                  {
+                    "tipo": "termicos",
+                    "recurso": "CAF6000-N3-TERMICAS",
+                    "termicas": [
+                                {"name":"33F1","estado":"CON"},
+                                {"name":"53F1","estado":"CON"},
+                                {"name":"57F1","estado":"CON"}
+                              ]
+                  },
+                  {
+                    "tipo": "pupitre",
+                    "recurso": null,
+                    "componente": [
+                                    {"name":null,"estado":null},
+                                    {"name":null,"estado":null}
+                                  ]
+                  },
+                  {
+                    "tipo": "salon",
+                    "recurso": null,
+                    "grifos": [
+                                {"name":null,"estado":null},
+                                {"name":null,"estado":null}
+                              ]
+                  }
+                ]
+    },
+    {
+      "numero": "coche5",
+      "tipo": "M",
+      "paneles": [
+                  {
+                    "tipo": "grifos",
+                    "recurso": "CAF6000-N3-GRIFOS",
+                    "grifos": [
+                                {"name":"B-138","estado":"CON"},
+                                {"name":"L-2","estado":"CON"},
+                                {"name":"B-73","estado":"CON"}
+                              ]
+                  },
+                  {
+                    "tipo": "termicos",
+                    "recurso": "CAF6000-N3-TERMICAS",
+                    "termicas": [
+                                {"name":"33F1","estado":"CON"},
+                                {"name":"53F1","estado":"CON"},
+                                {"name":"57F1","estado":"CON"}
+                              ]
+                  },
+                  {
+                    "tipo": "pupitre",
+                    "recurso": null,
+                    "componente": [
+                                    {"name":null,"estado":null},
+                                    {"name":null,"estado":null}
+                                  ]
+                  },
+                  {
+                    "tipo": "salon",
+                    "recurso": null,
+                    "grifos": [
+                                {"name":null,"estado":null},
+                                {"name":null,"estado":null}
+                              ]
+                  }
+                ]
+    },
+    {
+      "numero": "coche6",
+      "tipo": "M",
+      "paneles": [
+                  {
+                    "tipo": "grifos",
+                    "recurso": "CAF6000-N3-GRIFOS",
+                    "grifos": [
+                                {"name":"B-138","estado":"CON"},
+                                {"name":"L-2","estado":"CON"},
+                                {"name":"B-73","estado":"CON"}
+                              ]
+                  },
+                  {
+                    "tipo": "termicos",
+                    "recurso": "CAF6000-N3-TERMICAS",
+                    "termicas": [
+                                  {"name":"33F1","estado":"CON"},
+                                  {"name":"53F1","estado":"CON"},
+                                  {"name":"57F1","estado":"CON"}
+                              ]
+                  },
+                  {
+                    "tipo": "pupitre",
+                    "recurso": "CAF6000-N3-PUPITRE",
+                    "grifos": [
+                                {"name":"RANA","estado":"0"},
+                                {"name":"SETA","estado":"CON"}
+                              ]
+                  },
+                  {
+                    "tipo": "salon",
+                    "recurso": null,
+                    "componente": [
+                                    {"name":null,"estado":null},
+                                    {"name":null,"estado":null}
+                                  ]
+                  }
+                ]
+    }
+  ]}
+

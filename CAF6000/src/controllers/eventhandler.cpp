@@ -105,7 +105,8 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estado_simulador");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cargar_estado");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_averia");
-
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"i_mod_tren");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"i_config_vagones");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_coches_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_renglon_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estacion_destino_sicas");
@@ -125,6 +126,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_estado_puertas");
 
             m_subte->reset();
+            //Comentar linea en integracion y testear ver tarea SUBTES-227
             emit controlReset();
 
             m_eNetClient->CambiarValorClave("c_grifob138","con");
@@ -414,6 +416,24 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             emit departureEstation();
         }
     }
+    else if(key.compare("i_config_vagones") == 0){
+        try{
+            qDebug() << "i_config_vagones recibido.";
+            emit configWagon(value.c_str());
+        }
+        catch (...) {
+            qDebug() << "i_config_vagones valor recibido INVALIDO." ;
+        }
+    }
+    else if(key.compare("i_mod_tren") == 0){
+        try{
+            qDebug() << "i_mod_tren recibido.";
+            emit modelSubwayReceived(value.c_str());
+        }
+        catch (...) {
+            qDebug() << "i_mod_tren valor recibido INVALIDO." ;
+        }
+    }
 }
 
 void EventHandler::processKeyPressed(DWORD k)
@@ -441,6 +461,8 @@ void EventHandler::processKeyPressed(DWORD k)
         K_down = true;
         qDebug() << "K key pressed";
         emit kPressed();
+        emit modelSubwayReceived("CAF6000-");
+        emit configWagon("M-M-M-M-M-M");
     } else if ( k == _L && !L_down ){
         L_down = true;
         qDebug() << "L key pressed";

@@ -10,6 +10,7 @@
 #include "boardright.h"
 #include "boardtop.h"
 #include "src/instructionsolutionpanel/mainwindow.h"
+#include "boardauxiliarypanel.h"
 
 #include "src/controllers/eventhandler.h"
 #include "src/controllers/keypresseater.h"
@@ -57,6 +58,7 @@ int main(int argc, char *argv[])
     BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
     BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
     MainWindow *m_tree = new MainWindow(0,m_eventHandler);
+    BoardAuxiliaryPanel *m_auxiliaryPanel = new BoardAuxiliaryPanel(0,m_subte,m_eventHandler);
 
     m_h->setHardware(m_tHardware);
     m_c->setHardware(m_tHardware);
@@ -79,11 +81,11 @@ int main(int argc, char *argv[])
 
 
         /**
-     * Dimensiones -->  QRect(0,0 1024x768)
-     * Dimensiones -->  QRect(1024,0 1024x768)
-     * Dimensiones -->  QRect(-1024,0 1024x768)
-     * Dimensiones -->  QRect(0,-768 1024x768)
-     */
+         * Dimensiones -->  QRect(0,0 1024x768)
+         * Dimensiones -->  QRect(1024,0 1024x768)
+         * Dimensiones -->  QRect(-1024,0 1024x768)
+         * Dimensiones -->  QRect(0,-768 1024x768)
+        */
 
         m_t->showFullScreen();
         m_c->showFullScreen();
@@ -93,6 +95,7 @@ int main(int argc, char *argv[])
         tabRight->addTab(m_r,QObject::tr("RightPanel"));
         tabRight->addTab(m_h,QObject::tr("Hardware"));
         tabRight->addTab(m_tree,QObject::tr("TreePanel"));
+        tabRight->addTab(m_auxiliaryPanel,QObject::tr("Paneles Auxiliares"));
 
         tabRight->showFullScreen();
 
@@ -112,6 +115,7 @@ int main(int argc, char *argv[])
         tabRight->addTab(m_c,QObject::tr("Center"));
         tabRight->addTab(m_r,QObject::tr("RightPanel"));
         tabRight->addTab(m_tree,QObject::tr("TreePanel"));
+        tabRight->addTab(m_auxiliaryPanel,QObject::tr("Paneles Auxiliares"));
 
         tabRight->setMinimumWidth(1024);
         tabRight->setMinimumHeight(768);

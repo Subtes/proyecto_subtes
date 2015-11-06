@@ -40,6 +40,8 @@ ENetClient::~ENetClient(void)
 
 bool ENetClient::EstaConectado()
 {
+//  std::cout<<"Hay instancia de servidor? "<< (_fServidor != nullptr);
+//  std::cout<<"Esta conectado"<< (_fServidor->state == ENET_PEER_STATE_CONNECTED);
   return _fServidor != nullptr && _fServidor->state == ENET_PEER_STATE_CONNECTED;
 }
 
@@ -199,7 +201,7 @@ void ENetClient::ProcesarColaMensajes()
         if (partes.size()!=4)
         {
           if (OnErrorRecibir != nullptr)
-            OnErrorRecibir("Se recibió mal el valor de una clave desde el servidor",mensaje);
+            OnErrorRecibir("Se recibiÃ³ mal el valor de una clave desde el servidor",mensaje);
         }
         else
         {
@@ -210,23 +212,23 @@ void ENetClient::ProcesarColaMensajes()
       }
 #pragma endregion 
 
-#pragma region Conexión de Cliente
+#pragma region ConexiÃ³n de Cliente
       if (partes[0] == "seConectoCliente" && OnConnectHost != nullptr)
       {
         if (partes.size() != 2)
           if (OnErrorRecibir != nullptr)
-            OnErrorRecibir("Se recibió mal el valor de conexión de un Host",mensaje);
+            OnErrorRecibir("Se recibiÃ³ mal el valor de conexiÃ³n de un Host",mensaje);
           else
             OnConnectHost(partes[1]);
       }
 #pragma endregion 
 
-#pragma region Desconexión de Cliente
+#pragma region DesconexiÃ³n de Cliente
       if (partes[0] == "seDesConectoCliente" && OnDisconnectHost != nullptr)
       {
         if (partes.size() != 2)
           if (OnErrorRecibir != nullptr)
-            OnErrorRecibir("Se recibió mal el valor de desconexión de un Host",mensaje);
+            OnErrorRecibir("Se recibiÃ³ mal el valor de desconexiÃ³n de un Host",mensaje);
           else
             OnDisconnectHost(partes[1]);
       }
@@ -257,13 +259,13 @@ void ENetClient::ProcesarEvento()
     break;
 
   case ENET_EVENT_TYPE_CONNECT:
-#pragma region Conexión
+#pragma region ConexiÃ³n
     if(OnConnect != nullptr) OnConnect();
 #pragma endregion
     break;
 
   case ENET_EVENT_TYPE_DISCONNECT:
-#pragma region DesConexión
+#pragma region DesConexiÃ³n
     Terminar = true;
     _threads[0].join();
     _threads[1].join();

@@ -1,0 +1,26 @@
+{
+  "modelo": "CAF6000",
+  "configuracion": "MM-MM-MM",
+  "recurso": ["N1","MM-MM-MM"],
+  "coches": [
+    {
+      "numero": "coche1",
+      "tipo": "M",
+      "paneles": [
+                  {
+                    "tipo": "grifo",
+                    "recurso": "CAF6000-N3-TERMICAS",
+                    "grifos": [
+                                {"name":"B-138","estado":"CON"},
+                                {"name":"L-2","estado":"CON"},
+                                {"name":"B-73","estado":"CON"}
+                              ] 
+                  },
+                  {},
+                  {},
+                  {}
+                ]
+    },
+    {}
+  ],
+}
