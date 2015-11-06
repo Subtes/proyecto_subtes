@@ -25,7 +25,7 @@ SubteStatus::SubteStatus()
     m_seta = false;
     m_keyATP = false;
     m_rana = "0";
-    m_CMC = true;
+    m_drivingMode = 0;
     m_modeOperation = 0;
 }
 
@@ -511,12 +511,13 @@ double SubteStatus::getPressureWhite() const
     return m_pressure_white;
 }
 
-void SubteStatus::setDrivingModeATP(bool status){
-    m_CMC = status;
+void SubteStatus::setDrivingModeATP(int status){
+    m_drivingMode = status;
+    emit modeDrivingChanged(m_drivingMode);
 }
 
-bool SubteStatus::getDrivingModeATP(){
-    return m_CMC;
+int SubteStatus::getDrivingModeATP(){
+    return m_drivingMode;
 }
 
 void SubteStatus::setTractionFailure()

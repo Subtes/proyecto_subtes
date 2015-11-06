@@ -45,8 +45,9 @@ private:
     bool m_seta;
     bool m_keyATP;
     std::string m_rana;
-    bool m_CMC;
-    bool m_CL;
+    // CMC:0 CL:1
+    int m_drivingMode;
+    //m_sourceModoOFF:0 -- m_sourceModo:1 -- m_sourceModo20:2 -- m_sourceModoAs:3 -- m_sourceModoATO:4 -- m_sourceModoATP:5 -- m_sourceModoEEE
     int m_modeOperation;
 
 signals:
@@ -81,8 +82,7 @@ signals:
     frenoEstacionamientoDes();
     estadoNormal();
     estadoManioAcople();
-
-
+    modeDrivingChanged(int op);
 
 public:
 
@@ -115,7 +115,7 @@ public:
     bool seta() const;
     bool keyTopBoard() const;
     std::string rana() const;
-    bool getDrivingModeATP();
+    int getDrivingModeATP();
 
 public slots:
     // STATE CHANGE INVOCATIONS - SETTERS
@@ -182,7 +182,7 @@ public slots:
     void setRetentionBrake(bool state);
     void setSicasOk();
     // CMC, CL
-    void setDrivingModeATP(bool status);
+    void setDrivingModeATP(int status);
     void setModeOperation(int m);
 };
 
