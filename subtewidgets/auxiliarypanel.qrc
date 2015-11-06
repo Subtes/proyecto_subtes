@@ -1,0 +1,85 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../Source/images/coches/coche01.png</file>
+        <file alias="C1">../Source/images/coches/coche01_crop.png</file>
+        <file>../Source/images/coches/coche02.png</file>
+        <file alias="C2">../Source/images/coches/coche02_crop.png</file>
+        <file>../Source/images/coches/coche03.png</file>
+        <file alias="C3">../Source/images/coches/coche03_crop.png</file>
+        <file>../Source/images/coches/coche04.png</file>
+        <file alias="C4">../Source/images/coches/coche04_crop.png</file>
+        <file>../Source/images/coches/coche05.png</file>
+        <file alias="C5">../Source/images/coches/coche05_crop.png</file>
+        <file>../Source/images/coches/coche06.png</file>
+        <file alias="C6">../Source/images/coches/coche06_crop.png</file>
+        <file alias="CABINA">../Source/images/fondos/cabina_thumb.png</file>
+        <file>../Source/images/fondos/coches.png</file>
+        <file alias="MM-MM-MM-BCK">../Source/images/fondos/coches_crop.png</file>
+        <file>../Source/images/fondos/coches_opcion_desatu.png</file>
+        <file alias="MM-MM-MM-BCK-GREY">../Source/images/fondos/coches_opcion_desatu_crop.png</file>
+        <file>../Source/images/fondos/coches_opcionapagados.png</file>
+        <file>../Source/images/fondos/coches_opcionapagados_crop.png</file>
+        <file alias="N2-b-grifos">../Source/images/fondos/grifos_thumb.png</file>
+        <file alias="N2-4">../Source/images/fondos/Panel_Lateral.PNG</file>
+        <file alias="N2-3">../Source/images/fondos/Panel_Lateral2.png</file>
+        <file alias="N3-PN">../Source/images/fondos/PaneNeumatico_mod.png</file>
+        <file alias="N3-PS">../Source/images/fondos/Salon_Mod.PNG</file>
+        <file alias="N2-B-SALON">../Source/images/fondos/salon_thumb copy.png</file>
+        <file alias="N3-PT">../Source/images/fondos/Termicas_Mod.PNG</file>
+        <file alias="N2-B-TERMICAS">../Source/images/fondos/termicas_thumb.png</file>
+        <file>../Source/images/perillas/Neumatico/blanca00.png</file>
+        <file>../Source/images/perillas/Neumatico/blanca01.png</file>
+        <file>../Source/images/perillas/Neumatico/blanca02.png</file>
+        <file>../Source/images/perillas/Neumatico/blanca03.png</file>
+        <file>../Source/images/perillas/Neumatico/blanca04.png</file>
+        <file>../Source/images/perillas/Neumatico/blanca05.png</file>
+        <file>../Source/images/perillas/Neumatico/blanca06.png</file>
+        <file>../Source/images/perillas/Neumatico/blanca07.png</file>
+        <file>../Source/images/perillas/Neumatico/bronce00.png</file>
+        <file>../Source/images/perillas/Neumatico/bronce01.png</file>
+        <file>../Source/images/perillas/Neumatico/bronce02.png</file>
+        <file>../Source/images/perillas/Neumatico/bronce03.png</file>
+        <file>../Source/images/perillas/Neumatico/bronce04.png</file>
+        <file>../Source/images/perillas/Neumatico/bronce05.png</file>
+        <file>../Source/images/perillas/Neumatico/bronce06.png</file>
+        <file>../Source/images/perillas/Neumatico/bronce07.png</file>
+        <file>../Source/images/perillas/Neumatico/neumatico_red.png</file>
+        <file>../Source/images/perillas/Neumatico/neumatico_red_A.png</file>
+        <file>../Source/images/perillas/Neumatico/neumatico_red_A_1.PNG</file>
+        <file>../Source/images/perillas/Neumatico/neumatico_red_B.png</file>
+        <file>../Source/images/perillas/Neumatico/neumatico_red_B_1.PNG</file>
+        <file>../Source/images/perillas/Neumatico/neumatico_red_C.png</file>
+        <file>../Source/images/perillas/Neumatico/neumatico_red_C_1.PNG</file>
+        <file>../Source/images/perillas/Neumatico/neumatico_red_D.png</file>
+        <file>../Source/images/perillas/Neumatico/neumatico_red_D_1.PNG</file>
+        <file>../Source/images/perillas/Neumatico/rojagrande00.png</file>
+        <file>../Source/images/perillas/Neumatico/rojagrande01.png</file>
+        <file>../Source/images/perillas/Neumatico/rojagrande02.png</file>
+        <file>../Source/images/perillas/Neumatico/rojagrande03.png</file>
+        <file>../Source/images/perillas/Neumatico/side00.png</file>
+        <file>../Source/images/perillas/Neumatico/side01.png</file>
+        <file>../Source/images/perillas/Neumatico/side02.png</file>
+        <file>../Source/images/perillas/Neumatico/side03.png</file>
+        <file>../Source/images/perillas/Neumatico/side04.png</file>
+        <file>../Source/images/perillas/Neumatico/side05.png</file>
+        <file>../Source/images/perillas/Neumatico/side06.png</file>
+        <file>../Source/images/perillas/Neumatico/side07.png</file>
+        <file>../Source/images/perillas/Salon/amarilla1.PNG</file>
+        <file>../Source/images/perillas/Salon/amarilla2.PNG</file>
+        <file>../Source/images/perillas/Salon/amarilla3.PNG</file>
+        <file>../Source/images/perillas/Salon/amarilla4.PNG</file>
+        <file>../Source/images/perillas/Salon/amarilla5.PNG</file>
+        <file>../Source/images/perillas/termicas/tecla1_Abajo.PNG</file>
+        <file>../Source/images/perillas/termicas/Tecla1_Arriba.PNG</file>
+        <file>../Source/images/perillas/termicas/Tecla2_Abajo.PNG</file>
+        <file>../Source/images/perillas/termicas/Tecla2_Arriba.PNG</file>
+        <file>../Source/images/perillas/termicas/Tecla3_Abajo.PNG</file>
+        <file>../Source/images/perillas/termicas/Tecla3_Arriba.PNG</file>
+        <file>../Source/images/perillas/termicas/Tecla4_Abajo.PNG</file>
+        <file>../Source/images/perillas/termicas/Tecla4_Arriba.PNG</file>
+        <file>../Source/images/perillas/termicas/termicas_roja.PNG</file>
+        <file alias="CAF6000-MM-MM-MM">caf600023.qml</file>
+        <file alias="CAF6000-N2-PANEL-4">nivel2b4.qml</file>
+        <file alias="CAF6000-N3-TERMICAS">termicasPanel.qml</file>
+    </qresource>
+</RCC>

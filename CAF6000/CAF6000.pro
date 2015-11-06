@@ -54,7 +54,8 @@ SOURCES += ../ENet/ENetClient.cpp \
     src/controllers/hombremuerto_controller.cpp \
     src/controllers/llavemodoconduccion_controller.cpp \
     src/controllers/key_topboard_controller.cpp \
-    src/controllers/frenoretencion_controller.cpp
+    src/controllers/frenoretencion_controller.cpp \
+    boardauxiliarypanel.cpp
 
 HEADERS  += ../ENet/ENetClient.h \
     ../ENet/AdmClaves.h \
@@ -98,14 +99,17 @@ HEADERS  += ../ENet/ENetClient.h \
     src/controllers/hombremuerto_controller.h \
     src/controllers/llavemodoconduccion_controller.h \
     src/controllers/key_topboard_controller.h \
-    src/controllers/frenoretencion_controller.h
+    src/controllers/frenoretencion_controller.h \
+    boardauxiliarypanel.h
 
-FORMS    += boardcenter.ui \
+FORMS    += \
+    boardcenter.ui \
     boardright.ui \
     boardleft.ui \
     boardtop.ui \
     boardhardware.ui \
-    src/instructionsolutionpanel/mainwindow.ui
+    src/instructionsolutionpanel/mainwindow.ui \
+    boardauxiliarypanel.ui
 
 INCLUDEPATH +=  ../subtewidgets \
                 $$PWD/../ENet \
@@ -130,4 +134,6 @@ RESOURCES += ../subtewidgets/widgetsrsc.qrc \
 
 DESTDIR = $$PWD
 
-OTHER_FILES += etc/control.ini
+OTHER_FILES += etc/control.ini \
+               $$PWD/../Source
+

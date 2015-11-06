@@ -22,7 +22,8 @@ HEADERS += \
     llavetecho.h \
     tractionhardware.h \
     alstomtractionlever.h \
-    alstomselectormodoconduccion.h
+    alstomselectormodoconduccion.h \
+    auxiliarypanel.h
 
 SOURCES += \
     tractionlever.cpp \
@@ -41,7 +42,8 @@ SOURCES += \
     llavetecho.cpp \
     tractionhardware.cpp \
     alstomtractionlever.cpp \
-    alstomselectormodoconduccion.cpp
+    alstomselectormodoconduccion.cpp \
+    auxiliarypanel.cpp
 
 FORMS += \
     tractionlever.ui \
@@ -59,11 +61,13 @@ FORMS += \
     llavemodoconduccion.ui \
     llavetecho.ui \
     alstomtractionlever.ui \
-    alstomselectormodoconduccion.ui
+    alstomselectormodoconduccion.ui \
+    auxiliarypanel.ui
 
 RESOURCES += \
             qmlrsc.qrc \
-            widgetsrsc.qrc
+            widgetsrsc.qrc \
+	    auxiliarypanel.qrc
 
 INCLUDEPATH +=  $$PWD/../Source/include
 
@@ -71,5 +75,7 @@ DEPENDPATH += $$PWD/../Source
 
 LIBS += -L$$PWD/../Source/lib/ -lSDL \
         -L$$PWD/../Source/lib/ -lSDL_mixer
+
+OTHER_FILES += $$PWD/../Source
 
 DISTFILES +=
