@@ -3,7 +3,7 @@ QT += core gui quick quickwidgets widgets
 
 TEMPLATE = lib
 
-CONFIG += release
+CONFIG += release c++11
 
 HEADERS += \
     tractionlever.h \
@@ -22,7 +22,9 @@ HEADERS += \
     llavetecho.h \
     tractionhardware.h \
     alstomtractionlever.h \
-    alstomselectormodoconduccion.h
+    alstomselectormodoconduccion.h \
+    auxiliarypanel.h
+#    easylogging++.h
 
 SOURCES += \
     tractionlever.cpp \
@@ -41,7 +43,8 @@ SOURCES += \
     llavetecho.cpp \
     tractionhardware.cpp \
     alstomtractionlever.cpp \
-    alstomselectormodoconduccion.cpp
+    alstomselectormodoconduccion.cpp \
+    auxiliarypanel.cpp
 
 FORMS += \
     tractionlever.ui \
@@ -59,7 +62,8 @@ FORMS += \
     llavemodoconduccion.ui \
     llavetecho.ui \
     alstomtractionlever.ui \
-    alstomselectormodoconduccion.ui
+    alstomselectormodoconduccion.ui \
+    auxiliarypanel.ui
 
 RESOURCES += \
             qmlrsc.qrc \
@@ -72,5 +76,7 @@ DEPENDPATH += $$PWD/../Source
 
 LIBS += -L$$PWD/../Source/lib/ -lSDL \
         -L$$PWD/../Source/lib/ -lSDL_mixer
+
+OTHER_FILES += $$PWD/../Source
 
 DISTFILES +=
