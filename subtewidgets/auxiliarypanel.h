@@ -22,7 +22,7 @@ public:
 
 public slots:
     void level1();
-    void level2(int v);
+    void level2(QString s/*int v*/);
     void level3(int v);
 
 private:

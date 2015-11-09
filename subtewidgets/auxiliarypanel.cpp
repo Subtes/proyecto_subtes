@@ -13,15 +13,19 @@ AuxiliaryPanel::AuxiliaryPanel(QWidget *parent) :
 
 void AuxiliaryPanel::level1()
 {
-     ui->qkW_N1->setSource(QUrl("qrc:/foot_horn.qml"));
+     //ui->qkW_N1->setSource(QUrl("qrc:/foot_horn.qml"));
+     ui->qkW_N1->setSource(QUrl("qrc:/caf600023.qml"));
      m_qmlView1 = ui->qkW_N1->rootObject();
-     connect(m_qmlView1,SIGNAL(pedalPressed(int)),this,SLOT(level2(int)));
+     //connect(m_qmlView1,SIGNAL(pedalPressed(int)),this,SLOT(level2(int)));
+     connect(m_qmlView1,SIGNAL(pressedButton(QString)),this,SLOT(level2(QString)));
      LOG(INFO)<<"Entro en Nivel 1";
      qDebug()<<"Entro en Nivel 1";
 }
 
-void AuxiliaryPanel::level2(int op)
+void AuxiliaryPanel::level2(QString s/*int op*/)
 {
+    qDebug()<<"Selected option"<< s;
+
     ui->qkW_N2->setSource(QUrl("qrc:/foot_horn.qml"));
 
     m_qmlView2 = ui->qkW_N2->rootObject();

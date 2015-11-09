@@ -12,11 +12,11 @@
         <file alias="C5">../Source/images/coches/coche05_crop.png</file>
         <file>../Source/images/coches/coche06.png</file>
         <file alias="C6">../Source/images/coches/coche06_crop.png</file>
-        <file alias="cabina">../Source/images/fondos/cabina_thumb.png</file>
+        <file alias="CABINA">../Source/images/fondos/cabina_thumb.png</file>
         <file>../Source/images/fondos/coches.png</file>
-        <file alias="mm-mm-mm">../Source/images/fondos/coches_crop.png</file>
+        <file alias="MM-MM-MM-BCK">../Source/images/fondos/coches_crop.png</file>
         <file>../Source/images/fondos/coches_opcion_desatu.png</file>
-        <file alias="mm-mm-mm-bck-grey">../Source/images/fondos/coches_opcion_desatu_crop.png</file>
+        <file alias="MM-MM-MM-BCK-GREY">../Source/images/fondos/coches_opcion_desatu_crop.png</file>
         <file>../Source/images/fondos/coches_opcionapagados.png</file>
         <file>../Source/images/fondos/coches_opcionapagados_crop.png</file>
         <file alias="N2-b-grifos">../Source/images/fondos/grifos_thumb.png</file>
@@ -24,9 +24,9 @@
         <file alias="N2-3">../Source/images/fondos/Panel_Lateral2.png</file>
         <file alias="N3-PN">../Source/images/fondos/PaneNeumatico_mod.png</file>
         <file alias="N3-PS">../Source/images/fondos/Salon_Mod.PNG</file>
-        <file alias="N2-b-salon">../Source/images/fondos/salon_thumb copy.png</file>
+        <file alias="N2-B-SALON">../Source/images/fondos/salon_thumb copy.png</file>
         <file alias="N3-PT">../Source/images/fondos/Termicas_Mod.PNG</file>
-        <file alias="N2-b-termicas">../Source/images/fondos/termicas_thumb.png</file>
+        <file alias="N2-B-TERMICAS">../Source/images/fondos/termicas_thumb.png</file>
         <file>../Source/images/perillas/Neumatico/blanca00.png</file>
         <file>../Source/images/perillas/Neumatico/blanca01.png</file>
         <file>../Source/images/perillas/Neumatico/blanca02.png</file>
@@ -78,5 +78,6 @@
         <file>../Source/images/perillas/termicas/Tecla4_Abajo.PNG</file>
         <file>../Source/images/perillas/termicas/Tecla4_Arriba.PNG</file>
         <file>../Source/images/perillas/termicas/termicas_roja.PNG</file>
+        <file>caf600023.qml</file>
     </qresource>
 </RCC>
