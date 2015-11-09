@@ -55,7 +55,7 @@ SOURCES += ../ENet/ENetClient.cpp \
     src/controllers/llavemodoconduccion_controller.cpp \
     src/controllers/key_topboard_controller.cpp \
     src/controllers/frenoretencion_controller.cpp \
-    auxiliarypanel.cpp
+    boardauxiliarypanel.cpp
 
 HEADERS  += ../ENet/ENetClient.h \
     ../ENet/AdmClaves.h \
@@ -100,15 +100,16 @@ HEADERS  += ../ENet/ENetClient.h \
     src/controllers/llavemodoconduccion_controller.h \
     src/controllers/key_topboard_controller.h \
     src/controllers/frenoretencion_controller.h \
-    auxiliarypanel.h
+    boardauxiliarypanel.h
 
-FORMS    += boardcenter.ui \
+FORMS    += \
+    boardcenter.ui \
     boardright.ui \
     boardleft.ui \
     boardtop.ui \
     boardhardware.ui \
     src/instructionsolutionpanel/mainwindow.ui \
-    auxiliarypanel.ui
+    boardauxiliarypanel.ui
 
 INCLUDEPATH +=  ../subtewidgets \
                 $$PWD/../ENet \
@@ -133,4 +134,11 @@ RESOURCES += ../subtewidgets/widgetsrsc.qrc \
 
 DESTDIR = $$PWD
 
-OTHER_FILES += etc/control.ini
+OTHER_FILES += etc/control.ini \
+               $$PWD/../Source
+
+DEFINES += ELPP_QT_LOGGING   \
+          ELPP_STL_LOGGING   \
+#          ELPP_STRICT_SIZE_CHECK ELPP_UNICODE \
+          ELPP_MULTI_LOGGER_SUPPORT \
+          ELPP_THREAD_SAFE

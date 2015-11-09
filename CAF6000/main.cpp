@@ -10,13 +10,50 @@
 #include "boardright.h"
 #include "boardtop.h"
 #include "src/instructionsolutionpanel/mainwindow.h"
+#include "boardauxiliarypanel.h"
 
 #include "src/controllers/eventhandler.h"
 #include "src/controllers/keypresseater.h"
 #include "src/controllers/failures_controller.h"
 
+#include "easylogging++.h"
+
+INITIALIZE_EASYLOGGINGPP
+
+class LogHandler : public el::LogDispatchCallback {
+public:
+    void handle(const el::LogDispatchData* data) {
+        // NEVER LOG ANYTHING HERE! NOT HAPPY WITH MULTI_THREADING
+        ELPP_COUT << "Test this " << data << std::endl;
+    }
+};
+
+class HtmlHandler : public el::LogDispatchCallback {
+public:
+    HtmlHandler() {
+        el::Loggers::getLogger("html");
+    }
+    void handle(const el::LogDispatchData* data) {
+        // NEVER LOG ANYTHING HERE! NOT HAPPY WITH MULTI_THREADING
+        ELPP_COUT << "<b>" << data->logMessage()->message() << "</b>" << std::endl;
+    }
+};
+
 int main(int argc, char *argv[])
 {
+    START_EASYLOGGINGPP(argc, argv);
+
+   el::Loggers::removeFlag(el::LoggingFlag::NewLineForContainer);
+   el::Helpers::installLogDispatchCallback<LogHandler>("LogHandler");
+   el::Helpers::installLogDispatchCallback<HtmlHandler>("HtmlHandler");
+
+   LOG(INFO) << "First log";
+
+   LogHandler* logHandler = el::Helpers::logDispatchCallback<LogHandler>("LogHandler");
+   logHandler->setEnabled(false);
+
+   LOG(INFO) << "Second log";
+
     //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
     QApplication::setAttribute(Qt::AA_UseOpenGLES,true);
     //QApplication::setAttribute(Qt::AA_UseDesktopOpenGL,true);
@@ -40,6 +77,7 @@ int main(int argc, char *argv[])
     BoardRight *m_r = new BoardRight(0,m_subte,m_eventHandler);
     BoardTop *m_t = new BoardTop(0,m_subte,m_eventHandler);
     MainWindow *m_tree = new MainWindow(0,m_eventHandler);
+    BoardAuxiliaryPanel *m_auxiliaryPanel = new BoardAuxiliaryPanel(0,m_subte,m_eventHandler);
 
     m_h->setHardware(m_tHardware);
     m_c->setHardware(m_tHardware);
@@ -62,11 +100,11 @@ int main(int argc, char *argv[])
 
 
         /**
-     * Dimensiones -->  QRect(0,0 1024x768)
-     * Dimensiones -->  QRect(1024,0 1024x768)
-     * Dimensiones -->  QRect(-1024,0 1024x768)
-     * Dimensiones -->  QRect(0,-768 1024x768)
-     */
+         * Dimensiones -->  QRect(0,0 1024x768)
+         * Dimensiones -->  QRect(1024,0 1024x768)
+         * Dimensiones -->  QRect(-1024,0 1024x768)
+         * Dimensiones -->  QRect(0,-768 1024x768)
+        */
 
         m_t->showFullScreen();
         m_c->showFullScreen();
@@ -76,6 +114,7 @@ int main(int argc, char *argv[])
         tabRight->addTab(m_r,QObject::tr("RightPanel"));
         tabRight->addTab(m_h,QObject::tr("Hardware"));
         tabRight->addTab(m_tree,QObject::tr("TreePanel"));
+        tabRight->addTab(m_auxiliaryPanel,QObject::tr("Paneles Auxiliares"));
 
         tabRight->showFullScreen();
 
@@ -95,6 +134,7 @@ int main(int argc, char *argv[])
         tabRight->addTab(m_c,QObject::tr("Center"));
         tabRight->addTab(m_r,QObject::tr("RightPanel"));
         tabRight->addTab(m_tree,QObject::tr("TreePanel"));
+        tabRight->addTab(m_auxiliaryPanel,QObject::tr("Paneles Auxiliares"));
 
         tabRight->setMinimumWidth(1024);
         tabRight->setMinimumHeight(768);

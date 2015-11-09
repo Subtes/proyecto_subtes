@@ -2,8 +2,9 @@
 
 TEMPLATE = subdirs
 
-CONFIG     +=  ordered c++11
+CONFIG     +=  ordered
+#c++11
 
 SUBDIRS =   subtewidgets\subtewidgets.pro \
-            CAF6000 \
-            ALSTOM
+            CAF6000
+#            ALSTOM
