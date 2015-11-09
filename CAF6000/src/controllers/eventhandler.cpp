@@ -258,7 +258,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_rana_6","0");
             m_eNetClient->CambiarValorClave("c_seta_emergencia_6","des");
 
-            //m_eNetClient->Desconectar();
+            m_eNetClient->Desconectar();
 
             Sleep(1000);
             emit closeApp();
