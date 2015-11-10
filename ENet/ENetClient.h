@@ -52,7 +52,7 @@ protected:
   bool Inicializado;  
   enet_uint32 FMilisegundosEspera;
 
-  // Es la cola de los mensajes, thread y el semaforo;
+  // Es la cola de los mensajes, thread y el semáforo;
   std::vector<std::thread> _threads;
   std::queue<std::string> _fColaMsj; 
   std::mutex s_mutex;
@@ -61,7 +61,7 @@ protected:
   void do_work();
   bool EnviarMensaje(short idCanal, std::string unTexto);
 
-  // Cosas todavaa no probadas
+  // Cosas todavía no probadas
   bool CambiarValorClave(std::string unCliente, std::string unaClave, std::string unNuevoValor);
 
   // Revisa los buffers de la ENet

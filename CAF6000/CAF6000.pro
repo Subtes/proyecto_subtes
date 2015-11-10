@@ -137,8 +137,3 @@ DESTDIR = $$PWD
 OTHER_FILES += etc/control.ini \
                $$PWD/../Source
 
-DEFINES += ELPP_QT_LOGGING   \
-          ELPP_STL_LOGGING   \
-#          ELPP_STRICT_SIZE_CHECK ELPP_UNICODE \
-          ELPP_MULTI_LOGGER_SUPPORT \
-          ELPP_THREAD_SAFE

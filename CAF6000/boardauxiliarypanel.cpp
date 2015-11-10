@@ -8,7 +8,6 @@ BoardAuxiliaryPanel::BoardAuxiliaryPanel(QWidget *parent, SubteStatus * subte, E
     ui->setupUi(this);
 
     connect(m_eventHandler, SIGNAL(kPressed()),ui->centralwidget,SLOT(level1()));
-   // connect(ui->centralwidget->m_qmlView1,SIGNAL(pedalPressed(int)),ui->centralwidget,SLOT(level2(int)));
 }
 
 BoardAuxiliaryPanel::~BoardAuxiliaryPanel()

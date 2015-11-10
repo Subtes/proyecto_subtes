@@ -3,7 +3,7 @@ QT += core gui quick quickwidgets widgets
 
 TEMPLATE = lib
 
-CONFIG += release c++11
+CONFIG += release
 
 HEADERS += \
     tractionlever.h \
@@ -24,7 +24,6 @@ HEADERS += \
     alstomtractionlever.h \
     alstomselectormodoconduccion.h \
     auxiliarypanel.h
-#    easylogging++.h
 
 SOURCES += \
     tractionlever.cpp \
@@ -68,7 +67,7 @@ FORMS += \
 RESOURCES += \
             qmlrsc.qrc \
             widgetsrsc.qrc \
-    auxiliarypanel.qrc
+	    auxiliarypanel.qrc
 
 INCLUDEPATH +=  $$PWD/../Source/include
 
