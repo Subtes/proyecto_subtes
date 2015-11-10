@@ -1,180 +1,118 @@
 import QtQuick 2.0
 
 Rectangle {
-    id: setaButton
-    width: 150
-    height: 150
-    color: "#00000000"
+    z: 0
+    id: formacion
+    width: 1024
+    height: 93
 
-    signal pressedButton(string s)
-    signal releasedButton(string s)
+    signal selected(string s)
 
     Item {
-        id: item_SetaButton
+        id: coche1
         anchors.fill: parent
-
-        MouseArea {
-            id: mouseArea_SetaButton
-            anchors.fill: parent
-            onClicked: {
-                if ( setaButton.state == "State1_SetaON"){
-                    setaButton.state = "State1_SetaOFF";
-                    releasedButton();
-                }
-                else{
-                    setaButton.state = "State1_SetaON";
-                    pressedButton("Holaaaa");
-                }
-            }
-        }
+        z: 1
 
         Image {
-            id: imageBase_SetaOff
+            id: coche1Image
             anchors.fill: parent
-            source: "resources/setaOff.png"
+            source: "C1"
+            opacity: 0
         }
+
+        MouseArea {
+            id: mouseAreaCoche1
+            x: 20
+            y: 0
+            width: 160
+            height: 93
+            onClicked: {
+                if (coche1Image.opacity == 0){
+                    formacion.state = "formacionBackground";
+                    coche1Image.opacity = 1;
+                    selected("C1");
+                }else{
+                    coche1Image.opacity = 0;
+                    formacion.state = "formacionAll";
+                }
+                console.log("On Click, mouseAreaCoche1")
+            }
+        }
+    }//Item1, coche1
+
+    Item {
+        id: coche2
+        anchors.fill: parent
+        z: 1
+
+        Image {
+            id: coche2Image
+            anchors.fill: parent
+            source: "C2"
+            opacity: 0
+        }
+
+        MouseArea {
+            id: mouseAreaCoche2
+            x: 181
+            y: 0
+            width: 160
+            height: 93
+            onClicked: {
+                if (coche2Image.opacity == 0){
+                    formacion.state = "formacionBackground";
+                    coche2Image.opacity = 1;
+                    selected("C2");
+                }else{
+                    coche2Image.opacity = 0;
+                    formacion.state = "formacionAll";
+                }
+                console.log("On Click, mouseAreaCoche2")
+            }
+        }
+    }//Item2, coche2
+
+    Image{
+        id: bck
+        z:0
+        anchors.fill: parent
+        source: "MM-MM-MM-BCK"
+        opacity: 1
+    }
+
+    Image{
+        id: bckGrey
+        z:0
+        opacity: 0
+        anchors.fill: parent
+        source: "MM-MM-MM-BCK-GREY"
     }
 
     states: [
         State {
-            name: "State1_SetaON"
+            name: "formacionAll"
 
             PropertyChanges {
-                target: imageBase_SetaOff
-                source: "resources/setaOn.png"
+                target: bckGrey;
+                opacity: 0
+            }
+            PropertyChanges {
+                target: bck;
+                opacity: 1
             }
         },
         State {
-            name: "State2_SetaOFF"
-
+            name: "formacionBackground";
             PropertyChanges {
-                target: imageBase_SetaOff
-                source: "resources/setaOff.png"
+                target: bckGrey;
+                opacity: 1;
+            }
+            PropertyChanges {
+                target: bck;
+                opacity: 0
             }
         }
     ]
 
-    function isPressed(){
-        if ( setaButton.state == "State1_SetaON"){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-
-
-
-
-
-
-
-
-//    id: formacion
-//    width: 1024
-//    height: 93
-////    color: "transparent"
-////    border.color: "transparent"
-////    focus: true
-
-//    signal selected(string s)
-
-//    Item {
-//        id: coche1
-//        anchors.fill: parent
-
-//        Image {
-//            id: coche1Image
-//            anchors.fill: parent
-//            source: "C1"
-//            opacity: 0
-//        }
-//    }//Item1, coche1
-
-//    MouseArea {
-//        id: mouseAreaCoche1
-//        x: 20
-//        y: 0
-//        width: 160
-//        height: 93
-//        onClicked: {
-////            formacion.state = "formacionBackground";
-////            coche1Image.opacity = 1;
-////            selected("C1");
-//            console.log("On Click, mouseAreaCoche1")
-//        }
-//    }
-
-//    Item {
-//        id: coche2
-//        anchors.fill: parent
-
-//        Image {
-//            id: coche2Image
-//            anchors.fill: parent
-//            source: "C2"
-//            opacity: 0
-//        }
-//    }//Item2, coche2
-
-//    MouseArea {
-//        id: mouseAreaCoche2
-//        x: 181
-//        y: 0
-//        width: 160
-//        height: 93
-
-//        onClicked: {
-////            formacion.state = "formacionBackground";
-////            coche2Image.opacity = 1;
-////            formacion.selected("C2");
-//            console.log("On Click, mouseAreaCoche1")
-//        }
-//    }
-
-//    Image{
-//        id: bck
-//        anchors.fill: parent
-//        source: "../Source/images/fondos/coches_crop.png"
-//        opacity: 1
-//    }
-
-//    Image{
-//        id: bckGrey
-//        opacity: 0
-//        anchors.fill: parent
-//        source: "../Source/images/fondos/coches_opcion_desatu_crop.png"
-//    }
-
-//    states: [
-//        State {
-//            name: "formacionAll"
-
-//            PropertyChanges {
-//                target: bckGrey;
-//                opacity: 0
-//            }
-//            PropertyChanges {
-//                target: bck;
-//                opacity: 1
-//            }
-//        },
-//        State {
-//            name: "formacionBackground"
-
-//            PropertyChanges {
-//                target: bckGrey;
-//                opacity: 1
-//            }
-//            PropertyChanges {
-//                target: bck;
-//                opacity: 0
-//            }
-//        }
-//    ]
-
-//    state: "formacionAll"
-
+    state: "formacionAll"
 }//Rectangle
-

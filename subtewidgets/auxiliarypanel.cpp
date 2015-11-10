@@ -11,18 +11,37 @@ AuxiliaryPanel::AuxiliaryPanel(QWidget *parent) :
     ui->setupUi(this);
 }
 
+/**
+ * @brief AuxiliaryPanel::level1, estoy partiendo de una configuracion que deberia
+ * llegar como parametro (agregar parametro QString), por ejemplo, llegaria MM-MM-MM,
+ * entonces deberia buscar un archivo con el nombre CAF6000_23. Con este archivo, lee
+ * el tipo de formacion MM-MM-MM, entonces asigna el recurso qml con ese nombre.
+ */
 void AuxiliaryPanel::level1()
 {
-     //ui->qkW_N1->setSource(QUrl("qrc:/foot_horn.qml"));
-     ui->qkW_N1->setSource(QUrl("qrc:/caf600023.qml"));
-     m_qmlView1 = ui->qkW_N1->rootObject();
-     //connect(m_qmlView1,SIGNAL(pedalPressed(int)),this,SLOT(level2(int)));
-     connect(m_qmlView1,SIGNAL(pressedButton(QString)),this,SLOT(level2(QString)));
-     LOG(INFO)<<"Entro en Nivel 1";
-     qDebug()<<"Entro en Nivel 1";
+    //Buscar en un json la configuracion, en realidad esta primera parte ya la conozco.
+    //Agregar Assertion por si llega un nombre no esperado;
+
+    QString f("MM-MM-MM");
+    f.insert(0,"qrc:/");
+
+    ui->qkW_N1->setSource(QUrl(f));
+
+    m_qmlView1 = ui->qkW_N1->rootObject();
+
+    connect(m_qmlView1,SIGNAL(selected(QString)),this,SLOT(level2(QString)));
+
+    LOG(INFO)<<"Entro en Nivel 1";
+    qDebug()<<"Entro en Nivel 1";
 }
 
-void AuxiliaryPanel::level2(QString s/*int op*/)
+/**
+ * @brief AuxiliaryPanel::level2
+ * @param s
+ * recibe en s el coche (Ci), con ese busca en el archivo(json), 4 recursos, cada uno
+ * asociado a un boton, B1..B4, y lo carga (Nivel 2)
+ */
+void AuxiliaryPanel::level2(QString s)
 {
     qDebug()<<"Selected option"<< s;
 
@@ -39,6 +58,13 @@ void AuxiliaryPanel::level2(QString s/*int op*/)
     qDebug()<<"entro nivel 2";
 }
 
+/**
+ * @brief AuxiliaryPanel::level3
+ * @param op, segun la opcion elejida (B1..B4) busca y carga el recurso asociado.
+ * No precisaria buscar en json, el onclick devolveria el nombre (Alias) del recurso,
+ * asociado para cargar el qml.
+ * Finalmente agregar un SLOT para devolver resultado. Ver seria.
+ */
 void AuxiliaryPanel::level3(int op)
 {
     if (op == 0){

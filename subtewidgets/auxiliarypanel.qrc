@@ -78,6 +78,6 @@
         <file>../Source/images/perillas/termicas/Tecla4_Abajo.PNG</file>
         <file>../Source/images/perillas/termicas/Tecla4_Arriba.PNG</file>
         <file>../Source/images/perillas/termicas/termicas_roja.PNG</file>
-        <file>caf600023.qml</file>
+        <file alias="MM-MM-MM">caf600023.qml</file>
     </qresource>
 </RCC>
