@@ -19,7 +19,7 @@ void AuxiliaryPanel::level1()
     //Buscar en un json la configuracion, en realidad esta primera parte ya la conozco.
     //Agregar Assertion por si llega un nombre no esperado;
 
-    QString f("MM-MM-MM");
+    QString f("CAF6000-MM-MM-MM");
     f.insert(0,"qrc:/");
 
     ui->qkW_N1->setSource(QUrl(f));
@@ -41,14 +41,14 @@ void AuxiliaryPanel::level2(QString s)
 {
     qDebug()<<"Selected option"<< s;
 
-    ui->qkW_N2->setSource(QUrl("qrc:/foot_horn.qml"));
+    ui->qkW_N2->setSource(QUrl("qrc:/CAF6000-N2-PANEL-4"));
     m_qmlView2 = ui->qkW_N2->rootObject();
 
-    QObject *imageprop = m_qmlView2->findChild<QObject*>("upname");
+    //QObject *imageprop = m_qmlView2->findChild<QObject*>("upname");
 
-    imageprop->setProperty("source","qrc:/resources/blue.png");
+    //imageprop->setProperty("source","qrc:/resources/blue.png");
 
-    connect (m_qmlView2,SIGNAL(pedalPressed(int)),this,SLOT(level3(int)));
+    connect (m_qmlView2,SIGNAL(selected(QString)),this,SLOT(level3(QString)));
 
     qDebug()<<"entro nivel 2";
 }
@@ -60,13 +60,18 @@ void AuxiliaryPanel::level2(QString s)
  * asociado para cargar el qml.
  * Finalmente agregar un SLOT para devolver resultado. Ver seria.
  */
-void AuxiliaryPanel::level3(int op)
+void AuxiliaryPanel::level3(QString op)
 {
-    if (op == 0){
-        ui->qkW_N3->setSource(QUrl("qrc:/foot_horn.qml"));
+    if (op == "B1;button1Image" ){
+        ui->qkW_N3->setSource(QUrl("qrc:/CAF6000-N3-TERMICAS"));
     }
     m_qmlView3 = ui->qkW_N3->rootObject();
+    connect (m_qmlView3,SIGNAL(selected(QString)),this,SLOT(optionSelected(QString)));
     qDebug()<<"entro nivel 3 " << op;
+}
+
+void AuxiliaryPanel::optionSelected(QString op){
+    qDebug()<<"option selected from panel auxiliary: "<< op;
 }
 
 AuxiliaryPanel::~AuxiliaryPanel()

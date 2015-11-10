@@ -22,8 +22,9 @@ public:
 
 public slots:
     void level1();
-    void level2(QString s/*int v*/);
-    void level3(int v);
+    void level2(QString s);
+    void level3(QString s);
+    void optionSelected(QString op);
 
 private:
     Ui::AuxiliaryPanel *ui;

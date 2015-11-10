@@ -78,6 +78,8 @@
         <file>../Source/images/perillas/termicas/Tecla4_Abajo.PNG</file>
         <file>../Source/images/perillas/termicas/Tecla4_Arriba.PNG</file>
         <file>../Source/images/perillas/termicas/termicas_roja.PNG</file>
-        <file alias="MM-MM-MM">caf600023.qml</file>
+        <file alias="CAF6000-MM-MM-MM">caf600023.qml</file>
+        <file alias="CAF6000-N2-PANEL-4">nivel2b4.qml</file>
+        <file alias="CAF6000-N3-TERMICAS">termicasPanel.qml</file>
     </qresource>
 </RCC>
