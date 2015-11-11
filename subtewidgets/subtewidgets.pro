@@ -3,7 +3,7 @@ QT += core gui quick quickwidgets widgets
 
 TEMPLATE = lib
 
-CONFIG += release
+CONFIG += release c++11
 
 HEADERS += \
     tractionlever.h \

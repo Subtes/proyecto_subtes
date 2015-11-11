@@ -81,5 +81,6 @@
         <file alias="CAF6000-MM-MM-MM">caf600023.qml</file>
         <file alias="CAF6000-N2-PANEL-4">nivel2b4.qml</file>
         <file alias="CAF6000-N3-TERMICAS">termicasPanel.qml</file>
+        <file alias="CONFIG-CAF6000-23">../Source/config/CAF600023.json</file>
     </qresource>
 </RCC>

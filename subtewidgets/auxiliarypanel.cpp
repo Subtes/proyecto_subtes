@@ -1,3 +1,8 @@
+#include <QJsonDocument>
+#include <QJsonParseError>
+#include <QJsonObject>
+#include <QJsonArray>
+
 #include "auxiliarypanel.h"
 #include "ui_auxiliarypanel.h"
 
@@ -39,18 +44,60 @@ void AuxiliaryPanel::level1()
  */
 void AuxiliaryPanel::level2(QString s)
 {
-    qDebug()<<"Selected option"<< s;
+//    qDebug()<<"Selected option"<< s;
 
-    ui->qkW_N2->setSource(QUrl("qrc:/CAF6000-N2-PANEL-4"));
-    m_qmlView2 = ui->qkW_N2->rootObject();
+//    ui->qkW_N2->setSource(QUrl("qrc:/CAF6000-N2-PANEL-4"));
+//    m_qmlView2 = ui->qkW_N2->rootObject();
 
-    //QObject *imageprop = m_qmlView2->findChild<QObject*>("upname");
+//    //QObject *imageprop = m_qmlView2->findChild<QObject*>("upname");
 
-    //imageprop->setProperty("source","qrc:/resources/blue.png");
+//    //imageprop->setProperty("source","qrc:/resources/blue.png");
 
-    connect (m_qmlView2,SIGNAL(selected(QString)),this,SLOT(level3(QString)));
+//    connect (m_qmlView2,SIGNAL(selected(QString)),this,SLOT(level3(QString)));
 
-    qDebug()<<"entro nivel 2";
+//    qDebug()<<"entro nivel 2";
+
+QFile source;
+if (source.exists("://CONFIG-CAF6000-23")){
+    qDebug()<<"EXISTE Archivo!!!!!!!!";
+    source.setFileName("://CONFIG-CAF6000-23");
+}else{
+        qDebug()<<"NOOOOOOO EXISTE Archivo!!!!!!!!";
+}
+    QJsonParseError jerror;
+    if (!source.open(QIODevice::ReadOnly)){
+        qDebug()<<"No se pudo abrir el archivo";
+    }else{
+        qDebug()<<"Abrio archivo";
+    }
+    QJsonDocument jdoc= QJsonDocument::fromJson(source.readAll(),&jerror);
+    if(jerror.error != QJsonParseError::NoError){
+        qDebug()<<"Error en parseo de archivo Json configuracion Trenes";
+        source.close();
+        return;
+    }
+    QJsonObject obj = jdoc.object();
+    QString configuracion = obj["configuracion"].toString();
+    qDebug()<<"Recurso"<< configuracion;
+
+        if(configuracion.isEmpty()){
+            qDebug()<<"Configuracion vacia";
+            return;
+        }
+
+    QJsonArray coches = obj["coches"].toArray();
+    QString numero,tipo;
+    qDebug()<<"Antes del FOR";
+
+        //int coche=1;
+        for(auto&& item: coches)
+        {
+            const QJsonObject& coche = item.toObject();
+            numero = coche["numero"].toString();
+            tipo = coche["tipo"].toString();
+            qDebug() << "Numero y tipo de Coche: " << numero <<"--" << tipo;
+        }
+    source.close();
 }
 
 /**
