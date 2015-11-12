@@ -243,6 +243,7 @@ void SubteStatus::hombreMuertoReleased(){
  */
 void SubteStatus::disyuntoresCon(){
     m_eventHandler->notifyValueChanged("c_disyuntor","con");
+    emit senalDisyuntorCon();
     qDebug() << "Pressed CON Disyuntor";
 }
 
@@ -251,6 +252,7 @@ void SubteStatus::disyuntoresCon(){
  */
 void SubteStatus::disyuntoresDes(){
     m_eventHandler->notifyValueChanged("c_disyuntor","des");
+    emit senalDisyuntorDes();
     qDebug() << "Pressed DES Disyuntor";
     }
 
@@ -356,9 +358,11 @@ void SubteStatus::setBatteryConnector(bool status){
 void SubteStatus::setConmutadorPuestaServicio(bool status){
     if (status){
         m_eventHandler->notifyValueChanged("c_conmutador_puesta_en_servicio","automatica");
+        emit conmutadorServicioAutomatic();
         qDebug() << "c_conmutador_puesta_en_servicio: automatica";
     }else{
         m_eventHandler->notifyValueChanged("c_conmutador_puesta_en_servicio","manual");
+        emit conmutadorServicioManual();
         qDebug() << "c_conmutador_puesta_en_servicio :manual";
     }
 }
@@ -366,9 +370,11 @@ void SubteStatus::setConmutadorPuestaServicio(bool status){
 void SubteStatus::setConmutadorPuestaServicioAutomatica(bool status){
     if (status){
         m_eventHandler->notifyValueChanged("c_conmutador_puesta_en_servicio_automatica","con");
+        emit conmutadorPServicioBotonCon();
         qDebug() << "c_conmutador_puesta_en_servicio_automatica :con";
     }else{
         m_eventHandler->notifyValueChanged("c_conmutador_puesta_en_servicio_automatica","des");
+        emit conmutadorPServicioBotonDes();
         qDebug() << "c_conmutador_puesta_en_servicio_automatica: des";
     }
 }
@@ -386,11 +392,13 @@ void SubteStatus::setParkingBrakeConnector(bool status){
         qDebug() << "c_freno_estacionamiento: con";
         m_cscp->setParkingBrake(true);
         emit CSCPChanged(m_cscp->evalCircuit());
+        emit frenoEstacionamientoCon();
     }else{
         m_eventHandler->notifyValueChanged("c_freno_estacionamiento","des");
         qDebug() << "c_freno_estacionamiento: des";
         m_cscp->setParkingBrake(false);
         emit CSCPChanged(m_cscp->evalCircuit());
+        emit frenoEstacionamientoDes();
     }
 }
 
@@ -552,16 +560,21 @@ void SubteStatus::resolveCSCPFailure()
 void SubteStatus::setManiobraMode()
 {
     m_eventHandler->notifyValueChanged("c_modo_conduccion","maniobra");
+    emit estadoManioAcople();
 }
 
 void SubteStatus::setAtpMode()
 {
     m_eventHandler->notifyValueChanged("c_modo_conduccion","atp");
+    emit estadoNormal();
+
 }
 
 void SubteStatus::setAcopleMode()
 {
     m_eventHandler->notifyValueChanged("c_modo_conduccion","acople");
+    emit estadoManioAcople();
+
 }
 
 void SubteStatus::setRetentionBrakeBypass(bool state)

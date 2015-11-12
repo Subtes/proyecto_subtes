@@ -12,6 +12,7 @@ TractionHardware::TractionHardware()
         qDebug()<< "AUDIO Inicializado";
         m_sound_atp_target = Mix_LoadMUS("beepTargetATP.wav");
         m_sound_atp_warning = Mix_LoadMUS("beepWarningATP.wav");
+        m_sound_sicas_warning = Mix_LoadMUS("BeepSicasMsj.mp3");
     }
     SDL_JoystickClose(0);
     m_joystick = SDL_JoystickOpen(0);
@@ -192,6 +193,7 @@ TractionHardware::~TractionHardware(){
 
     Mix_FreeMusic(m_sound_atp_target);
     Mix_FreeMusic(m_sound_atp_warning);
+    Mix_FreeMusic(m_sound_sicas_warning);
 
     axis.clear();
     buttons.clear();
@@ -236,6 +238,11 @@ void TractionHardware::onSound(int s){
     case 1:
         qDebug()<< "Playing SOUND Target";
         Mix_PlayMusic(m_sound_atp_target, 1);
+        break;
+
+    case 2:
+        qDebug()<< "Playing SOUND SICAS Msn A ";
+        Mix_PlayMusic(m_sound_sicas_warning, 1);
         break;
    }
 }

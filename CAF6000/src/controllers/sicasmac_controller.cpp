@@ -25,8 +25,22 @@ SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac
     connect(m_sicasmac,SIGNAL(sicasOk()),m_subte,SLOT(setSicasOk()));
     connect(m_subte,SIGNAL(hiloLazoChanged(bool)),this,SLOT(estadoFreno(bool)));
     connect(m_subte,SIGNAL(CSCPChanged(bool)),this,SLOT(logicaPuertasSicas(bool)));
+
+    connect(m_subte,SIGNAL(senalDisyuntorDes()),this,SLOT(cargarMensajeDisyuntor()));
+    connect(m_subte,SIGNAL(senalDisyuntorCon()),this,SLOT(sacoMensajeDisyuntor()));
+    connect(m_subte,SIGNAL(conmutadorServicioAutomatic()),this,SLOT(sacoMensajeCompDesconectado()));
+    connect(m_subte,SIGNAL(conmutadorServicioManual()),this,SLOT(cargarMensajeCompDesconectado()));
+   // connect(m_subte,SIGNAL(conmutadorPServicioBotonCon()),this,SLOT(sacoMensajeConvFueraServicio()));
+   // connect(m_subte,SIGNAL(conmutadorPServicioBotonDes()),this,SLOT(cargarMensajeConvFueraServicio()));
+    connect(m_subte,SIGNAL(frenoEstacionamientoCon()),this,SLOT(cargarMensajeFrenoEstacAplicado()));
+    connect(m_subte,SIGNAL(frenoEstacionamientoDes()),this,SLOT(sacoMensajeFrenoEstacAplicado()));
+    connect(m_subte,SIGNAL(estadoManioAcople()),this,SLOT(cargarMensajeAcople()));
+    connect(m_subte,SIGNAL(estadoNormal()),this,SLOT(sacoMensajeAcople()));
+
+
+
+
     cargoVectorEstadoAnteriorFalla();
-    cargarMensajeAcople();
 
 }
 
@@ -121,9 +135,10 @@ void SicasMac_Controller::separoMensajes(QString mensaje){
                 renglon++;
                 if (renglon<5){
                     generoRenglonesSicas(strList[0],strList[1],strList[2],renglon);
+                    refrescoVista();
                 }
                 m_sicasmac->actualizarTamArreRenglon(renglon);
-             }
+            }
             if (renglon >2){
                 m_sicasmac->turnOnSiguiente();
             }
@@ -132,8 +147,10 @@ void SicasMac_Controller::separoMensajes(QString mensaje){
         {
             bajaMensaje(strList[0]);
         }
+        if (strList[2]=="A"){
+            emit playSound(2);
+        }
     }
- refrescoVista();
 }
 
 /**
@@ -185,29 +202,6 @@ void SicasMac_Controller::generoRenglonesSicas(QString texto, QString trenes, QS
     m_sicasmac->textEditSicas(texto,trenesSinBlink,letra,actual);
 }
 
-
-/**
- * @brief SicasMac_Controller::cargarMensajeAcople
- * Carga mensaje en sicas cuando esta en modo acople o maniobra
- * @param mensaje
- */
-
-void SicasMac_Controller::cargarMensajeAcople(){
-    separoMensajes("Conmutador Acop/Manio;1,F -,F -,F -,F -,F -,F;A;alta");
-    refrescoVista();
-}
-
-/**
- * @brief SicasMac_Controller::cargarMensajeAcople
- * Borra mensaje modo maniobra o acople cuando esta en modo NORM
- * @param mensaje
- */
-
-void SicasMac_Controller::sacoMensajeAcople(){
-    bajaMensaje("Conmutador Acop/Manio");
-}
-
-
 /**
  * @brief SicasMac_Controller::bajaMensaje
  * Borra el mensaje y actualiza la vista
@@ -223,14 +217,25 @@ void SicasMac_Controller::bajaMensaje(QString texto){
         if (posicion==0){
             cantPantallasSicas=0;
         }
-        refrescoVista();
         renglon--;
+        qDebug()<<"renglon "<< renglon<< "arreglo"<<pantallasicas.size();
         m_sicasmac->actualizarTamArreRenglon(renglon);
         m_sicasmac->initRenglonSicas();
         if (pantallasicas.size()==0){
-             m_sicasmac->ponerOnSicasSinIncidencia();
+            m_sicasmac->ponerOnSicasSinIncidencia();
         }
-   }
+        else{
+            m_sicasmac->ponerValoresInicio(cantPantallasSicas);
+        }
+
+        if (pantallasicas.size()<=1){
+            m_sicasmac->turnOffAnterior();
+            m_sicasmac->turnOffSiguiente();
+
+        }
+        m_sicasmac->ponerOnSicasSinIncidencia();
+        refrescoVista();
+    }
 }
 
 /**
@@ -280,6 +285,12 @@ void SicasMac_Controller::refrescoVista(){
         actual=(var%5);
         strList = separoCaracteres(pantallasicas[var]);
         generoRenglonesSicas(strList[0],strList[1],strList[2],actual);
+    }
+    if(actual > 0){
+        m_sicasmac->turnOnSiguiente();
+    }
+    if (pantallasicas.size()==0){
+        m_sicasmac->ponerOnSicasSinIncidencia();
     }
 }
 
@@ -455,7 +466,6 @@ void SicasMac_Controller::logicaPuertasSicas(bool b){
             }
             cantPuertas = cantPuertas + 4;
         }
-        qDebug()<< "cantpuertas abiertas left  "<<cantPuertas;
         separoMensajes("Puertas Abiertas;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
         refrescoVista();
     }
@@ -503,3 +513,58 @@ void SicasMac_Controller::prendoSicas(){
     refrescoVista();
 }
 
+void SicasMac_Controller::turnOnSicas(){
+//    sacoMensajeAcople();
+//    sacoMensajeCompDesconectado();
+//    sacoMensajeConvFueraServicio();
+//    sacoMensajeFrenoEstacAplicado();
+//    sacoMensajeDisyuntor();
+}
+
+
+//***************************MENSAJES SICAS PUESTA SERVICIO ********************************************
+
+void SicasMac_Controller::cargarMensajeAcople(){
+    separoMensajes("Conmutador Acop/Manio;1,F -,F -,F -,F -,F -,F;A;alta");
+    refrescoVista();
+}
+
+void SicasMac_Controller::sacoMensajeAcople(){
+    bajaMensaje("Conmutador Acop/Manio");
+}
+
+void SicasMac_Controller::cargarMensajeCompDesconectado(){
+    separoMensajes("Comp. Desconectado;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
+    refrescoVista();
+}
+
+void SicasMac_Controller::sacoMensajeCompDesconectado(){
+    bajaMensaje("Comp. Desconectado");
+}
+
+void SicasMac_Controller::cargarMensajeConvFueraServicio(){
+    separoMensajes("Conv. Fuera Servicio;1,F 2,F 3,F 4,F 5,F 6,F;A;alta");
+    refrescoVista();
+}
+
+void SicasMac_Controller::sacoMensajeConvFueraServicio(){
+    bajaMensaje("Conv. Fuera Servicio");
+}
+
+void SicasMac_Controller::cargarMensajeFrenoEstacAplicado(){
+    separoMensajes("Freno Estac. Aplicado;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
+    refrescoVista();
+}
+
+void SicasMac_Controller::sacoMensajeFrenoEstacAplicado(){
+    bajaMensaje("Freno Estac. Aplicado");
+}
+
+void SicasMac_Controller::cargarMensajeDisyuntor(){
+    separoMensajes("Disyuntor Desconectado;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
+    refrescoVista();
+}
+
+void SicasMac_Controller::sacoMensajeDisyuntor(){
+    bajaMensaje("Disyuntor Desconectado");
+}

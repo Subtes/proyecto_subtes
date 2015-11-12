@@ -399,9 +399,9 @@ Rectangle {
         x: 95
         y: 212
         width: 426
+        opacity: 1
         height: 37
         text: qsTr("Composición sin incidencias")
-        z: 1
         horizontalAlignment: Text.AlignHCenter
         font.bold: true
         font.family: "Arial"
@@ -438,7 +438,7 @@ Rectangle {
         y: 182
         width: 413
         height: 13
-        opacity: 0.5
+        opacity: 0
         source: "resources/sicas_renglon.png"
     }
 
@@ -455,7 +455,7 @@ Rectangle {
 
     function changeText(error1,trenes2,letra3,val){
         sicassinerror.opacity=0;
-        sicas_renglon.opacity=0.5;
+        sicas_renglon.opacity=0.7;
         textoError[val].opacity =1;
         textoError[val].text=error1;
         trenConFalla[val].opacity =1;
@@ -884,22 +884,8 @@ Rectangle {
 
    function actualizarTamArreRenglon(valorFin){
        valorRenglonFin=valorFin;
-   }
-
-   // FUNCIONES QUE VERIFICAN LA POSICION DEL RENGLON sicas
-
-   function moverSelectorSig(){
-       if((sicas_renglon.y <256)&&(valorRenglonActual<=valorRenglonFin)){
-           sicas_renglon.y= sicas_renglon.y +20;
-           movimientoCursor();
-
-       }
-   }
-
-   function moverSelectorAnt(){
-       if(sicas_renglon.y >176){
-           sicas_renglon.y= sicas_renglon.y -20;
-           movimientoCursor();
+       if(valorRenglonFin<valorRenglonActual){
+           valorRenglonActual =valorRenglonFin;
        }
    }
 
@@ -912,13 +898,18 @@ Rectangle {
        sicas_renglon.y= 182;
    }
 
-   function nextPositionSicas(){
-       sicas_renglon.y= sicas_renglon.y +20;
-   }
+// FUNCIONES QUE VERIFICAN LA POSICION DEL RENGLON sicas
 
+   function nextPositionSicas(){
+     if((sicas_renglon.y <262)&&(valorRenglonActual<=valorRenglonFin)){
+           sicas_renglon.y= sicas_renglon.y + 20;
+   }
+}
    function backPositionSicas(){
-       sicas_renglon.y= sicas_renglon.y -20;
-       valorRenglonActual--;
+       if(sicas_renglon.y >182){
+           sicas_renglon.y= sicas_renglon.y - 20;
+           valorRenglonActual--;
+       }
    }
 
    function turnOnSiguiente(){
@@ -947,12 +938,21 @@ Rectangle {
    }
 
    function cargoDestinoSicas(valordes){
-      destino.text = valordes;
+       destino.text = valordes;
    }
-    function ponerOnSicasSinIncidencia(){
-     sicassinerror.opacity=1;
-     sicas_renglon.opacity=0;
-     turnOffSiguiente();
-    }
+   function ponerOnSicasSinIncidencia(){
+       sicassinerror.opacity=1;
+       sicas_renglon.opacity=0;
+       turnOffSiguiente();
+   }
+
+   function ponerValoresInicio(cantPantallas) {
+       initRenglonSicas();
+       valorRenglonActual=0;
+       if (cantPantallas===0)
+            turnOffAnterior();
+   }
+
+
 }//FIN RECTANGLO
 
