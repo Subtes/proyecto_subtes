@@ -64,6 +64,7 @@ public slots:
        void generarTrenesBlink(QString trenes, int index,bool parpadeo);
        void borrarArregloBlinkSicas(QString trenes, int index);
        void ponerOnSicasSinIncidencia();
+       void ponerValoresInicio(int cantPantallas);
 
 
 };

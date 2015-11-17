@@ -71,6 +71,18 @@ signals:
     bateriaCon();
     bateriaDes();
     modeOperation(int m);
+    conmutadorServicioAutomatic();
+    conmutadorServicioManual();
+    conmutadorPServicioBotonCon();
+    conmutadorPServicioBotonDes();
+    senalDisyuntorDes();
+    senalDisyuntorCon();
+    frenoEstacionamientoCon();
+    frenoEstacionamientoDes();
+    estadoNormal();
+    estadoManioAcople();
+
+
 
 public:
 

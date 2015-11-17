@@ -261,3 +261,9 @@ void SicasMac::ponerOnSicasSinIncidencia()
     QMetaObject::invokeMethod(m_qmlView, "ponerOnSicasSinIncidencia",
             Q_RETURN_ARG(QVariant, returnedValue));
 }
+void SicasMac::ponerValoresInicio(int cantPantallas)
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "ponerValoresInicio",
+            Q_RETURN_ARG(QVariant, returnedValue),Q_ARG(QVariant, cantPantallas));
+}

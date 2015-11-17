@@ -53,6 +53,10 @@ void BoardRight::startBoard()
     connect(m_eventHandler,SIGNAL(cargarMensaje(QString)),m_sicasmac,SLOT(separoMensajes(QString)));
     connect(m_eventHandler,SIGNAL(cargarMensajeCocheSicas(QString)),m_sicasmac,SLOT(cargoCoches(QString)));
     this->setEnabled(false);
+
+    // SONIDO SICAS
+    connect(m_sicasmac,SIGNAL(playSound(int)),m_hardwareSupport,SLOT(onSound(int)));
+
 }
 
 void BoardRight::enableScreen()

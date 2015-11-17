@@ -39,9 +39,8 @@ class SicasMac_Controller : public Base_Controller
     TractionHardware *m_hardwareSupport = NULL;
 
 
-
-
-
+signals:
+    playSound(int);
 
 
 public:
@@ -60,6 +59,15 @@ public slots:
     void cargarMensajeAcople();
     void sacoMensajeAcople();
     void logicaPuertasSicas(bool b);
+    void cargarMensajeDisyuntor();
+    void sacoMensajeDisyuntor();
+    void cargarMensajeCompDesconectado();
+    void sacoMensajeCompDesconectado();
+    void cargarMensajeConvFueraServicio();
+    void sacoMensajeConvFueraServicio();
+    void cargarMensajeFrenoEstacAplicado();
+    void sacoMensajeFrenoEstacAplicado();
+    void turnOnSicas();
 
 
 };

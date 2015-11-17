@@ -72,6 +72,7 @@ private:
 
     Mix_Music *m_sound_atp_target = NULL;
     Mix_Music *m_sound_atp_warning = NULL;
+    Mix_Music * m_sound_sicas_warning = NULL;
 
 };
 
