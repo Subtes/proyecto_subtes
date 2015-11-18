@@ -78,13 +78,12 @@ private:
     QSplashScreen *m_splash2;
     QSplashScreen *m_splash3;
     QSplashScreen *m_splash4;
-    QDesktopWidget *desktop;
+    QDesktopWidget *m_desktop;
     QPixmap m_imageSplash;
-
-    int boardsReady = 0;
+    bool m_splashOn;
+    int m_boardsReady = 0;
     std::string m_cargandoEstado = "";
 
-    bool splashPassed;
 
     bool F1_down;
     bool F2_down;
@@ -115,6 +114,8 @@ private:
     bool MENOS_down;
 
     std::vector<std::string> split(std::string,char);
+    void bajarSplash();
+    void subirSplash();
 
 signals:
     controlReady();

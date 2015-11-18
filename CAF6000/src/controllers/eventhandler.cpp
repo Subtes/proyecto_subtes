@@ -36,18 +36,13 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
     m_eNetClient = new ENetClient();
     m_eNetHelper = new ENetHelper(m_eNetClient);
 
-    splashPassed = false;
-
     KeyPressEater *kel = KeyPressEater::instance();
     kel->setConnected(TRUE);
     connect(kel,SIGNAL(keyPressed(DWORD)),this,SLOT(processKeyPressed(DWORD)));
     connect(kel,SIGNAL(keyReleased(DWORD)),this,SLOT(processKeyReleased(DWORD)));
 
     m_imageSplash = QPixmap(":/resources/splash.jpg");
-
-    if(desktop->screenCount() == 4){
-        qDebug() << "Entre en For de pantallas igual 4 eventhandler: ";
-
+    if(m_desktop->screenCount() == 4){
         m_splash1 = new QSplashScreen(m_imageSplash);
         m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
         m_splash2 = new QSplashScreen(m_imageSplash);
@@ -57,34 +52,21 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
         m_splash4 = new QSplashScreen(m_imageSplash);
         m_splash4->setWindowFlags(Qt::WindowStaysOnTopHint);
 
-        QRect s0 = desktop->screenGeometry(0);
-        QRect s1 = desktop->screenGeometry(1);
-        QRect s2 = desktop->screenGeometry(2);
-        QRect s3 = desktop->screenGeometry(3);
+        QRect s0 = m_desktop->screenGeometry(0);
+        QRect s1 = m_desktop->screenGeometry(1);
+        QRect s2 = m_desktop->screenGeometry(2);
+        QRect s3 = m_desktop->screenGeometry(3);
 
         m_splash1->move(s0.topLeft());
         m_splash2->move(s1.topLeft());
         m_splash3->move(s2.topLeft());
         m_splash4->move(s3.topLeft());
-
-
-        m_splash1->showFullScreen();
-        m_splash2->showFullScreen();
-        m_splash3->showFullScreen();
-        m_splash4->showFullScreen();
-
-//        para evitar el cierre con un CLICK
-        m_splash1->setDisabled(true);
-        m_splash2->setDisabled(true);
-        m_splash3->setDisabled(true);
-        m_splash4->setDisabled(true);
-
     }else{
         m_splash1 = new QSplashScreen(m_imageSplash);
         m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
-        m_splash1->showMaximized();
-        m_splash1->setDisabled(true);
     }
+
+    subirSplash();
 }
 
 EventHandler::~EventHandler(){
@@ -114,24 +96,11 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     qDebug() << "value - key:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() << "time: " << QTime::currentTime().toString() ;
 
     if(key.compare("i_iniciar_simulador") == 0){
-        //Cargar Splash
         if (value.compare("con") == 0){
             qDebug() << "i_iniciar_simulador con recibido" ;
             m_eNetClient->CambiarValorClave("c_listo","0");
 
-            if(!splashPassed){
-                splashPassed = true;
-                emit controlReady();
-                //Bajar splash
-                if(desktop->screenCount() == 4){
-                    m_splash1->hide();
-                    m_splash2->hide();
-                    m_splash3->hide();
-                    m_splash4->hide();
-                }else{
-                    m_splash1->hide();
-                }
-            }
+            emit controlReady();
 
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estado_simulador");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cargar_estado");
@@ -269,21 +238,23 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         if (value.compare("0") == 0){
 
             qDebug() << "i_estado_simulador 0 recibido" ;
-
             m_eNetClient->CambiarValorClave("c_listo","0");
+            subirSplash();
 
             m_subte->reset();
             emit controlReset();
+            //emit controlReady();
             emit controlDisable();
-
             m_eNetClient->CambiarValorClave("c_listo","1");
         }
 
         else if(value.compare("1") == 0){
+            bajarSplash();
             emit controlEnable();
         }
 
         else if(value.compare("2") == 0){
+            //TODO: GRISAR o MOSTRAR UN LABEL DE PAUSA
             emit controlDisable();
         }
     }
@@ -318,7 +289,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         m_eNetClient->CambiarEstadoDifusion(false);
 
         QCoreApplication::processEvents(QEventLoop::AllEvents);
-        boardsReady = 0;
+        m_boardsReady = 0;
 
         int intState = -1; //default - ningun estado
         if (value.compare("apagado") == 0){
@@ -460,12 +431,10 @@ void EventHandler::processKeyPressed(DWORD k)
         F5_down = true;
         qDebug() << "F5 key pressed";
     }  else if ( k == _K && !K_down ){
-        //this->notifyValueChanged("c_llave_atp","con");
         K_down = true;
         qDebug() << "K key pressed";
         emit kPressed();
     } else if ( k == _L && !L_down ){
-        //this->notifyValueChanged("c_llave_atp","des");
         L_down = true;
         qDebug() << "L key pressed";
         emit lPressed();
@@ -643,12 +612,45 @@ void EventHandler::processKeyReleased(DWORD k){
 
 void EventHandler::enableDiffusion()
 {
-    boardsReady++;
-    if(boardsReady==5){
+    m_boardsReady++;
+    if(m_boardsReady==5){
         m_eNetClient->CambiarEstadoDifusion(true);
-        boardsReady = 0;
+        m_boardsReady = 0;
         m_eNetClient->CambiarValorClave("c_estado_cargado",m_cargandoEstado);
         m_cargandoEstado = "";
     }
 }
 
+void EventHandler::bajarSplash(){
+    if(m_splashOn){
+        if(m_desktop->screenCount() == 4){
+            m_splash1->hide();
+            m_splash2->hide();
+            m_splash3->hide();
+            m_splash4->hide();
+        }else{
+            m_splash1->hide();
+        }
+        m_splashOn = false;
+    }
+}
+
+void EventHandler::subirSplash(){
+    if(!m_splashOn){
+        if(m_desktop->screenCount() == 4){
+            m_splash1->showFullScreen();
+            m_splash2->showFullScreen();
+            m_splash3->showFullScreen();
+            m_splash4->showFullScreen();
+            //para evitar el cierre con un CLICK
+            m_splash1->setDisabled(true);
+            m_splash2->setDisabled(true);
+            m_splash3->setDisabled(true);
+            m_splash4->setDisabled(true);
+        }else{
+            m_splash1->showMaximized();
+            m_splash1->setDisabled(true);
+        }
+        m_splashOn = true;
+    }
+}
