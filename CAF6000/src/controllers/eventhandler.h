@@ -155,6 +155,10 @@ signals:
 
     newTarget(int);
 
+    configWagon(QString);
+    modelSubwayReceived(QString);
+    loadSubwayConfig(QString);
+
 public slots:
     void processKeyPressed(DWORD k);
     void processKeyReleased(DWORD k);

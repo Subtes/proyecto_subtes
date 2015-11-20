@@ -30,7 +30,7 @@ Rectangle {
                 if (coche1Image.opacity == 0){
                     formacion.state = "formacionBackground";
                     coche1Image.opacity = 1;
-                    selected("C1");
+                    selected("coche1");
                 }else{
                     coche1Image.opacity = 0;
                     formacion.state = "formacionAll";
@@ -62,7 +62,7 @@ Rectangle {
                 if (coche2Image.opacity == 0){
                     formacion.state = "formacionBackground";
                     coche2Image.opacity = 1;
-                    selected("C2");
+                    selected("coche2");
                 }else{
                     coche2Image.opacity = 0;
                     formacion.state = "formacionAll";

@@ -1,4 +1,4 @@
-{
+﻿{
   "modelo": "CAF6000",
   "configuracion": "MM-MM-MM",
   "recurso": "CAF6000-MM-MM-MM",
@@ -10,7 +10,7 @@
                   {
                     "tipo": "grifos",
                     "recurso": null,
-                    "image": null,
+                    "image": "N2-B-GRIFOS",
                     "grifos": [
                                 {"name":"B-138","estado":"CON"},
                                 {"name":"L-2","estado":"CON"},
@@ -53,7 +53,8 @@
       "paneles": [
                   {
                     "tipo": "grifos",
-                    "recurso": "CAF6000-N3-GRIFOS",
+                    "recurso": null,
+                    "image": "N2-B-GRIFOS",
                     "grifos": [
                                 {"name":"B-138","estado":"CON"},
                                 {"name":"L-2","estado":"CON"},
@@ -63,6 +64,7 @@
                   {
                     "tipo": "termicos",
                     "recurso": "CAF6000-N3-TERMICAS",
+                    "image": "N2-B-TERMICAS",
                     "termicas": [
                                   {"name":"33F1","estado":"CON"},
                                   {"name":"53F1","estado":"CON"},
@@ -72,6 +74,7 @@
                   {
                     "tipo": "pupitre",
                     "recurso": null,
+                    "image": "N2-B-PUPITRE",
                     "componente": [
                                     {"name":null,"estado":null},
                                     {"name":null,"estado":null}
@@ -80,6 +83,7 @@
                   {
                     "tipo": "salon",
                     "recurso": null,
+                    "image": "N2-B-SALON",
                     "grifos": [
                                 {"name":null,"estado":null},
                                 {"name":null,"estado":null}
@@ -93,7 +97,8 @@
       "paneles": [
                   {
                     "tipo": "grifos",
-                    "recurso": "CAF6000-N3-GRIFOS",
+                    "recurso": null,
+                    "image": "N2-B-GRIFOS",
                     "grifos": [
                                 {"name":"B-138","estado":"CON"},
                                 {"name":"L-2","estado":"CON"},
@@ -103,6 +108,7 @@
                   {
                     "tipo": "termicos",
                     "recurso": "CAF6000-N3-TERMICAS",
+                    "image": "N2-B-TERMICAS",
                     "termicas": [
                                   {"name":"33F1","estado":"CON"},
                                   {"name":"53F1","estado":"CON"},
@@ -112,6 +118,7 @@
                   {
                     "tipo": "pupitre",
                     "recurso": null,
+                    "image": "N2-B-PUPITRE",
                     "componente": [
                                     {"name":null,"estado":null},
                                     {"name":null,"estado":null}
@@ -120,6 +127,7 @@
                   {
                     "tipo": "salon",
                     "recurso": null,
+                    "image": "N2-B-SALON",
                     "grifos": [
                                 {"name":null,"estado":null},
                                 {"name":null,"estado":null}
@@ -133,7 +141,8 @@
       "paneles": [
                   {
                     "tipo": "grifos",
-                    "recurso": "CAF6000-N3-GRIFOS",
+                    "recurso": null,
+                    "image": "N2-B-GRIFOS",
                     "grifos": [
                                 {"name":"B-138","estado":"CON"},
                                 {"name":"L-2","estado":"CON"},
@@ -143,6 +152,7 @@
                   {
                     "tipo": "termicos",
                     "recurso": "CAF6000-N3-TERMICAS",
+                    "image": "N2-B-TERMICAS",
                     "termicas": [
                                 {"name":"33F1","estado":"CON"},
                                 {"name":"53F1","estado":"CON"},
@@ -152,6 +162,7 @@
                   {
                     "tipo": "pupitre",
                     "recurso": null,
+                    "image": "N2-B-PUPITRE",
                     "componente": [
                                     {"name":null,"estado":null},
                                     {"name":null,"estado":null}
@@ -160,6 +171,7 @@
                   {
                     "tipo": "salon",
                     "recurso": null,
+                    "image": "N2-B-SALON",
                     "grifos": [
                                 {"name":null,"estado":null},
                                 {"name":null,"estado":null}
@@ -173,7 +185,8 @@
       "paneles": [
                   {
                     "tipo": "grifos",
-                    "recurso": "CAF6000-N3-GRIFOS",
+                    "recurso": null,
+                    "image": "N2-B-GRIFOS",
                     "grifos": [
                                 {"name":"B-138","estado":"CON"},
                                 {"name":"L-2","estado":"CON"},
@@ -183,6 +196,7 @@
                   {
                     "tipo": "termicos",
                     "recurso": "CAF6000-N3-TERMICAS",
+                    "image": "N2-B-TERMICAS",
                     "termicas": [
                                 {"name":"33F1","estado":"CON"},
                                 {"name":"53F1","estado":"CON"},
@@ -192,6 +206,7 @@
                   {
                     "tipo": "pupitre",
                     "recurso": null,
+                    "image": "N2-B-PUPITRE",
                     "componente": [
                                     {"name":null,"estado":null},
                                     {"name":null,"estado":null}
@@ -200,6 +215,7 @@
                   {
                     "tipo": "salon",
                     "recurso": null,
+                    "image": "N2-B-SALON",
                     "grifos": [
                                 {"name":null,"estado":null},
                                 {"name":null,"estado":null}
@@ -213,7 +229,8 @@
       "paneles": [
                   {
                     "tipo": "grifos",
-                    "recurso": "CAF6000-N3-GRIFOS",
+                    "recurso": null,
+                    "image": "N2-B-GRIFOS",
                     "grifos": [
                                 {"name":"B-138","estado":"CON"},
                                 {"name":"L-2","estado":"CON"},
@@ -223,6 +240,7 @@
                   {
                     "tipo": "termicos",
                     "recurso": "CAF6000-N3-TERMICAS",
+                    "image": "N2-B-TERMICAS",
                     "termicas": [
                                   {"name":"33F1","estado":"CON"},
                                   {"name":"53F1","estado":"CON"},
@@ -231,7 +249,8 @@
                   },
                   {
                     "tipo": "pupitre",
-                    "recurso": "CAF6000-N3-PUPITRE",
+                    "recurso": null,
+                    "image": "N2-B-PUPITRE",
                     "grifos": [
                                 {"name":"RANA","estado":"0"},
                                 {"name":"SETA","estado":"CON"}
@@ -240,12 +259,13 @@
                   {
                     "tipo": "salon",
                     "recurso": null,
+                    "image": "N2-B-SALON",
                     "componente": [
                                     {"name":null,"estado":null},
                                     {"name":null,"estado":null}
-                                  ]
+                              ]
                   }
                 ]
     }
-  ]}
-
+  ]
+}

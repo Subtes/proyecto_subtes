@@ -9,7 +9,7 @@ TARGET = CAF6000
 
 TEMPLATE = app
 
-CONFIG +=  c++11 release
+CONFIG +=  c++11
 
 SOURCES += ../ENet/ENetClient.cpp \
     ../ENet/AdmClaves.cpp \

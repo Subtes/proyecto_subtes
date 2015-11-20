@@ -21,13 +21,18 @@ public:
     QQuickItem *m_qmlView3;
 
 public slots:
-    void level1();
+    bool level1(QString s);
     void level2(QString s);
     void level3(QString s);
     void optionSelected(QString op);
 
 private:
     Ui::AuxiliaryPanel *ui;
+
+    QString m_config;
+    QString m_configModelSubway;
+    QFile m_subways;
+    QFile m_modelSubway;
 
 };
 

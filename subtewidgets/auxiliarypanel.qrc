@@ -12,14 +12,14 @@
         <file alias="C5">../Source/images/coches/coche05_crop.png</file>
         <file>../Source/images/coches/coche06.png</file>
         <file alias="C6">../Source/images/coches/coche06_crop.png</file>
-        <file alias="CABINA">../Source/images/fondos/cabina_thumb.png</file>
+        <file alias="N2-B-PUPITRE">../Source/images/fondos/cabina_thumb.png</file>
         <file>../Source/images/fondos/coches.png</file>
         <file alias="MM-MM-MM-BCK">../Source/images/fondos/coches_crop.png</file>
         <file>../Source/images/fondos/coches_opcion_desatu.png</file>
         <file alias="MM-MM-MM-BCK-GREY">../Source/images/fondos/coches_opcion_desatu_crop.png</file>
         <file>../Source/images/fondos/coches_opcionapagados.png</file>
         <file>../Source/images/fondos/coches_opcionapagados_crop.png</file>
-        <file alias="N2-b-grifos">../Source/images/fondos/grifos_thumb.png</file>
+        <file alias="N2-B-GRIFOS">../Source/images/fondos/grifos_thumb.png</file>
         <file alias="N2-4">../Source/images/fondos/Panel_Lateral.PNG</file>
         <file alias="N2-3">../Source/images/fondos/Panel_Lateral2.png</file>
         <file alias="N3-PN">../Source/images/fondos/PaneNeumatico_mod.png</file>
@@ -81,6 +81,10 @@
         <file alias="CAF6000-MM-MM-MM">caf600023.qml</file>
         <file alias="CAF6000-N2-PANEL-4">nivel2b4.qml</file>
         <file alias="CAF6000-N3-TERMICAS">termicasPanel.qml</file>
-        <file alias="CONFIG-CAF6000-23">../Source/config/CAF600023.json</file>
+        <file>../Source/config/CAF600023.json</file>
+        <file alias="SUBWAY-CONFIGS">../Source/config/SUBTES-PanelesAuxiliares.json</file>
+        <file alias="NO-OPTION">../Source/images/fondos/noOptionthumb.png</file>
+        <file alias="prueba">../Source/config/prueba.json</file>
+        <file alias="CONFIG-CAF6000-23">../Source/config/newCAF600023.json</file>
     </qresource>
 </RCC>

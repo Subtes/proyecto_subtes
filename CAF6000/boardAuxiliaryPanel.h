@@ -22,8 +22,12 @@ public slots:
     void resetControls();
     void loadState(int state);
 
+    void setSubte(QString s);
+
 private:
-    Ui::BoardAuxiliaryPanel *ui;  
+    Ui::BoardAuxiliaryPanel *ui;
+    int m_ready;
+    QString m_modelSubway;
 };
 
 #endif // BOARDAUXILIARYPANEL_H

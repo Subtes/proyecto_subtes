@@ -43,7 +43,7 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
     connect(kel,SIGNAL(keyPressed(DWORD)),this,SLOT(processKeyPressed(DWORD)));
     connect(kel,SIGNAL(keyReleased(DWORD)),this,SLOT(processKeyReleased(DWORD)));
 
-    m_imageSplash = QPixmap(":/resources/splash.jpg");
+//    m_imageSplash = QPixmap(":/resources/splash.jpg");
 
     if(desktop->screenCount() == 4){
         qDebug() << "Entre en For de pantallas igual 4 eventhandler: ";
@@ -80,10 +80,10 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
         m_splash4->setDisabled(true);
 
     }else{
-        m_splash1 = new QSplashScreen(m_imageSplash);
-        m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
-        m_splash1->showMaximized();
-        m_splash1->setDisabled(true);
+//        m_splash1 = new QSplashScreen(m_imageSplash);
+//        m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
+//        m_splash1->showMaximized();
+//        m_splash1->setDisabled(true);
     }
 }
 
@@ -129,14 +129,15 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
                     m_splash3->hide();
                     m_splash4->hide();
                 }else{
-                    m_splash1->hide();
+                    //m_splash1->hide();
                 }
             }
 
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estado_simulador");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cargar_estado");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_averia");
-
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"i_mod_tren");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"i_config_vagones");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_coches_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_renglon_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estacion_destino_sicas");
@@ -258,7 +259,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_rana_6","0");
             m_eNetClient->CambiarValorClave("c_seta_emergencia_6","des");
 
-            //m_eNetClient->Desconectar();
+            m_eNetClient->Desconectar();
 
             Sleep(1000);
             emit closeApp();
@@ -436,6 +437,24 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             emit departureEstation();
         }
     }
+    else if(key.compare("i_config_vagones") == 0){
+        try{
+            qDebug() << "i_config_vagones recibido.";
+            emit configWagon(value.c_str());
+        }
+        catch (...) {
+            qDebug() << "i_config_vagones valor recibido INVALIDO." ;
+        }
+    }
+    else if(key.compare("i_mod_tren") == 0){
+        try{
+            qDebug() << "i_mod_tren recibido.";
+            emit modelSubwayReceived(value.c_str());
+        }
+        catch (...) {
+            qDebug() << "i_mod_tren valor recibido INVALIDO." ;
+        }
+    }
 }
 
 void EventHandler::processKeyPressed(DWORD k)
@@ -464,6 +483,8 @@ void EventHandler::processKeyPressed(DWORD k)
         K_down = true;
         qDebug() << "K key pressed";
         emit kPressed();
+        emit modelSubwayReceived("CAF6000-");
+        emit configWagon("M-M-M-M-M-M");
     } else if ( k == _L && !L_down ){
         //this->notifyValueChanged("c_llave_atp","des");
         L_down = true;
