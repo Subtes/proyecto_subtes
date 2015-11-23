@@ -40,8 +40,8 @@ ENetClient::~ENetClient(void)
 
 bool ENetClient::EstaConectado()
 {
-  std::cout<<"Hay instancia de servidor? "<< (_fServidor != nullptr);
-  std::cout<<"Esta conectado"<< (_fServidor->state == ENET_PEER_STATE_CONNECTED);
+//  std::cout<<"Hay instancia de servidor? "<< (_fServidor != nullptr);
+//  std::cout<<"Esta conectado"<< (_fServidor->state == ENET_PEER_STATE_CONNECTED);
   return _fServidor != nullptr && _fServidor->state == ENET_PEER_STATE_CONNECTED;
 }
 

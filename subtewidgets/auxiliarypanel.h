@@ -33,6 +33,7 @@ private:
     QString m_configModelSubway;
     QFile m_subways;
     QFile m_modelSubway;
+    QString m_wagonSelected;
 
 };
 

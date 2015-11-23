@@ -9,6 +9,7 @@ Rectangle {
     height: 675
 
     signal selected(string s)
+    property string tipo: "c_termico_"
 
     Image {
         id: backGroundPanelTermicas
@@ -600,6 +601,7 @@ Rectangle {
                 id: item57f1
                 width: 42
                 height: 32
+                property string termico: "57f1"
                 Image {
                     id: con57f1
                     x: 6
@@ -630,7 +632,7 @@ Rectangle {
                         if (con57f1.opacity == 0){
                             con57f1.opacity = 1;
                             des57f1.opacity = 0;
-                            level3.selected("con57f1");
+                            level3.selected((level3.tipo)+(item57f1.termico));
                         }else{
                             des57f1.opacity = 1;
                             con57f1.opacity = 0;

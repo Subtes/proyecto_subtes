@@ -13,6 +13,7 @@ AuxiliaryPanel::AuxiliaryPanel(QWidget *parent) :
     ui->setupUi(this);
     //Archivo config, contiene el nombre del recurso asociado para cada Subte.
     m_config = "://SUBWAY-CONFIGS";
+    m_wagonSelected = "DEFAULT";
 }
 
 /**
@@ -158,10 +159,15 @@ void AuxiliaryPanel::level2(QString s)
 {
     qDebug()<<"Entro en Nivel 2";
     qDebug()<<"Selected option"<< s;
+    //Guardo el coche seleccionado.
+    m_wagonSelected = s;
 
     ui->qkW_N2->setSource(QUrl("qrc:/CAF6000-N2-PANEL-4"));
     m_qmlView2 = ui->qkW_N2->rootObject();
     m_qmlView2->setVisible(false);
+
+    QMetaObject::invokeMethod(m_qmlView2,"resetResourceButton",
+                              Q_ARG(QVariant,QString("BACKGROUND-PANEL")));
 
     m_modelSubway.setFileName(m_configModelSubway);
 
@@ -213,7 +219,7 @@ void AuxiliaryPanel::level2(QString s)
 
                 if(!(coche["paneles"].isNull())){
                       paneles = coche["paneles"].toArray();
-                      int i = 1;
+                      int i = 0;
                       for(auto&& item2:paneles){
                           const QJsonObject& panel = item2.toObject();
                           imageprop = m_qmlView2->findChild<QObject*>(QString("buttonImage").append(QString::number(i)));
@@ -221,12 +227,12 @@ void AuxiliaryPanel::level2(QString s)
 
                           if(panel["image"].isNull()){
                               imageButton = "NO-OPTION";
-                              recursoButton = "NO-OPTION";
+                              recursoButton = "BACKGROUND-PANEL";
                               qDebug()<< "NO OPTION!!!!!!!!" << imageButton;
                           }else{
                               imageButton = panel["image"].toString();
                               if (panel["recurso"].isNull()){
-                                  recursoButton = "NO-OPTION";
+                                  recursoButton = "BACKGROUND-PANEL";
                                 }else{
                                   recursoButton = panel["recurso"].toString();
                                 }
@@ -237,7 +243,7 @@ void AuxiliaryPanel::level2(QString s)
                           //imageprop->setProperty("resourceButton",(recursoButton));
 
                           QMetaObject::invokeMethod(m_qmlView2,"setResourceButton",
-                                                    Q_ARG(QVariant,"rb"+QString::number(i)),
+                                                    Q_ARG(QVariant,QString::number(i)),
                                                     Q_ARG(QVariant,recursoButton));
 
                           i++;
@@ -265,13 +271,22 @@ void AuxiliaryPanel::level2(QString s)
  */
 void AuxiliaryPanel::level3(QString op)
 {
-    if (op == "B1;buttonImage1" ){
-        ui->qkW_N3->setSource(QUrl("qrc:/CAF6000-N3-TERMICAS"));
+  ui->qkW_N3->setSource(QUrl("qrc:/"+op));
+  m_qmlView3 = ui->qkW_N3->rootObject();
+
+  qDebug()<<"entro nivel 3 " << op;
+
+  if (op == "BACKGROUND-PANEL" ){
+        return;
     }
-    ui->qkW_N3->setSource(QUrl("qrc:/"+op));
-    m_qmlView3 = ui->qkW_N3->rootObject();
-    connect (m_qmlView3,SIGNAL(selected(QString)),this,SLOT(optionSelected(QString)));
-    qDebug()<<"entro nivel 3 " << op;
+  (m_qmlView3->findChild<QObject*>(QString("conT17")))->setProperty("opacity",0);
+  (m_qmlView3->findChild<QObject*>(QString("desT17")))->setProperty("opacity",1);
+  m_qmlView3->setProperty("numberWagon",m_wagonSelected);
+
+//  QMetaObject::invokeMethod(m_qmlView3,"resetThermal",
+//                            Q_ARG(QVariant,QString("")));
+
+  connect (m_qmlView3,SIGNAL(selected(QString)),this,SLOT(optionSelected(QString)));
 }
 
 void AuxiliaryPanel::optionSelected(QString op){

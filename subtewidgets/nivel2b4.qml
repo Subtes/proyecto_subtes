@@ -9,10 +9,10 @@ Rectangle {
     height: 675
 
     signal selected(string s)
-    property alias rb1 : buttonImage1.resourceButton
-    property alias rb2 : buttonImage2.resourceButton
-    property alias rb3 : buttonImage3.resourceButton
-    property alias rb4 : buttonImage4.resourceButton
+
+    property  int  index: 0
+    //Recursos asociados a los botones que seran instanciados segun configuracion del coche.
+    property variant buttonsResources: []
 
     Column {
         id: column1
@@ -22,13 +22,13 @@ Rectangle {
         height: 675
 
         Item{
-            id: b1
+            id: b0
             width: 119
             height: 92
-            objectName: "button1"
+            objectName: "button0"
 
             Image{
-                id: buttonImage1
+                id: buttonImage0
                 x: 0
                 y: 0
                 width: 119
@@ -40,25 +40,59 @@ Rectangle {
                 anchors.bottomMargin: -3
                 anchors.fill: parent
 
-                objectName: "buttonImage1"
-                property string resourceButton:"NO-OPTION"
-                //Text: "NO-OPTION"
+                objectName: "buttonImage0"
                 source: "NO-OPTION"
                 opacity: 1
 
             }
 
             MouseArea{
+                id: mouseAreaButton0
+                width: 119
+                height: 92
+                anchors.fill: parent
+                onClicked: {
+                    level2.selected(buttonsResources[0]);
+                    console.log("LEVEL 2: On Click, Mouse Area Button: ",b0.objectName)
+                }
+            }
+
+        }
+
+        Item {
+            id: b1
+            width: 119
+            height: 92
+            objectName: "button1"
+
+            Image {
+                id: buttonImage1
+                x: 0
+                y: 0
+                width: 119
+                height: 92
+                anchors.leftMargin: 3
+                anchors.rightMargin: -3
+                anchors.topMargin: 3
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectFit
+                anchors.bottomMargin: -3
+
+                objectName: "buttonImage1"
+                source: "NO-OPTION"
+                opacity: 1
+            }
+
+            MouseArea {
                 id: mouseAreaButton1
                 width: 119
                 height: 92
                 anchors.fill: parent
                 onClicked: {
-                    level2.selected(buttonImage1.resourceButton.toString());
-                    console.log("On Click, Mouse Area Button 1")
+                    level2.selected(buttonsResources[1]);
+                    console.log("LEVEL 2: On Click, Mouse Area Button: ",b1.objectName)
                 }
             }
-
         }
 
         Item {
@@ -66,6 +100,7 @@ Rectangle {
             width: 119
             height: 92
             objectName: "button2"
+
             Image {
                 id: buttonImage2
                 x: 0
@@ -80,7 +115,6 @@ Rectangle {
                 anchors.bottomMargin: -3
 
                 objectName: "buttonImage2"
-                property string resourceButton:"NO-OPTION"
                 source: "NO-OPTION"
                 opacity: 1
             }
@@ -91,8 +125,8 @@ Rectangle {
                 height: 92
                 anchors.fill: parent
                 onClicked: {
-                    level2.selected(buttonImage2.resourceButton.toString());
-                    console.log("On Click, Mouse Area Button 2")
+                    level2.selected(buttonsResources[2]);
+                    console.log("LEVEL 2: On Click, Mouse Area Button 2 ", b2.objectName)
                 }
             }
         }
@@ -101,7 +135,8 @@ Rectangle {
             id: b3
             width: 119
             height: 92
-            objectName: "button1"
+            objectName: "button3"
+
             Image {
                 id: buttonImage3
                 x: 0
@@ -116,7 +151,6 @@ Rectangle {
                 anchors.bottomMargin: -3
 
                 objectName: "buttonImage3"
-                property string resourceButton:"NO-OPTION"
                 source: "NO-OPTION"
                 opacity: 1
             }
@@ -127,55 +161,24 @@ Rectangle {
                 height: 92
                 anchors.fill: parent
                 onClicked: {
-                    level2.selected("B3;"+buttonImage3.objectName);
-                    console.log("On Click, Mouse Area Button 3")
+                    level2.selected(buttonsResources[3]);
+                    console.log("LEVEL 2: On Click, Mouse Area Button 3 ",b3.objectName)
                 }
             }
         }
-
-        Item {
-            id: b4
-            width: 119
-            height: 92
-            objectName: "button1"
-            Image {
-                id: buttonImage4
-                x: 0
-                y: 0
-                width: 119
-                height: 92
-                anchors.leftMargin: 3
-                anchors.rightMargin: -3
-                anchors.topMargin: 3
-                anchors.fill: parent
-                fillMode: Image.PreserveAspectFit
-                anchors.bottomMargin: -3
-
-                objectName: "buttonImage4"
-                property string resourceButton:"NO-OPTION"
-                source: "NO-OPTION"
-                opacity: 1
-            }
-
-            MouseArea {
-                id: mouseAreaButton4
-                width: 119
-                height: 92
-                anchors.fill: parent
-                onClicked: {
-                    level2.selected("B4;"+buttonImage4.objectName);
-                    console.log("On Click, Mouse Area Button 4")
-                }
-            }
-        }
-
-
-
     }
 
     function setResourceButton(aliasButton,resourceButton){
-        console.log("setResourceButton ANTES",aliasButton," ",resourceButton);
-        aliasButton = resourceButton;
-        console.log("setResourceButton DESPUES ",aliasButton," ",resourceButton);
+        console.log("setResourceButton: ......",aliasButton," ",resourceButton);
+        buttonsResources[aliasButton] = resourceButton;
+    }
+
+    property  int  indice: 0
+
+    function resetResourceButton(resourceButton){
+        for(indice=0; indice<4; indice ++){
+            buttonsResources[indice] = resourceButton;
+//            console.log("setResourceButton Button "+(indice+1).toString()+" : --->",resourceButton);
+        }
     }
 }

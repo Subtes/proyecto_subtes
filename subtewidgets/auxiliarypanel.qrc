@@ -80,11 +80,14 @@
         <file>../Source/images/perillas/termicas/termicas_roja.PNG</file>
         <file alias="CAF6000-MM-MM-MM">caf600023.qml</file>
         <file alias="CAF6000-N2-PANEL-4">nivel2b4.qml</file>
-        <file alias="CAF6000-N3-TERMICAS">termicasPanel.qml</file>
+        <file alias="Backup-CAF6000-N3-TERMICAS">termicasPanel.qml</file>
         <file>../Source/config/CAF600023.json</file>
         <file alias="SUBWAY-CONFIGS">../Source/config/SUBTES-PanelesAuxiliares.json</file>
         <file alias="NO-OPTION">../Source/images/fondos/noOptionthumb.png</file>
         <file alias="prueba">../Source/config/prueba.json</file>
         <file alias="CONFIG-CAF6000-23">../Source/config/newCAF600023.json</file>
+        <file alias="BACKGROUND-PANEL">noOptionPanel.qml</file>
+        <file alias="FONDO-PANEL">../Source/images/fondos/fondoPanel.png</file>
+        <file alias="CAF6000-N3-TERMICAS">thermalPanel.qml</file>
     </qresource>
 </RCC>
