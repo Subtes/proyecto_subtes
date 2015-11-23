@@ -154,5 +154,11 @@
         <file>resources/alstom_black.png</file>
         <file>resources/alstom_black_on.png</file>
         <file>resources/alstom_background.png</file>
+        <file>resources/alstom_puerta_abierta.png</file>
+        <file>resources/alstom_puerta_conobstaculo.png</file>
+        <file>resources/alstom_puertas_cerradas.png</file>
+        <file>resources/alstom_puertas_cerradas_bloqueadas.png</file>
+        <file>resources/alstom_puertas_entreabiertas.png</file>
+        <file>resources/alstom_puerta_aislada.png</file>
     </qresource>
 </RCC>
