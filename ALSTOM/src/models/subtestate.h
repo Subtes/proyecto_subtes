@@ -15,6 +15,19 @@ private:
     bool hombreMuerto = false;
     void updateTraction(double value);
 
+    //ALSTOMTCMS
+        double m_needleVelocityTcms;
+        double m_voltimetroLeft;
+        double m_voltimetroRight;
+        double m_amperimetro;
+
+signals:
+   velocityChangeTcms(double velocity);
+   voltimetroChangeLeft(double voltL);
+   voltimetroChangeRight(double voltR);
+   amperimetroChange(double amper);
+
+
 public:
     SubteState();
     ~SubteState();
@@ -27,6 +40,10 @@ public slots:
     void setBrake(int);
     void setEmergencyBeake(bool);
     void setMode(int value);
+    void updateneedleVelocityTcms(double value);
+    void updateVoltimetroLeftTCMS(double value);
+    void updateVoltimetroRightTCMS(double value);
+    void updateneedleamperimetro(double value);
 };
 
 #endif // SUBTESTATE_H

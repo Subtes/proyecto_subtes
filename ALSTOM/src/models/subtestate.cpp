@@ -74,3 +74,29 @@ void SubteState::setMode(int value)
         qDebug() << "c_rana - ad";
     }
 }
+
+void SubteState::updateneedleVelocityTcms(double value){
+    m_needleVelocityTcms = value;
+    qDebug()<<"subte velocidad"<<value;
+    emit velocityChangeTcms(m_needleVelocityTcms);
+}
+
+void SubteState::updateVoltimetroLeftTCMS(double value){
+    m_voltimetroLeft = value;
+    qDebug()<<"subte voltL"<<value;
+    emit voltimetroChangeLeft(m_voltimetroLeft);
+}
+
+void SubteState::updateVoltimetroRightTCMS(double value){
+    m_voltimetroRight = value;
+    qDebug()<<"subte voltRight"<<value;
+    emit voltimetroChangeRight(m_voltimetroRight);
+}
+
+void SubteState::updateneedleamperimetro(double value){
+    m_amperimetro = value;
+    qDebug()<<"subte amper"<<value;
+    emit amperimetroChange(m_amperimetro);
+}
+
+

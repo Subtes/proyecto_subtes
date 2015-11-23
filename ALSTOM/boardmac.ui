@@ -29,8 +29,32 @@
      <height>768</height>
     </size>
    </property>
+   <widget class="AlstomTcms" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>140</y>
+      <width>617</width>
+      <height>497</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>617</width>
+      <height>497</height>
+     </size>
+    </property>
+   </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>AlstomTcms</class>
+   <extends>QWidget</extends>
+   <header>alstomtcms.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
