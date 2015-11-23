@@ -139,5 +139,5 @@ void SingleButton::release()
 
 void SingleButton::setSize(QSize size)
 {
-    m_qmlView->setSize(size);
+    ui->button->resize(size);
 }

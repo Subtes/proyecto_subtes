@@ -9,6 +9,35 @@ BoardTop::BoardTop(QWidget *parent, SubteStatus * subte, EventHandler *eventHand
 {
     ui->setupUi(this);
 
+    QSize buttonSize;
+    buttonSize.setWidth(78);
+    buttonSize.setHeight(78);
+
+    ui->emergenciaSICAS->setSize(buttonSize);
+    ui->llaveManual->setSize(buttonSize);
+    ui->automaticoManualCON->setSize(buttonSize);
+    ui->automaticoManualDES->setSize(buttonSize);
+    ui->puetaEnMarchaCON->setSize(buttonSize);
+    ui->puestaEnMarchaDES->setSize(buttonSize);
+    ui->bateriaCON->setSize(buttonSize);
+    ui->bateriaDES->setSize(buttonSize);
+    ui->pantografoCON->setSize(buttonSize);
+    ui->pantografoDES->setSize(buttonSize);
+    ui->compAuxCON->setSize(buttonSize);
+    ui->compAuxDES->setSize(buttonSize);
+    ui->convertidorCON->setSize(buttonSize);
+    ui->convertidorDES->setSize(buttonSize);
+    ui->compPpalCON->setSize(buttonSize);
+    ui->compPpalDES->setSize(buttonSize);
+    ui->alumbradoCON->setSize(buttonSize);
+    ui->alumbradoDES->setSize(buttonSize);
+    ui->aireCON->setSize(buttonSize);
+    ui->aireDES->setSize(buttonSize);
+    ui->megaforniaCON->setSize(buttonSize);
+    ui->megaforniaDES->setSize(buttonSize);
+    ui->frenoCON->setSize(buttonSize);
+    ui->frenoDES->setSize(buttonSize);
+
     connect(m_eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(m_eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
     connect(m_eventHandler,SIGNAL(controlEnable()),this,SLOT(enableScreen()));

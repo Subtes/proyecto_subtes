@@ -9,6 +9,15 @@ BoardRight::BoardRight(QWidget *parent, SubteStatus * subte, EventHandler *event
 {
     ui->setupUi(this);
 
+    QSize buttonSize;
+    buttonSize.setWidth(78);
+    buttonSize.setHeight(78);
+    ui->CONDisy_widget->setSize(buttonSize);
+    ui->DESDisy_widget->setSize(buttonSize);
+    ui->calientapies->setSize(buttonSize);
+    ui->frenoRetencion->setSize(buttonSize);
+    ui->desacople->setSize(buttonSize);
+
     connect(m_eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(m_eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
     connect(m_eventHandler,SIGNAL(controlEnable()),this,SLOT(enableScreen()));

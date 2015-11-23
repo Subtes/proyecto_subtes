@@ -17,6 +17,29 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eve
     m_doors = NULL;
     m_tractionHardware = NULL;
 
+    QSize buttonSize;
+    buttonSize.setWidth(78);
+    buttonSize.setHeight(78);
+
+    ui->bypassFreno->setSize(buttonSize);
+    ui->bypassTraccion->setSize(buttonSize);
+
+    ui->abrirDerecha->setSize(buttonSize);
+    ui->abrirIzquierda->setSize(buttonSize);
+    ui->cerrarDerecha->setSize(buttonSize);
+    ui->cerrarIzquierda->setSize(buttonSize);
+    ui->selectorDerecha->setSize(buttonSize);
+    ui->selectorIzquierda->setSize(buttonSize);
+    ui->silbato->setSize(buttonSize);
+
+    ui->antivaho->setSize(buttonSize);
+    ui->faros->setSize(buttonSize);
+    ui->iluminacionPulsadores->setSize(buttonSize);
+    ui->iluminacionReducPulsad->setSize(buttonSize);
+    ui->publicoCabina->setSize(buttonSize);
+    ui->megafonia->setSize(buttonSize);
+    ui->anulacionEmergencia->setSize(buttonSize);
+    ui->luzCabina->setSize(buttonSize);
 
     connect(m_eventHandler,SIGNAL(controlReady()),this,SLOT(startBoard()));
     connect(m_eventHandler,SIGNAL(controlDisable()),this,SLOT(disableScreen()));
@@ -28,9 +51,6 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eve
     connect(m_eventHandler,SIGNAL(masReleased()),this,SLOT(bypassTraccionOFF()));
     connect(m_eventHandler,SIGNAL(menosPressed()),this,SLOT(bypassFrenoON()));
     connect(m_eventHandler,SIGNAL(menosReleased()),this,SLOT(bypassFrenoOFF()));
-
-//    connect(m_checkBypass,SIGNAL(timeout()),m_tractionHardware,SLOT(processBottonChanged()));
-
 
     connect(m_subte,SIGNAL(bateriaCon()),this,SLOT(turnOnWidgets()));
     connect(m_subte,SIGNAL(bateriaDes()),this,SLOT(turnOffWidgets()));

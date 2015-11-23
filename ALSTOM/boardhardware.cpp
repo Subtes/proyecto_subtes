@@ -6,6 +6,12 @@ BoardHardware::BoardHardware(QWidget *parent, SubteState *subte, EventHandler *e
     ui(new Ui::BoardHardware)
 {
     ui->setupUi(this);
+    QSize size;
+    size.setHeight(90);
+    size.setWidth(90);
+    ui->hablar->setSize(size);
+    ui->hablar->setButtonImage(QUrl("qrc:/resources/alstom_yellowsmall_on.png"),QUrl("qrc:/resources/alstom_yellowsmall.png"));
+    ui->hablar->setOnPressAsDriver();
 
     TractionController * traction = new TractionController(subte,ui->tractionWidget,ui->ranaWidget);
 }
