@@ -1,7 +1,5 @@
 #-------------------------------------------------
-#
 # Project created by QtCreator 2015-10-06T11:04:05
-#
 #-------------------------------------------------
 
 QT       += core gui quick quickwidgets widgets xml
@@ -20,22 +18,23 @@ SOURCES +=  ../ENet/ENetClient.cpp \
     boardhardware.cpp \
     boardmac.cpp \
     baseboard.cpp \
-    src/controllers/eventhandler.cpp \
-    src/models/subtestate.cpp \
     boardatp.cpp \
     boardbottom.cpp \
+    src/models/subtestate.cpp \
+    src/controllers/eventhandler.cpp \
     src/controllers/enethelper.cpp \
     src/controllers/tractioncontroller.cpp
 
-HEADERS  += \
+HEADERS  += \ ../ENet/ENetClient.h \
+    ../ENet/AdmClaves.h \
     boardcenter.h \
     boardhardware.h \
     boardmac.h \
     baseboard.h \
-    src/controllers/eventhandler.h \
-    src/models/subtestate.h \
     boardatp.h \
     boardbottom.h \
+    src/models/subtestate.h \
+    src/controllers/eventhandler.h \
     src/controllers/enethelper.h \
     src/controllers/tractioncontroller.h
 

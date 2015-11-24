@@ -151,5 +151,7 @@
         <file>resources/alstom_yellow_on.png</file>
         <file>resources/alstom_yellowsmall.png</file>
         <file>resources/alstom_yellowsmall_on.png</file>
+        <file>resources/alstom_black.png</file>
+        <file>resources/alstom_black_on.png</file>
     </qresource>
 </RCC>

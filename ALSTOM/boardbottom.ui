@@ -20,7 +20,7 @@
    <string>BOTTOM</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-image: url(:/resources/panel_4_a_2.jpg);</string>
+   <string notr="true">background-image: url(:/resources/panel_4_a.jpg);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="maximumSize">
@@ -29,8 +29,106 @@
      <height>768</height>
     </size>
    </property>
+   <widget class="SingleButton" name="cerrarPuertasIzq" native="true">
+    <property name="geometry">
+     <rect>
+      <x>66</x>
+      <y>300</y>
+      <width>109</width>
+      <height>109</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="abriPuertasIzq" native="true">
+    <property name="geometry">
+     <rect>
+      <x>66</x>
+      <y>447</y>
+      <width>109</width>
+      <height>109</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="puertasCerradasIzq" native="true">
+    <property name="geometry">
+     <rect>
+      <x>66</x>
+      <y>584</y>
+      <width>109</width>
+      <height>109</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="lavaParabrisas" native="true">
+    <property name="geometry">
+     <rect>
+      <x>632</x>
+      <y>389</y>
+      <width>109</width>
+      <height>109</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="abrirPuertasDer" native="true">
+    <property name="geometry">
+     <rect>
+      <x>846</x>
+      <y>446</y>
+      <width>109</width>
+      <height>109</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="cerrarPuertasDer" native="true">
+    <property name="geometry">
+     <rect>
+      <x>846</x>
+      <y>301</y>
+      <width>109</width>
+      <height>109</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="puertasCerradasDer" native="true">
+    <property name="geometry">
+     <rect>
+      <x>846</x>
+      <y>583</y>
+      <width>109</width>
+      <height>109</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="bajarPanto" native="true">
+    <property name="geometry">
+     <rect>
+      <x>632</x>
+      <y>204</y>
+      <width>109</width>
+      <height>109</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="subirPanto" native="true">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>56</y>
+      <width>109</width>
+      <height>109</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SingleButton</class>
+   <extends>QWidget</extends>
+   <header>singlebutton.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
