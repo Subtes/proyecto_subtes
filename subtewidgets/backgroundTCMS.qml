@@ -26,6 +26,12 @@ Rectangle {
     property double cantidad_de_lados_por_coche: 2
     property double pos_puertas_arriba: 87
     property double pos_puertas_abajo: 117
+    property double escala_maxima_volt: 2500
+    property double escala_maxima_amper: 400
+    property double escala_minima_amper: -400
+
+
+
 
 
     Image {
@@ -34,7 +40,7 @@ Rectangle {
         y: 4
         width: 610
         height: 490
-        fillMode: Image.PreserveAspectFit
+        fillMode: Image.PreserveAspectCrop
         rotation: 0
         source: "resources/alstom_background.png"
     }
@@ -76,7 +82,7 @@ Rectangle {
         id: voltimetrodigital1
         x: 243
         y: 284
-        text: qsTr("2500")
+        text: qsTr(" ")
         font.bold: true
         font.pixelSize: 13
     }
@@ -85,7 +91,7 @@ Rectangle {
         id: voltimetrodigital2
         x: 245
         y: 311
-        text: qsTr("2500")
+        text: qsTr(" ")
         font.bold: true
         font.pixelSize: 13
     }
@@ -94,7 +100,7 @@ Rectangle {
         id: amperimetrodigital
         x: 426
         y: 283
-        text: qsTr("400")
+        text: qsTr(" ")
         font.bold: true
         font.pixelSize: 13
     }
@@ -103,12 +109,12 @@ Rectangle {
     Rectangle {
         id: needle
         objectName: "needle"
-        x: 150
-        y: 291
-        width: 5
+        x: 152
+        y: 283
+        width: 4
         height: 60
         color: "#080505"
-        rotation: 44
+        rotation: 316
         transformOrigin: Item.Top
         border.color: "#00000000"
         radius: 2
@@ -132,19 +138,14 @@ Rectangle {
     }
 
     Rectangle {
-        id: rectangle1
+        id: barravoltimetroleft
         x: 316
         y: 211
         width: 13
         height: 166
         color: "#000000"
-        radius: 0
         antialiasing: false
-        z: 0
-        rotation: 0
-        transformOrigin: Item.Bottom
-        scale: 1
-        border.width: 0
+        transform: Scale { id:tranfobarravoltimetroleft ;origin.x: 0; origin.y: 170; yScale: 0.1}
     }
 
     Text {
@@ -166,15 +167,14 @@ Rectangle {
     }
 
     Rectangle {
-        id: rectangle2
+        id: barravoltimetroright
         x: 341
         y: 211
         width: 13
         height: 168
         color: "#000000"
-        rotation: 0
-        transformOrigin: Item.Top
-        border.width: 0
+        transform: Scale { id:tranfovoltimetroright ;origin.x: 0; origin.y: 170; yScale: 0.1}
+
     }
 
     Text {
@@ -187,15 +187,14 @@ Rectangle {
     }
 
     Rectangle {
-        id: rectangle3
+        id: barraamperimetro
         x: 490
         y: 210
         width: 14
         height: 85
         color: "#000000"
-        rotation: 0
-        border.width: 0
-        transformOrigin: Item.Top
+        transform: Scale { id:tranfobarraamperimetro ;origin.x: 0; origin.y: 90; yScale: 0.1}
+
     }
 
 
@@ -211,6 +210,8 @@ Rectangle {
         return "ok"
     }
 
+
+
     function updateDigitalVelocity(speed){
         velocimetrodigital.text=speed;
 
@@ -218,16 +219,26 @@ Rectangle {
 
     function updateDigitalVoltimetroLeft(volt){
         voltimetrodigital1.text=volt;
+        tranfovoltimetroleft.xScale = volt/escala_maxima_volt;
+
 
     }
 
     function updateDigitalVoltimetroRight(volt){
         voltimetrodigital2.text=volt;
+        tranfovoltimetroright.xScale = volt/escala_maxima_volt;
+
 
     }
     function updateDigitalAmperimetro(amp){
         amperimetrodigital.text=amp;
+        if(amp >=0){
+            tranfobarraamperimetro.xScale= amp/escala_maxima_amper
+        }else
+        {
+            tranfobarraamperimetro.xScale= amp/escala_minima_amper
 
+        }
     }
 
 
@@ -253,11 +264,7 @@ Rectangle {
                 },
                 State {
                     name: "des"
-                    PropertyChanges { target: puertastren;source: "resources/alstom_puertas_cerradas_bloqueadas.png"; opacity: 1;}
-                },
-                State {
-                    name: "inhab"
-                    PropertyChanges { target: f; opacity: 0.5;}
+                    PropertyChanges { target: blinkAnimation2;  running:true;}
                 },
                 State {
                     name: "int"
@@ -271,22 +278,13 @@ Rectangle {
 
             SequentialAnimation {
                 id: blinkAnimation2
-                loops: Animation.Infinite
+//                running: true
 
-                PropertyAnimation {
-                    properties: "opacity"
-                    to: 0
-                    duration: 200
-                    target: puertastren
-                }
-                PauseAnimation { duration: 200 }
-                PropertyAnimation {
-                    properties: "opacity"
-                    to: 1
-                    duration: 200
-                    target: puertastren
-                }
-            }
+//                   NumberAnimation { target: puertastren; property: "source"; to: "resources/alstom_puertas_entreabiertas.png"; duration: 200 }
+//                   NumberAnimation { target: puertastren; property: "source"; to: "resources/alstom_puertas_cerradas.png"; duration: 200 }
+//                   NumberAnimation { target: puertastren; property: "source"; to: "resources/alstom_puertas_cerradas_bloqueadas.png"; duration: 200 }
+             }
+
         }
         onItemAdded: puertasCoche[index] = item
     }
