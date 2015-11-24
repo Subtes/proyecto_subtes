@@ -10,7 +10,6 @@
 #define _J 0x4A
 #define _K 0x4B
 #define _L 0x4C
-#define _Mm 0x4D
 #define _R 0x52
 #define _tF 0x46
 #define _T 0x54
@@ -29,8 +28,8 @@
 #define _MAS 0xBB
 #define _MENOS 0xBD
 
-#ifndef EVENTHANDLER_H
-#define EVENTHANDLER_H
+#ifndef EVENTHANDLER_CAF6000_H
+#define EVENTHANDLER_CAF6000_H
 
 #include <QObject>
 #include <QSplashScreen>
@@ -42,28 +41,24 @@
 #include <Windows.h>
 #include <QString>
 #include <QTime>
-#include "src/controllers/enethelper.h"
 #include "src/controllers/keypresseater.h"
 #include "src/controllers/failures_controller.h"
 #include "src/models/subtestatus.h"
+#include "src/controllers/enethelper.h"
 
 class SubteStatus;
 class ENetHelper;
 class Failures_Controller;
 
-class EventHandler : public QObject
+class EventHandler_Caf6000 : public EventHandler
 {
     Q_OBJECT
 
 public:
-    EventHandler(QDesktopWidget *desk);
-    ~EventHandler();
+    EventHandler_Caf6000(QDesktopWidget *desk = 0);
+    ~EventHandler_Caf6000();
 
     void processValueChanged(std::string host, std::string key, std::string value);
-    void notifyValueChanged(std::string key, std::string value);
-    void notifyValueChanged(std::string key, std::string subKey, std::string value);
-    void initConnection();
-
     void setModel(SubteStatus *subte);
     void setFailures(Failures_Controller *failures);
 
@@ -98,7 +93,6 @@ private:
     bool J_down;
     bool K_down;
     bool L_down;
-    bool M_down;
     bool R_down;
     bool T_down;
     bool CERO_down;
@@ -122,7 +116,7 @@ signals:
     controlReady();
     controlDisable();
     controlEnable();
-    controlReset();
+    controlReset();    
     closeApp();
     iCambioSenial1();
     bPressed();
@@ -156,15 +150,11 @@ signals:
     cargarDestinoSicas(QString);
 
     newTarget(int);
-    signalRaped();
-
-    configWagon(QString);
-    modelSubwayReceived(QString);
-    //loadSubwayConfig(QString);
 
 public slots:
     void processKeyPressed(DWORD k);
     void processKeyReleased(DWORD k);
+
 };
 
-#endif // EVENTHANDLER_H
+#endif // EVENTHANDLER_CAF6000_H

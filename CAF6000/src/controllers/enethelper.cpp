@@ -60,4 +60,3 @@ void ENetHelper::readIni()
     qDebug() << "XML: visual Host Name: " << visualHostName.c_str();
     qDebug() << "XML: instructions Host Name: " << instructionsHostName.c_str();
 }
-

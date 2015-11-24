@@ -2,6 +2,8 @@
 #define BOARDHARDWARE_H
 #include "baseboard.h"
 #include "src/controllers/tractioncontroller.h"
+#include "src/controllers/hongoemergenciacontroller.h"
+#include "src/controllers/llavaseguridadcontroller.h"
 
 namespace Ui {
 class BoardHardware;
@@ -17,6 +19,11 @@ public:
 
 private:
     Ui::BoardHardware *ui;
+
+    TractionController * m_traction;
+    HongoEmergenciaController * m_hongo;
+    LlavaSeguridadController * m_llaveSeguridad;
+
 };
 
 #endif // BOARDHARDWARE_H

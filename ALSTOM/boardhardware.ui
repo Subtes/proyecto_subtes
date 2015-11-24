@@ -91,42 +91,20 @@ padding-top: 0px;</string>
      <pixmap resource="../subtewidgets/widgetsrsc.qrc">:/resources/alstom_greenkeybase.png</pixmap>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="SingleButton" name="hongo" native="true">
     <property name="geometry">
      <rect>
-      <x>589</x>
-      <y>609</y>
-      <width>81</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-image: url(:/resources/nada);</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="../subtewidgets/widgetsrsc.qrc">:/resources/alstom_greenkey.png</pixmap>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>743</x>
-      <y>538</y>
+      <x>740</x>
+      <y>530</y>
       <width>141</width>
       <height>141</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background-image: url(:/resources/nada);</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="../subtewidgets/widgetsrsc.qrc">:/resources/alstom_emergenciaoff.png</pixmap>
+    <property name="maximumSize">
+     <size>
+      <width>141</width>
+      <height>141</height>
+     </size>
     </property>
    </widget>
    <widget class="SingleButton" name="hablar" native="true">
@@ -136,6 +114,16 @@ padding-top: 0px;</string>
       <y>230</y>
       <width>90</width>
       <height>90</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="SingleButton" name="llaveSeguridad" native="true">
+    <property name="geometry">
+     <rect>
+      <x>592</x>
+      <y>605</y>
+      <width>72</width>
+      <height>72</height>
      </rect>
     </property>
    </widget>

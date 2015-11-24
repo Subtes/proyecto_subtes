@@ -2,7 +2,7 @@
 # Project created by QtCreator 2015-10-06T11:04:05
 #-------------------------------------------------
 
-QT       += core gui quick quickwidgets widgets xml
+QT += core gui quick quickwidgets widgets xml
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = ALSTOM
@@ -26,7 +26,9 @@ SOURCES +=  ../ENet/include/ENetClient.cpp \
     src/controllers/enethelper.cpp \
     src/controllers/tractioncontroller.cpp \
     src/controllers/alstomtcms_controller.cpp \
-    src/controllers/base_controller.cpp
+    src/controllers/base_controller.cpp \
+    src/controllers/hongoemergenciacontroller.cpp \
+    src/controllers/llavaseguridadcontroller.cpp
 
 HEADERS  += ../ENet/include/ENetClient.h \
     ../ENet/include/AdmClaves.h \
@@ -42,7 +44,9 @@ HEADERS  += ../ENet/include/ENetClient.h \
     src/controllers/enethelper.h \
     src/controllers/tractioncontroller.h \
     src/controllers/alstomtcms_controller.h \
-    src/controllers/base_controller.h
+    src/controllers/base_controller.h \
+    src/controllers/hongoemergenciacontroller.h \
+    src/controllers/llavaseguridadcontroller.h
 
 FORMS    += \
     boardcenter.ui \
@@ -53,6 +57,7 @@ FORMS    += \
 
 INCLUDEPATH +=  ../subtewidgets \
                 $$PWD/../ENet/include \
+                #../Common \
                 $$PWD/../Source/include
 
 DEPENDPATH += $$PWD/../ENet \
@@ -67,6 +72,8 @@ LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L$$PWD/../ENet/lib/ -lENetClient-Cpp \
         -L$$PWD/../Source/lib/ -lSDL \
         -L$$PWD/../Source/lib/ -lSDL_mixer
+        #-L../Common/debug -lCommon \
+        #-L../Common/release -lCommon \
 
 RESOURCES += ../subtewidgets/widgetsrsc.qrc \
             ../subtewidgets/qmlrsc.qrc \

@@ -2,7 +2,8 @@
 
 SubteState::SubteState()
 {
-
+    //Traction * m_traction = new Traction();
+    //Brakes * m_brakes = new Brakes();
 }
 
 SubteState::~SubteState()
@@ -18,24 +19,24 @@ void SubteState::setHandler(EventHandler *eventHandler)
 void SubteState::hmPressed()
 {
     hombreMuerto = true;
-    m_eventHandler->notifyValueChanged("c_dispositivo_hombre_muerto","con");
+    //m_eventHandler->notifyValueChanged("c_dispositivo_hombre_muerto","con");
     qDebug() << "c_dispositivo_hombre_muerto - con";
 }
 
 void SubteState::hmReleased()
 {
     hombreMuerto = false;
-    m_eventHandler->notifyValueChanged("c_dispositivo_hombre_muerto","des");
+    //m_eventHandler->notifyValueChanged("c_dispositivo_hombre_muerto","des");
     qDebug() << "c_dispositivo_hombre_muerto - des";
 }
 
 void SubteState::setTraction(int value)
 {
     if(hombreMuerto){
-        m_eventHandler->notifyValueChanged("c_traccion",std::to_string(value));
+        //m_eventHandler->notifyValueChanged("c_traccion",std::to_string(value));
         qDebug() << "c_traccion - " << value;
     }else{
-        m_eventHandler->notifyValueChanged("c_traccion","0");
+        //m_eventHandler->notifyValueChanged("c_traccion","0");
         qDebug() << "c_traccion - 0";
     }
 }
@@ -106,4 +107,7 @@ void SubteState::updatevaluedoors(double value){
     m_valuedoors = value;
     qDebug()<<"subte puertas"<<value;
     emit doorsChange(m_valuedoors);
+}
+
+void SubteState::setHongoEmergencia(bool state){
 }

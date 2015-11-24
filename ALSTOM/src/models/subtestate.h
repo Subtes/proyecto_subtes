@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "src/controllers/eventhandler.h"
+
 class EventHandler;
 
 class SubteState : public QObject
@@ -11,6 +12,9 @@ class SubteState : public QObject
 
 private:
     EventHandler *m_eventHandler;
+    //Brakes *m_brakes;
+    //Traction *m_traction;
+
     bool hombreMuerto = false;
     void updateTraction(double value);
 
@@ -45,6 +49,7 @@ public slots:
     void updateVoltimetroRightTCMS(double value);
     void updateneedleamperimetro(double value);
     void updatevaluedoors(double value);
+    void setHongoEmergencia(bool state); //true=PRESSED
 };
 
 #endif // SUBTESTATE_H

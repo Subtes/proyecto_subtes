@@ -16,6 +16,13 @@ Rectangle {
     property bool lightManager: true
 
     Image {
+        id: bkgImage
+        objectName: "bkgImage"
+        anchors.fill: parent
+        opacity: 1
+    }
+
+    Image {
         id: offImage
         objectName: "offImage"
         anchors.fill: parent
@@ -57,23 +64,23 @@ Rectangle {
         },
         State {
             name: "buttonOnState";
-            PropertyChanges { target: offImage;      opacity: 1}
+            PropertyChanges { target: offImage;      opacity: 0}
             PropertyChanges { target: onImage;       opacity: 1}
             PropertyChanges { target: offImageNestled; opacity: 0}
             PropertyChanges { target: onImageNestled;  opacity: 0}
         },
         State {
             name: "buttonOffStateNestled";
-            PropertyChanges { target: offImage;      opacity: 1}
+            PropertyChanges { target: offImage;      opacity: 0}
             PropertyChanges { target: onImage;       opacity: 0}
             PropertyChanges { target: offImageNestled; opacity: 1}
             PropertyChanges { target: onImageNestled;  opacity: 0}
         },
         State {
             name: "buttonOnStateNestled";
-            PropertyChanges { target: offImage;      opacity: 1}
+            PropertyChanges { target: offImage;      opacity: 0}
             PropertyChanges { target: onImage;       opacity: 0}
-            PropertyChanges { target: offImageNestled; opacity: 1}
+            PropertyChanges { target: offImageNestled; opacity: 0}
             PropertyChanges { target: onImageNestled;  opacity: 1}
         }
     ]
@@ -84,7 +91,7 @@ Rectangle {
         Transition {
             from: "*"
             to: "*"
-            NumberAnimation { id:turningOnOff; properties: "opacity"; duration: 200  }
+            NumberAnimation { id:turningOnOff; objectName: "animButton"; properties: "opacity"; duration: 200  }
         }
     ]
 

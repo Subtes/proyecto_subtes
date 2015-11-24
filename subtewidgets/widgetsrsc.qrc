@@ -135,8 +135,6 @@
         <file>resources/alstom_glass.png</file>
         <file>resources/alstom_green.png</file>
         <file>resources/alstom_green_on.png</file>
-        <file>resources/alstom_greenkey.png</file>
-        <file>resources/alstom_greenkeybase.png</file>
         <file>resources/alstom_llave_a.png</file>
         <file>resources/alstom_llave_b.png</file>
         <file>resources/alstom_manometro_base.png</file>
@@ -179,5 +177,7 @@
         <file>resources/alstom_PCE_operativo.png</file>
         <file>resources/alstom_PCE_por_defecto.png</file>
         <file>resources/alstom_needle_bar.png</file>
+        <file>resources/alstom_greenkey_off.png</file>
+        <file>resources/alstom_greenkey_on.png</file>
     </qresource>
 </RCC>

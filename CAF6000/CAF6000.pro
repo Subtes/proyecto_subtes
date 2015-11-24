@@ -33,8 +33,6 @@ SOURCES += ../ENet/include/ENetClient.cpp \
     src/controllers/circuitbreakercon_controller.cpp \
     src/controllers/speedgaugeleds_controller.cpp \
     src/controllers/atp_controller.cpp \
-    src/controllers/enethelper.cpp \
-    src/controllers/eventhandler.cpp \
     src/models/traction.cpp \
     src/models/brake.cpp \
     src/models/cscp.cpp \
@@ -57,7 +55,9 @@ SOURCES += ../ENet/include/ENetClient.cpp \
     src/controllers/key_topboard_controller.cpp \
     src/controllers/frenoretencion_controller.cpp \
     boardauxiliarypanel.cpp \
-    logger.cpp
+    logger.cpp \
+    src/controllers/enethelper.cpp \
+    src/controllers/eventhandler.cpp
 
 HEADERS  += ../ENet/include/ENetClient.h \
     ../ENet/include/AdmClaves.h \
@@ -80,8 +80,6 @@ HEADERS  += ../ENet/include/ENetClient.h \
     src/controllers/circuitbreakercon_controller.h \
     src/controllers/speedgaugeleds_controller.h \
     src/controllers/atp_controller.h \
-    src/controllers/enethelper.h \
-    src/controllers/eventhandler.h \
     src/models/traction.h \
     src/models/brake.h \
     src/models/cscp.h \
@@ -106,7 +104,9 @@ HEADERS  += ../ENet/include/ENetClient.h \
     boardauxiliarypanel.h \
     logger.h \
     DefaultLogManager.h \
-    easylogging++.h
+    easylogging++.h \
+    src/controllers/enethelper.h \
+    src/controllers/eventhandler.h
 
 FORMS    += \
     boardcenter.ui \
@@ -119,6 +119,7 @@ FORMS    += \
 
 INCLUDEPATH +=  ../subtewidgets \
                 $$PWD/../ENet/include \
+                #../Common \
                 $$PWD/../Source/include
 
 DEPENDPATH += $$PWD/../ENet \
@@ -131,6 +132,8 @@ LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L$$PWD/../ENet/lib/ -lBufferOverflowU \
         -L$$PWD/../ENet/lib/ -lWinMM \
         -L$$PWD/../ENet/lib/ -lENetClient-Cpp \
+        #-L../Common/debug -lCommon \
+        #-L../Common/ -lCommon \
         -L$$PWD/../Source/lib/ -lSDL \
         -L$$PWD/../Source/lib/ -lSDL_mixer
 
