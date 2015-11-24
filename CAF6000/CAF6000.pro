@@ -32,8 +32,6 @@ SOURCES += ../ENet/ENetClient.cpp \
     src/controllers/circuitbreakercon_controller.cpp \
     src/controllers/speedgaugeleds_controller.cpp \
     src/controllers/atp_controller.cpp \
-    src/controllers/enethelper.cpp \
-    src/controllers/eventhandler.cpp \
     src/models/traction.cpp \
     src/models/brake.cpp \
     src/models/cscp.cpp \
@@ -54,7 +52,9 @@ SOURCES += ../ENet/ENetClient.cpp \
     src/controllers/hombremuerto_controller.cpp \
     src/controllers/llavemodoconduccion_controller.cpp \
     src/controllers/key_topboard_controller.cpp \
-    src/controllers/frenoretencion_controller.cpp
+    src/controllers/frenoretencion_controller.cpp \
+    src/controllers/enethelper.cpp \
+    src/controllers/eventhandler.cpp
 
 HEADERS  += ../ENet/ENetClient.h \
     ../ENet/AdmClaves.h \
@@ -76,8 +76,6 @@ HEADERS  += ../ENet/ENetClient.h \
     src/controllers/circuitbreakercon_controller.h \
     src/controllers/speedgaugeleds_controller.h \
     src/controllers/atp_controller.h \
-    src/controllers/enethelper.h \
-    src/controllers/eventhandler.h \
     src/models/traction.h \
     src/models/brake.h \
     src/models/cscp.h \
@@ -98,7 +96,9 @@ HEADERS  += ../ENet/ENetClient.h \
     src/controllers/hombremuerto_controller.h \
     src/controllers/llavemodoconduccion_controller.h \
     src/controllers/key_topboard_controller.h \
-    src/controllers/frenoretencion_controller.h
+    src/controllers/frenoretencion_controller.h \
+    src/controllers/enethelper.h \
+    src/controllers/eventhandler.h
 
 FORMS    += boardcenter.ui \
     boardright.ui \
@@ -108,6 +108,7 @@ FORMS    += boardcenter.ui \
     src/instructionsolutionpanel/mainwindow.ui
 
 INCLUDEPATH +=  ../subtewidgets \
+                #../Common \
                 $$PWD/../ENet \
                 $$PWD/../Source/include
 
@@ -116,6 +117,8 @@ DEPENDPATH += $$PWD/../ENet \
 
 LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L../subtewidgets/release -lsubtewidgets \
+        #-L../Common/debug -lCommon \
+        #-L../Common/ -lCommon \
         -L$$PWD/../ENet/ -lenet \
         -L$$PWD/../ENet/ -lWS2_32 \
         -L$$PWD/../ENet/ -lBufferOverflowU \

@@ -20,7 +20,10 @@ public:
     bool isClickeable();
     bool isNestled();
     bool isLighted();
-    void setButtonImage(QUrl on,QUrl off);
+    void setButtonImage(QUrl on, QUrl off, QUrl bkg, bool noBkg, bool noAnim);
+    void setButtonImage(QUrl on, QUrl off, QUrl bkg, bool noBkg);
+    void setButtonImage(QUrl on, QUrl off, QUrl bkg);
+    void setButtonImage(QUrl on, QUrl off);
     void setButtonImageNestled(QUrl on,QUrl off);
     void setClickeable(bool clickeable);
     void setNestled(bool nestled);

@@ -11,7 +11,6 @@ class BaseBoard : public QMainWindow
     Q_OBJECT
 
 public:
-
     static const int EN_MARCHA = 1;
     static const int APAGADO = 0;
 

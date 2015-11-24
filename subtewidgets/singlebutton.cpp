@@ -43,11 +43,61 @@ bool SingleButton::isLighted()
     return m_qmlView->property("lighted").toBool();;
 }
 
-void SingleButton::setButtonImage(QUrl on,QUrl off)
-{
+void SingleButton::setButtonImage(QUrl on, QUrl off, QUrl bkg, bool noBkg, bool noAnim){
     QObject * button = m_qmlView->findChild<QObject*>("onImage");
     button->setProperty("source", on);
     button = m_qmlView->findChild<QObject*>("offImage");
+    button->setProperty("source", off);
+
+    if(!noBkg){
+        if(bkg.url()==NULL){
+            button = m_qmlView->findChild<QObject*>("bkgImage");
+            button->setProperty("source", bkg);
+        }else{
+            button = m_qmlView->findChild<QObject*>("bkgImage");
+            button->setProperty("source", off);
+        }
+    }
+
+    if(noAnim){
+        button = m_qmlView->findChild<QObject*>("animButton");
+        button->setProperty("duration", 0);
+    }
+}
+
+void SingleButton::setButtonImage(QUrl on, QUrl off, QUrl bkg, bool noBkg){
+    QObject * button = m_qmlView->findChild<QObject*>("onImage");
+    button->setProperty("source", on);
+    button = m_qmlView->findChild<QObject*>("offImage");
+    button->setProperty("source", off);
+
+    if(!noBkg){
+        if(bkg.url()==NULL){
+            button = m_qmlView->findChild<QObject*>("bkgImage");
+            button->setProperty("source", bkg);
+        }else{
+            button = m_qmlView->findChild<QObject*>("bkgImage");
+            button->setProperty("source", off);
+        }
+    }
+
+}
+
+void SingleButton::setButtonImage(QUrl on, QUrl off, QUrl bkg){
+    QObject * button = m_qmlView->findChild<QObject*>("onImage");
+    button->setProperty("source", on);
+    button = m_qmlView->findChild<QObject*>("offImage");
+    button->setProperty("source", off);
+    button = m_qmlView->findChild<QObject*>("bkgImage");
+    button->setProperty("source", bkg);
+}
+
+void SingleButton::setButtonImage(QUrl on, QUrl off){
+    QObject * button = m_qmlView->findChild<QObject*>("onImage");
+    button->setProperty("source", on);
+    button = m_qmlView->findChild<QObject*>("offImage");
+    button->setProperty("source", off);
+    button = m_qmlView->findChild<QObject*>("bkgImage");
     button->setProperty("source", off);
 }
 

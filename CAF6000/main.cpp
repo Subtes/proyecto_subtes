@@ -48,7 +48,6 @@ int main(int argc, char *argv[])
     m_r->setHardware(m_tHardware);
 
     QDesktopWidget *desktop = a.desktop();
-
     if(desktop->screenCount() == 4){
         qDebug() << "Entre en For de pantallas igual 4 main: ";
         for(int i = 0; i < desktop->screenCount(); i++){

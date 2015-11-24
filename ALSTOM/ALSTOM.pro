@@ -2,7 +2,7 @@
 # Project created by QtCreator 2015-10-06T11:04:05
 #-------------------------------------------------
 
-QT       += core gui quick quickwidgets widgets xml
+QT += core gui quick quickwidgets widgets xml
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = ALSTOM
@@ -23,7 +23,9 @@ SOURCES +=  ../ENet/ENetClient.cpp \
     src/models/subtestate.cpp \
     src/controllers/eventhandler.cpp \
     src/controllers/enethelper.cpp \
-    src/controllers/tractioncontroller.cpp
+    src/controllers/tractioncontroller.cpp \
+    src/controllers/hongoemergenciacontroller.cpp \
+    src/controllers/llavaseguridadcontroller.cpp
 
 HEADERS  += \ ../ENet/ENetClient.h \
     ../ENet/AdmClaves.h \
@@ -36,7 +38,9 @@ HEADERS  += \ ../ENet/ENetClient.h \
     src/models/subtestate.h \
     src/controllers/eventhandler.h \
     src/controllers/enethelper.h \
-    src/controllers/tractioncontroller.h
+    src/controllers/tractioncontroller.h \
+    src/controllers/hongoemergenciacontroller.h \
+    src/controllers/llavaseguridadcontroller.h
 
 FORMS    += \
     boardcenter.ui \
@@ -46,6 +50,7 @@ FORMS    += \
     boardbottom.ui
 
 INCLUDEPATH +=  ../subtewidgets \
+                #../Common \
                 $$PWD/../ENet \
                 $$PWD/../Source/include
 
@@ -54,6 +59,8 @@ DEPENDPATH += $$PWD/../ENet \
 
 LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L../subtewidgets/release -lsubtewidgets \
+        #-L../Common/debug -lCommon \
+        #-L../Common/release -lCommon \
         -L$$PWD/../ENet/ -lenet \
         -L$$PWD/../ENet/ -lWS2_32 \
         -L$$PWD/../ENet/ -lBufferOverflowU \

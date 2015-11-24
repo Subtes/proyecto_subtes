@@ -28,8 +28,8 @@
 #define _MAS 0xBB
 #define _MENOS 0xBD
 
-#ifndef EVENTHANDLER_H
-#define EVENTHANDLER_H
+#ifndef EVENTHANDLER_CAF6000_H
+#define EVENTHANDLER_CAF6000_H
 
 #include <QObject>
 #include <QSplashScreen>
@@ -41,28 +41,24 @@
 #include <Windows.h>
 #include <QString>
 #include <QTime>
-#include "src/controllers/enethelper.h"
 #include "src/controllers/keypresseater.h"
 #include "src/controllers/failures_controller.h"
 #include "src/models/subtestatus.h"
-
+#include "src/controllers/enethelper.h"
 
 class SubteStatus;
 class ENetHelper;
 class Failures_Controller;
 
-class EventHandler : public QObject
+class EventHandler_Caf6000 : public EventHandler
 {
     Q_OBJECT
 
 public:
-    EventHandler(QDesktopWidget *desk);
-    ~EventHandler();
+    EventHandler_Caf6000(QDesktopWidget *desk = 0);
+    ~EventHandler_Caf6000();
 
     void processValueChanged(std::string host, std::string key, std::string value);
-    void notifyValueChanged(std::string key, std::string value);
-    void initConnection();
-
     void setModel(SubteStatus *subte);
     void setFailures(Failures_Controller *failures);
 
@@ -83,7 +79,6 @@ private:
     bool m_splashOn;
     int m_boardsReady = 0;
     std::string m_cargandoEstado = "";
-
 
     bool F1_down;
     bool F2_down;
@@ -121,7 +116,7 @@ signals:
     controlReady();
     controlDisable();
     controlEnable();
-    controlReset();
+    controlReset();    
     closeApp();
     iCambioSenial1();
     bPressed();
@@ -162,4 +157,4 @@ public slots:
 
 };
 
-#endif // EVENTHANDLER_H
+#endif // EVENTHANDLER_CAF6000_H
