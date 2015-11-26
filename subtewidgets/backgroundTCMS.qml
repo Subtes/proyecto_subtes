@@ -40,6 +40,7 @@ Rectangle {
         y: 4
         width: 610
         height: 490
+        transformOrigin: Item.Center
         fillMode: Image.PreserveAspectCrop
         rotation: 0
         source: "resources/alstom_background.png"
@@ -58,8 +59,8 @@ Rectangle {
     }
     Text {
         id: velocimetrodigital
-        x: 148
-        y: 274
+        x: 146
+        y: 275
         width: 12
         height: 21
         text: qsTr(" ")
@@ -114,27 +115,45 @@ Rectangle {
         width: 4
         height: 60
         color: "#080505"
-        rotation: 316
+        rotation: -4
         transformOrigin: Item.Top
         border.color: "#00000000"
         radius: 2
         z: 1
         scale: 1.2
-        border.width: 0
-        smooth:true
         property double speed: 22;
         transform: Rotation{
-            id: rot
-            origin.x: borderBackground.originX
-            origin.y: borderBackground.originY
-            angle: 0
-            Behavior on angle {
-                PropertyAnimation{
-                    duration : 400
-                    easing {type: Easing.OutQuad}
-                }
-            }
+
+
+           id: rot
+            origin.x: 0
+            origin.y: 0
+            angle: 44
+//            Behavior on angle {
+//                PropertyAnimation{
+//                    duration : 400
+//                    easing {type: Easing.OutQuad}
+//                }
+//            }
         }
+    }
+
+
+  // valor de donde debe comenzar el ángulo 44
+  //offset para acomodar aguja 360-44 = 316/120 =2.6333333
+    function updateNeedle(valueIN) {
+
+        rot.angle=(valueIN *2.38)+(44);
+
+        //        if(valueIN<minValue){
+//            valueIN=minValue
+//        }else if(valueIN>maxValue){
+//            valueIN=maxValue
+//        }
+//        console.log("entramos a la velocidad")
+//        currentValue = (valueIN/maxValue)*maxAngle + offsetAngle
+//        rot.angle = currentValue
+//        return "ok"
     }
 
     Rectangle {
@@ -173,7 +192,7 @@ Rectangle {
         width: 13
         height: 168
         color: "#000000"
-        transform: Scale { id:tranfovoltimetroright ;origin.x: 0; origin.y: 170; yScale: 0.1}
+        transform: Scale { id:tranfovoltimetroright ;origin.x: 0; origin.y: 170}
 
     }
 
@@ -189,27 +208,15 @@ Rectangle {
     Rectangle {
         id: barraamperimetro
         x: 490
-        y: 210
-        width: 14
-        height: 85
+        y: 215
+        width: 15
+        height: 21
         color: "#000000"
-        transform: Scale { id:tranfobarraamperimetro ;origin.x: 0; origin.y: 90; yScale: 0.1}
+        transformOrigin: Item.Center
+        scale: 1
+        transform: Scale { id:tranfobarraamperimetro ;origin.x: 0; origin.y: 90}
 
     }
-
-
-    function updateNeedle(valueIN) {
-        if(valueIN<minValue){
-            valueIN=minValue
-        }else if(valueIN>maxValue){
-            valueIN=maxValue
-        }
-        console.log("entramos a la velocidad")
-        currentValue = (valueIN/maxValue)*maxAngle + offsetAngle
-        rot.angle = currentValue
-        return "ok"
-    }
-
 
 
     function updateDigitalVelocity(speed){
@@ -219,26 +226,27 @@ Rectangle {
 
     function updateDigitalVoltimetroLeft(volt){
         voltimetrodigital1.text=volt;
-        tranfovoltimetroleft.xScale = volt/escala_maxima_volt;
+        tranfobarravoltimetroleft.yScale = (volt/escala_maxima_volt);
 
 
     }
 
     function updateDigitalVoltimetroRight(volt){
         voltimetrodigital2.text=volt;
-        tranfovoltimetroright.xScale = volt/escala_maxima_volt;
+        tranfovoltimetroright.yScale = (volt/escala_maxima_volt);
 
 
     }
     function updateDigitalAmperimetro(amp){
         amperimetrodigital.text=amp;
-        if(amp >=0){
-            tranfobarraamperimetro.xScale= amp/escala_maxima_amper
-        }else
-        {
-            tranfobarraamperimetro.xScale= amp/escala_minima_amper
+        tranfobarraamperimetro.yScale= (amp/escala_maxima_amper);
+//        if(amp >=0){
+//            tranfobarraamperimetro.xScale= amp/escala_maxima_amper
+//        }else
+//        {
+//            tranfobarraamperimetro.xScale= amp/escala_minima_amper
 
-        }
+//        }
     }
 
 
@@ -260,11 +268,13 @@ Rectangle {
             states: [
                 State {
                     name: "con"
-                    PropertyChanges { target: puertastren;source: "resources/alstom_puerta_abierta.png"; opacity: 1;}
+                    PropertyChanges { target: abrirpuertas;running:true}
+
                 },
                 State {
                     name: "des"
-                    PropertyChanges { target: blinkAnimation2;  running:true;}
+                    PropertyChanges { target: cerrarpuertas;running:true}
+
                 },
                 State {
                     name: "int"
@@ -277,26 +287,26 @@ Rectangle {
             }
 
             SequentialAnimation {
-                id: blinkAnimation2
-//                running: true
+                id: abrirpuertas
 
-//                   NumberAnimation { target: puertastren; property: "source"; to: "resources/alstom_puertas_entreabiertas.png"; duration: 200 }
-//                   NumberAnimation { target: puertastren; property: "source"; to: "resources/alstom_puertas_cerradas.png"; duration: 200 }
-//                   NumberAnimation { target: puertastren; property: "source"; to: "resources/alstom_puertas_cerradas_bloqueadas.png"; duration: 200 }
+//                 PropertyChanges { target: puertastren;source: "resources/alstom_puertas_entreabiertas.png"; opacity: 1}
+//                 NumberAnimation {target: puertastren;duration: 500 }
+//                 PropertyChanges { target: puertastren;source: "resources/alstom_puertas_cerradas.png"; opacity: 1}
+//                 NumberAnimation {target: puertastren;duration: 500 }
+//                 PropertyChanges { target: puertastren;source: "resources/alstom_puertas_cerradas_bloqueadas.png"; opacity: 1}
+             }
+            SequentialAnimation {
+                id: cerrarpuertas
+
+//                  NumberAnimation {target: puertastren;duration: 500 }
+//                  PropertyChanges { target: puertastren;source: "resources/alstom_puertas_cerradas.png"; opacity: 1}
+//                  NumberAnimation {target: puertastren;duration: 500 }
+//                  PropertyChanges { target: puertastren;source: "resources/alstom_puertas_cerradas_bloqueadas.png"; opacity: 1}
              }
 
         }
         onItemAdded: puertasCoche[index] = item
     }
-//    offset_coche = 41
-//    offset_inicio_puerta = (102-41)
-//    offset_entre_coches = 30
-//    offset_espacio_entre_puertas = 21
-//    puertas_X_coche =8
-//    puertas_X_lado =4
-//    cantidad_de_lados_por_coche: 2
-//    pos_puertas_arriba: 87
-//    pos_puertas_abajo: 117
 
     function getXpuertastren(p){
         var nroCoche = Math.floor(p/puertas_X_coche);

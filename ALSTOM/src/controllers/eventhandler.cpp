@@ -25,7 +25,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_velocidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltajeizq");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltajeder");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_intensidad");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");//esfuerzo
 
             emit controlReset();
             m_eNetClient->CambiarValorClave("c_rana","at");
@@ -87,12 +87,12 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             qDebug() << "voltaje incorrecta." ;
         }
     }
-    else if(key.compare("v_intensidad") == 0){
+    else if(key.compare("v_esfuerzo") == 0){
         try{
             m_subte->updateneedleamperimetro(std::stod(value));
         }
         catch (...) {
-            qDebug() << "Intencidad incorrecta." ;
+            qDebug() << "esfuerzo incorrecta." ;
         }
     }
 

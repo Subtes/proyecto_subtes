@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QQuickWidget" name="quickWidget">
+  <widget class="QQuickWidget" name="qAlstomTcms">
    <property name="geometry">
     <rect>
      <x>0</x>

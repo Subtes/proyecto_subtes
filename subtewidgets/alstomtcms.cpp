@@ -6,6 +6,8 @@ AlstomTcms::AlstomTcms(QWidget *parent) :
     ui(new Ui::AlstomTcms)
 {
     ui->setupUi(this);
+    m_qmlView = ui->qAlstomTcms->rootObject();
+
 }
 
 AlstomTcms::~AlstomTcms()

@@ -23,7 +23,8 @@ int main(int argc, char *argv[])
     // VIEWS
     BoardCenter * m_c = new BoardCenter(0);
     BoardAtp *m_a = new BoardAtp(0);
-    BoardMac *m_m = new BoardMac(0);
+    qDebug()<<"1";
+    BoardMac *m_m = new BoardMac(0,m_subte,m_eventHandler);
 
     BoardBottom *m_b = new BoardBottom(0);
     BoardHardware *m_h = new BoardHardware(0,m_subte,m_eventHandler);
