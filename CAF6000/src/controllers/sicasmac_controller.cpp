@@ -14,31 +14,27 @@ SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac
     pantallasicas.clear();
     saveId.clear();
     estAnteriorFallaCocheSicas.clear();
+    sicasOn = false;
 
     m_hardwareSupport = th;
 
     connect(m_sicasmac,SIGNAL(onPressSigRow()),this,SLOT(onPressSigRow()));
     connect(m_sicasmac,SIGNAL(onPressAntRow()),this,SLOT(onPressAntRow()));
-    connect(m_subte,SIGNAL(bateriaCon()),m_sicasmac,SLOT(turnOnSicas()));
     connect(m_subte,SIGNAL(bateriaCon()),this,SLOT(prendoSicas()));
-    connect(m_subte,SIGNAL(bateriaDes()),m_sicasmac,SLOT(turnOffSicas()));
+    connect(m_subte,SIGNAL(bateriaDes()),this,SLOT(apagoSicas()));
     connect(m_sicasmac,SIGNAL(sicasOk()),m_subte,SLOT(setSicasOk()));
     connect(m_subte,SIGNAL(hiloLazoChanged(bool)),this,SLOT(estadoFreno(bool)));
     connect(m_subte,SIGNAL(CSCPChanged(bool)),this,SLOT(logicaPuertasSicas(bool)));
-
     connect(m_subte,SIGNAL(senalDisyuntorDes()),this,SLOT(cargarMensajeDisyuntor()));
     connect(m_subte,SIGNAL(senalDisyuntorCon()),this,SLOT(sacoMensajeDisyuntor()));
-    connect(m_subte,SIGNAL(conmutadorServicioAutomatic()),this,SLOT(sacoMensajeCompDesconectado()));
-    connect(m_subte,SIGNAL(conmutadorServicioManual()),this,SLOT(cargarMensajeCompDesconectado()));
-   // connect(m_subte,SIGNAL(conmutadorPServicioBotonCon()),this,SLOT(sacoMensajeConvFueraServicio()));
-   // connect(m_subte,SIGNAL(conmutadorPServicioBotonDes()),this,SLOT(cargarMensajeConvFueraServicio()));
+    connect(m_subte,SIGNAL(compresorAuxCon()),this,SLOT(sacoMensajeCompDesconectado()));
+    connect(m_subte,SIGNAL(compresorAuxDes()),this,SLOT(cargarMensajeCompDesconectado()));
+    connect(m_subte,SIGNAL(convertidorCon()),this,SLOT(sacoMensajeConvFueraServicio()));
+    connect(m_subte,SIGNAL(convertidorDes()),this,SLOT(cargarMensajeConvFueraServicio()));
     connect(m_subte,SIGNAL(frenoEstacionamientoCon()),this,SLOT(cargarMensajeFrenoEstacAplicado()));
     connect(m_subte,SIGNAL(frenoEstacionamientoDes()),this,SLOT(sacoMensajeFrenoEstacAplicado()));
     connect(m_subte,SIGNAL(estadoManioAcople()),this,SLOT(cargarMensajeAcople()));
     connect(m_subte,SIGNAL(estadoNormal()),this,SLOT(sacoMensajeAcople()));
-
-
-
 
     cargoVectorEstadoAnteriorFalla();
 
@@ -147,7 +143,7 @@ void SicasMac_Controller::separoMensajes(QString mensaje){
         {
             bajaMensaje(strList[0]);
         }
-        if (strList[2]=="A"){
+        if (strList[2]=="A" && sicasOn){
             emit playSound(2);
         }
     }
@@ -511,14 +507,13 @@ void SicasMac_Controller::logicaPuertasSicas(bool b){
 
 void SicasMac_Controller::prendoSicas(){
     refrescoVista();
+    m_sicasmac->turnOnSicas();
+    sicasOn = true;
 }
 
-void SicasMac_Controller::turnOnSicas(){
-//    sacoMensajeAcople();
-//    sacoMensajeCompDesconectado();
-//    sacoMensajeConvFueraServicio();
-//    sacoMensajeFrenoEstacAplicado();
-//    sacoMensajeDisyuntor();
+void SicasMac_Controller::apagoSicas(){
+    m_sicasmac->turnOffSicas();
+    sicasOn = false;
 }
 
 

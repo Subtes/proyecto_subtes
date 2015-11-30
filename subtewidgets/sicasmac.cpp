@@ -243,7 +243,7 @@ void SicasMac::turnOnSicas()
     QMetaObject::invokeMethod(m_qmlView, "turnOnSicas",
             Q_RETURN_ARG(QVariant, returnedValue));
 }
-void SicasMac::turnOffSicas()
+void SicasMac:: turnOffSicas()
 {
     QVariant returnedValue;
     QMetaObject::invokeMethod(m_qmlView, "turnOffSicas",

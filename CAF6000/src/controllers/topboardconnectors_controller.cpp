@@ -209,6 +209,16 @@ void TopBoardConnectors_Controller::conmutadorPuestaServicioPressed(){
         m_arranqueDes->setClickeable(false);
         m_arranqueCon->turnOff();
         m_arranqueDes->turnOff();
+
+        /*
+        m_subte->setPantographConnector(false);
+        m_subte->setCompressorAuxConnector(false);
+        m_subte->setConverterConnector(false);
+        m_subte->setMainCompressorConnector(false);
+        m_subte->setLightingConnector(false);
+        m_subte->setAirConnector(false);
+        m_subte->setMegaphoneConnector(false);
+        */
     }
 }
 
@@ -299,7 +309,7 @@ void TopBoardConnectors_Controller::mainCompressorConPressed(){
     m_mainCompressorDes->setClickeable(true);
     m_mainCompressorDes->turnOff();
     m_mainCompressorCon->turnOn();
-    m_subte->setConverterConnector(true);
+    m_subte->setMainCompressorConnector(true);
 }
 
 void TopBoardConnectors_Controller::mainCompressorDesPressed(){
@@ -307,7 +317,7 @@ void TopBoardConnectors_Controller::mainCompressorDesPressed(){
     m_mainCompressorDes->setClickeable(false);
     m_mainCompressorDes->turnOn();
     m_mainCompressorCon->turnOff();
-    m_subte->setConverterConnector(false);
+    m_subte->setMainCompressorConnector(false);
 }
 
 void TopBoardConnectors_Controller::lightingConPressed(){
@@ -315,7 +325,7 @@ void TopBoardConnectors_Controller::lightingConPressed(){
     m_lightingDes->setClickeable(true);
     m_lightingDes->turnOff();
     m_lightingCon->turnOn();
-    m_subte->setConverterConnector(true);
+    m_subte->setLightingConnector(true);
 }
 
 void TopBoardConnectors_Controller::lightingDesPressed(){
@@ -323,7 +333,7 @@ void TopBoardConnectors_Controller::lightingDesPressed(){
     m_lightingDes->setClickeable(false);
     m_lightingDes->turnOn();
     m_lightingCon->turnOff();
-    m_subte->setConverterConnector(false);
+    m_subte->setLightingConnector(false);
 }
 
 void TopBoardConnectors_Controller::airConPressed(){
@@ -331,7 +341,7 @@ void TopBoardConnectors_Controller::airConPressed(){
     m_airDes->setClickeable(true);
     m_airDes->turnOff();
     m_airCon->turnOn();
-    m_subte->setConverterConnector(true);
+    m_subte->setAirConnector(true);
 }
 
 void TopBoardConnectors_Controller::airDesPressed(){
@@ -339,7 +349,7 @@ void TopBoardConnectors_Controller::airDesPressed(){
     m_airDes->setClickeable(false);
     m_airDes->turnOn();
     m_airCon->turnOff();
-    m_subte->setConverterConnector(false);
+    m_subte->setAirConnector(false);
 }
 
 void TopBoardConnectors_Controller::megaphoneConPressed(){

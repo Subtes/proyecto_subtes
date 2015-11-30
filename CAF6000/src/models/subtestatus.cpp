@@ -370,22 +370,97 @@ void SubteStatus::setConmutadorPuestaServicio(bool status){
 void SubteStatus::setConmutadorPuestaServicioAutomatica(bool status){
     if (status){
         m_eventHandler->notifyValueChanged("c_conmutador_puesta_en_servicio_automatica","con");
-        emit conmutadorPServicioBotonCon();
         qDebug() << "c_conmutador_puesta_en_servicio_automatica :con";
     }else{
         m_eventHandler->notifyValueChanged("c_conmutador_puesta_en_servicio_automatica","des");
-        emit conmutadorPServicioBotonDes();
         qDebug() << "c_conmutador_puesta_en_servicio_automatica: des";
     }
 }
 
-void SubteStatus::setPantographConnector(bool status){}
-void SubteStatus::setCompressorAuxConnector(bool status){}
-void SubteStatus::setConverterConnector(bool status){}
-void SubteStatus::setMainCompressorConnector(bool status){}
-void SubteStatus::setLightingConnector(bool status){}
-void SubteStatus::setAirConnector(bool status){}
-void SubteStatus::setMegaphoneConnector(bool status){}
+void SubteStatus::setPantographConnector(bool status){
+    if (status){
+        m_eventHandler->notifyValueChanged("c_pantografo","con");
+        emit pantografoCon();
+        qDebug() << "c_conmutador_pantografo :con";
+    }else{
+        m_eventHandler->notifyValueChanged("c_pantografo","des");
+        emit pantografoDes();
+        qDebug() << "c_conmutador_pantografo: des";
+    }
+}
+
+void SubteStatus::setCompressorAuxConnector(bool status){
+    if (status){
+        m_eventHandler->notifyValueChanged("c_compresorAux","con");
+        emit compresorAuxCon();
+        qDebug() << "c_compresorAux :con";
+    }else{
+        m_eventHandler->notifyValueChanged("c_compresorAux","des");
+        emit compresorAuxDes();
+        qDebug() << "c_compresorAux: des";
+    }
+}
+
+void SubteStatus::setConverterConnector(bool status){
+    if (status){
+        m_eventHandler->notifyValueChanged("c_convertidor","con");
+        emit convertidorCon();
+        qDebug() << "c_convertidor :con";
+    }else{
+        m_eventHandler->notifyValueChanged("c_convertidor","des");
+        emit convertidorDes();
+        qDebug() << "c_convertidor: des";
+    }
+}
+
+void SubteStatus::setMainCompressorConnector(bool status){
+    if (status){
+        m_eventHandler->notifyValueChanged("c_compresorPpal","con");
+        emit compresorPpalCon();
+        qDebug() << "c_compresorPpal :con";
+    }else{
+        m_eventHandler->notifyValueChanged("c_compresorPpal","des");
+        emit compresorPpalDes();
+        qDebug() << "c_compresorPpal: des";
+    }
+}
+
+void SubteStatus::setLightingConnector(bool status){
+    if (status){
+        m_eventHandler->notifyValueChanged("c_alumbrado","con");
+        emit alumbradoCon();
+        qDebug() << "c_alumbrado :con";
+    }else{
+        m_eventHandler->notifyValueChanged("c_alumbrado","des");
+        emit alumbradoDes();
+        qDebug() << "c_alumbrado: des";
+    }
+}
+
+void SubteStatus::setAirConnector(bool status){
+    if (status){
+        m_eventHandler->notifyValueChanged("c_aireAcondicionado","con");
+        emit aireAcondicionadoCon();
+        qDebug() << "c_aireAcondicionado :con";
+    }else{
+        m_eventHandler->notifyValueChanged("c_aireAcondicionado","des");
+        emit aireAcondicionadoDes();
+        qDebug() << "c_aireAcondicionado: des";
+    }
+}
+
+void SubteStatus::setMegaphoneConnector(bool status){
+    if (status){
+        m_eventHandler->notifyValueChanged("c_megafonia","con");
+        emit megafoniaCon();
+        qDebug() << "c_megafonia :con";
+    }else{
+        m_eventHandler->notifyValueChanged("c_megafonia","des");
+        emit megafoniaDes();
+        qDebug() << "c_megafonia: des";
+    }
+}
+
 void SubteStatus::setParkingBrakeConnector(bool status){
     if (status){
         m_eventHandler->notifyValueChanged("c_freno_estacionamiento","con");
