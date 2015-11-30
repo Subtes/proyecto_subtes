@@ -15,8 +15,25 @@
 #include "src/controllers/keypresseater.h"
 #include "src/controllers/failures_controller.h"
 
+#include "logger.h"
+
+
+INITIALIZE_EASYLOGGINGPP
+
+
+
 int main(int argc, char *argv[])
 {
+
+    qInstallMessageHandler(logger::logMessageOutput);
+
+    DefaultLogManager mLogManager;
+    mLogManager.initialize("logs/CAF6000_logexec", DefaultLogManager::EXECUTION_FILE);
+
+
+    LOG(INFO) << "Iniciando CAF6000";
+
+
     //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
     QApplication::setAttribute(Qt::AA_UseOpenGLES,true);
     //QApplication::setAttribute(Qt::AA_UseDesktopOpenGL,true);

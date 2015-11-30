@@ -2,6 +2,7 @@
 
 #include "boardcenter.h"
 #include "ui_boardcenter.h"
+#include "DefaultLogManager.h"
 
 BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eventHandler) :
     BaseBoard(parent,subte,eventHandler),
@@ -63,7 +64,7 @@ BoardCenter::~BoardCenter()
 
 void BoardCenter::startBoard()
 {
-    qDebug() << "board center startBoard";
+    LOG(INFO) << "board center startBoard";
 
     m_wiper = new Wiper_Controller(m_subte,ui->wiper);;
     m_emergencyOverride = new EmergencyOverride_Controller(m_subte,ui->anulacionEmergencia);

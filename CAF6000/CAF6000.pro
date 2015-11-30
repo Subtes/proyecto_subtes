@@ -54,7 +54,8 @@ SOURCES += ../ENet/ENetClient.cpp \
     src/controllers/hombremuerto_controller.cpp \
     src/controllers/llavemodoconduccion_controller.cpp \
     src/controllers/key_topboard_controller.cpp \
-    src/controllers/frenoretencion_controller.cpp
+    src/controllers/frenoretencion_controller.cpp \
+    logger.cpp
 
 HEADERS  += ../ENet/ENetClient.h \
     ../ENet/AdmClaves.h \
@@ -98,7 +99,10 @@ HEADERS  += ../ENet/ENetClient.h \
     src/controllers/hombremuerto_controller.h \
     src/controllers/llavemodoconduccion_controller.h \
     src/controllers/key_topboard_controller.h \
-    src/controllers/frenoretencion_controller.h
+    src/controllers/frenoretencion_controller.h \
+    logger.h \
+    DefaultLogManager.h \
+    easylogging++.h
 
 FORMS    += boardcenter.ui \
     boardright.ui \

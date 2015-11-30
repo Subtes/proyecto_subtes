@@ -2,6 +2,7 @@
 
 #include "boardtop.h"
 #include "ui_boardtop.h"
+#include "DefaultLogManager.h"
 
 BoardTop::BoardTop(QWidget *parent, SubteStatus * subte, EventHandler *eventHandler) :
     BaseBoard(parent,subte,eventHandler),
@@ -58,7 +59,7 @@ BoardTop::~BoardTop()
 
 void BoardTop::startBoard()
 {
-    qDebug() << "board top startBoard";
+    LOG(INFO) << "board top startBoard";
 
     ui->seta->setClearColor(Qt::transparent);
     ui->seta->setAttribute(Qt::WA_AlwaysStackOnTop);
