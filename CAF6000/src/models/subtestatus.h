@@ -68,24 +68,34 @@ signals:
     atpOn();
     atpOff();
     retentionBrakeChanged(bool status);
-    bateriaCon();
-    bateriaDes();
     modeOperation(int m);
-    conmutadorServicioAutomatic();
-    conmutadorServicioManual();
-    conmutadorPServicioBotonCon();
-    conmutadorPServicioBotonDes();
-    senalDisyuntorDes();
-    senalDisyuntorCon();
-    frenoEstacionamientoCon();
-    frenoEstacionamientoDes();
     estadoNormal();
     estadoManioAcople();
 
-
+    senalDisyuntorDes();
+    senalDisyuntorCon();
+    conmutadorServicioAutomatic();
+    conmutadorServicioManual();
+    bateriaCon();
+    bateriaDes();
+    pantografoCon();
+    pantografoDes();
+    compresorAuxCon();
+    compresorAuxDes();
+    convertidorCon();
+    convertidorDes();
+    compresorPpalCon();
+    compresorPpalDes();
+    alumbradoCon();
+    alumbradoDes();
+    aireAcondicionadoCon();
+    aireAcondicionadoDes();
+    megafoniaCon();
+    megafoniaDes();
+    frenoEstacionamientoCon();
+    frenoEstacionamientoDes();
 
 public:
-
     static const bool PUERTAS_CERRADAS = false;
     static const bool PUERTAS_ABIERTAS = true;
 
