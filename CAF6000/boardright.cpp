@@ -2,6 +2,7 @@
 
 #include "boardright.h"
 #include "ui_boardright.h"
+#include "DefaultLogManager.h"
 
 BoardRight::BoardRight(QWidget *parent, SubteStatus * subte, EventHandler *eventHandler) :
     BaseBoard(parent,subte,eventHandler),
@@ -39,7 +40,7 @@ BoardRight::~BoardRight()
 
 void BoardRight::startBoard()
 {
-    qDebug() << "board right startBoard";
+    LOG(INFO) << "board right startBoard";
 
     ui->calientapies->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blue.png"));
     ui->desacople->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));

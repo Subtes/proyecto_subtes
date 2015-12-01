@@ -21,7 +21,7 @@ Rectangle {
         //horn.play();
         down.opacity = 1;
         up.opacity = 0;
-        pedal.pedalPressed();
+        pedal.pedalPressed();        
     }
 
     function release() {

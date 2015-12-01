@@ -2,6 +2,7 @@
 
 #include "boardhardware.h"
 #include "ui_boardhardware.h"
+#include "DefaultLogManager.h"
 
 BoardHardware::BoardHardware(QWidget *parent, SubteStatus * subte, EventHandler *eventHandler) :
     BaseBoard(parent,subte,eventHandler),
@@ -39,7 +40,7 @@ BoardHardware::~BoardHardware()
 
 void BoardHardware::startBoard()
 {
-    qDebug() << "board hardware startBoard";
+    LOG(INFO) << "board hardware startBoard";
 
     m_horn = new Horn_Controller(m_subte,ui->horn);
     m_tractionLever = new TractionLever_Controller(m_subte,ui->traction, m_tractionHardware);
