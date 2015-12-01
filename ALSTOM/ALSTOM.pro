@@ -23,7 +23,9 @@ SOURCES +=  ../ENet/ENetClient.cpp \
     src/models/subtestate.cpp \
     src/controllers/eventhandler.cpp \
     src/controllers/enethelper.cpp \
-    src/controllers/tractioncontroller.cpp
+    src/controllers/tractioncontroller.cpp \
+    src/controllers/alstomtcms_controller.cpp \
+    src/controllers/base_controller.cpp
 
 HEADERS  += \ ../ENet/ENetClient.h \
     ../ENet/AdmClaves.h \
@@ -36,7 +38,9 @@ HEADERS  += \ ../ENet/ENetClient.h \
     src/models/subtestate.h \
     src/controllers/eventhandler.h \
     src/controllers/enethelper.h \
-    src/controllers/tractioncontroller.h
+    src/controllers/tractioncontroller.h \
+    src/controllers/alstomtcms_controller.h \
+    src/controllers/base_controller.h
 
 FORMS    += \
     boardcenter.ui \

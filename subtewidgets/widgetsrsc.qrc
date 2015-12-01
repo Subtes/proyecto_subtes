@@ -153,5 +153,31 @@
         <file>resources/alstom_yellowsmall_on.png</file>
         <file>resources/alstom_black.png</file>
         <file>resources/alstom_black_on.png</file>
+        <file>resources/alstom_background.png</file>
+        <file>resources/alstom_puerta_abierta.png</file>
+        <file>resources/alstom_puerta_conobstaculo.png</file>
+        <file>resources/alstom_puertas_cerradas.png</file>
+        <file>resources/alstom_puertas_cerradas_bloqueadas.png</file>
+        <file>resources/alstom_puertas_entreabiertas.png</file>
+        <file>resources/alstom_puerta_aislada.png</file>
+        <file>resources/alstom_contactor_de_transferencia_abierto.png</file>
+        <file>resources/alstom_contactor_de_transferencia_cerrado.png</file>
+        <file>resources/alstom_convertidor_auxiliar_1_defectuoso.png</file>
+        <file>resources/alstom_convertidor_auxiliar_1_defectuoso_susceptible.png</file>
+        <file>resources/alstom_convertidor_auxiliar_1_operativo.png</file>
+        <file>resources/alstom_convertidor_auxiliar_1_sin_comunicacion.png</file>
+        <file>resources/alstom_Freno_de_estacionamiento_con_problemas.png</file>
+        <file>resources/alstom_Freno_de_estacionamiento_en_estado_desconocido.png</file>
+        <file>resources/alstom_Freno_de_estacionamiento_operacional_y_aplicado.png</file>
+        <file>resources/alstom_Freno_de_estacionamiento_operacional_y_libre.png</file>
+        <file>resources/alstom_medialuna_cabina1.png</file>
+        <file>resources/alstom_medialuna_cabina2.png</file>
+        <file>resources/alstom_pantografo_aislado.png</file>
+        <file>resources/alstom_pantografo_para_arriba.png</file>
+        <file>resources/alstom_pantografo_por_defecto.png</file>
+        <file>resources/alstom_PCE_esta_aislado.png</file>
+        <file>resources/alstom_PCE_operativo.png</file>
+        <file>resources/alstom_PCE_por_defecto.png</file>
+        <file>resources/alstom_needle_bar.png</file>
     </qresource>
 </RCC>

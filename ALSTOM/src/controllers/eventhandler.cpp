@@ -20,7 +20,18 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->CambiarValorClave("c_listo","0");
             emit controlReady();
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estado_simulador");
+
+
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_velocidad");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltajeizq");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltajeder");
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
+
+//------------------------------------SACAR SOLO PARA PROBAR PUERTAS--------
+
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_doors");
+
+
             emit controlReset();
             m_eNetClient->CambiarValorClave("c_rana","at");
             m_eNetClient->CambiarValorClave("c_regulador_mando","0");
@@ -60,6 +71,47 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             emit controlDisable();
         }
     }
+
+    else if(key.compare("v_velocidad") == 0){
+        m_subte->updateneedleVelocityTcms(std::stod(value));
+        qDebug() << "Velocidad ingresa velocidad correcta." ;
+    }
+    else if(key.compare("v_voltajeizq") == 0){
+        try{
+            m_subte->updateVoltimetroLeftTCMS(std::stod(value));
+        }
+        catch (...) {
+            qDebug() << "voltaje incorrecta." ;
+        }
+    }
+    else if(key.compare("v_voltajeder") == 0){
+        try{
+            m_subte->updateVoltimetroRightTCMS(std::stod(value));
+        }
+        catch (...) {
+            qDebug() << "voltaje incorrecta." ;
+        }
+    }
+    else if(key.compare("v_esfuerzo") == 0){
+        try{
+            m_subte->updateneedleamperimetro(std::stod(value));
+        }
+        catch (...) {
+            qDebug() << "esfuerzo incorrecta." ;
+        }
+    }
+
+//------------------------------------SACAR SOLO PARA PROBAR PUERTAS--------
+
+    else if(key.compare("v_doors") == 0){
+        try{
+            m_subte->updatevaluedoors(std::stod(value));
+        }
+        catch (...) {
+            qDebug() << "valor puertas incorrecto." ;
+        }
+    }
+
 }
 
 void EventHandler::notifyValueChanged(std::string key, std::string value)

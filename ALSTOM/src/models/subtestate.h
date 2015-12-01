@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include "src/controllers/eventhandler.h"
-
 class EventHandler;
 
 class SubteState : public QObject
@@ -14,6 +13,20 @@ private:
     EventHandler *m_eventHandler;
     bool hombreMuerto = false;
     void updateTraction(double value);
+
+    //ALSTOMTCMS
+        double m_needleVelocityTcms;
+        double m_voltimetroLeft;
+        double m_voltimetroRight;
+        double m_amperimetro;
+        double m_valuedoors;
+
+signals:
+   velocityChangeTcms(double velocity);
+   voltimetroChangeLeft(double voltL);
+   voltimetroChangeRight(double voltR);
+   amperimetroChange(double amper);
+   doorsChange(double statedoors);
 
 public:
     SubteState();
@@ -27,6 +40,11 @@ public slots:
     void setBrake(int);
     void setEmergencyBeake(bool);
     void setMode(int value);
+    void updateneedleVelocityTcms(double value);
+    void updateVoltimetroLeftTCMS(double value);
+    void updateVoltimetroRightTCMS(double value);
+    void updateneedleamperimetro(double value);
+    void updatevaluedoors(double value);
 };
 
 #endif // SUBTESTATE_H

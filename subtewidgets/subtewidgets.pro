@@ -22,7 +22,8 @@ HEADERS += \
     llavetecho.h \
     tractionhardware.h \
     alstomtractionlever.h \
-    alstomselectormodoconduccion.h
+    alstomselectormodoconduccion.h \
+    alstomtcms.h
 
 SOURCES += \
     tractionlever.cpp \
@@ -41,7 +42,8 @@ SOURCES += \
     llavetecho.cpp \
     tractionhardware.cpp \
     alstomtractionlever.cpp \
-    alstomselectormodoconduccion.cpp
+    alstomselectormodoconduccion.cpp \
+    alstomtcms.cpp
 
 FORMS += \
     tractionlever.ui \
@@ -59,7 +61,8 @@ FORMS += \
     llavemodoconduccion.ui \
     llavetecho.ui \
     alstomtractionlever.ui \
-    alstomselectormodoconduccion.ui
+    alstomselectormodoconduccion.ui \
+    alstomtcms.ui
 
 RESOURCES += \
             qmlrsc.qrc \

@@ -23,6 +23,8 @@ class SicasMac_Controller : public Base_Controller
     int DatosPorCoche;
     int maxRenglonesSicas;
     bool sicasOn;
+    int offsetCantRows;
+    int cantdoorsicas;
     QStringList pantallasicas ;
     QStringList saveId ;
     QStringList estAnteriorFallaCocheSicas;

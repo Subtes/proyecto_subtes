@@ -16,5 +16,6 @@
         <file>sicasmac.qml</file>
         <file>llavetrespuntos.qml</file>
         <file>alstom_selectorModoConduccion.qml</file>
+        <file>backgroundTCMS.qml</file>
     </qresource>
 </RCC>

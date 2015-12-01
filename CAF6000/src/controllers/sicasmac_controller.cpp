@@ -15,7 +15,8 @@ SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac
     saveId.clear();
     estAnteriorFallaCocheSicas.clear();
     sicasOn = false;
-
+    offsetCantRows=5;// cantidad de renglones por
+    cantdoorsicas=4;//cantidad de puestas por lado de cada coche
     m_hardwareSupport = th;
 
     connect(m_sicasmac,SIGNAL(onPressSigRow()),this,SLOT(onPressSigRow()));
@@ -57,11 +58,11 @@ void SicasMac_Controller::cargoVectorEstadoAnteriorFalla(){
  */
 void SicasMac_Controller::onPressSigRow(){
     int posicion = m_sicasmac->getPosActualRenglon();
-    cantPantallasSicas= floor(posicion/5);
+    cantPantallasSicas= floor(posicion/offsetCantRows);
     int actual=0;
     if (posicion < pantallasicas.size()){
         m_sicasmac->turnOnSiguiente();
-        actual=(posicion%5);
+        actual=(posicion%offsetCantRows);
         if(actual>0){
             m_sicasmac->sigPosicionSicas();
             m_sicasmac->turnOnAnterior();
@@ -84,19 +85,19 @@ void SicasMac_Controller::onPressSigRow(){
  */
 void SicasMac_Controller::onPressAntRow(){
     int posicion = m_sicasmac->getPosActualRenglon();
-    cantPantallasSicas= floor(posicion/5);
+    cantPantallasSicas= floor(posicion/offsetCantRows);
     int actual=0;
     if (posicion>0){
         m_sicasmac->turnOnAnterior();
         m_sicasmac->turnOnSiguiente();
-        actual=(posicion%5);
+        actual=(posicion%offsetCantRows);
         if(actual>0){
             m_sicasmac->antPositionSicas();
         }
         else{
             m_sicasmac->endRenglonSicas();
             posicion = m_sicasmac->getPosActualRenglon();
-            cantPantallasSicas= floor(posicion/5);
+            cantPantallasSicas= floor(posicion/offsetCantRows);
             refrescoVista();
         }
     }
@@ -159,7 +160,7 @@ void SicasMac_Controller::generoRenglonesSicas(QString texto, QString trenes, QS
     QStringList cocheXcoche = trenes.split(" ");
     QString sepCocheLetra;
     QString trenesSinBlink;
-    int  actual=(index%5);
+    int  actual=(index%offsetCantRows);
     QString trenesConBlink;
     QStringList cocheYLetra;
     QString valorI = "I";
@@ -209,7 +210,7 @@ void SicasMac_Controller::bajaMensaje(QString texto){
     if(posicion >= 0){
         pantallasicas.removeAt(posicion);
         saveId.removeAt(posicion);
-        cantPantallasSicas= floor((posicion-1)/5);//X
+        cantPantallasSicas= floor((posicion-1)/offsetCantRows);//X
         if (posicion==0){
             cantPantallasSicas=0;
         }
@@ -256,7 +257,7 @@ int SicasMac_Controller::buscoPosicion(QString mensaje){
  */
 
 void SicasMac_Controller::borrarPantallaSicas(){
-    for (int var = 0; var < 5; var++){
+    for (int var = 0; var < offsetCantRows; var++){
         m_sicasmac->textEditSicas(" "," "," ",var);
         m_sicasmac->borrarArregloBlinkSicas(" ",var);
     }
@@ -271,14 +272,14 @@ void SicasMac_Controller::borrarPantallaSicas(){
 void SicasMac_Controller::refrescoVista(){
     QStringList  strList;
     int actual;
-    int inicio = (cantPantallasSicas*5);
-    int fin = ((cantPantallasSicas+1)*5);
+    int inicio = (cantPantallasSicas*offsetCantRows);
+    int fin = ((cantPantallasSicas+1)*offsetCantRows);
     if (fin > pantallasicas.size()){
         fin= pantallasicas.size();
     }
     borrarPantallaSicas();
     for (int var = inicio; var < fin ;var++) {
-        actual=(var%5);
+        actual=(var%offsetCantRows);
         strList = separoCaracteres(pantallasicas[var]);
         generoRenglonesSicas(strList[0],strList[1],strList[2],actual);
     }
@@ -456,22 +457,22 @@ void SicasMac_Controller::logicaPuertasSicas(bool b){
  int cantPuertas=0;
     if(m_subte->leftDoors()){
         for (int var = 0; var < cantCochesTotal; var++) {
-            for (int datos = 0; datos < 4; datos++) {
+            for (int datos = 0; datos < cantdoorsicas; datos++) {
                 verificoEstPuertas("abierto",cantPuertas); //las puertas
                 cantPuertas++;
             }
-            cantPuertas = cantPuertas + 4;
+            cantPuertas = cantPuertas + cantdoorsicas;
         }
         separoMensajes("Puertas Abiertas;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
         refrescoVista();
     }
     else{
         for (int var = 0; var < cantCochesTotal; var++) {
-            for (int datos = 0; datos < 4; datos++) {
+            for (int datos = 0; datos < cantdoorsicas; datos++) {
                 verificoEstPuertas("cerrado",cantPuertas); //las puertas
                 cantPuertas++;
             }
-            cantPuertas = cantPuertas + 4;
+            cantPuertas = cantPuertas + cantdoorsicas;
         }
         bajaMensaje("Puertas Abiertas");
         qDebug()<< "cantpuertas cerradas left  "<<cantPuertas;
@@ -480,8 +481,8 @@ void SicasMac_Controller::logicaPuertasSicas(bool b){
    cantPuertas=0;
    if(m_subte->rightDoors()){
       for (int var = 0; var < cantCochesTotal; var++) {
-            cantPuertas = cantPuertas + 4;
-            for (int datos = 0; datos < 4; datos++) {
+            cantPuertas = cantPuertas + cantdoorsicas;
+            for (int datos = 0; datos < cantdoorsicas; datos++) {
                 verificoEstPuertas("abierto",cantPuertas); //las puertas
                 cantPuertas++;
             }
@@ -493,8 +494,8 @@ void SicasMac_Controller::logicaPuertasSicas(bool b){
     }
    else{
         for (int var = 0; var < cantCochesTotal; var++) {
-            cantPuertas = cantPuertas + 4;
-            for (int datos = 0; datos < 4; datos++) {
+            cantPuertas = cantPuertas + cantdoorsicas;
+            for (int datos = 0; datos < cantdoorsicas; datos++) {
                 verificoEstPuertas("cerrado",cantPuertas); //las puertas
                 cantPuertas++;
             }
