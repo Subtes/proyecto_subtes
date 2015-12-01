@@ -66,3 +66,47 @@ void AlstomTcms::updateDigitalAmperimetro(double amper){
             Q_RETURN_ARG(QVariant, returnedValue),
             Q_ARG(QVariant, amper));
 }
+
+
+void AlstomTcms::closedoors(double doors){
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "closedoors",
+            Q_RETURN_ARG(QVariant, returnedValue),
+            Q_ARG(QVariant, doors));
+}
+void AlstomTcms::doornotclosedandnotopened(double doors){
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "doornotclosedandnotopened",
+            Q_RETURN_ARG(QVariant, returnedValue),
+            Q_ARG(QVariant, doors));
+}
+
+void AlstomTcms::opendoors(double doors){
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "opendoors",
+            Q_RETURN_ARG(QVariant, returnedValue),
+            Q_ARG(QVariant, doors));
+}
+
+
+void AlstomTcms::obstacledetected(double doors){
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "obstacledetected",
+            Q_RETURN_ARG(QVariant, returnedValue),
+            Q_ARG(QVariant, doors));
+}
+void AlstomTcms::doorisolated(double doors){
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "doorisolated",
+            Q_RETURN_ARG(QVariant, returnedValue),
+            Q_ARG(QVariant, doors));
+}
+void AlstomTcms::doorclosedandlocked(double doors){
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "doorclosedandlocked",
+            Q_RETURN_ARG(QVariant, returnedValue),
+            Q_ARG(QVariant, doors));
+}
+
+
+

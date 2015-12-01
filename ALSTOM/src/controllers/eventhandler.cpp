@@ -25,7 +25,12 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_velocidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltajeizq");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltajeder");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");//esfuerzo
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
+
+//------------------------------------SACAR SOLO PARA PROBAR PUERTAS--------
+
+            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_doors");
+
 
             emit controlReset();
             m_eNetClient->CambiarValorClave("c_rana","at");
@@ -93,6 +98,17 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         }
         catch (...) {
             qDebug() << "esfuerzo incorrecta." ;
+        }
+    }
+
+//------------------------------------SACAR SOLO PARA PROBAR PUERTAS--------
+
+    else if(key.compare("v_doors") == 0){
+        try{
+            m_subte->updatevaluedoors(std::stod(value));
+        }
+        catch (...) {
+            qDebug() << "valor puertas incorrecto." ;
         }
     }
 

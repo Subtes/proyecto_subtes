@@ -99,4 +99,11 @@ void SubteState::updateneedleamperimetro(double value){
     emit amperimetroChange(m_amperimetro);
 }
 
+//SACAR ES SOLO PARA PROBAR
 
+
+void SubteState::updatevaluedoors(double value){
+    m_valuedoors = value;
+    qDebug()<<"subte puertas"<<value;
+    emit doorsChange(m_valuedoors);
+}

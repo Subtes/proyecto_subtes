@@ -5,6 +5,7 @@
 #include "src/models/subtestate.h"
 #include <QObject>
 #include <ENetClient.h>
+#include "QString"
 
 class SubteState;
 class ENetHelper;

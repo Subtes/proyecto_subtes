@@ -29,6 +29,16 @@ public slots:
     void updateDigitalVoltimetroRight(double voltR);
     void updateDigitalVoltimetroLeft(double voltL);
     void updateDigitalAmperimetro(double amper);
+    void closedoors(double doors);
+    void doornotclosedandnotopened(double doors);
+    void opendoors(double doors);
+    void obstacledetected(double doors);
+    void doorisolated(double doors);
+    void doorclosedandlocked(double doors);
+
+
 };
 
 #endif // ALSTOMTCMS_H
+
+

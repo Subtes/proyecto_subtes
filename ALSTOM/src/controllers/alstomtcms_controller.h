@@ -10,11 +10,18 @@ class AlstomTcms_Controller : public Base_Controller
 
 private:
     AlstomTcms * m_alstomtcms;
-
+    int cantwagons;
+    int doorsXwagon;
+    int abrir_puertas;
+    int cerrar_puertas;
 
 public:
     AlstomTcms_Controller(SubteState * subte, AlstomTcms * tcms);
     ~AlstomTcms_Controller();
+    void verificoEstPuertas(QString estado, int cantPuertas);
+    void recorridoPuertasVagon(QString stateDoors);
+
+
 
 public slots:
     void updateNeedle(double velocity);
@@ -22,6 +29,7 @@ public slots:
     void updateDigitalVoltimetroLeft(double voltL);
     void updateDigitalVoltimetroRight(double voltR);
     void updateDigitalAmperimetro(double amper);
+    void logicaPuertasSicas(double b);
 
 };
 

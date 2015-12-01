@@ -1,4 +1,5 @@
 import QtQuick 2.0
+
 Rectangle {
     id: borderBackground
     width: 617
@@ -6,7 +7,7 @@ Rectangle {
     radius: 0
     border.color: "#534848"
     border.width: 7
-    property variant puertasCoche: []
+    property variant trainsdoors: []
     property double currentValue: 0
     property double maxValue: 100
     property double minValue: -100
@@ -14,26 +15,30 @@ Rectangle {
     property double offsetAngle: 0
     property double originX: width/2
     property double originY: height/2
-
+    
     //variables repeater puertas diferentes offset
 
-    property double offset_coche: 41
-    property double offset_inicio_puerta: 61
-    property double offset_entre_coches: 30
-    property double offset_espacio_entre_puertas: 21
-    property double puertas_X_coche: 8
-    property double puertas_X_lado: 4
-    property double cantidad_de_lados_por_coche: 2
-    property double pos_puertas_arriba: 87
-    property double pos_puertas_abajo: 117
+    property double offset_train: 41
+    property double offset_init_doors: 61
+    property double offset_between_trains: 30
+    property double offset_space_between_doors: 21
+    property double doors_X_wagon: 8
+    property double doors_X_side: 4
+    property double number_of_sides_per_wagon: 2
+    property double pos_doors_up: 87
+    property double pos_doors_down: 117
+
+    //max value amper, velocity, voltimetre
     property double escala_maxima_volt: 2500
     property double escala_maxima_amper: 400
-    property double escala_minima_amper: -400
-
-
-
-
-
+    property double offset_needle_effort: 86
+    property double offset_needle_volt: 170
+    property double offset_start_angle:44
+    property double offset_rot_needle:2.27
+    
+    
+    
+    
     Image {
         id: background
         x: 4
@@ -44,129 +49,278 @@ Rectangle {
         fillMode: Image.PreserveAspectCrop
         rotation: 0
         source: "resources/alstom_background.png"
+
+        Rectangle {
+            id: wagon1
+            x: 11
+            y: 100
+            width: 18
+            height: 17
+            color: "#ffffff"
+            radius: 8
+            z: 2
+
+            Text {
+                id: wagontext1
+                x: 5
+                y: 2
+                width: 13
+                height: 14
+                text: qsTr("1")
+                z: 3
+                font.family: "Arial"
+                font.pixelSize: 12
+            }
+        }
+
+        Rectangle {
+            id: wagon2
+            x: 582
+            y: 100
+            width: 18
+            height: 18
+            color: "#ffffff"
+            radius: 8
+            z: 1
+
+            Text {
+                id: wagontext2
+                x: 5
+                y: 2
+                width: 13
+                height: 14
+                text: qsTr("2")
+                z: 2
+                font.pixelSize: 12
+            }
+        }
+
+        Image {
+            id: convertidorauxiliarleft
+            x: 64
+            y: 155
+            width: 38
+            height: 38
+            source: "resources/alstom_convertidor_auxiliar_1_operativo.png"
+        }
+
+        Image {
+            id: pantografoleft
+            x: 130
+            y: 155
+            width: 38
+            height: 38
+            source: "resources/alstom_pantografo_para_arriba.png"
+        }
+
+        Image {
+            id: pceleft
+            x: 174
+            y: 155
+            width: 38
+            height: 38
+            source: "resources/alstom_PCE_operativo.png"
+        }
+
+        Image {
+            id: pcecenterleft
+            x: 239
+            y: 155
+            width: 38
+            height: 38
+            source: "resources/alstom_PCE_operativo.png"
+        }
+
+        Image {
+            id: contactordetransferencia
+            x: 289
+            y: 155
+            width: 38
+            height: 38
+            source: "resources/alstom_contactor_de_transferencia_abierto.png"
+        }
+
+        Image {
+            id: pcecenterright
+            x: 335
+            y: 155
+            width: 38
+            height: 38
+            source: "resources/alstom_PCE_operativo.png"
+        }
+
+        Image {
+            id: pceright
+            x: 404
+            y: 155
+            width: 38
+            height: 38
+            source: "resources/alstom_PCE_operativo.png"
+        }
+
+        Image {
+            id: pantografoder
+            x: 448
+            y: 155
+            width: 38
+            height: 38
+            source: "resources/alstom_pantografo_para_arriba.png"
+        }
+
+        Image {
+            id: convertidorauxiliarder
+            x: 508
+            y: 155
+            width: 38
+            height: 38
+            source: "resources/alstom_convertidor_auxiliar_1_operativo.png"
+        }
+
+        Image {
+            id: half_moon_change_active2
+            x: 576
+            y: 80
+            width: 32
+            height: 58
+            z: 0
+            opacity: 0
+            source: "resources/alstom_medialuna_cabina2.png"
+        }
+
+        Image {
+            id: half_moon_change_active1
+            x: 2
+            y: 80
+            width: 32
+            height: 57
+            z: 0
+            opacity: 1
+            source: "resources/alstom_medialuna_cabina1.png"
+        }
+
     }
-    Rectangle {
-        id: circulovelocidad
-        x: 125
-        y: 266
-        width: 60
-        height: 60
-        color: "#ffffff"
-        radius: 30
-        scale: 0.9
-        z: 2
-        border.width: 3
-    }
+
     Text {
         id: velocimetrodigital
-        x: 146
-        y: 275
-        width: 12
+        x: 142
+        y: 272
+        width: 29
         height: 21
-        text: qsTr(" ")
+        text: qsTr("0")
+        horizontalAlignment: Text.AlignHCenter
         z: 3
         font.bold: true
         font.pixelSize: 14
     }
-
+    
     Text {
         id: kilometros
-        x: 136
-        y: 297
+        x: 139
+        y: 293
         text: qsTr("km/h")
         font.bold: true
         z: 3
         font.pixelSize: 13
     }
-
+    
     Text {
         id: voltimetrodigital1
-        x: 243
+        x: 244
         y: 284
-        text: qsTr(" ")
+        width: 39
+        height: 16
+        text: qsTr("0")
+        horizontalAlignment: Text.AlignHCenter
         font.bold: true
         font.pixelSize: 13
     }
-
+    
     Text {
         id: voltimetrodigital2
-        x: 245
+        x: 244
         y: 311
-        text: qsTr(" ")
+        width: 39
+        height: 16
+        text: qsTr("0")
+        horizontalAlignment: Text.AlignHCenter
         font.bold: true
         font.pixelSize: 13
     }
-
+    
     Text {
-        id: amperimetrodigital
-        x: 426
+        id: digitaleffort
+        x: 425
         y: 283
-        text: qsTr(" ")
+        width: 31
+        height: 16
+        text: qsTr("0")
+        horizontalAlignment: Text.AlignHCenter
         font.bold: true
         font.pixelSize: 13
     }
-
-
+    
+    
     Rectangle {
-        id: needle
-        objectName: "needle"
-        x: 152
-        y: 283
-        width: 4
-        height: 60
-        color: "#080505"
-        rotation: -4
-        transformOrigin: Item.Top
-        border.color: "#00000000"
-        radius: 2
-        z: 1
-        scale: 1.2
-        property double speed: 22;
-        transform: Rotation{
-
-
-           id: rot
-            origin.x: 0
-            origin.y: 0
-            angle: 44
-//            Behavior on angle {
-//                PropertyAnimation{
-//                    duration : 400
-//                    easing {type: Easing.OutQuad}
-//                }
-//            }
-        }
-    }
-
-
-  // valor de donde debe comenzar el ángulo 44
-  //offset para acomodar aguja 360-44 = 316/120 =2.6333333
-    function updateNeedle(valueIN) {
-
-        rot.angle=(valueIN *2.38)+(44);
-
-        //        if(valueIN<minValue){
-//            valueIN=minValue
-//        }else if(valueIN>maxValue){
-//            valueIN=maxValue
-//        }
-//        console.log("entramos a la velocidad")
-//        currentValue = (valueIN/maxValue)*maxAngle + offsetAngle
-//        rot.angle = currentValue
-//        return "ok"
-    }
-
-    Rectangle {
-        id: barravoltimetroleft
-        x: 316
-        y: 211
+        id: barvoltimetreleft
+        x: 317
+        y: 212
         width: 13
-        height: 166
+        height: 168
         color: "#000000"
-        antialiasing: false
-        transform: Scale { id:tranfobarravoltimetroleft ;origin.x: 0; origin.y: 170; yScale: 0.1}
+        antialiasing: true
+        transform: Scale { id:changebarvoltimetreleft ;origin.x: 0; origin.y: 170; yScale:0}
     }
+    
+    Rectangle {
+        id: rectangle1
+        x: 76
+        y: 208
+        width: 162
+        height: 162
+        color: "#00ffffff"
+        radius: 80
+        border.color: "#00000000"
+        
+        Rectangle {
+            id: circulovelocidad
+            x: 51
+            y: 53
+            width: 60
+            height: 60
+            color: "#ffffff"
+            radius: 30
+            transformOrigin: Item.Center
+            scale: 0.9
+            z: 2
+            border.width: 3
+        }
+        
+        Rectangle {
+            id: needle
+            objectName: "needle"
+            x: 79
+            y: 81
+            width: 4
+            height: 60
+            color: "#080505"
+            rotation: 90
+            transformOrigin: Item.Top
+            border.color: "#00000000"
+            radius: 2
+            z: 1
+            smooth:true
+            scale: 1.2
+            property double speed: 22;
+         }
+    }
+    
+    
 
+    function updateNeedle(valueIN) {
+        needle.rotation=(valueIN *offset_rot_needle)+(offset_start_angle);
+    }
+    
+    
     Text {
         id: notacionvoltimetro1
         x: 283
@@ -175,150 +329,189 @@ Rectangle {
         font.bold: true
         font.pixelSize: 13
     }
-
+    
     Text {
         id: notacionvoltimetro2
         x: 284
         y: 311
         text: qsTr("V")
         font.bold: true
+        antialiasing: true
+        smooth: true
         font.pixelSize: 13
     }
-
+    
     Rectangle {
-        id: barravoltimetroright
+        id: barvoltimetreright
         x: 341
-        y: 211
+        y: 212
         width: 13
         height: 168
         color: "#000000"
-        transform: Scale { id:tranfovoltimetroright ;origin.x: 0; origin.y: 170}
+        antialiasing: true
+        smooth: true
+        transform: Scale { id:changebarvoltimetreright ;origin.x: 0; origin.y: 170; yScale:0}
+    }
+    
+    Image {
+        id: needle_volt
+        x: 302
+        y: 375
+        width: 68
+        height: 13
+        z: 1
+        opacity: 1
+        source: "resources/alstom_needle_bar.png"
+        transform: Translate{id: change_needle_volt;y:0}
+    }
 
+    Rectangle {
+        id: bareffort
+        x: 490
+        y: 212
+        width: 15
+        height: 84
+        color: "#000000"
+        transformOrigin: Item.Center
+        antialiasing: true
+        smooth: true
+        transform: Scale { id:changebareffort ;origin.x: 0; origin.y: 85; yScale:0}
+     }
+
+    Image {
+        id: needle_effort
+        x: 483
+        y: 291
+        width: 35
+        height: 13
+        z: 1
+        opacity: 1
+        transform: Translate  {id:change_needle_effort; y:0}
+
+        source: "resources/alstom_needle_bar.png"
     }
 
     Text {
-        id: notacionamperimetro
+        id: notationeffort
         x: 456
         y: 283
         text: qsTr("KN")
         font.bold: true
         font.pixelSize: 13
     }
-
-    Rectangle {
-        id: barraamperimetro
-        x: 490
-        y: 215
-        width: 15
-        height: 21
-        color: "#000000"
-        transformOrigin: Item.Center
-        scale: 1
-        transform: Scale { id:tranfobarraamperimetro ;origin.x: 0; origin.y: 90}
-
-    }
-
-
+    
+    
     function updateDigitalVelocity(speed){
         velocimetrodigital.text=speed;
-
     }
-
+    
     function updateDigitalVoltimetroLeft(volt){
         voltimetrodigital1.text=volt;
-        tranfobarravoltimetroleft.yScale = (volt/escala_maxima_volt);
-
-
+        changebarvoltimetreleft.yScale = (volt/escala_maxima_volt);
+        change_needle_volt.y = (-(volt*offset_needle_volt)/escala_maxima_volt);
     }
-
+    
     function updateDigitalVoltimetroRight(volt){
         voltimetrodigital2.text=volt;
-        tranfovoltimetroright.yScale = (volt/escala_maxima_volt);
-
-
+        changebarvoltimetreright.yScale = (volt/escala_maxima_volt);
+        change_needle_volt.y = (-(volt*offset_needle_volt)/escala_maxima_volt);
+        
     }
     function updateDigitalAmperimetro(amp){
-        amperimetrodigital.text=amp;
-        tranfobarraamperimetro.yScale= (amp/escala_maxima_amper);
-//        if(amp >=0){
-//            tranfobarraamperimetro.xScale= amp/escala_maxima_amper
-//        }else
-//        {
-//            tranfobarraamperimetro.xScale= amp/escala_minima_amper
-
-//        }
+        digitaleffort.text=amp;
+        changebareffort.yScale= (amp/escala_maxima_amper);
+        change_needle_effort.y = (-(amp * offset_needle_effort)/escala_maxima_amper);
     }
-
-
-
+    
+    
     //REPEAT QUE GENERA en el renglon en la viuaizacion del tren
+    
+
+
 
     Repeater {
         model: 48
-        Image {
-            id: puertastren
+        delegate: Image {
+            id: doors_train
             width: 18
             height: 22
             opacity: 1
-            x: getXpuertastren(index)
-            y: getYpuertastren(index)
+            x: getXdoors_train(index)
+            y: getYdoors_train(index)
             source: "resources/alstom_puertas_cerradas_bloqueadas.png"
             antialiasing: true
             smooth: true
             states: [
                 State {
-                    name: "con"
-                    PropertyChanges { target: abrirpuertas;running:true}
+                    name: "puerta_abierta"
+                    PropertyChanges { target: doors_train;source:"resources/alstom_puerta_abierta.png"}
+                },
+                State {
+                    name: "puertas_entreabiertas"
+                    PropertyChanges { target: doors_train;source:"resources/alstom_puertas_entreabiertas.png"}
 
                 },
                 State {
-                    name: "des"
-                    PropertyChanges { target: cerrarpuertas;running:true}
-
+                    name: "puertas_cerradas"
+                    PropertyChanges { target: doors_train;source:"resources/alstom_puertas_cerradas.png"}
                 },
                 State {
-                    name: "int"
-                    PropertyChanges { target: blinkAnimation2; running:true;}
+                    name: "puertas_cerradas_bloqueadas"
+                    PropertyChanges { target: doors_train;source:"resources/alstom_puertas_cerradas_bloqueadas.png"}
+                },
+                State {
+                    name: "puerta_aislada"
+                    PropertyChanges { target: doors_train;source:"resources/alstom_puerta_aislada.png"}
+                },
+                State {
+                    name: "puerta_conobstaculo"
+                    PropertyChanges { target: doors_train;source:"resources/alstom_puerta_conobstaculo.png"}
                 }
             ]
-
+            
             transitions: Transition {
                 PropertyAnimation { properties: "opacity"; duration: 100 }
             }
-
-            SequentialAnimation {
-                id: abrirpuertas
-
-//                 PropertyChanges { target: puertastren;source: "resources/alstom_puertas_entreabiertas.png"; opacity: 1}
-//                 NumberAnimation {target: puertastren;duration: 500 }
-//                 PropertyChanges { target: puertastren;source: "resources/alstom_puertas_cerradas.png"; opacity: 1}
-//                 NumberAnimation {target: puertastren;duration: 500 }
-//                 PropertyChanges { target: puertastren;source: "resources/alstom_puertas_cerradas_bloqueadas.png"; opacity: 1}
-             }
-            SequentialAnimation {
-                id: cerrarpuertas
-
-//                  NumberAnimation {target: puertastren;duration: 500 }
-//                  PropertyChanges { target: puertastren;source: "resources/alstom_puertas_cerradas.png"; opacity: 1}
-//                  NumberAnimation {target: puertastren;duration: 500 }
-//                  PropertyChanges { target: puertastren;source: "resources/alstom_puertas_cerradas_bloqueadas.png"; opacity: 1}
-             }
-
         }
-        onItemAdded: puertasCoche[index] = item
+        onItemAdded: trainsdoors[index] = item
     }
 
-    function getXpuertastren(p){
-        var nroCoche = Math.floor(p/puertas_X_coche);
-        var valor = ((offset_coche)+(nroCoche*(offset_inicio_puerta))+(offset_entre_coches*nroCoche)+((p%puertas_X_lado)*offset_espacio_entre_puertas));
+    
+    function getXdoors_train(p){
+        var nroCoche = Math.floor(p/doors_X_wagon);
+        var valor = ((offset_train)+(nroCoche*(offset_init_doors))+(offset_between_trains*nroCoche)+((p%doors_X_side)*offset_space_between_doors));
         return valor;
     }
-
-    function getYpuertastren(p){
-        var acum=(Math.floor(p/puertas_X_lado)%cantidad_de_lados_por_coche);
+    
+    function getYdoors_train(p){
+        var acum=(Math.floor(p/doors_X_side)%number_of_sides_per_wagon);
         if (acum==0)
-            return (pos_puertas_arriba);
-        return(pos_puertas_abajo);
+            return (pos_doors_up);
+        return(pos_doors_down);
+    }
+
+    function closedoors(valF){
+        trainsdoors[valF].state = "puertas_cerradas";
+    }
+
+    function doornotclosedandnotopened(valF){
+        trainsdoors[valF].state = "puertas_entreabiertas";
+    }
+
+    function opendoors(valF){
+        trainsdoors[valF].state = "puerta_abierta";
+    }
+
+    function obstacledetected(valF){
+        trainsdoors[valF].state = "puerta_conobstaculo";
+    }
+
+    function doorisolated(valF){
+        trainsdoors[valF].state = "puerta_aislada";
+    }
+
+    function doorclosedandlocked(valF){
+        trainsdoors[valF].state = "puertas_cerradas_bloqueadas";
     }
 
 }//FIN RECTANGULO

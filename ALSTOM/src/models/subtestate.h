@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include "src/controllers/eventhandler.h"
-
 class EventHandler;
 
 class SubteState : public QObject
@@ -20,13 +19,14 @@ private:
         double m_voltimetroLeft;
         double m_voltimetroRight;
         double m_amperimetro;
+        double m_valuedoors;
 
 signals:
    velocityChangeTcms(double velocity);
    voltimetroChangeLeft(double voltL);
    voltimetroChangeRight(double voltR);
    amperimetroChange(double amper);
-
+   doorsChange(double statedoors);
 
 public:
     SubteState();
@@ -44,6 +44,7 @@ public slots:
     void updateVoltimetroLeftTCMS(double value);
     void updateVoltimetroRightTCMS(double value);
     void updateneedleamperimetro(double value);
+    void updatevaluedoors(double value);
 };
 
 #endif // SUBTESTATE_H
