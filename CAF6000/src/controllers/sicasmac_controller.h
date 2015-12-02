@@ -38,6 +38,8 @@ class SicasMac_Controller : public Base_Controller
     void borrarPantallaSicas();
     void generoRenglonesSicas(QString texto, QString trenes, QString letra, int renglon);
     void cargoVectorEstadoAnteriorFalla();
+    void recorridoDePuertas_1Der_2Izq(QString state);
+    void recorridoDePuertas_1Izq_2Der(QString state);
 
     TractionHardware *m_hardwareSupport = NULL;
 

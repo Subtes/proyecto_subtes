@@ -399,7 +399,6 @@ void SicasMac_Controller::resetSicas(){
     m_sicasmac->ponerOnSicasSinIncidencia();
     cargoVectorEstadoAnteriorFalla();
     cargarMensajeAcople();
-
 }
 
 /**
@@ -448,61 +447,53 @@ void SicasMac_Controller::estadoFreno(bool state){
     }
 }
 
+void SicasMac_Controller::recorridoDePuertas_1Der_2Izq(QString state){
+ int cantPuertas=0;
+ qDebug()<<"estamos aqui!";
+    for (int var = 0; var < cantCochesTotal; var++) {
+        for (int datos = 0; datos < cantdoorsicas; datos++) {
+            verificoEstPuertas(state,cantPuertas); //las puertas
+            cantPuertas++;
+        }
+        cantPuertas = cantPuertas + cantdoorsicas;
+
+    }
+}
+
+void SicasMac_Controller::recorridoDePuertas_1Izq_2Der(QString state){
+ int cantPuertas=0;
+    for (int var = 0; var < cantCochesTotal; var++) {
+        cantPuertas = cantPuertas + cantdoorsicas;
+        for (int datos = 0; datos < cantdoorsicas; datos++) {
+            verificoEstPuertas(state,cantPuertas); //las puertas
+            cantPuertas++;
+        }
+    }
+}
+
  /**
  * @brief SicasMac_Controller::logicaPuertasSicas
  * genera los guines en el coche para la visual de las puertas abiertas y cerradas
  * @param mensaje
  */
 void SicasMac_Controller::logicaPuertasSicas(bool b){
- int cantPuertas=0;
     if(m_subte->leftDoors()){
-        for (int var = 0; var < cantCochesTotal; var++) {
-            for (int datos = 0; datos < cantdoorsicas; datos++) {
-                verificoEstPuertas("abierto",cantPuertas); //las puertas
-                cantPuertas++;
-            }
-            cantPuertas = cantPuertas + cantdoorsicas;
-        }
+        recorridoDePuertas_1Izq_2Der("abierto");
         separoMensajes("Puertas Abiertas;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
         refrescoVista();
     }
     else{
-        for (int var = 0; var < cantCochesTotal; var++) {
-            for (int datos = 0; datos < cantdoorsicas; datos++) {
-                verificoEstPuertas("cerrado",cantPuertas); //las puertas
-                cantPuertas++;
-            }
-            cantPuertas = cantPuertas + cantdoorsicas;
-        }
+        recorridoDePuertas_1Izq_2Der("cerrado");
         bajaMensaje("Puertas Abiertas");
-        qDebug()<< "cantpuertas cerradas left  "<<cantPuertas;
-
    }
-   cantPuertas=0;
-   if(m_subte->rightDoors()){
-      for (int var = 0; var < cantCochesTotal; var++) {
-            cantPuertas = cantPuertas + cantdoorsicas;
-            for (int datos = 0; datos < cantdoorsicas; datos++) {
-                verificoEstPuertas("abierto",cantPuertas); //las puertas
-                cantPuertas++;
-            }
-        }
+    if(m_subte->rightDoors()){
+        recorridoDePuertas_1Der_2Izq("abierto");
         separoMensajes("Puertas Abiertas;1,F 2,F 3,F 4,F 5,F 6,F;C;alta");
         refrescoVista();
-        qDebug()<< "cantpuertas abiertas der  "<<cantPuertas;
-
     }
-   else{
-        for (int var = 0; var < cantCochesTotal; var++) {
-            cantPuertas = cantPuertas + cantdoorsicas;
-            for (int datos = 0; datos < cantdoorsicas; datos++) {
-                verificoEstPuertas("cerrado",cantPuertas); //las puertas
-                cantPuertas++;
-            }
-        }
+    else{
+        recorridoDePuertas_1Der_2Izq("cerrado");
         bajaMensaje("Puertas Abiertas");
-        qDebug()<< "cantpuertas cerradas der  "<<cantPuertas;
-
     }
 }
 
