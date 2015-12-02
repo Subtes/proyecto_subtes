@@ -267,3 +267,9 @@ void SicasMac::ponerValoresInicio(int cantPantallas)
     QMetaObject::invokeMethod(m_qmlView, "ponerValoresInicio",
             Q_RETURN_ARG(QVariant, returnedValue),Q_ARG(QVariant, cantPantallas));
 }
+void SicasMac::cambiarEstadoCabina(int state)
+{
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(m_qmlView, "cambiarEstadoCabina",
+            Q_RETURN_ARG(QVariant, returnedValue),Q_ARG(QVariant, state));
+}

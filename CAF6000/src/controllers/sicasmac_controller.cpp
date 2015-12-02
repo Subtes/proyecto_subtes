@@ -18,6 +18,9 @@ SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac
     offsetCantRows=5;// cantidad de renglones por
     cantdoorsicas=4;//cantidad de puestas por lado de cada coche
     m_hardwareSupport = th;
+    m_coche_maquina =1;
+
+
 
     connect(m_sicasmac,SIGNAL(onPressSigRow()),this,SLOT(onPressSigRow()));
     connect(m_sicasmac,SIGNAL(onPressAntRow()),this,SLOT(onPressAntRow()));
@@ -36,7 +39,7 @@ SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac
     connect(m_subte,SIGNAL(frenoEstacionamientoDes()),this,SLOT(sacoMensajeFrenoEstacAplicado()));
     connect(m_subte,SIGNAL(estadoManioAcople()),this,SLOT(cargarMensajeAcople()));
     connect(m_subte,SIGNAL(estadoNormal()),this,SLOT(sacoMensajeAcople()));
-
+    connect(m_subte,SIGNAL(cabinChanged(int)),this,SLOT(changeStateCabin(int)));
     cargoVectorEstadoAnteriorFalla();
 
 }
@@ -509,14 +512,37 @@ void SicasMac_Controller::apagoSicas(){
 }
 
 
+/**
+* @brief SicasMac_Controller::logicaPuertasSicas
+* verifico en que cabina se encuentra el motorman
+* @param mensaje
+*/
+void SicasMac_Controller::changeStateCabin(int stateCabin){
+    m_coche_maquina=stateCabin;
+    m_sicasmac->cambiarEstadoCabina(stateCabin);
+    if(cargoAcople){
+        sacoMensajeAcople();
+        cargarMensajeAcople();
+    }
+}
+
+
+
 //***************************MENSAJES SICAS PUESTA SERVICIO ********************************************
 
 void SicasMac_Controller::cargarMensajeAcople(){
-    separoMensajes("Conmutador Acop/Manio;1,F -,F -,F -,F -,F -,F;A;alta");
+    cargoAcople=true;
+    if (m_coche_maquina==1){
+        separoMensajes("Conmutador Acop/Manio;1,F -,F -,F -,F -,F -,F;A;alta");
+    }
+    else if (m_coche_maquina==6){
+        separoMensajes("Conmutador Acop/Manio;-,F -,F -,F -,F -,F 6,F;A;alta");
+    }
     refrescoVista();
 }
 
 void SicasMac_Controller::sacoMensajeAcople(){
+    cargoAcople=false;
     bajaMensaje("Conmutador Acop/Manio");
 }
 

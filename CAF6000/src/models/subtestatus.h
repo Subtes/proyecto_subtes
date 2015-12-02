@@ -48,6 +48,7 @@ private:
     bool m_CMC;
     bool m_CL;
     int m_modeOperation;
+    int m_estado_coche;
 
 signals:
     // STATE CHANGE NOTIFICATION
@@ -94,6 +95,7 @@ signals:
     megafoniaDes();
     frenoEstacionamientoCon();
     frenoEstacionamientoDes();
+    cabinChanged(int statecabin);
 
 public:
     static const bool PUERTAS_CERRADAS = false;
@@ -194,6 +196,9 @@ public slots:
     // CMC, CL
     void setDrivingModeATP(bool status);
     void setModeOperation(int m);
+    void updatestatecabine(int state_cabine);
 };
 
 #endif // SUBTESTATUS_H
+
+
