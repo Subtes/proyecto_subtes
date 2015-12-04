@@ -4,8 +4,9 @@ TEMPLATE = subdirs
 
 CONFIG     +=  ordered c++11
 
-SUBDIRS =   subtewidgets\subtewidgets.pro \
-            Common\Common.pro \
+SUBDIRS =   Common\Common.pro \
+            subtewidgets\subtewidgets.pro \
             CAF6000 \
-            ALSTOM
+            ALSTOM \
+            CNR
 

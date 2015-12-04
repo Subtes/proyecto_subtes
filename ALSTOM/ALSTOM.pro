@@ -56,8 +56,8 @@ FORMS    += \
     boardbottom.ui
 
 INCLUDEPATH +=  ../subtewidgets \
+                ../Common \
                 $$PWD/../ENet/include \
-                #../Common \
                 $$PWD/../Source/include
 
 DEPENDPATH += $$PWD/../ENet \
@@ -65,6 +65,8 @@ DEPENDPATH += $$PWD/../ENet \
 
 LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L../subtewidgets/release -lsubtewidgets \
+        -L../Common/debug -lCommon \
+        -L../Common/release -lCommon \
         -L$$PWD/../ENet/lib/ -lenet \
         -L$$PWD/../ENet/lib/ -lWS2_32 \
         -L$$PWD/../ENet/lib/ -lBufferOverflowU \
@@ -72,8 +74,6 @@ LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L$$PWD/../ENet/lib/ -lENetClient-Cpp \
         -L$$PWD/../Source/lib/ -lSDL \
         -L$$PWD/../Source/lib/ -lSDL_mixer
-        #-L../Common/debug -lCommon \
-        #-L../Common/release -lCommon \
 
 RESOURCES += ../subtewidgets/widgetsrsc.qrc \
             ../subtewidgets/qmlrsc.qrc \

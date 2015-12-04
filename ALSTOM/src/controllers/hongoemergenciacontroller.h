@@ -4,8 +4,9 @@
 #include <QObject>
 #include "singlebutton.h"
 #include "src/models/subtestate.h"
+#include "src/controllers/base_controller.h"
 
-class HongoEmergenciaController : public QObject
+class HongoEmergenciaController : public Base_Controller
 {
     Q_OBJECT
 
@@ -21,7 +22,6 @@ private slots:
 
 private:
     SingleButton *m_hongo;
-    SubteState *m_subte;
 };
 
 #endif // HONGOEMERGENCIACONTROLLER_H

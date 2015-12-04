@@ -14,8 +14,8 @@ LlavaSeguridadController::LlavaSeguridadController(SubteState *subte, SingleButt
                         QUrl("qrc:/resources/alstom_greenkey_off.png"),
                         true,true);
 
-    connect(m_llave,SIGNAL(buttonPressed),this,SLOT(turnedOn()));
-    connect(m_llave,SIGNAL(buttonPressed),this,SLOT(turnedOff()));
+    connect(m_llave,SIGNAL(buttonPressed()),this,SLOT(turnedOn()));
+    connect(m_llave,SIGNAL(buttonPressed()),this,SLOT(turnedOff()));
 }
 
 LlavaSeguridadController::~LlavaSeguridadController(){

@@ -15,15 +15,12 @@ AlstomTcms_Controller::AlstomTcms_Controller(SubteState * subte, AlstomTcms * tc
     m_alstomtcms->setOffsetAngle(-40);
     m_alstomtcms->updateNeedle(0);
 
-    connect(m_subte,SIGNAL(velocityChangeTcms(double)),this,SLOT(updateNeedle(double)));
-    connect(m_subte,SIGNAL(velocityChangeTcms(double)),this,SLOT(updateDigitalVelocity(double)));
-
-    connect(m_subte,SIGNAL(voltimetroChangeLeft(double)),this,SLOT(updateDigitalVoltimetroLeft(double)));
-    connect(m_subte,SIGNAL(voltimetroChangeRight(double)),this,SLOT(updateDigitalVoltimetroRight(double)));
-    connect(m_subte,SIGNAL(amperimetroChange(double)),this,SLOT(updateDigitalAmperimetro(double)));
-    connect(m_subte,SIGNAL(doorsChange(double)),this,SLOT(logicaPuertasSicas(double)));
-
-
+    connect(m_subte,SIGNAL(speedChanged(double)),this,SLOT(updateNeedle(double)));
+    connect(m_subte,SIGNAL(speedChanged(double)),this,SLOT(updateDigitalVelocity(double)));
+    connect(m_subte,SIGNAL(voltChanged(double)),this,SLOT(updateDigitalVoltimetroLeft(double)));
+    connect(m_subte,SIGNAL(voltChanged(double)),this,SLOT(updateDigitalVoltimetroRight(double)));
+    connect(m_subte,SIGNAL(ampsChanged(double)),this,SLOT(updateDigitalAmperimetro(double)));
+    connect(m_subte,SIGNAL(DoorsChanged(bool)),this,SLOT(logicaPuertas(bool)));
 }
 
 AlstomTcms_Controller::~AlstomTcms_Controller()
@@ -66,31 +63,36 @@ void AlstomTcms_Controller::recorridoPuertasVagon(QString stateDoors){
     }
 }
 
-void AlstomTcms_Controller::logicaPuertasSicas(double state){
-
-    if (state == 0){
-        recorridoPuertasVagon("closedoors");
+void AlstomTcms_Controller::logicaPuertas(bool state){
+    if(m_subte->leftDoors()){
+        recorridoDePuertas_1Der_2Izq("closedoors");
         Sleep(1000);
-        recorridoPuertasVagon("doornotclosedandnotopened");
+        recorridoDePuertas_1Der_2Izq("doornotclosedandnotopened");
         Sleep(1000);
-        recorridoPuertasVagon("opendoors");
+        recorridoDePuertas_1Der_2Izq("opendoors");
+    }else{
+        recorridoDePuertas_1Der_2Izq("closedoors");
+        Sleep(1000);
+        recorridoDePuertas_1Der_2Izq("doornotclosedandnotopened");
+        Sleep(1000);
+        recorridoDePuertas_1Der_2Izq("opendoors");
     }
-    else if (state == 1){
-        recorridoPuertasVagon("doornotclosedandnotopened");
-        Sleep(1000);
-        recorridoPuertasVagon("closedoors");
-        Sleep(1000);
-        recorridoPuertasVagon("doorclosedandlocked");
-    }
-    else if (state == 2){
-        recorridoPuertasVagon("doorisolated");
 
+    if(m_subte->rightDoors()){
+        recorridoDePuertas_1Izq_2Der("closedoors");
+        Sleep(1000);
+        recorridoDePuertas_1Izq_2Der("doornotclosedandnotopened");
+        Sleep(1000);
+        recorridoDePuertas_1Izq_2Der("opendoors");
+    }else{
+        recorridoDePuertas_1Izq_2Der("closedoors");
+        Sleep(1000);
+        recorridoDePuertas_1Izq_2Der("doornotclosedandnotopened");
+        Sleep(1000);
+        recorridoDePuertas_1Izq_2Der("opendoors");
     }
-    else if (state == 3){
-       recorridoPuertasVagon("obstacledetected");
-
-   }
 }
+
 void AlstomTcms_Controller::verificoEstPuertas(QString state, int canrdoors){
     if(state=="closedoors"){
         m_alstomtcms->closedoors(canrdoors);}
@@ -104,4 +106,26 @@ void AlstomTcms_Controller::verificoEstPuertas(QString state, int canrdoors){
         m_alstomtcms->doorisolated(canrdoors);}
     if(state=="doorclosedandlocked"){
         m_alstomtcms->doorclosedandlocked(canrdoors);}
- }
+}
+
+void AlstomTcms_Controller::recorridoDePuertas_1Der_2Izq(QString state){
+ int cantPuertas=0;
+    for (int var = 0; var < 6; var++) {
+        for (int datos = 0; datos < 4; datos++) {
+            verificoEstPuertas(state,cantPuertas); //las puertas
+            cantPuertas++;
+        }
+        cantPuertas = cantPuertas + 4;
+    }
+}
+
+void AlstomTcms_Controller::recorridoDePuertas_1Izq_2Der(QString state){
+ int cantPuertas=0;
+    for (int var = 0; var < 6; var++) {
+        cantPuertas = cantPuertas + 4;
+        for (int datos = 0; datos < 4; datos++) {
+            verificoEstPuertas(state,cantPuertas); //las puertas
+            cantPuertas++;
+        }
+    }
+}

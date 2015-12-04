@@ -1,3 +1,6 @@
+#ifndef DEFAULTLOGMANAGER_H
+#define DEFAULTLOGMANAGER_H
+
 #include "easylogging++.h"
 #include <ctime>
 #include <iostream>
@@ -102,3 +105,5 @@ private:
 	std::string mCurrentFormat;
 	std::string mCurrentLogFile;
 };
+
+#endif // DEFAULTLOGMANAGER_H

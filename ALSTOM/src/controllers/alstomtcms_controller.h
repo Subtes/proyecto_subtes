@@ -15,6 +15,9 @@ private:
     int abrir_puertas;
     int cerrar_puertas;
 
+    void recorridoDePuertas_1Der_2Izq(QString state);
+    void recorridoDePuertas_1Izq_2Der(QString state);
+
 public:
     AlstomTcms_Controller(SubteState * subte, AlstomTcms * tcms);
     ~AlstomTcms_Controller();
@@ -29,7 +32,7 @@ public slots:
     void updateDigitalVoltimetroLeft(double voltL);
     void updateDigitalVoltimetroRight(double voltR);
     void updateDigitalAmperimetro(double amper);
-    void logicaPuertasSicas(double b);
+    void logicaPuertas(bool b);
 
 };
 

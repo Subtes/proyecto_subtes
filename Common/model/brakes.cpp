@@ -2,16 +2,7 @@
 
 Brakes::Brakes()
 {
-    m_emergencyBrake_atp = false;
-    m_emergencyBrake_setas = false;
-    m_emergencyBrake_tractionLever = false;
-    m_emergencyBrake_HM = false;
-    m_brake = 0;
-    m_lastBrake = 0;
-    m_bypass = false;
-    m_retentioBrake = false;
-    m_anulacionFrenoRetencion = false;
-    m_averia = false;
+    reset();
 }
 
 Brakes::~Brakes()
@@ -23,7 +14,7 @@ void Brakes::linkTraction(Traction *traction)
     m_traction = traction;
 }
 
-void Brakes::setHandler(EventHandler * eventHandler)
+void Brakes::setHandler(Base_EventHandler * eventHandler)
 {
     m_eventHandler = eventHandler;
 }
@@ -164,14 +155,12 @@ void Brakes::setAnulacionFrenoRetencion(bool anulacionFrenoRetencion)
 
 void Brakes::notifyEmergencyBrake(){
     if (getEmergencyBrake()){
-        //m_eventHandler->notifyValueChanged(NOMBRE_FRENO_EMERGENCIA,VALOR_CON_FRENO_EMERGENCIA);
+        m_eventHandler->notifyValueChanged(NOMBRE_FRENO_EMERGENCIA,VALOR_CON_FRENO_EMERGENCIA);
     }else{
-        //m_eventHandler->notifyValueChanged(NOMBRE_FRENO_EMERGENCIA,VALOR_DES_FRENO_EMERGENCIA);
+        m_eventHandler->notifyValueChanged(NOMBRE_FRENO_EMERGENCIA,VALOR_DES_FRENO_EMERGENCIA);
     }
 }
 
 void Brakes::notifyBrake(){
-    //m_eventHandler->notifyValueChanged(NOMBRE_FRENO,std::to_string(getBrake()));
+    m_eventHandler->notifyValueChanged(NOMBRE_FRENO,std::to_string(getBrake()));
 }
-
-

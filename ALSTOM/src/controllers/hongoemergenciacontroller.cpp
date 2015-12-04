@@ -1,8 +1,9 @@
 #include "hongoemergenciacontroller.h"
 
-HongoEmergenciaController::HongoEmergenciaController(SubteState *subte, SingleButton *hongo){
+HongoEmergenciaController::HongoEmergenciaController(SubteState *subte, SingleButton *hongo):
+    Base_Controller(subte){
+
     m_hongo = hongo;
-    m_subte = subte;
 
     QSize size;
     size.setWidth(140);
@@ -14,8 +15,8 @@ HongoEmergenciaController::HongoEmergenciaController(SubteState *subte, SingleBu
                             QUrl("qrc:/resources/alstom_emergenciaon.png"),
                             true,true);
 
-    connect(m_hongo,SIGNAL(buttonPressed),this,SLOT(hongoPressed()));
-    connect(m_hongo,SIGNAL(buttonPressed),this,SLOT(hongoPressed()));
+    connect(m_hongo,SIGNAL(buttonPressed()),this,SLOT(hongoPressed()));
+    connect(m_hongo,SIGNAL(buttonPressed()),this,SLOT(hongoPressed()));
 }
 
 HongoEmergenciaController::~HongoEmergenciaController(){
@@ -30,8 +31,9 @@ void HongoEmergenciaController::releaseHongo(){
 }
 
 void HongoEmergenciaController::hongoPressed(){
+    m_subte->setaActivated();
 }
 
 void HongoEmergenciaController::hongoReleased(){
-
+    m_subte->setaDeactivated();
 }

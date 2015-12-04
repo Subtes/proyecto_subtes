@@ -49,7 +49,6 @@ signals:
     buttonClicked();
     buttonPressed();
     buttonReleased();
-
 };
 
 #endif // SINGLEBUTTON_H

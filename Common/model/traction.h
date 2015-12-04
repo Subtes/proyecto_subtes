@@ -1,48 +1,29 @@
 #ifndef TRACTION_H
 #define TRACTION_H
 
-//#include "src/models/cscp.h"
-//#include "src/models/atp_model.h"
-#include "model/brakes.h"
-#include "controller/eventhandler.h"
+#include "brakes.h"
+#include "automatictrainprotection.h"
+#include "doors.h"
+#include "controller/base_eventhandler.h"
 
 class Brakes;
-class EventHandler;
 
 class Traction
 {
 
 public:
-    enum class RANA { AD=1, CERO=0, AT=-1 };
 
-private:
-    const std::string NOMBRE_TRACCION = "c_traccion";
-    const std::string NOMBRE_FRENO_HOMBRE_MUERTO = "c_freno";
-    const std::string NOMBRE_HOMBRE_MUERTO = "c_dispositivo_hombre_muerto";
-    const std::string VALOR_HOMBRE_MUERTO_CON = "con";
-    const std::string VALOR_HOMBRE_MUERTO_DES = "des";
+    enum TRACTION_MODE { ADELANTE=1, NEUTRO=0, REVERSA=-1, LIMITADO=2 };
 
-    RANA m_rana;
-    Brakes *m_brake;
-    EventHandler * m_eventHandler;
-
-    bool m_hombreMuerto;
-
-    int m_traction;
-    int m_lastTraction;
-
-    bool m_averia;
-    bool debuguear = false;
-
-public:
     Traction();
     ~Traction();
-
     void linkBrake(Brakes *b);
-    void setHandler(EventHandler * eventHandler);
+    void linkCSCP(Doors *c);
+    void linkATP(AutomaticTrainProtection *a);
+    void setHandler(Base_EventHandler * eventHandler);
 
     void reset();
-    void setDirection(RANA r);
+    void setDirection(TRACTION_MODE tm);
 
     int getTraction();
     void updateTraction(int traction);
@@ -55,6 +36,28 @@ public:
 
     void notifyTraction();
     void notifyHM();
+
+private:
+    const std::string NOMBRE_TRACCION = "c_traccion";
+    const std::string NOMBRE_FRENO_HOMBRE_MUERTO = "c_freno";
+    const std::string VALOR_FRENO_HOMBRE_MUERTO = "50";
+    const std::string NOMBRE_HOMBRE_MUERTO = "c_dispositivo_hombre_muerto";
+    const std::string VALOR_HOMBRE_MUERTO_CON = "con";
+    const std::string VALOR_HOMBRE_MUERTO_DES = "des";
+    const int SAFE_NEUTRAL_ZONE = 15;
+    const int INTERVAL_EMISSION = 5;
+
+    int m_traction;
+    int m_lastTraction;
+    bool m_hombreMuerto;
+    bool m_averia;
+    bool debuguear = false;
+
+    TRACTION_MODE m_rana;
+    Brakes *m_brake;
+    Doors *m_doors;
+    AutomaticTrainProtection *m_atp;
+    Base_EventHandler * m_eventHandler;
 };
 
 #endif // TRACTION_H

@@ -80,7 +80,6 @@ void SingleButton::setButtonImage(QUrl on, QUrl off, QUrl bkg, bool noBkg){
             button->setProperty("source", off);
         }
     }
-
 }
 
 void SingleButton::setButtonImage(QUrl on, QUrl off, QUrl bkg){
@@ -99,7 +98,7 @@ void SingleButton::setButtonImage(QUrl on, QUrl off){
     button->setProperty("source", off);
     button = m_qmlView->findChild<QObject*>("bkgImage");
     button->setProperty("source", off);
-}
+ }
 
 void SingleButton::setButtonImageNestled(QUrl on,QUrl off)
 {

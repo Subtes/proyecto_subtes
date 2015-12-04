@@ -17,8 +17,8 @@ public:
     ~Manometer_Controller();
 
 public slots:
-    void updatePressureRed(double m_needle_red);
-    void updatePressureWhite(double m_needle_white);
+    void updateCylinderPressure(double m_needle_red);
+    void updateMainPressure(double m_needle_white);
 
 };
 #endif // MANOMETER_CONTROLLER_H
