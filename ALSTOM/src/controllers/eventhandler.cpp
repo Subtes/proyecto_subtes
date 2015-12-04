@@ -23,15 +23,10 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetHelper->client()->CambiarValorClave("c_listo","0");
             emit controlReady();
             m_eNetHelper->client()->Suscribirse(m_eNetHelper->instructionsHostName(),"i_estado_simulador");
-
             m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_velocidad");
-            m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_voltajeizq");
-            m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_voltajeder");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_voltaje");
             m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_esfuerzo");
-
-            //TODO: SACAR SOLO PARA PROBAR PUERTAS
-            m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_doors");
-
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_estado_puertas");
             emit controlReset();
             m_eNetHelper->client()->CambiarValorClave("c_rana","at");
             m_eNetHelper->client()->CambiarValorClave("c_regulador_mando","0");

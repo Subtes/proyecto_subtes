@@ -15,8 +15,7 @@ HongoEmergenciaController::HongoEmergenciaController(SubteState *subte, SingleBu
                             QUrl("qrc:/resources/alstom_emergenciaon.png"),
                             true,true);
 
-    connect(m_hongo,SIGNAL(buttonPressed()),this,SLOT(hongoPressed()));
-    connect(m_hongo,SIGNAL(buttonPressed()),this,SLOT(hongoPressed()));
+    connect(m_hongo,SIGNAL(buttonClicked()),this,SLOT(hongoChange()));
 }
 
 HongoEmergenciaController::~HongoEmergenciaController(){
@@ -30,10 +29,11 @@ void HongoEmergenciaController::releaseHongo(){
     m_hongo->turnOff();
 }
 
-void HongoEmergenciaController::hongoPressed(){
-    m_subte->setaActivated();
-}
-
-void HongoEmergenciaController::hongoReleased(){
-    m_subte->setaDeactivated();
+void HongoEmergenciaController::hongoChange(){
+    if(m_hongo->buttonState()) {
+        //TODO: checkear! funciona invertido ??
+        m_subte->setaDeactivated();
+    }else{
+        m_subte->setaActivated();
+    }
 }

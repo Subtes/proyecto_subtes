@@ -21,8 +21,7 @@ class Base_EventHandler : public QObject
 protected:
     Base_ENetHelper * m_eNetHelper;
     int m_boardsReady = 0;
-    std::string m_cargandoEstado = "";
-
+    std::string m_cargandoEstado = " ";
 
 public:
     Base_EventHandler();

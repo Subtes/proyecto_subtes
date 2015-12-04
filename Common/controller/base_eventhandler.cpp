@@ -25,7 +25,8 @@ void Base_EventHandler::enableDiffusion(){
     if(m_boardsReady==5){
         m_eNetHelper->client()->CambiarEstadoDifusion(true);
         m_boardsReady = 0;
-        m_eNetHelper->client()->CambiarValorClave("c_estado_cargado",m_cargandoEstado);
-        m_cargandoEstado = "";
+        if(!m_cargandoEstado.compare("")==0)
+            m_eNetHelper->client()->CambiarValorClave("c_estado_cargado",m_cargandoEstado);
+        m_cargandoEstado = " ";
     }
 }

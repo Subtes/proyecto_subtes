@@ -17,8 +17,7 @@ public:
     void releaseHongo();
 
 private slots:
-    void hongoPressed();
-    void hongoReleased();
+    void hongoChange();
 
 private:
     SingleButton *m_hongo;

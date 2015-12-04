@@ -1,6 +1,7 @@
 #include "subtestate.h"
 
 SubteState::SubteState() : SubteStateBase(){
+    m_atp->enableTraction();
 }
 
 SubteState::~SubteState(){

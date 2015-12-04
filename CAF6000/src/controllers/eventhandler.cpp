@@ -116,7 +116,11 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_subte->reset();
 
             //Se comento linea, testear bien en integracion y ver si salta error (ver tarea SUBTES-227 asociada 419-Test)
+<<<<<<< HEAD
             //emit controlReset();
+=======
+            emit controlReset();
+>>>>>>> fd controller enetHelper y eventHandler abstraido
 
             m_eNetHelper->client()->CambiarValorClave("c_grifob138","con");
             m_eNetHelper->client()->CambiarValorClave("c_grifol2","con");
@@ -294,7 +298,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_cargandoEstado = "puesta_servicio";
             intState = 1;
         }
-        emit cargarEstado(intState);
+        //emit cargarEstado(intState);
     }
 
     else if(key.compare("v_voltaje") == 0){
