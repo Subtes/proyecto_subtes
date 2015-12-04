@@ -1,36 +1,45 @@
-QT += core xml
+QT += core xml widgets gui
 
-TEMPLATE = lib
+TEMPLATE =
 
-CONFIG +=  c++11 release
+CONFIG += c++11 dll release
 
-HEADERS += model/brakes.h \
+HEADERS += ../ENet/include/ENetClient.h \
+    ../ENet/include/AdmClaves.h \
+    ../ENet/include/DicClave.h \
+    model/brakes.h \
     model/traction.h \
-    controller/eventhandler.h \
-    controller/enethelper.h
-    #../ENet/ENetClient.h \
-    #../ENet/AdmClaves.h \
-
-SOURCES += model/brakes.cpp \
+    model/subtestatebase.h \
+    model/doors.h \
+    model/automatictrainprotection.h \
+    controller/base_eventhandler.h \
+    controller/base_enethelper.h \
+    notifier.h
+    
+SOURCES += ../ENet/include/ENetClient.cpp \
+    ../ENet/include/AdmClaves.cpp \
+    ../ENet/include/DicClave.cpp \
+    model/brakes.cpp \
     model/traction.cpp \
-    controller/eventhandler.cpp \
-    controller/enethelper.cpp
-    #../ENet/ENetClient.cpp \
-    #../ENet/AdmClaves.cpp \
+    model/subtestatebase.cpp \
+    model/doors.cpp \
+    model/automatictrainprotection.cpp \
+    controller/base_eventhandler.cpp \
+    controller/base_enethelper.cpp \
+    notifier.cpp
+    
+INCLUDEPATH += $$PWD/../ENet/include
 
-INCLUDEPATH += #$$PWD/../ENet
+DEPENDPATH += $$PWD/../ENet
 
+LIBS+=  -L$$PWD/../ENet/lib/ -lenet \
+        -L$$PWD/../ENet/lib/ -lWS2_32 \
+        -L$$PWD/../ENet/lib/ -lBufferOverflowU \
+        -L$$PWD/../ENet/lib/ -lWinMM \
+        -L$$PWD/../ENet/lib/ -lENetClient-Cpp
 
-DEPENDPATH += #$$PWD/../ENet
+#DESTDIR = $$PWD
 
-LIBS += #-L$$PWD/../ENet/ -lenet \
-    #-L$$PWD/../ENet/ -lWS2_32 \
-    #-L$$PWD/../ENet/ -lBufferOverflowU \
-    #-L$$PWD/../ENet/ -lWinMM \
-    #-L$$PWD/../ENet/ -lENetClient-Cpp
-
-DESTDIR = $$PWD
-
-#DISTFILES +=
-
-
+EVERYTHING = $$SOURCES $$HEADERS $$LIBS
+message("The project contains the following files:")
+message($$EVERYTHING)

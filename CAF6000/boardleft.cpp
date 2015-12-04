@@ -1,6 +1,6 @@
 #include "boardleft.h"
 #include "ui_boardleft.h"
-#include "DefaultLogManager.h"
+//#include "DefaultLogManager.h"
 
 BoardLeft::BoardLeft(QWidget *parent, SubteStatus * subte, EventHandler *eventHandler) :
     BaseBoard(parent,subte,eventHandler),
@@ -23,7 +23,7 @@ BoardLeft::~BoardLeft()
 
 void BoardLeft::startBoard()
 {
-    LOG(INFO) << "board Left startBoard";
+    //LOG(INFO) << "board Left startBoard";
 
     m_atp = new Atp_Controller(m_subte, ui->widget_atp, m_eventHandler);
     connect(m_atp,SIGNAL(playSound(int)),m_hardwareSupport,SLOT(onSound(int)));

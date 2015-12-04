@@ -22,7 +22,7 @@ TractionBypass_Controller::TractionBypass_Controller(SubteStatus *subte, SingleB
     connect(m_button,SIGNAL(buttonReleased()),this,SLOT(releaseBypass()));
     connect(m_subte,SIGNAL(CSCPChanged(bool)),this,SLOT(updateStatus(bool)));
 
-    updateStatus(m_subte->cscp());
+    updateStatus(m_subte->doorsCircuit());
 
     connect(m_checkTB,SIGNAL(timeout()),m_tractionHardware,SLOT(processBottonChanged()));
 }
@@ -55,13 +55,13 @@ void TractionBypass_Controller::updateStatus(bool status)
 void TractionBypass_Controller::releaseBypass()
 {
     m_subte->bypassCSCP(false);
-    updateStatus(m_subte->cscp());
+    updateStatus(m_subte->doorsCircuit());
 }
 
 void TractionBypass_Controller::pressBypass()
 {
     m_subte->bypassCSCP(true);
-    updateStatus(m_subte->cscp());
+    updateStatus(m_subte->doorsCircuit());
 }
 
 void TractionBypass_Controller::onBypassHD(){

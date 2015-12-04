@@ -15,7 +15,6 @@ public:
     ~TractionController();
 
 private:
-    bool seActivoFreno = false;
     SubteState *m_subte;
     AlstomTractionLever *m_tractionLever;
     AlstomSelectorModoConduccion *m_modoConduccion;

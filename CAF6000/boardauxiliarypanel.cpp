@@ -37,9 +37,9 @@ void BoardAuxiliaryPanel::disableScreen()
 
 void BoardAuxiliaryPanel::resetControls(){
 
-    m_ready = 0;
-    m_modelSubway.clear();
-    qDebug()<<"Reset Controls: "<< "Ready: "<< m_ready<<" Model Subway: "<< m_modelSubway;
+    //m_ready = 0;
+    //m_modelSubway.clear();
+    //qDebug()<<"Reset Controls: "<< "Ready: "<< m_ready<<" Model Subway: "<< m_modelSubway;
 }
 
 void BoardAuxiliaryPanel::loadState(int state){

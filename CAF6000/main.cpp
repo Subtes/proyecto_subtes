@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QDesktopWidget>
 #include <tractionhardware.h>
+
 #include "boardhardware.h"
 #include "boardcenter.h"
 #include "boardleft.h"
@@ -18,7 +19,6 @@ INITIALIZE_EASYLOGGINGPP
 
 int main(int argc, char *argv[])
 {
-
     qInstallMessageHandler(logger::logMessageOutput);
 
     DefaultLogManager mLogManager;
@@ -69,11 +69,11 @@ int main(int argc, char *argv[])
         QRect s2 = desktop->screenGeometry(2);//Dimensiones -->  QRect(1024,0 1024x768)
         QRect s3 = desktop->screenGeometry(3);//Dimensiones -->  QRect(-1024,0 1024x768)
 
-        /**
-         * Dimensiones -->  QRect(0,0 1024x768)
-         * Dimensiones -->  QRect(1024,0 1024x768)
-         * Dimensiones -->  QRect(-1024,0 1024x768)
-         * Dimensiones -->  QRect(0,-768 1024x768)
+        /*
+        * Dimensiones -->  QRect(0,0 1024x768)
+        * Dimensiones -->  QRect(1024,0 1024x768)
+        * Dimensiones -->  QRect(-1024,0 1024x768)
+        * Dimensiones -->  QRect(0,-768 1024x768)
         */
 
         m_t->showFullScreen();
@@ -99,6 +99,8 @@ int main(int argc, char *argv[])
         m_h->showNormal();
         m_l->showNormal();
         m_t->showNormal();
+        m_c->showNormal();
+
 
         QTabWidget *tabRight = new QTabWidget(0);
         tabRight->addTab(m_c,QObject::tr("Center"));
@@ -115,7 +117,7 @@ int main(int argc, char *argv[])
     m_eventHandler->setModel(m_subte);
     m_eventHandler->setFailures(m_failures);
     m_subte->setHandler(m_eventHandler);
-    m_eventHandler->initConnection();
+    m_eventHandler->initConnection(qApp->applicationDirPath());
 
     QObject::connect(m_eventHandler,SIGNAL(closeApp()),qApp,SLOT(quit()));
     return a.exec();

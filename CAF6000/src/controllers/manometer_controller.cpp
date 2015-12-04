@@ -15,8 +15,8 @@ Manometer_Controller::Manometer_Controller(SubteStatus * subte, Manometer * mano
     m_manometer->updateNeedleRed(0);
     m_manometer->updateNeedleWhite(0);
 
-    connect(m_subte,SIGNAL(manometerRedChange(double)),this,SLOT(updatePressureRed(double)));
-    connect(m_subte,SIGNAL(manometerWhiteChange(double)),this,SLOT(updatePressureWhite(double)));
+    connect(m_subte,SIGNAL(cylinderPressureChange(double)),this,SLOT(updateCylinderPressure(double)));
+    connect(m_subte,SIGNAL(mainPressureChange(double)),this,SLOT(updateMainPressure(double)));
 }
 
 Manometer_Controller::~Manometer_Controller()
@@ -24,10 +24,10 @@ Manometer_Controller::~Manometer_Controller()
 
 }
 
-void Manometer_Controller::updatePressureWhite(double press){
+void Manometer_Controller::updateMainPressure(double press){
     m_manometer->updateNeedleWhite(press);
 }
 
-void Manometer_Controller::updatePressureRed(double presscil){
+void Manometer_Controller::updateCylinderPressure(double presscil){
     m_manometer->updateNeedleRed(presscil);
 }

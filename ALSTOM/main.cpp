@@ -17,7 +17,6 @@ int main(int argc, char *argv[])
 
     // MODEL
     SubteState * m_subte = new SubteState();
-
     // CONTROLLER DISPATCHER
     EventHandler *m_eventHandler = new EventHandler();
 
@@ -60,7 +59,7 @@ int main(int argc, char *argv[])
 
     m_eventHandler->setModel(m_subte);
     m_subte->setHandler(m_eventHandler);
-    m_eventHandler->initConnection();
+    m_eventHandler->initConnection(qApp->applicationDirPath());
 
     QObject::connect(m_eventHandler,SIGNAL(closeApp()),qApp,SLOT(quit()));
     return a.exec();

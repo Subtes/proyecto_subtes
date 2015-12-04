@@ -1,31 +1,28 @@
 #include "traction.h"
-#include <QDebug>
 
 Traction::Traction()
 {
-    m_traction = 0;
-    m_rana = RANA::CERO;
-    m_hombreMuerto = false;
-    m_lastTraction = 0;
+    reset();
 }
 
 Traction::~Traction()
 {
 }
 
+
 void Traction::linkBrake(Brakes *b){
     m_brake = b;
 }
 
-//void Traction::linkCSCP(CSCP *c){
-//    m_cscp = c;
-//}
+void Traction::linkCSCP(Doors *c){
+    m_doors = c;
+}
 
-//void Traction::linkATP(ATP_model *a){
-//    m_atp = a;
-//}
+void Traction::linkATP(AutomaticTrainProtection *a){
+    m_atp = a;
+}
 
-void Traction::setHandler(EventHandler * eventHandler)
+void Traction::setHandler(Base_EventHandler * eventHandler)
 {
     m_eventHandler = eventHandler;
 }
@@ -33,13 +30,13 @@ void Traction::setHandler(EventHandler * eventHandler)
 void Traction::reset()
 {
     m_traction = 0;
-    m_rana = RANA::CERO;
+    m_rana = TRACTION_MODE::NEUTRO;
     m_hombreMuerto = false;
     m_lastTraction = 0;
     m_averia = false;
 }
 
-void Traction::setDirection(RANA r){
+void Traction::setDirection(TRACTION_MODE r){
     m_rana = r;
 }
 
@@ -53,21 +50,21 @@ int Traction::getTraction()
             qDebug() << "averia en traccion";
         if(m_brake->braking())
             qDebug() << "coche frenando";
-        //if (!m_cscp->evalCircuit())
-        //    qDebug() << "CSCP abierto";
-        //if(!m_atp->tractionReady())
-        //    qDebug() <<  "atp bloquea traccion";
-        if(m_rana == RANA::CERO)
-            qDebug() << "rana en CERO";
+        if (!m_doors->evalCircuit())
+            qDebug() << "CSCP abierto";
+        if(!m_atp->tractionReady())
+            qDebug() <<  "atp bloquea traccion";
+        if(m_rana == TRACTION_MODE::NEUTRO)
+            qDebug() << "rana en NEUTRO";
         if(!m_hombreMuerto)
             qDebug() << "Hombre Muerto NO cumplido";
     }
 
     if(!m_averia
        && !m_brake->braking()
-       //&& m_cscp->evalCircuit()
-       //&& m_atp->tractionReady()
-       && m_rana != RANA::CERO
+       && m_doors->evalCircuit()
+       && m_atp->tractionReady()
+       && m_rana != TRACTION_MODE::NEUTRO
        && m_hombreMuerto){
         return m_traction;
     }else{
@@ -121,18 +118,17 @@ void Traction::setAveria(bool averia)
 void Traction::notifyTraction()
 {
     double tractionToEmit = getTraction();
-
-    if((tractionToEmit<15) || (abs(tractionToEmit - m_lastTraction) >= 5)){
+    if((tractionToEmit<SAFE_NEUTRAL_ZONE) || (abs(tractionToEmit - m_lastTraction) >= INTERVAL_EMISSION)){
         m_lastTraction = tractionToEmit;
-        //m_eventHandler->notifyValueChanged(NOMBRE_TRACCION,std::to_string(tractionToEmit));
+        m_eventHandler->notifyValueChanged(NOMBRE_TRACCION,std::to_string(tractionToEmit));
     }
 }
 
 void Traction::notifyHM()
 {
     if(m_hombreMuerto){
-        //m_eventHandler->notifyValueChanged(NOMBRE_HOMBRE_MUERTO,VALOR_HOMBRE_MUERTO_CON);
+        m_eventHandler->notifyValueChanged(NOMBRE_HOMBRE_MUERTO,VALOR_HOMBRE_MUERTO_CON);
     } else {
-        //m_eventHandler->notifyValueChanged(NOMBRE_HOMBRE_MUERTO,VALOR_HOMBRE_MUERTO_DES);
+        m_eventHandler->notifyValueChanged(NOMBRE_HOMBRE_MUERTO,VALOR_HOMBRE_MUERTO_DES);
     }
 }
