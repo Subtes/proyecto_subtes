@@ -23,8 +23,10 @@ class SicasMac_Controller : public Base_Controller
     int DatosPorCoche;
     int maxRenglonesSicas;
     bool sicasOn;
+    bool cargoAcople;
     int offsetCantRows;
     int cantdoorsicas;
+    int m_coche_maquina;
     QStringList pantallasicas ;
     QStringList saveId ;
     QStringList estAnteriorFallaCocheSicas;
@@ -73,6 +75,7 @@ public slots:
     void sacoMensajeConvFueraServicio();
     void cargarMensajeFrenoEstacAplicado();
     void sacoMensajeFrenoEstacAplicado();
+    void changeStateCabin(int);
 };
 
 #endif // SICASMAC_CONTROLLER_H

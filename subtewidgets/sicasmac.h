@@ -65,6 +65,7 @@ public slots:
        void borrarArregloBlinkSicas(QString trenes, int index);
        void ponerOnSicasSinIncidencia();
        void ponerValoresInicio(int cantPantallas);
+       void cambiarEstadoCabina(int state);
 
 
 };

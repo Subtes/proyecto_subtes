@@ -110,6 +110,8 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_renglon_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estacion_destino_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_salir_de_estacion");
+            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cabina_activa");
+
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_freno_retencion");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_velocidad");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_tramo_vel");
@@ -121,6 +123,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_presion_alimentacion");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_proximo_a_estacion");
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_estado_puertas");
+
             m_subte->reset();
             emit controlReset();
 
@@ -304,6 +307,10 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
 
     else if(key.compare("v_voltaje") == 0){
         m_subte->updateVolt(std::stod(value));
+    }
+
+   else if(key.compare("i_cabina_activa") == 0){
+        m_subte->cabinChanged(std::stoi(value));
     }
 
     else if(key.compare("v_intensidad") == 0){

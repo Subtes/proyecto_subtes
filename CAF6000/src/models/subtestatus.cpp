@@ -489,6 +489,12 @@ void SubteStatus::updateVolt(double value)
     emit voltChanged(m_volts);
 }
 
+void SubteStatus::updatestatecabine(int state_cabine)
+{
+    m_estado_coche = state_cabine;
+    emit cabinChanged(m_estado_coche);
+}
+
 void SubteStatus::updateAmm(double value)
 {
     m_amps = value;

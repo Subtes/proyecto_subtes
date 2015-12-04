@@ -176,7 +176,6 @@ Rectangle {
         height: 20
         opacity: 0
         text: qsTr("Siguiente")
-        visible: true
         font.family: "Arial"
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 12
@@ -190,7 +189,6 @@ Rectangle {
         width: 70
         height: 20
         text: qsTr("Anterior")
-        visible: true
         font.family: "Arial"
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 12
@@ -203,7 +201,6 @@ Rectangle {
         width: 70
         height: 20
         text: qsTr("Avería")
-        visible: true
         font.family: "Arial"
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 12
@@ -216,7 +213,6 @@ Rectangle {
         width: 70
         height: 20
         text: qsTr("Reconocer")
-        visible: false
         font.family: "Arial"
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 12
@@ -322,7 +318,6 @@ Rectangle {
         y: 98
         width: 16
         height: 53
-        visible: false
         objectName:"actualtrainend"
         fillMode: Image.PreserveAspectFit
         source: "resources/sicas_azul.png"
@@ -953,6 +948,17 @@ Rectangle {
             turnOffAnterior();
    }
 
+   function cambiarEstadoCabina(state){
+    if (state ===1){
+        maquinatrenstart.opacity=1;
+        maquinatrenend.opacity=0;
+    }
+    else{
+        maquinatrenstart.opacity=0;
+        maquinatrenend.opacity=1;
+    }
+
+   }
 
 }//FIN RECTANGLO
 
