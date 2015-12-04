@@ -17,5 +17,6 @@
         <file>llavetrespuntos.qml</file>
         <file>alstom_selectorModoConduccion.qml</file>
         <file>backgroundTCMS.qml</file>
+        <file>switchMultiPoint.qml</file>
     </qresource>
 </RCC>

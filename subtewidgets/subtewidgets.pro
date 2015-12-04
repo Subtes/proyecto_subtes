@@ -23,7 +23,8 @@ HEADERS += \
     tractionhardware.h \
     alstomtractionlever.h \
     alstomselectormodoconduccion.h \
-    alstomtcms.h
+    alstomtcms.h \
+    switchmultipoint.h
 
 SOURCES += \
     tractionlever.cpp \
@@ -43,7 +44,8 @@ SOURCES += \
     tractionhardware.cpp \
     alstomtractionlever.cpp \
     alstomselectormodoconduccion.cpp \
-    alstomtcms.cpp
+    alstomtcms.cpp \
+    switchmultipoint.cpp
 
 FORMS += \
     tractionlever.ui \
@@ -62,7 +64,8 @@ FORMS += \
     llavetecho.ui \
     alstomtractionlever.ui \
     alstomselectormodoconduccion.ui \
-    alstomtcms.ui
+    alstomtcms.ui \
+    switchmultipoint.ui
 
 RESOURCES += \
             qmlrsc.qrc \
