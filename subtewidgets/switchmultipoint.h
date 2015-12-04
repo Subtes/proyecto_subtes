@@ -16,9 +16,15 @@ public:
     explicit SwitchMultiPoint(QWidget *parent = 0);
     ~SwitchMultiPoint();
 
-private:    
+    void setSize(QSize size);    
+    void setONMouseArea(QString pos);
+
+private:
     Ui::SwitchMultiPoint *ui;
     QQuickItem *m_qml = NULL;
+
+signals:
+    onPressPosSwitch(int);
 };
 
 #endif // SWITCHMULTIPOINT_H

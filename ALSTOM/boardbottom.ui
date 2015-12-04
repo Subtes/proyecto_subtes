@@ -119,6 +119,16 @@
      </rect>
     </property>
    </widget>
+   <widget class="SwitchMultiPoint" name="switch_mp" native="true">
+    <property name="geometry">
+     <rect>
+      <x>425</x>
+      <y>545</y>
+      <width>160</width>
+      <height>170</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
  <customwidgets>
@@ -126,6 +136,12 @@
    <class>SingleButton</class>
    <extends>QWidget</extends>
    <header>singlebutton.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SwitchMultiPoint</class>
+   <extends>QWidget</extends>
+   <header>switchmultipoint.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

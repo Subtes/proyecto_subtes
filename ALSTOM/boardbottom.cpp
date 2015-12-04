@@ -39,9 +39,34 @@ BoardBottom::BoardBottom(QWidget *parent) :
     ui->lavaParabrisas->setOnPressAsDriver();
     ui->bajarPanto->setOnPressAsDriver();
     ui->subirPanto->setOnPressAsDriver();
+
+    /*QSize size;
+    size.setWidth();
+    size.setHeight();
+    ui->switch_mp->resize();*/
+
+    /*m_switch1 = new SwitchMultiPoint();*/
+
+    //m_switch1 = ui->switch_mp;
+
+    connect(ui->switch_mp,SIGNAL(onPressPosSwitch(int)),this,SLOT(onPressPosSlot(int)));
+
+    ui->switch_mp->setONMouseArea("p1");
+    ui->switch_mp->setONMouseArea("p3");
+    ui->switch_mp->setONMouseArea("p9");
+    ui->switch_mp->setONMouseArea("p11");
 }
 
 BoardBottom::~BoardBottom()
 {
     delete ui;
 }
+
+void BoardBottom::onPressPosSlot(int pos){
+
+
+qDebug() << "Mensaje de la Perilla: " << pos;
+
+
+}
+

@@ -2,6 +2,7 @@
 #define BOARDBOTTOM_H
 
 #include <QMainWindow>
+#include "switchmultipoint.h"
 
 namespace Ui {
 class BoardBottom;
@@ -15,8 +16,12 @@ public:
     explicit BoardBottom(QWidget *parent = 0);
     ~BoardBottom();
 
+public slots:
+    void onPressPosSlot(int pos);
+
 private:
     Ui::BoardBottom *ui;
+    SwitchMultiPoint *m_switch1;
 };
 
 #endif // BOARDBOTTOM_H
