@@ -24,7 +24,10 @@ private:
     QQuickItem *m_qml = NULL;
 
 signals:
-    onPressPosSwitch(int);
+    onPressPosSwitch(QString);
+
+public slots:
+    void onPressPosSwitchSlot(QString pos);
 };
 
 #endif // SWITCHMULTIPOINT_H

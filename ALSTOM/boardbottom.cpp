@@ -49,7 +49,7 @@ BoardBottom::BoardBottom(QWidget *parent) :
 
     //m_switch1 = ui->switch_mp;
 
-    connect(ui->switch_mp,SIGNAL(onPressPosSwitch(int)),this,SLOT(onPressPosSlot(int)));
+    connect(ui->switch_mp,SIGNAL(onPressPosSwitch(QString)),this,SLOT(onPressPosSlot(QString)));
 
     ui->switch_mp->setONMouseArea("p1");
     ui->switch_mp->setONMouseArea("p3");
@@ -62,7 +62,7 @@ BoardBottom::~BoardBottom()
     delete ui;
 }
 
-void BoardBottom::onPressPosSlot(int pos){
+void BoardBottom::onPressPosSlot(QString pos){
 
 
 qDebug() << "Mensaje de la Perilla: " << pos;

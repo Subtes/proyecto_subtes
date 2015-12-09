@@ -17,7 +17,7 @@ public:
     ~BoardBottom();
 
 public slots:
-    void onPressPosSlot(int pos);
+    void onPressPosSlot(QString);
 
 private:
     Ui::BoardBottom *ui;

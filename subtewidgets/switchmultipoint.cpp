@@ -13,7 +13,7 @@ SwitchMultiPoint::SwitchMultiPoint(QWidget *parent) :
 
     m_qml = ui->quickWidget->rootObject();
 
-    connect(m_qml,SIGNAL(onPressPos(int)),this,SIGNAL(onPressPosSwitch(int)));
+    connect(m_qml,SIGNAL(onPressPos(QString)),this,SLOT(onPressPosSwitchSlot(QString)));
 
 }
 
@@ -31,9 +31,13 @@ void SwitchMultiPoint::setONMouseArea(QString pos)
 {
    QObject *switch_i = m_qml->findChild<QObject*>(pos,Qt::FindChildrenRecursively);
 
-   qDebug() << "QUE POSICION LLEGA: "<< pos;
-   qDebug() << switch_i->objectName();
+  // qDebug() << "QUE POSICION LLEGA: "<< pos;
+  // qDebug() << switch_i->objectName();
    switch_i->setProperty("enabled",true);
 
 }
 
+void SwitchMultiPoint::onPressPosSwitchSlot(QString pos)
+{
+emit onPressPosSwitch(pos);
+}

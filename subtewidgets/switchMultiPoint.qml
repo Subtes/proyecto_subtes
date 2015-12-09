@@ -8,10 +8,11 @@ Rectangle {
     height: 170
     color: "#00000000"
 
-    signal onPressPos();
+    signal onPressPos(string pos);
 
     property int posActual: 0
     property int giroActual: 0
+    property int gradoActual: 0
 
     Item {
         id: item1
@@ -49,9 +50,10 @@ Rectangle {
             rotation: 30
             enabled: false
             onClicked: {
-                setPos(30)
+                setGrado(30)
                 item1.state = "g30"
-                onPressPos(1)
+                posActual = 1
+                onPressPos("1")
                 console.log("1");}
         }
 
@@ -65,9 +67,10 @@ Rectangle {
             rotation: 60
             enabled: false
             onClicked: {
-                setPos(60)
+                setGrado(60)
                 item1.state = "g60"
-                onPressPos(2)
+                posActual = 2
+                onPressPos("2")
                 console.log("2");}
         }
 
@@ -80,9 +83,10 @@ Rectangle {
             height: 30
             enabled: false
             onClicked: {
-                setPos(90)
+                setGrado(90)
                 item1.state = "g90"
-                onPressPos(3)
+                posActual = 3
+                onPressPos("3")
                 console.log("3");}
         }
 
@@ -96,9 +100,10 @@ Rectangle {
             rotation: -60
             enabled: false
             onClicked: {
-                setPos(120)
+                setGrado(120)
                 item1.state = "g120"
-                onPressPos(4)
+                posActual = 4
+                onPressPos("4")
                 console.log("4");}
         }
 
@@ -112,9 +117,10 @@ Rectangle {
             rotation: -30
             enabled: false
             onClicked: {
-                setPos(150)
+                setGrado(150)
                 item1.state = "g150"
-                onPressPos(5)
+                posActual = 5
+                onPressPos("5")
                 console.log("5");}
         }
 
@@ -127,9 +133,10 @@ Rectangle {
             height: 30
             enabled: false
             onClicked: {
-                setPos(180)
+                setGrado(180)
                 item1.state = "g180"
-                onPressPos(6)
+                posActual = 6
+                onPressPos("6")
                 console.log("6");}
         }
 
@@ -143,9 +150,10 @@ Rectangle {
             rotation: 30
             enabled: false
             onClicked: {
-                setPos(210)
+                setGrado(210)
                 item1.state = "g210"
-                onPressPos(7)
+                posActual = 7
+                onPressPos("7")
                 console.log("7");}
         }
 
@@ -159,9 +167,10 @@ Rectangle {
             rotation: 60
             enabled: false
             onClicked: {
-                setPos(240)
+                setGrado(240)
                 item1.state = "g240"
-                onPressPos(8)
+                posActual = 8
+                onPressPos("8")
                 console.log("8");}
         }
 
@@ -175,9 +184,10 @@ Rectangle {
             height: 30
             enabled: false
             onClicked: {
-                setPos(270)
+                setGrado(270)
                 item1.state = "g270"
-                onPressPos(9)
+                posActual = 9
+                onPressPos("9")
                 console.log("9");}
         }
 
@@ -191,9 +201,10 @@ Rectangle {
             rotation: -60
             enabled: false
             onClicked: {
-                setPos(300)
+                setGrado(300)
                 item1.state = "g300"
-                onPressPos(10)
+                posActual = 10
+                onPressPos("10")
                 console.log("10");}
         }
 
@@ -207,9 +218,10 @@ Rectangle {
             rotation: -30
             enabled: false
             onClicked: {
-                setPos(330)
+                setGrado(330)
                 item1.state = "g330"
-                onPressPos(11)
+                posActual = 11
+                onPressPos("11")
                 console.log("11");}
         }
 
@@ -222,9 +234,10 @@ Rectangle {
             height: 30
             enabled: false
             onClicked: {
-                setPos(0)
+                setGrado(0)
                 item1.state = "g0"
-                onPressPos(12)
+                posActual = 12
+                onPressPos("12")
                 console.log("12");}
         }
 
@@ -286,13 +299,13 @@ Rectangle {
         }
     }
 
-    function setPos(gradoobjetivo){
-        if ((switchmp.posActual - gradoobjetivo) > 0)
+    function setGrado(gradoobjetivo){
+        if ((switchmp.gradoActual - gradoobjetivo) > 0)
         {
-            switchmp.giroActual =  gradoobjetivo - switchmp.posActual;
+            switchmp.giroActual =  gradoobjetivo - switchmp.gradoActual;
         }
         else{
-            switchmp.giroActual = gradoobjetivo - 360 - switchmp.posActual;
+            switchmp.giroActual = gradoobjetivo - 360 - switchmp.gradoActual;
         }
     }
 
