@@ -126,8 +126,8 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_estado_puertas");
 
             m_subte->reset();
-            //Comentar linea en integracion y testear ver tarea SUBTES-227
-            emit controlReset();
+            //Se comento linea, testear bien en integracion y ver si salta error (ver tarea SUBTES-227 asociada 419-Test)
+            //emit controlReset();
 
             m_eNetClient->CambiarValorClave("c_grifob138","con");
             m_eNetClient->CambiarValorClave("c_grifol2","con");
