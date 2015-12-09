@@ -10,6 +10,7 @@
 #define _J 0x4A
 #define _K 0x4B
 #define _L 0x4C
+#define _Mm 0x4D
 #define _R 0x52
 #define _tF 0x46
 #define _T 0x54
@@ -98,6 +99,7 @@ private:
     bool J_down;
     bool K_down;
     bool L_down;
+    bool M_down;
     bool R_down;
     bool T_down;
     bool CERO_down;
@@ -158,7 +160,7 @@ signals:
 
     configWagon(QString);
     modelSubwayReceived(QString);
-    loadSubwayConfig(QString);
+    //loadSubwayConfig(QString);
 
 public slots:
     void processKeyPressed(DWORD k);

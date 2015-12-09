@@ -42,7 +42,14 @@ private:
     QFile m_subways;
     QFile m_modelSubway;
     QString m_wagonSelected;
-
+    /**
+     * @brief m_paneles
+     * Mantiene el estado de los switch leidos desde archivo. <tipoPanel,Vector de Switch con sus datos>
+     * Estos datos de switch los va a utilizar en el Nivel 3, segun la opción elejida en N2, por ejemplo:
+     * si selecciona panel de termicas, el mismo se instanciara con las termicas segun el archivo.
+     * Mas adelante según demanda podria cargarce en función de un modelo con datos en particular según
+     * pedido de instrucciones para un ejercicio particular en un momento x.
+     */
     QHash<QString,QVariantList> *m_paneles;
 
     QTimer *m_setingThermal;

@@ -7,12 +7,12 @@ Rectangle {
     y: 0
     width: 900
     height: 675
-    Component.onCompleted: {console.log("@_ Cargado Panel de Termicas");
+    Component.onCompleted: {//console.log("@_ Cargado Panel de Termicas");
                             thermalsVector[thermalsVector.length]=r1;
                             thermalsVector[thermalsVector.length]=r2;
                             thermalsVector[thermalsVector.length]=r3;
                             thermalsVector[thermalsVector.length]=r4;
-                            console.log("Vector de Termicas: ---> ",thermalsVector.toString());
+                            //console.log("@_ Vector de Termicas: ---> ",thermalsVector.toString());
     }
 
     signal selected(string s)
@@ -78,7 +78,7 @@ Rectangle {
 
                     Component.onCompleted: {
                         countThermal();
-                        console.log("@:_...Item Thermal: ",objectName);
+                        //console.log("@:_...Item Thermal: ",objectName);
                     }
 
                     Image {
@@ -171,7 +171,7 @@ Rectangle {
 
                     Component.onCompleted: {
                         countThermal();
-                        console.log("@:_...Item Thermal: ",objectName);
+                        //console.log("@:_...Item Thermal: ",objectName);
                     }
 
                     Image {
@@ -275,7 +275,7 @@ Rectangle {
 
                     Component.onCompleted: {
                         countThermal();
-                        console.log("@:_...Item Thermal: ",objectName);
+                        //console.log("@:_...Item Thermal: ",objectName);
                     }
 
                     Image {
@@ -379,7 +379,7 @@ Rectangle {
 
                     Component.onCompleted: {
                         countThermal();
-                        console.log("@:_...Item Thermal: ",objectName);
+                        //console.log("@:_...Item Thermal: ",objectName);
                     }
 
                     Image {
@@ -467,7 +467,7 @@ Rectangle {
 
             Component.onCompleted: {
                 countThermal();
-                console.log("@:_...Item Thermal: ",objectName);
+                //console.log("@:_...Item Thermal: ",objectName);
             }
 
             Image {
@@ -528,7 +528,7 @@ Rectangle {
 
             Component.onCompleted: {
                 countThermal();
-                console.log("@:_...Item Thermal: ",objectName);
+                //console.log("@:_...Item Thermal: ",objectName);
             }
 
             Image {
@@ -611,7 +611,7 @@ Rectangle {
 
             Component.onCompleted: {
                 countThermal();
-                console.log("@:_...Item Thermal: ",objectName);
+                //console.log("@:_...Item Thermal: ",objectName);
             }
 
             Image {
@@ -693,7 +693,7 @@ Rectangle {
 
             Component.onCompleted: {
                 countThermal();
-                console.log("@:_...Item Thermal: ",objectName);
+                //console.log("@:_...Item Thermal: ",objectName);
             }
 
             Image {
@@ -776,13 +776,13 @@ Rectangle {
         level3.cantThermal++;
         if (level3.cantThermal == (cantRow0+cantRow1+cantRow2+cantRow3-1)){
             level3.ready0("true");
-            console.log("@:_ COMPLETED THERMAL RACKS..........OK");
+            //console.log("@:_ COMPLETED THERMAL RACKS..........OK");
         }
         //console.log("Entro en countThermal");
     }
 
     function readyThermal(){
-        console.log("Entro en QML thermalPanel");
+        //console.log("Entro en QML thermalPanel");
         level3.ready0("true");
     }
 }

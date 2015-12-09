@@ -386,19 +386,6 @@ Rectangle {
             fillMode: Image.PreserveAspectFit
             source: "../Source/images/perillas/Neumatico/mariposaBronce.png"
             opacity: 1
-//            transform: Rotation {
-//                id: g6r
-//                origin.x: parent.x/2
-//                origin.y: parent.y/2
-//                axis { x: 0; y: 0; z: 1 }
-//                angle: 0
-//                Behavior on angle{
-//                    SpringAnimation{
-//                        spring: 1.4
-//                        damping: 0.15
-//                    }
-//                }
-//            }
         }
 
         MouseArea {

@@ -110,10 +110,10 @@ StackView{
                 onClicked: {
                     if (cocheImage1.opacity == 0){
                         if (stack.depth > 0){
-                            console.log(("Antes del POP!!!!!!!!!!!!!!!!!!!!!!!!!"));
+                            //console.log(("Antes del POP!"));
                             stack.currentItem.opacity = 0;
                             stack.pop();
-                            console.log("Entrando en POP");
+                            //console.log("Entrando en POP");
                         }
                         //stack.push({item:formacion, properties:{state:"formacionBackground"}});
                         //formacion.state = "formacionBackground";
@@ -161,18 +161,18 @@ StackView{
                 onClicked: {
                     if (cocheImage2.opacity == 0){
                         if ((stack.depth) > 0){
-                            console.log("Entrando antes del POP COCHE 1 !!!!!!!!!!!!!");
+                            //console.log("Entrando antes del POP COCHE 1!");
                             stack.currentItem.opacity = 0;
                             stack.pop();
-                            console.log("Saliendo en POP COCHE 1 !!!!!!!!!!!!!!!!");
+                            //console.log("Saliendo en POP COCHE 1!");
                         }
-                        console.log("Entrando en opacity COCHE 2 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                        //console.log("Entrando en opacity COCHE 2 @");
                         //formacion.state = "formacionBackground";
                         //cocheImage2.opacity = 1;
                         stack.push({item:cocheImage2, properties:{opacity:1}});
                         stack.selected("coche2");
                         //selectedWagon = cocheImage2.objectName;
-                        console.log("PASE push opacity COCHE 2 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                        //console.log("PASE push opacity COCHE 2 @");
                        // formacion.state = "formacionBackgroundOff";
                     }else{
                         cocheImage2.opacity = 0;
@@ -224,24 +224,24 @@ StackView{
                 onClicked: {
                     if (cocheImage3.opacity == 0){
                         if ((stack.depth) > 0){
-                            console.log("Entrando (Coche 3)antes del POP!!!!!!!!!!!!!",stack.currentItem.objectName, " opacity: ", stack.currentItem.opacity.toString());
+                            //console.log("Entrando (Coche 3)antes del POP! ",stack.currentItem.objectName, " opacity: ", stack.currentItem.opacity.toString());
                             stack.currentItem.opacity = 0;
                             stack.pop();
-                            console.log("Saliendo de POP COCHE 3 !!!!!!!!!!!!!!!!");
+                            //console.log("Saliendo de POP COCHE 3 !");
                         }
-                        console.log("Entrando en opacity COCHE 3 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                        //console.log("Entrando en opacity COCHE 3 @");
                         //formacion.state = "formacionBackground";
                         //cocheImage3.opacity = 1;
                         stack.push({item:cocheImage3, properties:{opacity:1}});
                         stack.selected("coche3");
                         //stack.selectedWagon = cocheImage3.objectName;
-                        console.log("PASE push opacity COCHE 3 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                        //console.log("PASE push opacity COCHE 3 @ ");
                     }else{
                         cocheImage3.opacity = 0;
                         stack.pop();
                         //formacion.state = "formacionAll";
                         //stack.selectedWagon = "";
-                        console.log("On Click, ELSE mouseAreaCoche3");
+                        //console.log("On Click, ELSE mouseAreaCoche3 ");
                         stack.push({item:bck,properties:{opacity:1}});
                         stack.selected("off");
                     }
@@ -287,10 +287,10 @@ StackView{
                 onClicked: {
                     if (cocheImage4.opacity == 0){
                         if (stack.depth > 0){
-                            console.log(("Antes del POP!!!!!!!!!!!!!!!!!!!!!!!!!"));
+                            //console.log(("Antes del POP!"));
                             stack.currentItem.opacity = 0;
                             stack.pop();
-                            console.log("Entrando en POP");
+                            //console.log("Entrando en POP");
                         }
                         //formacion.state = "formacionBackground";
                         //cocheImage1.opacity = 1;
@@ -349,10 +349,10 @@ StackView{
                 onClicked: {
                     if (cocheImage5.opacity == 0){
                         if (stack.depth > 0){
-                            console.log(("Antes del POP!!!!!!!!!!!!!!!!!!!!!!!!!"));
+                            //console.log(("Antes del POP!"));
                             stack.currentItem.opacity = 0;
                             stack.pop();
-                            console.log("Entrando en POP");
+                            //console.log("Entrando en POP");
                         }
                         stack.push({item:cocheImage5, properties:{opacity:1}});
                         stack.selected("coche5");
@@ -392,10 +392,10 @@ StackView{
                 onClicked: {
                     if (cocheImage6.opacity == 0){
                         if (stack.depth > 0){
-                            console.log(("Antes del POP!!!!!!!!!!!!!!!!!!!!!!!!!"));
+                            //console.log(("Antes del POP!"));
                             stack.currentItem.opacity = 0;
                             stack.pop();
-                            console.log("Entrando en POP");
+                            //console.log("Entrando en POP");
                         }
                         stack.push({item:cocheImage6, properties:{opacity:1}});
                         stack.selected("coche6");

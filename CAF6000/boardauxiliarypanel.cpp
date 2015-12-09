@@ -55,12 +55,13 @@ void BoardAuxiliaryPanel::setSubte(QString s){
     qDebug()<<"Append to Model Subte " <<m_modelSubway <<" configuration: "<< s <<"Ready: "<< m_ready;
 
     if (m_ready == 2){
-        //Q_ASSERT(!(ui->centralwidget->level1(m_modelSubway)));
 
         bool ok = ui->centralwidget->level1(m_modelSubway);
         connect(m_view,SIGNAL(switchSelected(QString)),this,SLOT(processSelection(QString)));
 
         qDebug()<< "Configuration recibed to load auxiliary panel OK: "<< ok;
+    }else{
+        this->m_modelSubway.append("-");
     }
 }
 /**

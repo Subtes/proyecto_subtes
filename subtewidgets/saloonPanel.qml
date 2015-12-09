@@ -53,19 +53,6 @@ Rectangle {
             fillMode: Image.PreserveAspectFit
             source: "../Source/images/perillas/Salon/mariposaAmarillaCON.png"
             opacity: 1
-//            transform: Rotation {
-//                id: r0
-//                origin.x: 42
-//                origin.y: 28
-//                axis { x: 0; y: -1; z: 0 }
-//                angle: 0
-//                Behavior on angle{
-//                    SpringAnimation{
-//                        spring: 1.4
-//                        damping: 0.15
-//                    }
-//                }
-//            }
         }//ImageCON
 
         Image {
