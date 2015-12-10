@@ -31,6 +31,7 @@ class SicasMac_Controller : public Base_Controller
     QStringList saveId ;
     QStringList estAnteriorFallaCocheSicas;
     int buscoPosicion(QString mensaje);
+
     void borrarSicas();
     void verificoEstFalla(QString falla, int coche);
     void verificoEstPuertas(QString falla, int coche);
@@ -42,6 +43,7 @@ class SicasMac_Controller : public Base_Controller
     void cargoVectorEstadoAnteriorFalla();
     void recorridoDePuertas_1Der_2Izq(QString state);
     void recorridoDePuertas_1Izq_2Der(QString state);
+    QString specificMsjWagon(QString wagon);
 
     TractionHardware *m_hardwareSupport = NULL;
 
@@ -76,6 +78,7 @@ public slots:
     void cargarMensajeFrenoEstacAplicado();
     void sacoMensajeFrenoEstacAplicado();
     void changeStateCabin(int);
+    void updateSwitchMsj(QString msjSwitch);
 };
 
 #endif // SICASMAC_CONTROLLER_H
