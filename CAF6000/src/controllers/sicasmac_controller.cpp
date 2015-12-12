@@ -218,7 +218,6 @@ void SicasMac_Controller::bajaMensaje(QString texto){
             cantPantallasSicas=0;
         }
         renglon--;
-        qDebug()<<"renglon "<< renglon<< "arreglo"<<pantallasicas.size();
         m_sicasmac->actualizarTamArreRenglon(renglon);
         m_sicasmac->initRenglonSicas();
         if (pantallasicas.size()==0){
@@ -452,7 +451,6 @@ void SicasMac_Controller::estadoFreno(bool state){
 
 void SicasMac_Controller::recorridoDePuertas_1Der_2Izq(QString state){
  int cantPuertas=0;
- qDebug()<<"estamos aqui!";
     for (int var = 0; var < cantCochesTotal; var++) {
         for (int datos = 0; datos < cantdoorsicas; datos++) {
             verificoEstPuertas(state,cantPuertas); //las puertas

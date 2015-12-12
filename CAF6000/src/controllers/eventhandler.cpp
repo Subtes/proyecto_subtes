@@ -90,7 +90,12 @@ void EventHandler::setFailures(Failures_Controller *failures)
 
 void EventHandler::notifyValueChanged(std::string key, std::string value)
 {
-    m_eNetClient->CambiarValorClave(key,value);
+    m_eNetClient->CambiarValorClave(key," ",value);
+}
+
+void EventHandler::notifyValueChanged(std::string key, std::string subKey, std::string value)
+{
+    m_eNetClient->CambiarValorClave(key,subKey,value);
 }
 
 void EventHandler::processValueChanged(std::string host, std::string key, std::string value){
@@ -130,61 +135,61 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             //Se comento linea, testear bien en integracion y ver si salta error (ver tarea SUBTES-227 asociada 419-Test)
             //emit controlReset();
 
-            m_eNetClient->CambiarValorClave("c_grifob138","con");
-            m_eNetClient->CambiarValorClave("c_grifol2","con");
-            m_eNetClient->CambiarValorClave("c_grifob73","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1","con");
-            m_eNetClient->CambiarValorClave("c_grifob138_2","con");
-            m_eNetClient->CambiarValorClave("c_grifol2_2","con");
-            m_eNetClient->CambiarValorClave("c_grifob73_2","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1_2","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1_2","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1_2","con");
-            m_eNetClient->CambiarValorClave("c_rana_2","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_2","des");
-            m_eNetClient->CambiarValorClave("c_grifob138_3","con");
-            m_eNetClient->CambiarValorClave("c_grifol2_3","con");
-            m_eNetClient->CambiarValorClave("c_grifob73_3","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1_3","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1_3","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1_3","con");
-            m_eNetClient->CambiarValorClave("c_rana_3","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_3","des");
-            m_eNetClient->CambiarValorClave("c_grifob138_4","con");
-            m_eNetClient->CambiarValorClave("c_grifol2_4","con");
-            m_eNetClient->CambiarValorClave("c_grifob73_4","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1_4","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1_4","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1_4","con");
-            m_eNetClient->CambiarValorClave("c_rana_4","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_4","des");
-            m_eNetClient->CambiarValorClave("c_grifob138_5","con");
-            m_eNetClient->CambiarValorClave("c_grifol2_5","con");
-            m_eNetClient->CambiarValorClave("c_grifob73_5","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1_5","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1_5","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1_5","con");
-            m_eNetClient->CambiarValorClave("c_rana_5","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_5","des");
-            m_eNetClient->CambiarValorClave("c_grifob138_6","con");
-            m_eNetClient->CambiarValorClave("c_grifol2_6","con");
-            m_eNetClient->CambiarValorClave("c_grifob73_6","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1_6","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1_6","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1_6","con");
-            m_eNetClient->CambiarValorClave("c_rana_6","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_6","des");
+            m_eNetClient->CambiarValorClave("c_grifob138","1","con");
+            m_eNetClient->CambiarValorClave("c_grifol2","1","con");
+            m_eNetClient->CambiarValorClave("c_grifob73","1","con");
+            m_eNetClient->CambiarValorClave("c_termico_57f1","1","con");
+            m_eNetClient->CambiarValorClave("c_termico_53f1","1","con");
+            m_eNetClient->CambiarValorClave("c_termico_33f1","1","con");
+            m_eNetClient->CambiarValorClave("c_grifob138","2","con");
+            m_eNetClient->CambiarValorClave("c_grifol2","2","con");
+            m_eNetClient->CambiarValorClave("c_grifob73","2","con");
+            m_eNetClient->CambiarValorClave("c_termico_57f1","2","con");
+            m_eNetClient->CambiarValorClave("c_termico_53f1","2","con");
+            m_eNetClient->CambiarValorClave("c_termico_33f1","2","con");
+            m_eNetClient->CambiarValorClave("c_rana","2","0");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia","2","des");
+            m_eNetClient->CambiarValorClave("c_grifob138","3","con");
+            m_eNetClient->CambiarValorClave("c_grifol2","3","con");
+            m_eNetClient->CambiarValorClave("c_grifob73","3","con");
+            m_eNetClient->CambiarValorClave("c_termico_57f1","3","con");
+            m_eNetClient->CambiarValorClave("c_termico_53f1","3","con");
+            m_eNetClient->CambiarValorClave("c_termico_33f1","3","con");
+            m_eNetClient->CambiarValorClave("c_rana","3","0");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia","3","des");
+            m_eNetClient->CambiarValorClave("c_grifob138","4","con");
+            m_eNetClient->CambiarValorClave("c_grifol2","4","con");
+            m_eNetClient->CambiarValorClave("c_grifob73","4","con");
+            m_eNetClient->CambiarValorClave("c_termico_57f1","4","con");
+            m_eNetClient->CambiarValorClave("c_termico_53f1","4","con");
+            m_eNetClient->CambiarValorClave("c_termico_33f1","4","con");
+            m_eNetClient->CambiarValorClave("c_rana","4","0");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia","4","des");
+            m_eNetClient->CambiarValorClave("c_grifob138","5","con");
+            m_eNetClient->CambiarValorClave("c_grifol2","5","con");
+            m_eNetClient->CambiarValorClave("c_grifob73","5","con");
+            m_eNetClient->CambiarValorClave("c_termico_57f1","5","con");
+            m_eNetClient->CambiarValorClave("c_termico_53f1","5","con");
+            m_eNetClient->CambiarValorClave("c_termico_33f1","5","con");
+            m_eNetClient->CambiarValorClave("c_rana","5","0");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia","5","des");
+            m_eNetClient->CambiarValorClave("c_grifob138","6","con");
+            m_eNetClient->CambiarValorClave("c_grifol2","6","con");
+            m_eNetClient->CambiarValorClave("c_grifob73","6","con");
+            m_eNetClient->CambiarValorClave("c_termico_57f1","6","con");
+            m_eNetClient->CambiarValorClave("c_termico_53f1","6","con");
+            m_eNetClient->CambiarValorClave("c_termico_33f1","6","con");
+            m_eNetClient->CambiarValorClave("c_rana","6","0");
+            m_eNetClient->CambiarValorClave("c_seta_emergencia","6","des");
 
             emit controlDisable();
             m_eNetClient->CambiarValorClave("c_listo","1");
 
         }else if (value.compare("des") == 0){
             m_eNetClient->CambiarValorClave("c_listo","0");
-            m_eNetClient->CambiarValorClave("c_regulador_mando","");
-            m_eNetClient->CambiarValorClave("c_llave_atp","");
-            m_eNetClient->CambiarValorClave("c_modo_conduccion","");
+            m_eNetClient->CambiarValorClave("c_regulador_mando"," ");
+            m_eNetClient->CambiarValorClave("c_llave_atp"," ");
+            m_eNetClient->CambiarValorClave("c_modo_conduccion"," ");
 
             m_eNetClient->CambiarValorClave("c_grifob138","con");
             m_eNetClient->CambiarValorClave("c_grifol2","con");
@@ -655,7 +660,9 @@ void EventHandler::enableDiffusion()
     if(m_boardsReady==5){
         m_eNetClient->CambiarEstadoDifusion(true);
         m_boardsReady = 0;
-        m_eNetClient->CambiarValorClave("c_estado_cargado",m_cargandoEstado);
+        if(m_cargandoEstado.compare("")!=0){
+            m_eNetClient->CambiarValorClave("c_estado_cargado",m_cargandoEstado);
+        }
         m_cargandoEstado = "";
     }
 }
