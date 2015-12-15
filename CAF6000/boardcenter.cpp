@@ -124,8 +124,6 @@ void BoardCenter::loadState(int state){
     m_brakesBypass->bypassBrakeReleased();
     m_tractionBypass->releaseBypass();
 
-
-
     if(state == APAGADO){
         lastState = APAGADO;
         m_doors->turnOff();
@@ -137,7 +135,6 @@ void BoardCenter::loadState(int state){
         ui->velocimetro->turnOn();
         ui->bypassFreno->turnOn();
         ui->bypassTraccion->turnOn();
-
     }
 
     m_eventHandler->enableDiffusion();

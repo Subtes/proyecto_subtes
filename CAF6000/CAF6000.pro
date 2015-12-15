@@ -11,8 +11,9 @@ TEMPLATE = app
 
 CONFIG +=  c++11 release
 
-SOURCES += ../ENet/ENetClient.cpp \
-    ../ENet/AdmClaves.cpp \
+SOURCES += ../ENet/include/ENetClient.cpp \
+    ../ENet/include/AdmClaves.cpp \
+    ../ENet/include/DicClave.cpp \
     main.cpp \
     baseboard.cpp \
     boardcenter.cpp \
@@ -58,8 +59,9 @@ SOURCES += ../ENet/ENetClient.cpp \
     boardauxiliarypanel.cpp \
     logger.cpp
 
-HEADERS  += ../ENet/ENetClient.h \
-    ../ENet/AdmClaves.h \
+HEADERS  += ../ENet/include/ENetClient.h \
+    ../ENet/include/AdmClaves.h \
+    ../ENet/include/DicClave.h \
     baseboard.h \
     boardcenter.h \
     boardright.h \
@@ -116,7 +118,7 @@ FORMS    += \
     boardauxiliarypanel.ui
 
 INCLUDEPATH +=  ../subtewidgets \
-                $$PWD/../ENet \
+                $$PWD/../ENet/include \
                 $$PWD/../Source/include
 
 DEPENDPATH += $$PWD/../ENet \
@@ -124,11 +126,11 @@ DEPENDPATH += $$PWD/../ENet \
 
 LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L../subtewidgets/release -lsubtewidgets \
-        -L$$PWD/../ENet/ -lenet \
-        -L$$PWD/../ENet/ -lWS2_32 \
-        -L$$PWD/../ENet/ -lBufferOverflowU \
-        -L$$PWD/../ENet/ -lWinMM \
-        -L$$PWD/../ENet/ -lENetClient-Cpp \
+        -L$$PWD/../ENet/lib/ -lenet \
+        -L$$PWD/../ENet/lib/ -lWS2_32 \
+        -L$$PWD/../ENet/lib/ -lBufferOverflowU \
+        -L$$PWD/../ENet/lib/ -lWinMM \
+        -L$$PWD/../ENet/lib/ -lENetClient-Cpp \
         -L$$PWD/../Source/lib/ -lSDL \
         -L$$PWD/../Source/lib/ -lSDL_mixer
 

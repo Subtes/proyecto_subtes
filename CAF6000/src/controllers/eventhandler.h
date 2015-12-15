@@ -62,6 +62,7 @@ public:
 
     void processValueChanged(std::string host, std::string key, std::string value);
     void notifyValueChanged(std::string key, std::string value);
+    void notifyValueChanged(std::string key, std::string subKey, std::string value);
     void initConnection();
 
     void setModel(SubteStatus *subte);

@@ -42,9 +42,9 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
 
         }else if (value.compare("des") == 0){
             m_eNetClient->CambiarValorClave("c_listo","0");
-            m_eNetClient->CambiarValorClave("c_regulador_mando","");
-            m_eNetClient->CambiarValorClave("c_llave_atp","");
-            m_eNetClient->CambiarValorClave("c_modo_conduccion","");
+            m_eNetClient->CambiarValorClave("c_regulador_mando"," ");
+            m_eNetClient->CambiarValorClave("c_llave_atp"," ");
+            m_eNetClient->CambiarValorClave("c_modo_conduccion"," ");
             Sleep(1000);
             emit closeApp();
         }

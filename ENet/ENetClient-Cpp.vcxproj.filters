@@ -60,6 +60,9 @@
     <ClInclude Include="ErrorClave.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DicClave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -72,6 +75,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ErrorClave.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DicClave.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
