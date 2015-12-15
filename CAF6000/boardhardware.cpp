@@ -1,5 +1,3 @@
-//#include <tractionhardware.h>
-
 #include "boardhardware.h"
 #include "ui_boardhardware.h"
 #include "DefaultLogManager.h"

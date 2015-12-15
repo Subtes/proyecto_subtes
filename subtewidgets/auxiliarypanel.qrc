@@ -1,0 +1,57 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="N2-B-PUPITRE">../Source/images/fondos/cabina_thumb.png</file>
+        <file>../Source/images/fondos/coches_crop.png</file>
+        <file alias="MM-MM-MM-BCK-GREY">../Source/images/fondos/coches_opcion_desatu_crop.png</file>
+        <file alias="N2-B-GRIFOS">../Source/images/fondos/grifos_thumb.png</file>
+        <file alias="N3-PN">../Source/images/fondos/PaneNeumatico_mod.png</file>
+        <file alias="N3-PS">../Source/images/fondos/Salon_Mod.PNG</file>
+        <file alias="N2-B-SALON">../Source/images/fondos/salon_thumb copy.png</file>
+        <file alias="BACK-N3-PT">../Source/images/fondos/Termicas_Mod.PNG</file>
+        <file alias="N2-B-TERMICAS">../Source/images/fondos/termicas_thumb.png</file>
+        <file alias="CAF6000-MM-MM-MM">caf600023.qml</file>
+        <file alias="CAF6000-N2-PANEL-4">nivel2b4.qml</file>
+        <file alias="SUBWAY-CONFIGS">../Source/config/SUBTES-PanelesAuxiliares.json</file>
+        <file alias="NO-OPTION">../Source/images/fondos/noOptionthumb.png</file>
+        <file alias="BACKGROUND-PANEL">noOptionPanel.qml</file>
+        <file alias="FONDO-PANEL">../Source/images/fondos/fondoPanel.png</file>
+        <file alias="CAF6000-N3-GRIFOS">griffinPanel.qml</file>
+        <file alias="CAF6000-N3-TERMICAS">thermalPanelv02.qml</file>
+        <file alias="Back-N3-PT">../Source/images/fondos/fondoTermicas2.png</file>
+        <file alias="N3-PT">../Source/images/fondos/Termicas_Resize.PNG</file>
+        <file>../Source/images/perillas/termicas/Termicas_roja_Resize.PNG</file>
+        <file>../Source/images/perillas/termicas/Tecla4_Arriba_Resize.PNG</file>
+        <file>../Source/images/perillas/termicas/Tecla4_Abajo_Resize.PNG</file>
+        <file>../Source/images/perillas/termicas/Tecla3_Arriba_Resize.PNG</file>
+        <file>../Source/images/perillas/termicas/Tecla3_Abajo_Resize.PNG</file>
+        <file>../Source/images/perillas/termicas/Tecla2_Arriba_Resize.PNG</file>
+        <file>../Source/images/perillas/termicas/Tecla2_Abajo_Resize.PNG</file>
+        <file>../Source/images/perillas/termicas/Tecla1_Arriba_Resize.PNG</file>
+        <file>../Source/images/perillas/termicas/Tecla1_Abajo_Resize.PNG</file>
+        <file>../Source/images/perillas/Neumatico/mariposaBlanca.png</file>
+        <file>../Source/images/perillas/Neumatico/mariposaBronce.png</file>
+        <file>../Source/images/perillas/Neumatico/mariposaGris.png</file>
+        <file alias="CAF6000-N3-SALOON">saloonPanel.qml</file>
+        <file alias="CAF6000-N3-PUPITRE">cabPanel.qml</file>
+        <file alias="N3-PC">../Source/images/fondos/fondoCabina.png</file>
+        <file>../Source/images/perillas/Cabina/rana.png</file>
+        <file>../Source/images/perillas/Cabina/setaOff.png</file>
+        <file>../Source/images/perillas/Cabina/setaOn.png</file>
+        <file>../Source/images/perillas/Cabina/ranaResize.png</file>
+        <file>../Source/images/perillas/Neumatico/mariposaRojaCON.png</file>
+        <file>../Source/images/perillas/Neumatico/mariposaRojaDES.png</file>
+        <file>../Source/images/perillas/Salon/mariposaAmarillaCON.png</file>
+        <file>../Source/images/perillas/Salon/mariposaAmarillaDES.png</file>
+        <file alias="C1">../Source/images/coches/coche1Verde.png</file>
+        <file alias="C2">../Source/images/coches/coche2Verde.png</file>
+        <file alias="C3">../Source/images/coches/coche3Verde.png</file>
+        <file alias="C4">../Source/images/coches/coche4Verde.png</file>
+        <file alias="C5">../Source/images/coches/coche5Verde.png</file>
+        <file alias="C6">../Source/images/coches/coche6Verde.png</file>
+        <file>../Source/images/perillas/Neumatico/neumatico_red.png</file>
+        <file>../Source/images/perillas/termicas/Termicas_roja.PNG</file>
+        <file>../Source/images/fondos/coches_opcionapagados_crop.png</file>
+        <file alias="MM-MM-MM-BCK">../Source/images/fondos/coches_crop_2.png</file>
+        <file alias="CONFIG-CAF6000-23">../Source/config/CAF600023.json</file>
+    </qresource>
+</RCC>

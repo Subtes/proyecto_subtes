@@ -16,6 +16,7 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
     J_down = false;
     K_down = false;
     L_down = false;
+    M_down = false;
     R_down = false;
     T_down = false;
 
@@ -105,7 +106,8 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estado_simulador");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cargar_estado");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_averia");
-
+            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_mod_tren");
+            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_config_vagones");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_coches_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_renglon_sicas");
             m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estacion_destino_sicas");
@@ -125,7 +127,8 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_estado_puertas");
 
             m_subte->reset();
-            emit controlReset();
+            //Se comento linea, testear bien en integracion y ver si salta error (ver tarea SUBTES-227 asociada 419-Test)
+            //emit controlReset();
 
             m_eNetClient->CambiarValorClave("c_grifob138","con");
             m_eNetClient->CambiarValorClave("c_grifol2","con");
@@ -414,6 +417,24 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
             emit departureEstation();
         }
     }
+    else if(key.compare("i_config_vagones") == 0){
+        try{
+            qDebug() << "i_config_vagones recibido.";
+            emit configWagon(value.c_str());
+        }
+        catch (...) {
+            qDebug() << "i_config_vagones valor recibido INVALIDO." ;
+        }
+    }
+    else if(key.compare("i_mod_tren") == 0){
+        try{
+            qDebug() << "i_mod_tren recibido.";
+            emit modelSubwayReceived(value.c_str());
+        }
+        catch (...) {
+            qDebug() << "i_mod_tren valor recibido INVALIDO." ;
+        }
+    }
 }
 
 void EventHandler::processKeyPressed(DWORD k)
@@ -437,18 +458,37 @@ void EventHandler::processKeyPressed(DWORD k)
     } else if ( k == _F5 && !F5_down  ){
         F5_down = true;
         qDebug() << "F5 key pressed";
-    }  else if ( k == _K && !K_down ){
-        K_down = true;
-        qDebug() << "K key pressed";
-        emit kPressed();
-    } else if ( k == _L && !L_down ){
-        L_down = true;
-        qDebug() << "L key pressed";
-        emit lPressed();
     } else if ( k == _A && !A_down ){
         A_down = true;
         emit aPressed();
         qDebug() << "A key pressed";
+    } else if ( k == _B && !B_down){
+        B_down = true;
+        qDebug() << "B key pressed";
+        emit bPressed();
+    } else if ( k == _H && !H_down  ){
+        H_down = true;
+        qDebug() << "H key pressed, nextToEstation";
+        this->processValueChanged(m_eNetHelper->instructionsHostName, "v_proximo_a_estacion", "1");
+    } else if ( k == _J && !J_down  ){
+        J_down = true;
+        qDebug() << "J key pressed, departureFromEstation";
+        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_salir_de_estacion", "1");
+    }  else if ( k == _K && !K_down ){
+        K_down = true;
+        qDebug() << "K key pressed";
+        emit kPressed();
+//        emit modelSubwayReceived("CAF6000");
+//        emit configWagon("M-M-M-M-M-M");
+    } else if ( k == _L && !L_down ){
+        L_down = true;
+        qDebug() << "L key pressed";
+        emit lPressed();
+    } else if ( k == _Mm && !M_down){
+        M_down = true;
+        qDebug() << "M key pressed";
+        emit modelSubwayReceived("CAF6000");
+        emit configWagon("M-M-M-M-M-M");
     } else if ( k == _R  && !R_down ){
         R_down = true;
         emit rPressed();
@@ -461,10 +501,6 @@ void EventHandler::processKeyPressed(DWORD k)
         T_down = true;
         qDebug() << "T key pressed";
         emit tPressed();
-    } else if ( k == _B && !B_down){
-        B_down = true;
-        qDebug() << "B key pressed";
-        emit bPressed();
     } else if ( k == 0x43 && !C_down){
         C_down = true;
         qDebug() << "C key pressed";
@@ -513,14 +549,6 @@ void EventHandler::processKeyPressed(DWORD k)
         qDebug() << "9 key pressed";
         qDebug() << "9 key pressed, New TARGET 30";
         emit newTarget(1);
-    } else if ( k == _H && !H_down  ){
-        H_down = true;
-        qDebug() << "H key pressed, nextToEstation";
-        this->processValueChanged(m_eNetHelper->instructionsHostName, "v_proximo_a_estacion", "1");
-    } else if ( k == _J && !J_down  ){
-        J_down = true;
-        qDebug() << "J key pressed, departureFromEstation";
-        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_salir_de_estacion", "1");
     } else if ( k == _MAS && !MAS_down ){
         MAS_down = true;
         qDebug() << "MAS key pressed, ";
@@ -548,15 +576,28 @@ void EventHandler::processKeyReleased(DWORD k){
     } else if ( k == _F5 ) {
         qDebug() << "F5 key released";
         F5_down = false;
+    } else if ( k == _A ){
+        qDebug() << "A key released";
+        A_down = false;
+    } else if ( k == _B ){
+        B_down = false;
+        qDebug() << "B key released";
+        emit bReleased();
+    } else if ( k == _H ){
+        H_down = false;
+        qDebug() << "H key released";
+    } else if ( k == _J ){
+        J_down = false;
+        qDebug() << "J key released";
     } else if ( k == _K ){
         qDebug() << "K key released";
         K_down = false;
     } else if ( k == _L ){
         qDebug() << "L key released";
         L_down = false;
-    } else if ( k == _A ){
-        qDebug() << "A key released";
-        A_down = false;
+    } else if ( k == _Mm ){
+        qDebug() << "M key released";
+        M_down = false;
     } else if ( k == _R ){
         qDebug() << "R key released";
         R_down = false;
@@ -566,10 +607,6 @@ void EventHandler::processKeyReleased(DWORD k){
     } else if ( k == _T ){
         qDebug() << "T key released";
         T_down = false;
-    } else if ( k == _B ){
-        B_down = false;
-        qDebug() << "B key released";
-        emit bReleased();
     } else if ( k == _CERO ){
         qDebug() << "0 key released";
         CERO_down = false;
@@ -600,12 +637,6 @@ void EventHandler::processKeyReleased(DWORD k){
     } else if ( k == _NUEVE ){
         NUEVE_down = false;
         qDebug() << "9 key released";
-    } else if ( k == _H ){
-        H_down = false;
-        qDebug() << "H key released";
-    } else if ( k == _J ){
-        J_down = false;
-        qDebug() << "J key released";
     } else if ( k == _MAS ){
         MAS_down = false;
         qDebug() << "MAS key released";
