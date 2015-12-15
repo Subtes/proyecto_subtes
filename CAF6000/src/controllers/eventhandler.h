@@ -157,6 +157,7 @@ signals:
     cargarDestinoSicas(QString);
 
     newTarget(int);
+    signalRaped();
 
     configWagon(QString);
     modelSubwayReceived(QString);

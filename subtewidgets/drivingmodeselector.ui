@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DrivingModeSelector</class>
+ <widget class="QWidget" name="DrivingModeSelector">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>353</width>
+    <height>203</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QQuickWidget" name="quickWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>411</width>
+     <height>207</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>411</width>
+     <height>207</height>
+    </size>
+   </property>
+   <property name="resizeMode">
+    <enum>QQuickWidget::SizeRootObjectToView</enum>
+   </property>
+   <property name="source">
+    <url>
+     <string>qrc:/mode_selector.qml</string>
+    </url>
+   </property>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QQuickWidget</class>
+   <extends>QWidget</extends>
+   <header>QtQuickWidgets/QQuickWidget</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

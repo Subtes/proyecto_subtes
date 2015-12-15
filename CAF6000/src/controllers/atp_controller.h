@@ -9,6 +9,7 @@
 #include <QString>
 
 #include <atp.h>
+#include <drivingmodeselector.h>
 #include "src/models/subtestatus.h"
 #include "src/controllers/eventhandler.h"
 
