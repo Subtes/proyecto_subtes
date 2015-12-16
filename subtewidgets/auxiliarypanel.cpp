@@ -237,7 +237,7 @@ void AuxiliaryPanel::level2(QString s)
             QString imageButton, recursoButton, tipoRecurso;
             imageButton.clear();recursoButton.clear();tipoRecurso.clear();
             if (numero == s){
-               // qDebug()<<"Entro en coche seleccionado: "<< s;
+                qDebug()<<"Entro en coche seleccionado: "<< s;
 
                 if(!(coche["paneles"].isNull())){
                       paneles = coche["paneles"].toArray();

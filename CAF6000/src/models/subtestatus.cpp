@@ -27,6 +27,9 @@ SubteStatus::SubteStatus()
     m_rana = "0";
     m_drivingMode = 0;
     m_modeOperation = 0;
+
+    //AUXILIARY PANELS
+    m_switch.append("DEFAULT-COCHE;DEFAULT-PANEL;DEFAULT-THERMAL;DEFAULT-STATE");
 }
 
 SubteStatus::~SubteStatus()
@@ -58,6 +61,9 @@ void SubteStatus::reset()
     m_rana = "0";
     m_seta = false;
     m_keyATP = false;
+
+    //AUXILIARY PANELS
+    m_switch.append("DEFAULT-COCHE;DEFAULT-PANEL;DEFAULT-THERMAL;DEFAULT-STATE");
 }
 
 bool SubteStatus::cscp() const
@@ -686,4 +692,9 @@ void SubteStatus::setSicasOk(){
 void SubteStatus::setModeOperation(int m){
     m_modeOperation = m;
     emit modeOperation(m);
+}
+
+void SubteStatus::setSwitch(QString s){
+    m_switch = s;
+    emit changeSwitch(s);
 }

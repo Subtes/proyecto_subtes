@@ -11,7 +11,7 @@ Rectangle {
     border.color: "#00000000"
 
     signal selected(string s)
-    property string type: "c_grifo_"
+    property string type: "c_grifo"
     property string numberWagon: "_X_"
     property string token: ";"
 

@@ -71,18 +71,54 @@ void BoardAuxiliaryPanel::setSubte(QString s){
  * m_eventHandler->notifyValueChanged("c_termico_33f1"+nrocoche.toStdString(),"con");
  */
 void BoardAuxiliaryPanel::processSelection(QString s){
+    //"c_grifo;b-120;coche1;des"
+    QString namePanel,numberWagon,numberSwtich,stateSwitch = "";
+    QString moncho;
 
   if (s.contains(";")){
 
-      QStringList keyValue = s.split(";");
-      //m_eventHandler->notifyValueChanged((keyValue.at(0)).toStdString(),(keyValue.at(1)).toStdString());
+          QStringList keyValue = s.split(";");
+          namePanel.append(keyValue.at(0));
+          numberSwtich.append(keyValue.at(1));
+          numberWagon.append(keyValue.at(2));
+          stateSwitch.append(keyValue.at(3));
 
-      qDebug()<<"Switch y estado seleccionado:...."<<keyValue.at(0)<<" "<<keyValue.at(1);
+          moncho.append(numberWagon+";").append(namePanel+";").append(numberSwtich+";").append(stateSwitch);
+          qDebug()<< "Informacion de paneles para SICAS:---->" << moncho;
 
+          if ((keyValue.size() == 4) && (namePanel != "" && numberSwtich != "" && numberWagon != "" && stateSwitch != "") ){
+
+//              if(numberWagon == "1"){
+//                  m_eventHandler->notifyValueChanged((namePanel.append(numberSwtich)).toStdString(),
+//                                                         stateSwitch.toStdString());
+//              }else{
+//                  m_eventHandler->notifyValueChanged((namePanel.append(numberSwtich+"_"+numberWagon)).toStdString(),
+//                                                         stateSwitch.toStdString());
+//              }
+                  if (numberWagon == "1"){
+                      m_eventHandler->notifyValueChanged(namePanel.append(numberSwtich).toStdString(),
+                                                         stateSwitch.toStdString());
+                      //Agrego esta lines asi le pega a todos los coches 1, despues de integracion la saco.
+                      m_eventHandler->notifyValueChanged((namePanel.append(numberSwtich)).toStdString(),
+                                                         numberWagon.toStdString(),
+                                                         stateSwitch.toStdString());
+                  }else{
+                      m_eventHandler->notifyValueChanged((namePanel.append(numberSwtich)).toStdString(),
+                                                         numberWagon.toStdString(),
+                                                         stateSwitch.toStdString());
+                  }
+              m_subte->setSwitch(moncho);
+              qDebug()<<"Panel, Switch, Vagon y Estado seleccionado:...."<<namePanel<<" "<<numberSwtich<<" "<<numberWagon<<" "<<stateSwitch;
+        //size == 4 && ...
+        }else{
+              qDebug()<<"Error en parametros recibidos en seleccion de Paneles Auxiliares, "
+                        "tienen espacio vacio o menor a 4 parametros, los cuales no pueden ser emitidos por enet ...>"<< s;
+          }
+     //contains ";"
     }else{
       qDebug()<<"Error in format selection message from Panel Auxiliary";
   }
 
-}
+}//processSelection
 
 
