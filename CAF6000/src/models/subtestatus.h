@@ -104,7 +104,7 @@ signals:
     modeDrivingChanged(int op);
 
     //AUXILIARY PANEL
-    changeSwitch(QString);
+    changeSwitch(QString t);
 
 public:
     static const bool PUERTAS_CERRADAS = false;
