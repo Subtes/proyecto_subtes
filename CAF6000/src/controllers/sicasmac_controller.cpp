@@ -20,8 +20,6 @@ SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac
     m_hardwareSupport = th;
     m_coche_maquina =1;
 
-
-
     connect(m_sicasmac,SIGNAL(onPressSigRow()),this,SLOT(onPressSigRow()));
     connect(m_sicasmac,SIGNAL(onPressAntRow()),this,SLOT(onPressAntRow()));
     connect(m_subte,SIGNAL(bateriaCon()),this,SLOT(prendoSicas()));
@@ -40,9 +38,8 @@ SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac
     connect(m_subte,SIGNAL(estadoManioAcople()),this,SLOT(cargarMensajeAcople()));
     connect(m_subte,SIGNAL(estadoNormal()),this,SLOT(sacoMensajeAcople()));
     connect(m_subte,SIGNAL(cabinChanged(int)),this,SLOT(changeStateCabin(int)));
-    connect((m_subte,SIGNAL(changeSwitch(QString)),this,SLOT(updateSwitchMsj(QString))));
+    connect(m_subte,SIGNAL(changeSwitch(QString)),this,SLOT(updateSwitchMsj(QString)));
     cargoVectorEstadoAnteriorFalla();
-
 }
 
 SicasMac_Controller::~SicasMac_Controller()
