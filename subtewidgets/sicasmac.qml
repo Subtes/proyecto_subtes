@@ -306,6 +306,7 @@ Rectangle {
         y: 98
         width: 16
         height: 54
+        opacity: 0
         objectName:"actualtrainstart"
         fillMode: Image.PreserveAspectFit
         source: "resources/sicas_azul.png"
@@ -318,6 +319,7 @@ Rectangle {
         y: 98
         width: 16
         height: 53
+        opacity: 0
         objectName:"actualtrainend"
         fillMode: Image.PreserveAspectFit
         source: "resources/sicas_azul.png"

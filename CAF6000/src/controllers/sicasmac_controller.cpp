@@ -40,6 +40,7 @@ SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac
     connect(m_subte,SIGNAL(estadoManioAcople()),this,SLOT(cargarMensajeAcople()));
     connect(m_subte,SIGNAL(estadoNormal()),this,SLOT(sacoMensajeAcople()));
     connect(m_subte,SIGNAL(cabinChanged(int)),this,SLOT(changeStateCabin(int)));
+    connect((m_subte,SIGNAL(changeSwitch(QString)),this,SLOT(updateSwitchMsj(QString))));
     cargoVectorEstadoAnteriorFalla();
 
 }
@@ -113,14 +114,14 @@ void SicasMac_Controller::onPressAntRow(){
 /**
  * @brief SicasMac_Controller::separoMensajes
  *  Separa y genera los mensajes en el sicas. Desde todo el mensaje y los encapsula de a 4 por el id! que
- *  donde este no es visualizado.
+ *  donde este no es visualizado. la lógica de los grifos se cargan cuando se desconectan
  * @param mensaje
  */
 void SicasMac_Controller::separoMensajes(QString mensaje){
     if(mensaje != ""){
         QStringList strList;
         strList = separoCaracteres(mensaje);
-        if(strList.at(3)=="alta"){
+        if((strList.at(3)=="alta")||(strList.at(3)=="des")){
             if(saveId.contains(mensaje.split(';')[0])){
                 int posicion = buscoPosicion(mensaje.split(';')[0]);
                 if (posicion >= 0){
@@ -143,7 +144,8 @@ void SicasMac_Controller::separoMensajes(QString mensaje){
                 m_sicasmac->turnOnSiguiente();
             }
         }
-        else //baja
+        else if((strList.at(3)=="baja")||(strList.at(3)=="con"))
+
         {
             bajaMensaje(strList[0]);
         }
@@ -401,6 +403,7 @@ void SicasMac_Controller::resetSicas(){
     m_sicasmac->ponerOnSicasSinIncidencia();
     cargoVectorEstadoAnteriorFalla();
     cargarMensajeAcople();
+
 }
 
 /**
@@ -457,7 +460,6 @@ void SicasMac_Controller::recorridoDePuertas_1Der_2Izq(QString state){
             cantPuertas++;
         }
         cantPuertas = cantPuertas + cantdoorsicas;
-
     }
 }
 
@@ -502,6 +504,7 @@ void SicasMac_Controller::prendoSicas(){
     refrescoVista();
     m_sicasmac->turnOnSicas();
     sicasOn = true;
+    changeStateCabin(m_coche_maquina);
 }
 
 void SicasMac_Controller::apagoSicas(){
@@ -524,7 +527,62 @@ void SicasMac_Controller::changeStateCabin(int stateCabin){
     }
 }
 
+/**
+* @brief SicasMac_Controller::logicaPuertasSicas
+* carga el renglon del mensaje donde se verifica el estado de los coches
+* @param mensaje
+*/
 
+QString SicasMac_Controller::specificMsjWagon(QString wagon){
+QString rowMsjWagon;
+int numberWagon;
+    for (int var = 0; var < cantCochesTotal; var++){
+        numberWagon=var+1;
+        if (wagon.toInt()==numberWagon){
+            rowMsjWagon.append(wagon);
+            rowMsjWagon.append(",I ");
+        }
+        else{
+            rowMsjWagon.append("-,F ");
+        }
+     }
+    rowMsjWagon.append(";");
+    qDebug()<<"mensaje  "<< rowMsjWagon;
+  return rowMsjWagon;
+}
+/**
+* @brief SicasMac_Controller::logicaPuertasSicas
+* genero el mensaje cuando se actualiza un grifo o una termica
+* @param mensaje
+*/
+
+void SicasMac_Controller::updateSwitchMsj(QString msjSwitch){
+    QStringList  msjData = msjSwitch.split(";");
+    QString wagon = msjData[0];
+    QString namePanel= msjData[1];
+    QString nroThermal= msjData[2];
+    QString state= msjData[3];
+    QString msnComplet;
+
+    msnComplet.append(namePanel);
+    msnComplet.append(" ");
+    msnComplet.append(nroThermal);
+    if(state=="des"){
+        msnComplet.append(";");
+        msnComplet.append(specificMsjWagon(wagon));
+        msnComplet.append("A;");
+        msnComplet.append(state);
+        verificoEstFalla("int", wagon.toInt());
+        separoMensajes(msnComplet);
+        estAnteriorFallaCocheSicas[wagon.toInt()]="int";
+    }
+    else if (state =="con"){
+        bajaMensaje(msnComplet);
+        verificoEstFalla("norm", wagon.toInt());
+        estAnteriorFallaCocheSicas[wagon.toInt()]="norm";
+    }
+    refrescoVista();
+}
 
 //***************************MENSAJES SICAS PUESTA SERVICIO ********************************************
 

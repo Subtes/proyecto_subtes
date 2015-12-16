@@ -70,7 +70,7 @@ void AlstomTcms_Controller::logicaPuertasSicas(double state){
 
     if (state == 0){
         recorridoPuertasVagon("closedoors");
-        Sleep(5000);
+        Sleep(1000);
         recorridoPuertasVagon("doornotclosedandnotopened");
         Sleep(1000);
         recorridoPuertasVagon("opendoors");
