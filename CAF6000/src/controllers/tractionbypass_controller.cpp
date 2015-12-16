@@ -20,7 +20,7 @@ TractionBypass_Controller::TractionBypass_Controller(SubteStatus *subte, SingleB
     connect(m_tractionHardware,SIGNAL(tractionBypassReleased()),this,SLOT(releaseBypass()));
     connect(m_button,SIGNAL(buttonPressed()),this,SLOT(pressBypass()));
     connect(m_button,SIGNAL(buttonReleased()),this,SLOT(releaseBypass()));
-    connect(m_subte,SIGNAL(CSCPChanged(bool)),this,SLOT(updateStatus(bool)));
+    connect(m_subte,SIGNAL(DoorsChanged(bool)),this,SLOT(updateStatus(bool)));
 
     updateStatus(m_subte->doorsCircuit());
 

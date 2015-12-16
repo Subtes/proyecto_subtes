@@ -51,7 +51,7 @@ private:
     int m_lastTraction;
     bool m_hombreMuerto;
     bool m_averia;
-    bool debuguear = true;
+    bool debuguear = false;
 
     TRACTION_MODE m_rana;
     Brakes *m_brake;

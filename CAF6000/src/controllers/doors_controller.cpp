@@ -32,7 +32,7 @@ Doors_Controller::Doors_Controller(SubteStatus *subte, SingleButton *openLeftDoo
     connect(m_selectLeftDoors,SIGNAL(buttonClicked()),this,SLOT(enableLeftPanel()));
     connect(m_selectRightDoors,SIGNAL(buttonClicked()),this,SLOT(enableRightPanel()));
 
-    connect(m_subte,SIGNAL(CSCPChanged(bool)),this,SLOT(updatePanel(bool)));
+    connect(m_subte,SIGNAL(DoorsChanged(bool)),this,SLOT(updatePanel(bool)));
 }
 
 Doors_Controller::~Doors_Controller(){}

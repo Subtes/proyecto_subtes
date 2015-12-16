@@ -26,7 +26,7 @@ SicasMac_Controller::SicasMac_Controller(SubteStatus * subte,SicasMac * sicasmac
     connect(m_subte,SIGNAL(bateriaDes()),this,SLOT(apagoSicas()));
     connect(m_sicasmac,SIGNAL(sicasOk()),m_subte,SLOT(setSicasOk()));
     connect(m_subte,SIGNAL(hiloLazoChanged(bool)),this,SLOT(estadoFreno(bool)));
-    connect(m_subte,SIGNAL(CSCPChanged(bool)),this,SLOT(logicaPuertasSicas(bool)));
+    connect(m_subte,SIGNAL(DoorsChanged(bool)),this,SLOT(logicaPuertasSicas(bool)));
     connect(m_subte,SIGNAL(senalDisyuntorDes()),this,SLOT(cargarMensajeDisyuntor()));
     connect(m_subte,SIGNAL(senalDisyuntorCon()),this,SLOT(sacoMensajeDisyuntor()));
     connect(m_subte,SIGNAL(compresorAuxCon()),this,SLOT(sacoMensajeCompDesconectado()));
