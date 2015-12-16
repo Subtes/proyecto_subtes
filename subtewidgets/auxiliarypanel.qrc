@@ -53,5 +53,6 @@
         <file>../Source/images/fondos/coches_opcionapagados_crop.png</file>
         <file alias="MM-MM-MM-BCK">../Source/images/fondos/coches_crop_2.png</file>
         <file alias="CONFIG-CAF6000-23">../Source/config/CAF600023.json</file>
+        <file>backup.qml</file>
     </qresource>
 </RCC>

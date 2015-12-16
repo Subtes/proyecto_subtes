@@ -4,7 +4,7 @@
   "recurso": "CAF6000-MM-MM-MM",
   "coches": [
     {
-      "numero": "coche1",
+      "numero": "1",
       "tipo": "M",
       "paneles": [
                   {
@@ -12,12 +12,8 @@
                     "recurso": "CAF6000-N3-GRIFOS",
                     "image": "N2-B-GRIFOS",
                     "grifos": [
-                                {"name":"B-119","estado":"des","numero":"t1"},
-                                {"name":"D-20","numero":"t2"},
-                                {"name":"B-120","estado":"CON","numero":"t3"},
-                                {"name":"D-26","estado":"CON","numero":"t4"},
-                                {"name":"B-138","estado":"CON","numero":"t5"},
-                                {"name":null,"estado":"con","numero":"t7"}
+                                {"name":"B138","estado":"CON","numero":"t5"},
+                                {"name":"L2","estado":"CON","numero":"t7"}
                               ]
                   },
                   {
@@ -25,9 +21,51 @@
                     "recurso": "CAF6000-N3-TERMICAS",
                     "image": "N2-B-TERMICAS",
                     "termicas": [
-                                  {"name":"33F1","estado":"DES","numero":"t0"},
-                                  {"name":"53F1","estado":"DES","numero":"t16"},
-                                  {"name":"57F1","estado":"DES","numero":"t19"}
+                                  {"name":"33F1","estado":"CON","numero":"t0"},
+                                  {"name":"53F1","estado":"CON","numero":"t16"},
+                                  {"name":"57F1","estado":"CON","numero":"t19"}
+                              ]
+                  },
+                  {
+                    "tipo": "pupitre",
+                    "recurso": null,
+                    "image": "N2-B-PUPITRE",
+                    "pupitre": [
+                                {"name":"RANA","estado":"0","numero":"t0"},
+                                {"name":"SETA","estado":"CON","numero":"t1"}
+                              ]
+                  },
+                  {
+                    "tipo": "salon",
+                    "recurso": "CAF6000-N3-SALOON",
+                    "image": "N2-B-SALON",
+                    "salon": [
+                                {"name":"B-73","estado":"CON","numero":"t0"}
+                            ]
+                  }
+                ]
+    },
+    {
+      "numero": "2",
+      "tipo": "M",
+      "paneles": [
+                  {
+                    "tipo": "grifos",
+                    "recurso": "CAF6000-N3-GRIFOS",
+                    "image": "N2-B-GRIFOS",
+                    "grifos": [
+                                {"name":"B138","estado":"CON","numero":"t5"},
+                                {"name":"L2","estado":"CON","numero":"t7"}
+                              ]
+                  },
+                  {
+                    "tipo": "termicas",
+                    "recurso": "CAF6000-N3-TERMICAS",
+                    "image": "N2-B-TERMICAS",
+                    "termicas": [
+                                  {"name":"33F1","estado":"CON","numero":"t0"},
+                                  {"name":"53F1","estado":"CON","numero":"t16"},
+                                  {"name":"57F1","estado":"CON","numero":"t19"}
                               ]
                   },
                   {
@@ -44,13 +82,13 @@
                     "recurso": "CAF6000-N3-SALOON",
                     "image": "N2-B-SALON",
                     "salon": [
-                                {"name":"B-73","estado":"CON"}
-                            ]
+                                {"name":"B-73","estado":"CON","numero":"t0"}
+                              ]
                   }
                 ]
     },
     {
-      "numero": "coche2",
+      "numero": "3",
       "tipo": "M",
       "paneles": [
                   {
@@ -58,9 +96,8 @@
                     "recurso": "CAF6000-N3-GRIFOS",
                     "image": "N2-B-GRIFOS",
                     "grifos": [
-                                {"name":"B-138","estado":"CON"},
-                                {"name":"L-2","estado":"CON"},
-                                {"name":"B-73","estado":"CON"}
+                                {"name":"B138","estado":"CON","numero":"t5"},
+                                {"name":"L2","estado":"CON","numero":"t7"}
                               ]
                   },
                   {
@@ -68,43 +105,41 @@
                     "recurso": "CAF6000-N3-TERMICAS",
                     "image": "N2-B-TERMICAS",
                     "termicas": [
-                                  {"name":"33F1","estado":"CON"},
-                                  {"name":"53F1","estado":"CON"},
-                                  {"name":"57F1","estado":"CON"}
+                                  {"name":"33F1","estado":"CON","numero":"t0"},
+                                  {"name":"53F1","estado":"CON","numero":"t16"},
+                                  {"name":"57F1","estado":"CON","numero":"t19"}
                               ]
                   },
                   {
                     "tipo": "pupitre",
-                    "recurso": null,
+                    "recurso": "CAF6000-N3-PUPITRE",
                     "image": "N2-B-PUPITRE",
                     "pupitre": [
-                                    {"name":null,"estado":null},
-                                    {"name":null,"estado":null}
-                                  ]
+                                {"name":"RANA","estado":"0","numero":"t0"},
+                                {"name":"SETA","estado":"CON","numero":"t1"}
+                              ]
                   },
                   {
                     "tipo": "salon",
-                    "recurso": null,
+                    "recurso": "CAF6000-N3-SALOON",
                     "image": "N2-B-SALON",
                     "salon": [
-                                {"name":null,"estado":null},
-                                {"name":null,"estado":null}
-                              ]
+                                {"name":"B-73","estado":"CON","numero":"t0"}
+                            ]
                   }
                 ]
     },
     {
-      "numero": "coche3",
+      "numero": "4",
       "tipo": "M",
       "paneles": [
                   {
                     "tipo": "grifos",
-                    "recurso": null,
+                    "recurso": "CAF6000-N3-GRIFOS",
                     "image": "N2-B-GRIFOS",
                     "grifos": [
-                                {"name":"B-138","estado":"CON"},
-                                {"name":"L-2","estado":"CON"},
-                                {"name":"B-73","estado":"CON"}
+                                {"name":"B138","estado":"CON","numero":"t5"},
+                                {"name":"L2","estado":"CON","numero":"t7"}
                               ]
                   },
                   {
@@ -112,87 +147,41 @@
                     "recurso": "CAF6000-N3-TERMICAS",
                     "image": "N2-B-TERMICAS",
                     "termicas": [
-                                  {"name":"33F1","estado":"CON"},
-                                  {"name":"53F1","estado":"CON"},
-                                  {"name":"57F1","estado":"CON"}
+                                  {"name":"33F1","estado":"CON","numero":"t0"},
+                                  {"name":"53F1","estado":"CON","numero":"t16"},
+                                  {"name":"57F1","estado":"CON","numero":"t19"}
                               ]
                   },
                   {
                     "tipo": "pupitre",
-                    "recurso": null,
+                    "recurso": "CAF6000-N3-PUPITRE",
                     "image": "N2-B-PUPITRE",
                     "pupitre": [
-                                    {"name":null,"estado":null},
-                                    {"name":null,"estado":null}
-                                  ]
+                                {"name":"RANA","estado":"0","numero":"t0"},
+                                {"name":"SETA","estado":"CON","numero":"t1"}
+                              ]
                   },
                   {
                     "tipo": "salon",
-                    "recurso": null,
+                    "recurso": "CAF6000-N3-SALOON",
                     "image": "N2-B-SALON",
                     "salon": [
-                                {"name":null,"estado":null},
-                                {"name":null,"estado":null}
+                                {"name":"B-73","estado":"CON","numero":"t0"}
                               ]
                   }
                 ]
     },
     {
-      "numero": "coche4",
+      "numero": "5",
       "tipo": "M",
       "paneles": [
                   {
                     "tipo": "grifos",
-                    "recurso": null,
+                    "recurso": "CAF6000-N3-GRIFOS",
                     "image": "N2-B-GRIFOS",
                     "grifos": [
-                                {"name":"B-138","estado":"CON"},
-                                {"name":"L-2","estado":"CON"},
-                                {"name":"B-73","estado":"CON"}
-                              ]
-                  },
-                  {
-                    "tipo": "termicas",
-                    "recurso": "CAF6000-N3-TERMICAS",
-                    "image": "N2-B-TERMICAS",
-                    "termicas": [
-                                {"name":"33F1","estado":"CON"},
-                                {"name":"53F1","estado":"CON"},
-                                {"name":"57F1","estado":"CON"}
-                              ]
-                  },
-                  {
-                    "tipo": "pupitre",
-                    "recurso": null,
-                    "image": "N2-B-PUPITRE",
-                    "pupitre": [
-                                    {"name":null,"estado":null},
-                                    {"name":null,"estado":null}
-                                  ]
-                  },
-                  {
-                    "tipo": "salon",
-                    "recurso": null,
-                    "image": "N2-B-SALON",
-                    "salon": [
-                                {"name":null,"estado":null},
-                                {"name":null,"estado":null}
-                              ]
-                  }
-                ]
-    },
-    {
-      "numero": "coche5",
-      "tipo": "M",
-      "paneles": [
-                  {
-                    "tipo": "grifos",
-                    "recurso": null,
-                    "image": "N2-B-GRIFOS",
-                    "grifos": [
-                                {"name":"B-138","estado":"CON"},
-                                {"name":"L-2","estado":"CON"},
-                                {"name":"B-73","estado":"CON"}
+                                {"name":"B138","estado":"CON","numero":"t5"},
+                                {"name":"L2","estado":"CON","numero":"t7"}
                               ]
                   },
                   {
@@ -200,43 +189,41 @@
                     "recurso": "CAF6000-N3-TERMICAS",
                     "image": "N2-B-TERMICAS",
                     "termicos": [
-                                {"name":"33F1","estado":"CON"},
-                                {"name":"53F1","estado":"CON"},
-                                {"name":"57F1","estado":"CON"}
+                                  {"name":"33F1","estado":"CON","numero":"t0"},
+                                  {"name":"53F1","estado":"CON","numero":"t16"},
+                                  {"name":"57F1","estado":"CON","numero":"t19"}
                               ]
                   },
                   {
                     "tipo": "pupitre",
-                    "recurso": null,
+                    "recurso": "CAF6000-N3-PUPITRE",
                     "image": "N2-B-PUPITRE",
                     "pupitre": [
-                                    {"name":null,"estado":null},
-                                    {"name":null,"estado":null}
-                                  ]
+                                {"name":"RANA","estado":"0","numero":"t0"},
+                                {"name":"SETA","estado":"CON","numero":"t1"}
+                              ]
                   },
                   {
                     "tipo": "salon",
-                    "recurso": null,
+                    "recurso": "CAF6000-N3-SALOON",
                     "image": "N2-B-SALON",
                     "salon": [
-                                {"name":null,"estado":null},
-                                {"name":null,"estado":null}
+                                {"name":"B-73","estado":"CON","numero":"t0"}
                               ]
                   }
                 ]
     },
     {
-      "numero": "coche6",
+      "numero": "6",
       "tipo": "M",
       "paneles": [
                   {
                     "tipo": "grifos",
-                    "recurso": null,
+                    "recurso": "CAF6000-N3-GRIFOS",
                     "image": "N2-B-GRIFOS",
                     "grifos": [
-                                {"name":"B-138","estado":"CON"},
-                                {"name":"L-2","estado":"CON"},
-                                {"name":"B-73","estado":"CON"}
+                                {"name":"B138","estado":"CON","numero":"t5"},
+                                {"name":"L2","estado":"CON","numero":"t7"}
                               ]
                   },
                   {
@@ -244,27 +231,26 @@
                     "recurso": "CAF6000-N3-TERMICAS",
                     "image": "N2-B-TERMICAS",
                     "termicas": [
-                                  {"name":"33F1","estado":"CON"},
-                                  {"name":"53F1","estado":"CON"},
-                                  {"name":"57F1","estado":"CON"}
+                                  {"name":"33F1","estado":"CON","numero":"t0"},
+                                  {"name":"53F1","estado":"CON","numero":"t16"},
+                                  {"name":"57F1","estado":"CON","numero":"t19"}
                               ]
                   },
                   {
                     "tipo": "pupitre",
-                    "recurso": null,
+                    "recurso": "CAF6000-N3-PUPITRE",
                     "image": "N2-B-PUPITRE",
                     "pupitre": [
-                                {"name":"RANA","estado":"0"},
-                                {"name":"SETA","estado":"CON"}
+                                {"name":"RANA","estado":"0","numero":"t0"},
+                                {"name":"SETA","estado":"CON","numero":"t1"}
                               ]
                   },
                   {
                     "tipo": "salon",
-                    "recurso": null,
+                    "recurso": "CAF6000-N3-SALOON",
                     "image": "N2-B-SALON",
                     "salon": [
-                                    {"name":null,"estado":null},
-                                    {"name":null,"estado":null}
+                                {"name":"B-73","estado":"CON","numero":"t0"}
                               ]
                   }
                 ]
