@@ -569,14 +569,14 @@ void SicasMac_Controller::updateSwitchMsj(QString msjSwitch){
         msnComplet.append(specificMsjWagon(wagon));
         msnComplet.append("A;");
         msnComplet.append(state);
-        verificoEstFalla("int", wagon.toInt());
+        verificoEstFalla("int", wagon.toInt()-1);
         separoMensajes(msnComplet);
-        estAnteriorFallaCocheSicas[wagon.toInt()]="int";
+        estAnteriorFallaCocheSicas[wagon.toInt()-1]="int";
     }
     else if (state =="con"){
         bajaMensaje(msnComplet);
-        verificoEstFalla("norm", wagon.toInt());
-        estAnteriorFallaCocheSicas[wagon.toInt()]="norm";
+        verificoEstFalla("norm", wagon.toInt()-1);
+        estAnteriorFallaCocheSicas[wagon.toInt()-1]="norm";
     }
     refrescoVista();
 }
