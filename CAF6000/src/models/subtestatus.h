@@ -7,6 +7,7 @@
 #include <QFile>
 #include <QSplashScreen>
 #include <QPixmap>
+#include <QString>
 
 #include "src/controllers/eventhandler.h"
 #include "src/models/cscp.h"
@@ -50,6 +51,9 @@ private:
     //m_sourceModoOFF:0 -- m_sourceModo:1 -- m_sourceModo20:2 -- m_sourceModoAs:3 -- m_sourceModoATO:4 -- m_sourceModoATP:5 -- m_sourceModoEEE
     int m_modeOperation;
     int m_estado_coche;
+
+    //CONTROL AUXILIARY PANEL
+    QString m_switch;
 
 signals:
     // STATE CHANGE NOTIFICATION
@@ -98,6 +102,9 @@ signals:
     frenoEstacionamientoDes();
     cabinChanged(int statecabin);
     modeDrivingChanged(int op);
+
+    //AUXILIARY PANEL
+    changeSwitch(QString);
 
 public:
     static const bool PUERTAS_CERRADAS = false;
@@ -199,6 +206,8 @@ public slots:
     void setDrivingModeATP(int status);
     void setModeOperation(int m);
     void updatestatecabine(int state_cabine);
+    //AUXILIARY PANELS
+    void setSwitch(QString s);
 };
 
 #endif // SUBTESTATUS_H

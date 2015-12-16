@@ -11,6 +11,12 @@ StackView{
     signal selected(string s)
     property string selectedWagon: ""
     objectName: "formacion"
+    property string namecoche1: "1"
+    property string namecoche2: "2"
+    property string namecoche3: "3"
+    property string namecoche4: "4"
+    property string namecoche5: "5"
+    property string namecoche6: "6"
 
         Rectangle {
 //            z: 0
@@ -120,7 +126,7 @@ StackView{
                         //cocheImage1.opacity = 1;
 //                        stack.push({item:bckGreyOff, properties:{opacity:1}});
                         stack.push({item:cocheImage1, properties:{opacity:1}});
-                        stack.selected("coche1");
+                        stack.selected(namecoche1);
                         //formacion.state = "formacionAll";
                        // formacion.state = "formacionBackgroundOff";
                     }else{
@@ -170,7 +176,7 @@ StackView{
                         //formacion.state = "formacionBackground";
                         //cocheImage2.opacity = 1;
                         stack.push({item:cocheImage2, properties:{opacity:1}});
-                        stack.selected("coche2");
+                        stack.selected(namecoche2);
                         //selectedWagon = cocheImage2.objectName;
                         //console.log("PASE push opacity COCHE 2 @");
                        // formacion.state = "formacionBackgroundOff";
@@ -233,7 +239,7 @@ StackView{
                         //formacion.state = "formacionBackground";
                         //cocheImage3.opacity = 1;
                         stack.push({item:cocheImage3, properties:{opacity:1}});
-                        stack.selected("coche3");
+                        stack.selected(namecoche3);
                         //stack.selectedWagon = cocheImage3.objectName;
                         //console.log("PASE push opacity COCHE 3 @ ");
                     }else{
@@ -296,7 +302,7 @@ StackView{
                         //cocheImage1.opacity = 1;
 //                        stack.push({item:bckGreyOff, properties:{opacity:1}});
                         stack.push({item:cocheImage4, properties:{opacity:1}});
-                        stack.selected("coche4");
+                        stack.selected(namecoche4);
                         //formacion.state = "formacionAll";
                        // formacion.state = "formacionBackgroundOff";
                     }else{
@@ -355,7 +361,7 @@ StackView{
                             //console.log("Entrando en POP");
                         }
                         stack.push({item:cocheImage5, properties:{opacity:1}});
-                        stack.selected("coche5");
+                        stack.selected(namecoche5);
                     }else{
                         cocheImage5.opacity = 0;
                         stack.pop();
@@ -398,7 +404,7 @@ StackView{
                             //console.log("Entrando en POP");
                         }
                         stack.push({item:cocheImage6, properties:{opacity:1}});
-                        stack.selected("coche6");
+                        stack.selected(namecoche6);
                     }else{
                         cocheImage6.opacity = 0;
                         stack.pop();

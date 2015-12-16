@@ -13,7 +13,7 @@ Item {
 
     signal selected(string s)
 
-    property string type: "c_cabina_"
+    property string type: "c_cabina"
     property string numberWagon: "_X_"
     property string token: ";"
 
