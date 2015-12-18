@@ -1,16 +1,14 @@
 #ifndef EVENTHANDLER_H
 #define EVENTHANDLER_H
 
-#include "src/controllers/enethelper.h"
-#include "src/models/subtestate.h"
 #include <QObject>
-#include <ENetClient.h>
-#include "QString"
+#include <QString>
+#include "src/models/subtestate.h"
+#include "controller/base_eventhandler.h"
 
 class SubteState;
-class ENetHelper;
 
-class EventHandler : public QObject
+class EventHandler : public Base_EventHandler
 {
     Q_OBJECT
 
@@ -18,22 +16,12 @@ public:
     EventHandler();
     ~EventHandler();
 
+    void processDifussionChanged(std::string host, bool difusion);
     void processValueChanged(std::string host, std::string key, std::string value);
-    void notifyValueChanged(std::string key, std::string value);
-    void initConnection();
     void setModel(SubteState *subte);
 
 private:
-    ENetClient * m_eNetClient;
-    ENetHelper * m_eNetHelper;
     SubteState * m_subte;
-
-signals:
-    controlReady();
-    controlDisable();
-    controlEnable();
-    controlReset();
-    closeApp();
 };
 
 #endif // EVENTHANDLER_H

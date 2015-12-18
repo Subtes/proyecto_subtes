@@ -59,13 +59,11 @@ BoardCenter::BoardCenter(QWidget *parent, SubteStatus * subte, EventHandler *eve
     connect(m_subte,SIGNAL(bateriaDes()),this,SLOT(turnOffWidgets()));
 }
 
-BoardCenter::~BoardCenter()
-{
+BoardCenter::~BoardCenter(){
     delete ui;
 }
 
-void BoardCenter::startBoard()
-{
+void BoardCenter::startBoard(){
     LOG(INFO) << "board center startBoard";
 
     m_wiper = new Wiper_Controller(m_subte,ui->wiper);;
@@ -89,17 +87,14 @@ void BoardCenter::startBoard()
     connect(ui->bypassFrenoTraccion,SIGNAL(pressed()),m_tractionBypass,SLOT(pressBypass()));
     connect(ui->bypassFrenoTraccion,SIGNAL(released()),m_brakesBypass,SLOT(bypassBrakeReleased()));
     connect(ui->bypassFrenoTraccion,SIGNAL(released()),m_tractionBypass,SLOT(releaseBypass()));
-
 }
 
-void BoardCenter::enableScreen()
-{
+void BoardCenter::enableScreen(){
     this->setEnabled(true);
     m_tractionBypass->onBypassHD();
 }
 
-void BoardCenter::disableScreen()
-{
+void BoardCenter::disableScreen(){
     this->setEnabled(false);
     m_tractionBypass->offBypassHD();
 }
@@ -120,7 +115,6 @@ void BoardCenter::loadState(int state){
     ui->anulacionEmergencia->turnOff();
     ui->velocimetro->updateSpeed(0);
     ui->velocimetro->updateTargetSpeed(0);
-
     m_brakesBypass->bypassBrakeReleased();
     m_tractionBypass->releaseBypass();
 
@@ -136,7 +130,6 @@ void BoardCenter::loadState(int state){
         ui->bypassFreno->turnOn();
         ui->bypassTraccion->turnOn();
     }
-
     m_eventHandler->enableDiffusion();
 }
 
@@ -156,9 +149,7 @@ void BoardCenter::bypassTraccionOFF(){
     m_tractionBypass->releaseBypass();
 }
 
-
-void BoardCenter::turnOnWidgets()
-{
+void BoardCenter::turnOnWidgets(){
     m_doors->turnOn();
     ui->velocimetro->turnOn();
     ui->bypassFreno->setLighted(true);
@@ -168,8 +159,7 @@ void BoardCenter::turnOnWidgets()
     m_tractionBypass->releaseBypass();
 }
 
-void BoardCenter::turnOffWidgets()
-{
+void BoardCenter::turnOffWidgets(){
     m_doors->turnOff();
     ui->velocimetro->turnOff();
     ui->bypassFreno->turnOff();
@@ -178,6 +168,7 @@ void BoardCenter::turnOffWidgets()
     ui->bypassFreno->setLighted(false);
     ui->bypassTraccion->setLighted(false);
 }
+
 void BoardCenter::setHardware(TractionHardware *th){
     m_tractionHardware = th;
 }

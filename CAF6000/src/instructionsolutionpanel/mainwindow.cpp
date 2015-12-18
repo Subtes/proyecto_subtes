@@ -55,20 +55,15 @@ void MainWindow::clickActionDecision(QModelIndex hoja, QModelIndex root)
 
     nrocoche.remove(0,nrocoche.size()-1); //Me quedo con el ultimo caracter, seria el nro de coche.
 
-    if (nrocoche.operator ==("1"))
-        nrocoche = "";
-    else
-        nrocoche = ("_" + nrocoche);
-
     if (category.operator ==("Grifos")){
         if (father.operator ==("B-138"))
             if (action.operator ==("CON"))
-                m_eventHandler->notifyValueChanged("c_grifob138"+nrocoche.toStdString(),"con");
+                m_eventHandler->notifyValueChanged("c_grifob138",nrocoche.toStdString(),"con");
             else
-                m_eventHandler->notifyValueChanged("c_grifob138"+nrocoche.toStdString(),"des");
+                m_eventHandler->notifyValueChanged("c_grifob138",nrocoche.toStdString(),"des");
         if (father.operator ==("L-2"))
             if (action.operator ==("CON"))
-                m_eventHandler->notifyValueChanged("c_grifol2"+nrocoche.toStdString(),"con");
+                m_eventHandler->notifyValueChanged("c_grifol2",nrocoche.toStdString(),"con");
             else
                 m_eventHandler->notifyValueChanged("c_grifol2",nrocoche.toStdString(),"des");
         if (father.operator ==("B-73"))

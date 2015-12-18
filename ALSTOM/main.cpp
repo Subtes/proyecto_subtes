@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <QDesktopWidget>
+
 #include "src/models/subtestate.h"
 #include "src/controllers/eventhandler.h"
 #include "boardhardware.h"
@@ -16,21 +17,21 @@ int main(int argc, char *argv[])
 
     // MODEL
     SubteState * m_subte = new SubteState();
-
     // CONTROLLER DISPATCHER
     EventHandler *m_eventHandler = new EventHandler();
 
     // VIEWS
     BoardCenter * m_c = new BoardCenter(0);
     BoardAtp *m_a = new BoardAtp(0);
-    qDebug()<<"1";
     BoardMac *m_m = new BoardMac(0,m_subte,m_eventHandler);
-
     BoardBottom *m_b = new BoardBottom(0);
     BoardHardware *m_h = new BoardHardware(0,m_subte,m_eventHandler);
+
     QTabWidget *m_tabs = new QTabWidget(0);
     m_tabs->addTab(m_h,QObject::tr("HARDWARE"));
     m_tabs->addTab(m_b,QObject::tr("BOTTOM"));
+    m_tabs->setMinimumWidth(1024);
+    m_tabs->setMinimumHeight(768);
 
     QDesktopWidget *desktop = a.desktop();
     if(desktop->screenCount() == 4){
@@ -58,7 +59,7 @@ int main(int argc, char *argv[])
 
     m_eventHandler->setModel(m_subte);
     m_subte->setHandler(m_eventHandler);
-    m_eventHandler->initConnection();
+    m_eventHandler->initConnection(qApp->applicationDirPath());
 
     QObject::connect(m_eventHandler,SIGNAL(closeApp()),qApp,SLOT(quit()));
     return a.exec();

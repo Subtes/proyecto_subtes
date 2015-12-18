@@ -1,3 +1,6 @@
+#ifndef EVENTHANDLER_H
+#define EVENTHANDLER_H
+
 #define _F1 0x70
 #define _F2 0x71
 #define _F3 0x72
@@ -29,30 +32,24 @@
 #define _MAS 0xBB
 #define _MENOS 0xBD
 
-#ifndef EVENTHANDLER_H
-#define EVENTHANDLER_H
-
 #include <QObject>
-#include <QSplashScreen>
-#include <QPixmap>
-#include <QDesktopWidget>
 #include <vector>
-#include <stdio.h>
-#include <ENetClient.h>
+//#include <stdio.h>
 #include <Windows.h>
 #include <QString>
 #include <QTime>
-#include "src/controllers/enethelper.h"
+#include <QSplashScreen>
+#include <QDesktopWidget>
 #include "src/controllers/keypresseater.h"
 #include "src/controllers/failures_controller.h"
 #include "src/models/subtestatus.h"
-
+#include "controller/base_eventhandler.h"
+#include "logger.h"
 
 class SubteStatus;
-class ENetHelper;
 class Failures_Controller;
 
-class EventHandler : public QObject
+class EventHandler : public Base_EventHandler
 {
     Q_OBJECT
 
@@ -60,19 +57,12 @@ public:
     EventHandler(QDesktopWidget *desk);
     ~EventHandler();
 
+    void processDifussionChanged(std::string host, bool difusion);
     void processValueChanged(std::string host, std::string key, std::string value);
-    void notifyValueChanged(std::string key, std::string value);
-    void notifyValueChanged(std::string key, std::string subKey, std::string value);
-    void initConnection();
-
     void setModel(SubteStatus *subte);
     void setFailures(Failures_Controller *failures);
 
-    void enableDiffusion();
-
 private:
-    ENetClient * m_eNetClient;
-    ENetHelper * m_eNetHelper;
     Failures_Controller * m_failures;
     SubteStatus * m_subte;
 
@@ -84,8 +74,6 @@ private:
     QPixmap m_imageSplash;
     bool m_splashOn;
     int m_boardsReady = 0;
-    std::string m_cargandoEstado = "";
-
 
     bool F1_down;
     bool F2_down;
@@ -121,12 +109,7 @@ private:
     void subirSplash();
 
 signals:
-    controlReady();
-    controlDisable();
-    controlEnable();
-    controlReset();    
-    closeApp();
-    iCambioSenial1();
+    //keyboard input
     bPressed();
     bReleased();
     aPressed();
@@ -139,24 +122,24 @@ signals:
     f3Pressed();
     f4Pressed();
     cPressed();
-    frenoEstDes();
-    doorsChanged(bool);
-    downLoaderBoarders();
-    accelerationInstant(double);
-    nextToEstation();
-    departureEstation();
-    cargarEstado(int);
     kHardPressed();
     lHardPressed();
     masPressed();
     masReleased();
     menosPressed();
     menosReleased();
+    iCambioSenial1();
 
+    //otros
+    frenoEstDes();
+    doorsChanged(bool);
+    downLoaderBoarders();
+    accelerationInstant(double);
+    nextToEstation();
+    departureEstation();
     cargarMensaje(QString);
     cargarMensajeCocheSicas(QString);
     cargarDestinoSicas(QString);
-
     newTarget(int);
     signalRaped();
 
@@ -167,7 +150,6 @@ signals:
 public slots:
     void processKeyPressed(DWORD k);
     void processKeyReleased(DWORD k);
-
 };
 
 #endif // EVENTHANDLER_H

@@ -33,15 +33,12 @@ SOURCES += ../ENet/include/ENetClient.cpp \
     src/controllers/circuitbreakercon_controller.cpp \
     src/controllers/speedgaugeleds_controller.cpp \
     src/controllers/atp_controller.cpp \
-    src/controllers/enethelper.cpp \
-    src/controllers/eventhandler.cpp \
-    src/models/traction.cpp \
-    src/models/brake.cpp \
-    src/models/cscp.cpp \
+    #src/models/traction.cpp \
+    #src/models/brake.cpp \
+    #src/models/cscp.cpp \
     src/controllers/keypresseater.cpp \
-    src/models/atp_model.cpp \
+    #src/models/atp_model.cpp \
     src/controllers/topboardconnectors_controller.cpp \
-    src/models/connectors.cpp \
     src/controllers/topgauges_controller.cpp \
     src/controllers/brakebypass_controller.cpp \
     src/controllers/base_controller.cpp \
@@ -57,7 +54,9 @@ SOURCES += ../ENet/include/ENetClient.cpp \
     src/controllers/key_topboard_controller.cpp \
     src/controllers/frenoretencion_controller.cpp \
     boardauxiliarypanel.cpp \
-    logger.cpp
+    logger.cpp \
+    src/controllers/enethelper.cpp \
+    src/controllers/eventhandler.cpp
 
 HEADERS  += ../ENet/include/ENetClient.h \
     ../ENet/include/AdmClaves.h \
@@ -80,15 +79,12 @@ HEADERS  += ../ENet/include/ENetClient.h \
     src/controllers/circuitbreakercon_controller.h \
     src/controllers/speedgaugeleds_controller.h \
     src/controllers/atp_controller.h \
-    src/controllers/enethelper.h \
-    src/controllers/eventhandler.h \
-    src/models/traction.h \
-    src/models/brake.h \
-    src/models/cscp.h \
+    #src/models/traction.h \
+    #src/models/brake.h \
+    #src/models/cscp.h \
     src/controllers/keypresseater.h \
-    src/models/atp_model.h \
+    #src/models/atp_model.h \
     src/controllers/topboardconnectors_controller.h \
-    src/models/connectors.h \
     src/controllers/topgauges_controller.h \
     src/controllers/brakebypass_controller.h \
     src/controllers/base_controller.h \
@@ -106,7 +102,9 @@ HEADERS  += ../ENet/include/ENetClient.h \
     boardauxiliarypanel.h \
     logger.h \
     DefaultLogManager.h \
-    easylogging++.h
+    easylogging++.h \
+    src/controllers/enethelper.h \
+    src/controllers/eventhandler.h
 
 FORMS    += \
     boardcenter.ui \
@@ -118,6 +116,7 @@ FORMS    += \
     boardauxiliarypanel.ui
 
 INCLUDEPATH +=  ../subtewidgets \
+                ../Common \
                 $$PWD/../ENet/include \
                 $$PWD/../Source/include
 
@@ -126,6 +125,8 @@ DEPENDPATH += $$PWD/../ENet \
 
 LIBS+=  -L../subtewidgets/debug -lsubtewidgets \
         -L../subtewidgets/release -lsubtewidgets \
+        -L../Common/debug -lCommon \
+        -L../Common/release -lCommon \
         -L$$PWD/../ENet/lib/ -lenet \
         -L$$PWD/../ENet/lib/ -lWS2_32 \
         -L$$PWD/../ENet/lib/ -lBufferOverflowU \

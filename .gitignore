@@ -16,6 +16,8 @@ proyecto_subtes.pro.user
 [*].pro.user*
 *.7z
 # *.zip
+*.log
+*/logs
 
 # Windows image file caches
 Thumbs.db

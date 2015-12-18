@@ -1,7 +1,8 @@
 #include "eventhandler.h"
 
-EventHandler::EventHandler(QDesktopWidget *desktop)
-{
+EventHandler::EventHandler(QDesktopWidget *desktop) :
+    Base_EventHandler(){
+
     F1_down = false;
     F2_down = false;
     F3_down = false;
@@ -34,8 +35,7 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
     MAS_down = false;
     MENOS_down = false;
 
-    m_eNetClient = new ENetClient();
-    m_eNetHelper = new ENetHelper(m_eNetClient);
+    m_eNetHelper = new Base_ENetHelper();
 
     KeyPressEater *kel = KeyPressEater::instance();
     kel->setConnected(TRUE);
@@ -43,6 +43,7 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
     connect(kel,SIGNAL(keyReleased(DWORD)),this,SLOT(processKeyReleased(DWORD)));
 
     m_imageSplash = QPixmap(":/resources/splash.jpg");
+    m_desktop = desktop;
     if(m_desktop->screenCount() == 4){
         m_splash1 = new QSplashScreen(m_imageSplash);
         m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
@@ -66,16 +67,11 @@ EventHandler::EventHandler(QDesktopWidget *desktop)
         m_splash1 = new QSplashScreen(m_imageSplash);
         m_splash1->setWindowFlags(Qt::WindowStaysOnTopHint);
     }
-
+    m_splashOn = false;
     subirSplash();
 }
 
 EventHandler::~EventHandler(){
-}
-
-void EventHandler::initConnection()
-{
-    m_eNetHelper->initENet(m_eNetClient, this);
 }
 
 void EventHandler::setModel(SubteStatus *subte)
@@ -88,157 +84,148 @@ void EventHandler::setFailures(Failures_Controller *failures)
     m_failures = failures;
 }
 
-void EventHandler::notifyValueChanged(std::string key, std::string value)
-{
-    m_eNetClient->CambiarValorClave(key," ",value);
-}
-
-void EventHandler::notifyValueChanged(std::string key, std::string subKey, std::string value)
-{
-    m_eNetClient->CambiarValorClave(key,subKey,value);
+void EventHandler::processDifussionChanged(std::string host, bool difusion){
 }
 
 void EventHandler::processValueChanged(std::string host, std::string key, std::string value){
     qDebug() << "value - key:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() << "time: " << QTime::currentTime().toString() ;
-
     if(key.compare("i_iniciar_simulador") == 0){
         if (value.compare("con") == 0){
             qDebug() << "i_iniciar_simulador con recibido" ;
-            m_eNetClient->CambiarValorClave("c_listo","0");
-
+            m_eNetHelper->client()->CambiarValorClave("c_listo","0");
             emit controlReady();
-
-            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estado_simulador");
-            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cargar_estado");
-            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_averia");
-            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_mod_tren");
-            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_config_vagones");
-            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_coches_sicas");
-            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_renglon_sicas");
-            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_estacion_destino_sicas");
-            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_salir_de_estacion");
-            m_eNetClient->Suscribirse(m_eNetHelper->instructionsHostName,"i_cabina_activa");
-
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_freno_retencion");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_velocidad");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_tramo_vel");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_esfuerzo");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_intensidad");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_voltaje");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_llego_senial");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_presion_cilindro");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_presion_alimentacion");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_proximo_a_estacion");
-            m_eNetClient->Suscribirse(m_eNetHelper->visualHostName,"v_estado_puertas");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->instructionsHostName(),"i_estado_simulador");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->instructionsHostName(),"i_cargar_estado");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->instructionsHostName(),"i_averia");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->instructionsHostName(),"i_coches_sicas");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->instructionsHostName(),"i_renglon_sicas");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->instructionsHostName(),"i_estacion_destino_sicas");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->instructionsHostName(),"i_salir_de_estacion");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->instructionsHostName(),"i_mod_tren");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->instructionsHostName(),"i_config_vagones");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->instructionsHostName(),"i_cabina_activa");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_freno_retencion");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_velocidad");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_tramo_vel");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_esfuerzo");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_intensidad");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_voltaje");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_llego_senial");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_presion_cilindro");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_presion_alimentacion");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_proximo_a_estacion");
+            m_eNetHelper->client()->Suscribirse(m_eNetHelper->visualHostName(),"v_estado_puertas");
 
             m_subte->reset();
-            //Se comento linea, testear bien en integracion y ver si salta error (ver tarea SUBTES-227 asociada 419-Test)
-            //emit controlReset();
 
-            m_eNetClient->CambiarValorClave("c_grifob138","1","con");
-            m_eNetClient->CambiarValorClave("c_grifol2","1","con");
-            m_eNetClient->CambiarValorClave("c_grifob73","1","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1","1","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1","1","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1","1","con");
-            m_eNetClient->CambiarValorClave("c_grifob138","2","con");
-            m_eNetClient->CambiarValorClave("c_grifol2","2","con");
-            m_eNetClient->CambiarValorClave("c_grifob73","2","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1","2","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1","2","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1","2","con");
-            m_eNetClient->CambiarValorClave("c_rana","2","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia","2","des");
-            m_eNetClient->CambiarValorClave("c_grifob138","3","con");
-            m_eNetClient->CambiarValorClave("c_grifol2","3","con");
-            m_eNetClient->CambiarValorClave("c_grifob73","3","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1","3","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1","3","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1","3","con");
-            m_eNetClient->CambiarValorClave("c_rana","3","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia","3","des");
-            m_eNetClient->CambiarValorClave("c_grifob138","4","con");
-            m_eNetClient->CambiarValorClave("c_grifol2","4","con");
-            m_eNetClient->CambiarValorClave("c_grifob73","4","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1","4","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1","4","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1","4","con");
-            m_eNetClient->CambiarValorClave("c_rana","4","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia","4","des");
-            m_eNetClient->CambiarValorClave("c_grifob138","5","con");
-            m_eNetClient->CambiarValorClave("c_grifol2","5","con");
-            m_eNetClient->CambiarValorClave("c_grifob73","5","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1","5","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1","5","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1","5","con");
-            m_eNetClient->CambiarValorClave("c_rana","5","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia","5","des");
-            m_eNetClient->CambiarValorClave("c_grifob138","6","con");
-            m_eNetClient->CambiarValorClave("c_grifol2","6","con");
-            m_eNetClient->CambiarValorClave("c_grifob73","6","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1","6","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1","6","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1","6","con");
-            m_eNetClient->CambiarValorClave("c_rana","6","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia","6","des");
+            //Se comento linea, testear bien en integracion y ver si salta error (ver tarea SUBTES-227 asociada 419-Test)
+            emit controlReset();
+
+            m_eNetHelper->client()->CambiarValorClave("c_grifob138","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifol2","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob73","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_57f1","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_53f1","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_33f1","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob138","2","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifol2","2","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob73","2","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_57f1","2","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_53f1","2","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_33f1","2","con");
+            m_eNetHelper->client()->CambiarValorClave("c_rana","2","0");
+            m_eNetHelper->client()->CambiarValorClave("c_seta_emergencia","2","des");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob138","3","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifol2","3","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob73","3","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_57f1","3","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_53f1","3","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_33f1","3","con");
+            m_eNetHelper->client()->CambiarValorClave("c_rana","3","0");
+            m_eNetHelper->client()->CambiarValorClave("c_seta_emergencia","3","des");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob138","4","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifol2","4","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob73","4","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_57f1","4","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_53f1","4","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_33f1","4","con");
+            m_eNetHelper->client()->CambiarValorClave("c_rana","4","0");
+            m_eNetHelper->client()->CambiarValorClave("c_seta_emergencia","4","des");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob138","5","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifol2","5","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob73","5","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_57f1","5","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_53f1","5","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_33f1","5","con");
+            m_eNetHelper->client()->CambiarValorClave("c_rana","5","0");
+            m_eNetHelper->client()->CambiarValorClave("c_seta_emergencia","5","des");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob138","6","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifol2","6","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob73","6","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_57f1","6","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_53f1","6","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_33f1","6","con");
+            m_eNetHelper->client()->CambiarValorClave("c_rana","6","0");
+            m_eNetHelper->client()->CambiarValorClave("c_seta_emergencia","6","des");
 
             emit controlDisable();
-            m_eNetClient->CambiarValorClave("c_listo","1");
+            m_eNetHelper->client()->CambiarValorClave("c_listo","1");
 
         }else if (value.compare("des") == 0){
-            m_eNetClient->CambiarValorClave("c_listo","0");
-            m_eNetClient->CambiarValorClave("c_regulador_mando"," ");
-            m_eNetClient->CambiarValorClave("c_llave_atp"," ");
-            m_eNetClient->CambiarValorClave("c_modo_conduccion"," ");
 
-            m_eNetClient->CambiarValorClave("c_grifob138","con");
-            m_eNetClient->CambiarValorClave("c_grifol2","con");
-            m_eNetClient->CambiarValorClave("c_grifob73","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1","con");
-            m_eNetClient->CambiarValorClave("c_grifob138_2","con");
-            m_eNetClient->CambiarValorClave("c_grifol2_2","con");
-            m_eNetClient->CambiarValorClave("c_grifob73_2","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1_2","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1_2","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1_2","con");
-            m_eNetClient->CambiarValorClave("c_rana_2","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_2","des");
-            m_eNetClient->CambiarValorClave("c_grifob138_3","con");
-            m_eNetClient->CambiarValorClave("c_grifol2_3","con");
-            m_eNetClient->CambiarValorClave("c_grifob73_3","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1_3","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1_3","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1_3","con");
-            m_eNetClient->CambiarValorClave("c_rana_3","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_3","des");
-            m_eNetClient->CambiarValorClave("c_grifob138_4","con");
-            m_eNetClient->CambiarValorClave("c_grifol2_4","con");
-            m_eNetClient->CambiarValorClave("c_grifob73_4","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1_4","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1_4","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1_4","con");
-            m_eNetClient->CambiarValorClave("c_rana_4","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_4","des");
-            m_eNetClient->CambiarValorClave("c_grifob138_5","con");
-            m_eNetClient->CambiarValorClave("c_grifol2_5","con");
-            m_eNetClient->CambiarValorClave("c_grifob73_5","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1_5","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1_5","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1_5","con");
-            m_eNetClient->CambiarValorClave("c_rana_5","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_5","des");
-            m_eNetClient->CambiarValorClave("c_grifob138_6","con");
-            m_eNetClient->CambiarValorClave("c_grifol2_6","con");
-            m_eNetClient->CambiarValorClave("c_grifob73_6","con");
-            m_eNetClient->CambiarValorClave("c_termico_57f1_6","con");
-            m_eNetClient->CambiarValorClave("c_termico_53f1_6","con");
-            m_eNetClient->CambiarValorClave("c_termico_33f1_6","con");
-            m_eNetClient->CambiarValorClave("c_rana_6","0");
-            m_eNetClient->CambiarValorClave("c_seta_emergencia_6","des");
+            m_eNetHelper->client()->CambiarValorClave("c_listo","0");
+            m_eNetHelper->client()->CambiarValorClave("c_regulador_mando"," ");
+            m_eNetHelper->client()->CambiarValorClave("c_llave_atp"," ");
+            m_eNetHelper->client()->CambiarValorClave("c_modo_conduccion"," ");
 
-            //m_eNetClient->Desconectar();
+            m_eNetHelper->client()->CambiarValorClave("c_grifob138","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifol2","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob73","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_57f1","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_53f1","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_33f1","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob138","2","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifol2","2","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob73","2","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_57f1","2","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_53f1","2","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_33f1","2","con");
+            m_eNetHelper->client()->CambiarValorClave("c_rana","2","0");
+            m_eNetHelper->client()->CambiarValorClave("c_seta_emergencia","2","des");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob138","3","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifol2","3","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob73","3","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_57f1","3","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_53f1","3","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_33f1","3","con");
+            m_eNetHelper->client()->CambiarValorClave("c_rana","3","0");
+            m_eNetHelper->client()->CambiarValorClave("c_seta_emergencia","3","des");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob138","4","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifol2","4","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob73","4","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_57f1","4","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_53f1","4","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_33f1","4","con");
+            m_eNetHelper->client()->CambiarValorClave("c_rana","4","0");
+            m_eNetHelper->client()->CambiarValorClave("c_seta_emergencia","4","des");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob138","5","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifol2","5","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob73","5","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_57f1","5","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_53f1","5","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_33f1","5","con");
+            m_eNetHelper->client()->CambiarValorClave("c_rana","5","0");
+            m_eNetHelper->client()->CambiarValorClave("c_seta_emergencia","5","des");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob138","6","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifol2","6","con");
+            m_eNetHelper->client()->CambiarValorClave("c_grifob73","6","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_57f1","6","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_53f1","6","con");
+            m_eNetHelper->client()->CambiarValorClave("c_termico_33f1","6","con");
+            m_eNetHelper->client()->CambiarValorClave("c_rana","6","0");
+            m_eNetHelper->client()->CambiarValorClave("c_seta_emergencia","6","des");
+
+            //m_eNetHelper->client()->Desconectar();
 
             Sleep(1000);
             emit closeApp();
@@ -249,14 +236,13 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         if (value.compare("0") == 0){
 
             qDebug() << "i_estado_simulador 0 recibido" ;
-            m_eNetClient->CambiarValorClave("c_listo","0");
+            m_eNetHelper->client()->CambiarValorClave("c_listo","0");
             subirSplash();
 
             m_subte->reset();
             emit controlReset();
-            //emit controlReady();
             emit controlDisable();
-            m_eNetClient->CambiarValorClave("c_listo","1");
+            m_eNetHelper->client()->CambiarValorClave("c_listo","1");
         }
 
         else if(value.compare("1") == 0){
@@ -297,8 +283,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     }
 
     else if(key.compare("i_cargar_estado") == 0){
-
-        m_eNetClient->CambiarEstadoDifusion(false);
+        m_eNetHelper->client()->CambiarEstadoDifusion(false);
 
         QCoreApplication::processEvents(QEventLoop::AllEvents);
         m_boardsReady = 0;
@@ -332,7 +317,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
 
     else if(key.compare("v_presion_cilindro") == 0){
         try{
-            m_subte->updatePreassureRed(std::stod(value));
+            m_subte->updateCylinderPreassure(std::stod(value));
         }
         catch (...) {
             qDebug() << "Presion de cilindro incorrecta." ;
@@ -341,10 +326,10 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
 
     else if(key.compare("v_presion_alimentacion") == 0){
         try{
-            m_subte->updatePreassureWhite(std::stod(value));
+            m_subte->updateMainPreassure(std::stod(value));
         }
         catch(...){
-            qDebug() << "presion de frenado incorrecta." ;
+            qDebug() << "presion de caneria incorrecta." ;
         }
     }
 
@@ -413,7 +398,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         emit cargarMensajeCocheSicas(mensaje);
     }
     else if(key.compare("i_estacion_destino_sicas") == 0){
-        qDebug() << "cargo destino sicas." ;
+        qDebug() << "cargo destino sicas." << value.c_str() ;
         QString mensaje = value.c_str();
         emit cargarDestinoSicas(mensaje);
     }
@@ -448,19 +433,19 @@ void EventHandler::processKeyPressed(DWORD k)
     if ( k == _F1 && !F1_down) {
         F1_down = true;
         qDebug() << "F1 key pressed";
-        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_iniciar_simulador", "con");
+        this->processValueChanged(m_eNetHelper->instructionsHostName(), "i_iniciar_simulador", "con");
     } else if ( k == _F2 && !F2_down) {
         F2_down = true;
         qDebug() << "F2 key pressed";
-        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_iniciar_simulador", "des");
+        this->processValueChanged(m_eNetHelper->instructionsHostName(), "i_iniciar_simulador", "des");
     } else if ( k == _F3 && !F3_down) {
         F3_down = true;
         qDebug() << "F3 key pressed";
-        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_estado_simulador", "0");
+        this->processValueChanged(m_eNetHelper->instructionsHostName(), "i_estado_simulador", "0");
     } else if ( k == _F4 && !F4_down) {
         F4_down = true;
         qDebug() << "F4 key pressed";
-        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_estado_simulador", "1");
+        this->processValueChanged(m_eNetHelper->instructionsHostName(), "i_estado_simulador", "1");
     } else if ( k == _F5 && !F5_down  ){
         F5_down = true;
         qDebug() << "F5 key pressed";
@@ -475,17 +460,15 @@ void EventHandler::processKeyPressed(DWORD k)
     } else if ( k == _H && !H_down  ){
         H_down = true;
         qDebug() << "H key pressed, nextToEstation";
-        this->processValueChanged(m_eNetHelper->instructionsHostName, "v_proximo_a_estacion", "1");
+        this->processValueChanged(m_eNetHelper->instructionsHostName(), "v_proximo_a_estacion", "1");
     } else if ( k == _J && !J_down  ){
         J_down = true;
         qDebug() << "J key pressed, departureFromEstation";
-        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_salir_de_estacion", "1");
+        this->processValueChanged(m_eNetHelper->instructionsHostName(), "i_salir_de_estacion", "1");
     }  else if ( k == _K && !K_down ){
         K_down = true;
         qDebug() << "K key pressed";
         emit kPressed();
-//        emit modelSubwayReceived("CAF6000");
-//        emit configWagon("M-M-M-M-M-M");
     } else if ( k == _L && !L_down ){
         L_down = true;
         qDebug() << "L key pressed";
@@ -543,7 +526,7 @@ void EventHandler::processKeyPressed(DWORD k)
         qDebug() << "6 key pressed";
     } else if ( k == _SIETE && !SIETE_down  ){
         SIETE_down = true;
-        this->processValueChanged(m_eNetHelper->instructionsHostName, "i_cargar_estado", "puesta_servicio");
+        this->processValueChanged(m_eNetHelper->instructionsHostName(), "i_cargar_estado", "puesta_servicio");
         qDebug() << "7 key pressed";
     } else if ( k == _OCHO && !OCHO_down  ){
         OCHO_down = true;
@@ -555,6 +538,14 @@ void EventHandler::processKeyPressed(DWORD k)
         qDebug() << "9 key pressed";
         qDebug() << "9 key pressed, New TARGET 30";
         emit newTarget(1);
+    } else if ( k == _H && !H_down  ){
+        H_down = true;
+        qDebug() << "H key pressed, nextToEstation";
+        this->processValueChanged(m_eNetHelper->instructionsHostName(), "v_proximo_a_estacion", "1");
+    } else if ( k == _J && !J_down  ){
+        J_down = true;
+        qDebug() << "J key pressed, departureFromEstation";
+        this->processValueChanged(m_eNetHelper->instructionsHostName(), "i_salir_de_estacion", "1");
     } else if ( k == _MAS && !MAS_down ){
         MAS_down = true;
         qDebug() << "MAS key pressed, ";
@@ -651,19 +642,6 @@ void EventHandler::processKeyReleased(DWORD k){
         MENOS_down = false;
         qDebug() << "MENOS key released";
         emit menosReleased();
-    }
-}
-
-void EventHandler::enableDiffusion()
-{
-    m_boardsReady++;
-    if(m_boardsReady==5){
-        m_eNetClient->CambiarEstadoDifusion(true);
-        m_boardsReady = 0;
-        if(m_cargandoEstado.compare("")!=0){
-            m_eNetClient->CambiarValorClave("c_estado_cargado",m_cargandoEstado);
-        }
-        m_cargandoEstado = "";
     }
 }
 

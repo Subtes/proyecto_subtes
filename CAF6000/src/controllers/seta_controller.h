@@ -11,7 +11,6 @@
 
 /**
  * @brief The Seta_Controller class
- *
  */
 
 class Seta_Controller : public QObject

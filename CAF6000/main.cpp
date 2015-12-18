@@ -1,7 +1,6 @@
 #include <QApplication>
 #include <QDebug>
 #include <QDesktopWidget>
-
 #include <tractionhardware.h>
 
 #include "boardhardware.h"
@@ -11,29 +10,21 @@
 #include "boardtop.h"
 #include "src/instructionsolutionpanel/mainwindow.h"
 #include "boardauxiliarypanel.h"
-
 #include "src/controllers/eventhandler.h"
 #include "src/controllers/keypresseater.h"
 #include "src/controllers/failures_controller.h"
-
 #include "logger.h"
-
 
 INITIALIZE_EASYLOGGINGPP
 
-
-
 int main(int argc, char *argv[])
 {
-
     qInstallMessageHandler(logger::logMessageOutput);
 
     DefaultLogManager mLogManager;
     mLogManager.initialize("logs/CAF6000_logexec", DefaultLogManager::EXECUTION_FILE);
 
-
     LOG(INFO) << "Iniciando CAF6000";
-
 
     //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
     QApplication::setAttribute(Qt::AA_UseOpenGLES,true);
@@ -67,7 +58,6 @@ int main(int argc, char *argv[])
     m_r->setHardware(m_tHardware);
 
     QDesktopWidget *desktop = a.desktop();
-
     if(desktop->screenCount() == 4){
         qDebug() << "Entre en For de pantallas igual 4 main: ";
         for(int i = 0; i < desktop->screenCount(); i++){
@@ -79,12 +69,11 @@ int main(int argc, char *argv[])
         QRect s2 = desktop->screenGeometry(2);//Dimensiones -->  QRect(1024,0 1024x768)
         QRect s3 = desktop->screenGeometry(3);//Dimensiones -->  QRect(-1024,0 1024x768)
 
-
-        /**
-         * Dimensiones -->  QRect(0,0 1024x768)
-         * Dimensiones -->  QRect(1024,0 1024x768)
-         * Dimensiones -->  QRect(-1024,0 1024x768)
-         * Dimensiones -->  QRect(0,-768 1024x768)
+        /*
+        * Dimensiones -->  QRect(0,0 1024x768)
+        * Dimensiones -->  QRect(1024,0 1024x768)
+        * Dimensiones -->  QRect(-1024,0 1024x768)
+        * Dimensiones -->  QRect(0,-768 1024x768)
         */
 
         m_t->showFullScreen();
@@ -110,6 +99,8 @@ int main(int argc, char *argv[])
         m_h->showNormal();
         m_l->showNormal();
         m_t->showNormal();
+        m_c->showNormal();
+
 
         QTabWidget *tabRight = new QTabWidget(0);
         tabRight->addTab(m_c,QObject::tr("Center"));
@@ -120,14 +111,13 @@ int main(int argc, char *argv[])
         tabRight->setMinimumWidth(1024);
         tabRight->setMinimumHeight(768);
         tabRight->showNormal();
-
     }
 
     // DEPENDENCY INJECTION
     m_eventHandler->setModel(m_subte);
     m_eventHandler->setFailures(m_failures);
     m_subte->setHandler(m_eventHandler);
-    m_eventHandler->initConnection();
+    m_eventHandler->initConnection(qApp->applicationDirPath());
 
     QObject::connect(m_eventHandler,SIGNAL(closeApp()),qApp,SLOT(quit()));
     return a.exec();

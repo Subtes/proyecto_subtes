@@ -36,7 +36,7 @@ public:
 
 	bool EstaConectado();
 	bool Conectar(std::string unaIP, int unPuerto, std::string unNombre);
-    bool Desconectar(void);
+	bool Desconectar(void);
 	bool Suscribirse(std::string unCliente, std::string unaClave);
 	bool Suscribirse(std::string unCliente, std::string unaClave, std::string unaSubClave);
 	bool DeSuscribirse(std::string unCliente, std::string unaClave);
@@ -59,7 +59,7 @@ protected:
   bool Inicializado;  
   enet_uint32 FMilisegundosEspera;
 
-  // Es la cola de los mensajes, thread y el sem√°foro;
+  // Es la cola de los mensajes, thread y el sem·foro;
   std::vector<std::thread> _threads;
   std::queue<std::string> _fColaMsj; 
   std::mutex s_mutex;

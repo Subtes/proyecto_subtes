@@ -113,7 +113,6 @@ void BoardTop::loadState(int state)
         m_keyTopBoard->keyTurnOFF();
         m_topGauges->turnOffGauges();
 
-
     } else if(state== EN_MARCHA){
         lastState = EN_MARCHA;
         m_connectors->setEstado(EN_MARCHA);

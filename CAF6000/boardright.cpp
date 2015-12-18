@@ -2,7 +2,7 @@
 
 #include "boardright.h"
 #include "ui_boardright.h"
-#include "DefaultLogManager.h"
+//#include "DefaultLogManager.h"
 
 BoardRight::BoardRight(QWidget *parent, SubteStatus * subte, EventHandler *eventHandler) :
     BaseBoard(parent,subte,eventHandler),
@@ -40,7 +40,7 @@ BoardRight::~BoardRight()
 
 void BoardRight::startBoard()
 {
-    LOG(INFO) << "board right startBoard";
+    //LOG(INFO) << "board right startBoard";
 
     ui->calientapies->setButtonImage(QUrl("qrc:/resources/blueON.png"),QUrl("qrc:/resources/blue.png"));
     ui->desacople->setButtonImage(QUrl("qrc:/resources/greenON.png"),QUrl("qrc:/resources/green.png"));
@@ -92,14 +92,14 @@ void BoardRight::loadState(int state){
     m_frenoRetencion->turnOff();
 
     if(state == APAGADO){
-        m_manometer->updatePressureRed(0);
-        m_manometer->updatePressureWhite(0);
+        m_manometer->updateCylinderPressure(0);
+        m_manometer->updateMainPressure(0);
         m_modoConduccion->setManiobraMode();
         ui->sicasmac->turnOffSicas();
     }
     else if(state == EN_MARCHA){
-        m_manometer->updatePressureRed(m_subte->getPressureRed());
-        m_manometer->updatePressureWhite(m_subte->getPressureWhite());
+        m_manometer->updateCylinderPressure(m_subte->getCylinderPressure());
+        m_manometer->updateMainPressure(m_subte->getMainPressure());
         ui->sicasmac->turnOnSicas();
     }
 
