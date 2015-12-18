@@ -16,6 +16,7 @@ void Base_ENetHelper::initENet(Base_EventHandler *eventHandler, QString dirPath)
 
     using namespace std::placeholders;
     m_eNetClient->OnCambioValClave = std::bind(&Base_EventHandler::processValueChanged, eventHandler, _1, _2, _3);
+    m_eNetClient->OnClienteCambiaDifusion = std::bind(&Base_EventHandler::processDifussionChanged, eventHandler, _1, _2);
     if (!m_eNetClient->Conectar(m_serverIp, m_serverPort, m_controlsHostName)){
         qDebug() << "ERROR AL CONECTAR CON EL SERVIDOR";
         qDebug() << "Intento conectar con:: servidor " << m_serverIp.c_str() << " , puerto "<< m_serverPort << " , host "<< m_controlsHostName.c_str();

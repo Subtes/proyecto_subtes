@@ -84,6 +84,9 @@ void EventHandler::setFailures(Failures_Controller *failures)
     m_failures = failures;
 }
 
+void EventHandler::processDifussionChanged(std::string host, bool difusion){
+}
+
 void EventHandler::processValueChanged(std::string host, std::string key, std::string value){
     qDebug() << "value - key:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() << "time: " << QTime::currentTime().toString() ;
     if(key.compare("i_iniciar_simulador") == 0){
@@ -280,7 +283,6 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
     }
 
     else if(key.compare("i_cargar_estado") == 0){
-
         m_eNetHelper->client()->CambiarEstadoDifusion(false);
 
         QCoreApplication::processEvents(QEventLoop::AllEvents);
@@ -396,7 +398,7 @@ void EventHandler::processValueChanged(std::string host, std::string key, std::s
         emit cargarMensajeCocheSicas(mensaje);
     }
     else if(key.compare("i_estacion_destino_sicas") == 0){
-        qDebug() << "cargo destino sicas." ;
+        qDebug() << "cargo destino sicas." << value.c_str() ;
         QString mensaje = value.c_str();
         emit cargarDestinoSicas(mensaje);
     }

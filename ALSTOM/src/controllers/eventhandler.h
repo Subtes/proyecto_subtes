@@ -16,6 +16,7 @@ public:
     EventHandler();
     ~EventHandler();
 
+    void processDifussionChanged(std::string host, bool difusion);
     void processValueChanged(std::string host, std::string key, std::string value);
     void setModel(SubteState *subte);
 

@@ -57,6 +57,7 @@ public:
     EventHandler(QDesktopWidget *desk);
     ~EventHandler();
 
+    void processDifussionChanged(std::string host, bool difusion);
     void processValueChanged(std::string host, std::string key, std::string value);
     void setModel(SubteStatus *subte);
     void setFailures(Failures_Controller *failures);
@@ -73,7 +74,6 @@ private:
     QPixmap m_imageSplash;
     bool m_splashOn;
     int m_boardsReady = 0;
-    std::string m_cargandoEstado = "";
 
     bool F1_down;
     bool F2_down;

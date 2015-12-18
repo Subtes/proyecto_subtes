@@ -14,6 +14,9 @@ void EventHandler::setModel(SubteState *subte)
     m_subte = subte;
 }
 
+void EventHandler::processDifussionChanged(std::string host, bool difusion){
+}
+
 void EventHandler::processValueChanged(std::string host, std::string key, std::string value){
     qDebug() << "value - key:: host:" << host.c_str() << " key:"<< key.c_str() << " value:" << value.c_str() << "time: " << QTime::currentTime().toString() ;
 
