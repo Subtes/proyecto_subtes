@@ -336,7 +336,10 @@ bool ENetClient::ColocarMiNombre(std::string unNombre)
 
 bool ENetClient::CambiarEstadoDifusion(bool unNuevoEstado)
 {
-  return EnviarMensaje(1, "difusion||" + unNuevoEstado ? "true" : "false");
+ std::string cosa =  unNuevoEstado ? "true" : "false";
+ std::string cosa2 = "difusion||" + cosa;
+
+ return EnviarMensaje(1, cosa2);
 }
 
 bool ENetClient::EnviarMensaje(short idCanal, std::string unTexto)
